@@ -29,7 +29,7 @@ end)
 TOCAFrameMain:SetScript("OnDragStop", function()
   TOCAFrameMain:StopMovingOrSizing()
   local point, relativeTo, relativePoint, xOfs, yOfs = TOCAFrameMain:GetPoint()
-  TOCADB[player.combine]["CONFIG"]["MAINPOS"] = point .. "," .. xOfs .. "," .. yOfs
+  TOCADB[TOCAPlayer.combine]["CONFIG"]["MAINPOS"] = point .. "," .. xOfs .. "," .. yOfs
 end)
 local TOCAMain = CreateFrame("Frame")
 TOCAMain:RegisterEvent("ADDON_LOADED")
@@ -199,10 +199,19 @@ TOCAFrameOptionsBtnSave:SetScript("OnLeave", function(self)
   self:SetBackdropBorderColor(1, 1, 1, 0.6)
 end)
 TOCAFrameOptionsBtnSave:SetScript("OnClick", function()
-  if ((TOCAFrameOptionsProfile:GetText() == "") or (TOCAFrameOptionsProfile == nil)) then
+  TOCAFrameOptionsProfile.border:SetBackdropBorderColor(1, 1, 1, 0.8)
+  local profileSaveText = TOCAFrameOptionsProfile:GetText()
+  if ((profileSaveText == "") or (profileSaveText == nil)) then
     print(TOCAGlobal.title .. " Profile Saved: " .. TOCADDOpt.text:GetText())
+    TOCADB[TOCAPlayer.combine]["PROFILES"][TOCADDOpt.text:GetText()] = {AIR="Grace of Air Totem", EARTH="Stoneclaw Totem", FIRE="Totem of Wrath", WATER="Mana Spring Totem"}
   else
-    print(TOCAGlobal.title .. " Profile Saved: " .. TOCAFrameOptionsProfile:GetText())
+    if(profileSaveText:match("[^%w%s]")) then
+      TOCAFrameOptionsProfile.border:SetBackdropBorderColor(1, 0.2, 0.2, 1)
+      print(TOCAGlobal.title .. "|cffff0000 Unable to save profile with non alphanumeric characters!")
+    else
+      print(TOCAGlobal.title .. " Profile Saved: " .. profileSaveText)
+      TOCADB[TOCAPlayer.combine]["PROFILES"][profileSaveText] = {AIR="Grace of Air Totem", EARTH="Stoneclaw Totem", FIRE="Totem of Wrath", WATER="Mana Spring Totem"}
+    end
   end
 end)
 TOCAFrameOptionsBtnSave.text = TOCAFrameOptionsBtnSave:CreateFontString(nil, "ARTWORK")
@@ -223,8 +232,9 @@ TOCAFrameOptionsBtnDelete:SetScript("OnLeave", function(self)
   self:SetBackdropBorderColor(1, 1, 1, 0.6)
 end)
 TOCAFrameOptionsBtnDelete:SetScript("OnClick", function()
+  TOCACloseAllMenus()
   if (TOCADDOpt.text:GetText() == "Default") then
-    print(TOCAGlobal.title .. " Unable to remove the Default profile.")
+    print(TOCAGlobal.title .. "|cffff0000 Unable to remove the Default profile.")
   end
 end)
 TOCAFrameOptionsBtnDelete.text = TOCAFrameOptionsBtnDelete:CreateFontString(nil, "ARTWORK")
@@ -356,6 +366,9 @@ TOCAFrameOptionsProfile.border:SetBackdrop({
   edgeSize= 12,
   insets  = {left=2, right=2, top=2, bottom=2},
 })
+TOCAFrameOptionsProfile:SetScript("OnKeyUp", function(self)
+  TOCACloseAllMenus()
+end)
 
 TOCADDMenu = {"Default"}
 TOCADD = CreateFrame("Frame", nil, TOCAFrameMain, "UIDropDownMenuTemplate")

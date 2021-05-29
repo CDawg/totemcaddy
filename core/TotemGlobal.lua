@@ -53,7 +53,12 @@ function TOCAInit()
     if (TOCADB[TOCAPlayer.combine]["CONFIG"] == nil) then
       TOCADB[TOCAPlayer.combine]["CONFIG"] = {}
     end
+    if (TOCADB[TOCAPlayer.combine]["PROFILES"] == nil) then
+      TOCADB[TOCAPlayer.combine]["PROFILES"] = {}
+    end
+    print(TOCAGlobal.title .. " Building Profile: " .. TOCAPlayer.combine)
   end
+  --print(TOCAGlobal.title .. " Loading Profile: " .. TOCAPlayer.combine)
   --[==[
   for k,v in pairs(totems) do
     print(k)
@@ -62,6 +67,7 @@ function TOCAInit()
     end
   end
   ]==]--
+  print("TOCAInit()")
 end
 
 function TOCACloseAllMenus()
