@@ -13,8 +13,9 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
-TOCATotems = {}
-TOCATotems.FIRE = {
+TOCA={}
+TOCA.Totems = {}
+TOCA.Totems.FIRE = {
   {"Fire Nova Totem",       "spell_fire_sealoffire"},
   {"Flametongue Totem",     "spell_nature_guardianward"},
   {"Frost Resistance Totem","spell_frostresistancetotem_01"},
@@ -22,24 +23,24 @@ TOCATotems.FIRE = {
   {"Searing Totem",         "spell_fire_searingtotem"},
   {"Totem of Wrath",        "spell_fire_totemofwrath"},
 }
-TOCATotems.EARTH = {
+TOCA.Totems.EARTH = {
   {"Earthbind Totem",        "spell_nature_strengthofearthtotem02"},
   {"Stoneclaw Totem",        "spell_nature_stoneclawtotem"},
   {"Stoneskin Totem",        "spell_nature_stoneskintotem"},
   {"Strength of Earth Totem","spell_nature_earthbindtotem"},
   {"Tremor Totem",           "spell_nature_tremortotem"},
 }
-TOCATotems.WATER = {
+TOCA.Totems.WATER = {
   {"Disease Cleansing Totem","spell_nature_diseasecleansingtotem"},
   {"Fire Resistance Totem",  "spell_fireresistancetotem_01"},
   {"Healing Stream Totem",   "inv_spear_04"},
   {"Mana Spring Totem",      "spell_nature_manaregentotem"},
   {"Poison Cleansing Totem", "spell_nature_poisoncleansingtotem"},
 }
-TOCATotems.AIR = {
+TOCA.Totems.AIR = {
   {"Grace of Air Totem",     "spell_nature_invisibilitytotem"},
   {"Grounding Totem",        "spell_nature_groundingtotem"},
-  {"Nature Resitance Totem", "spell_nature_natureresistancetotem"},
+  {"Nature Resistance Totem","spell_nature_natureresistancetotem"},
   {"Sentry Totem",           "spell_nature_removecurse"},
   {"Tranquil Air Totem",     "spell_nature_brilliance"},
   {"Windfury Totem",         "spell_nature_windfury"},
@@ -60,10 +61,20 @@ function pairsByKeys (t, f)
   return iter
 end
 
-TOCAPlayer = {
+function multiKeyFromValue(_array, value, index)
+  if ((index == nil) or (index == 0)) then
+    index = 1
+  end
+  for k,v in pairs(_array) do
+    if v[index]==value then return k end
+  end
+  return nil
+end
+
+TOCA.Player = {
   name   = UnitName("player"),
   realm  = GetRealmName(),
   class  = UnitClass("player"),
   faction= UnitFactionGroup("player"),
 }
-TOCAPlayer.combine = TOCAPlayer.name .. "-" .. TOCAPlayer.realm
+TOCA.Player.combine = TOCA.Player.name .. "-" .. TOCA.Player.realm
