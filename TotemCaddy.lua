@@ -78,7 +78,8 @@ TOCATotem={}
 local TOCASlot_w=35
 local TOCASlot_h=35
 local TOCASlot_x=-TOCASlot_w/2
-for totemCat,v in pairs(TOCATotems) do
+--for totemCat,v in pairs(TOCATotems) do
+for totemCat,v in pairsByKeys(TOCATotems) do
   TOCASlot_x = TOCASlot_x +TOCASlot_w+5
   TOCASlot[totemCat]={}
   TOCASlot[totemCat]= CreateFrame("Button", nil, TOCAFrameMain, "BackdropTemplate")
@@ -100,7 +101,7 @@ for totemCat,v in pairs(TOCATotems) do
   TOCATotem[totemCat]:SetAttribute("type", "spell")
   TOCATotem[totemCat]:SetAttribute("spell", "Healing Stream Totem") -- default
   TOCATotem[totemCat]:SetScript("OnEnter", function()
-    print(totemCat)
+    --print(totemCat)
     TOCASlot[totemCat]:SetBackdropBorderColor(1, 1, 1, 1)
   end)
   TOCATotem[totemCat]:SetScript("OnLeave", function()
@@ -146,14 +147,14 @@ TOCABtnOpt= CreateFrame("Button", nil, TOCAFrameMain, "BackdropTemplate")
 TOCABtnOpt:SetSize(18, 18)
 TOCABtnOpt:SetPoint("TOPRIGHT", -18, -2)
 TOCABtnOpt:SetBackdrop({
-  bgFile  = "Interface/Buttons/RedGrad64",
+  bgFile  = "Interface/Buttons/GreenGrad64",
   edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
   edgeSize= 12,
   tile    = true,
   insets  = {left=4, right=4, top=4, bottom=4},
 })
 TOCABtnOpt:SetBackdropBorderColor(1, 1, 1, 0.6)
-TOCABtnOpt:SetBackdropColor(0.7, 0.7, 0.7, 1)
+TOCABtnOpt:SetBackdropColor(0.5, 0.5, 0.6, 1)
 TOCABtnOpt.icon = TOCABtnOpt:CreateTexture(nil, "ARTWORK")
 TOCABtnOpt.icon:SetSize(12, 12)
 TOCABtnOpt.icon:SetPoint("CENTER", 0, 0)
@@ -219,13 +220,13 @@ TOCAFrameOptionsBtnClose= CreateFrame("Button", nil, TOCAFrameOptions, "Backdrop
 TOCAFrameOptionsBtnClose:SetSize(18, 18)
 TOCAFrameOptionsBtnClose:SetPoint("TOPRIGHT", -2, -2)
 TOCAFrameOptionsBtnClose:SetBackdrop({
-  bgFile  = "Interface/ToolTips/CHATBUBBLE-BACKGROUND",
+  bgFile  = "Interface/Buttons/RedGrad64",
   edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
   edgeSize= 12,
   tile    = true,
   insets  = {left=4, right=4, top=4, bottom=4},
 })
-TOCAFrameOptionsBtnClose:SetBackdropColor(1, 0.6, 0.6, 1)
+TOCAFrameOptionsBtnClose:SetBackdropColor(0.7, 0.7, 0.7, 1)
 TOCAFrameOptionsBtnClose:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCAFrameOptionsBtnClose.icon = TOCAFrameOptionsBtnClose:CreateTexture(nil, "ARTWORK")
 TOCAFrameOptionsBtnClose.icon:SetSize(12, 12)
@@ -243,13 +244,14 @@ end)
 
 TOCAFrameOptionsSlot={}
 TOCAFrameOptionsTotem={}
+TOCAFrameOptionsSlotSelect={}
 TOCASlotOptions_x = 0
-for totemCat,v in ipairs(TOCATotems) do
+for totemCat,v in pairsByKeys(TOCATotems) do
   TOCASlotOptions_x = TOCASlotOptions_x + TOCASlot_w+4
   TOCAFrameOptionsSlot[totemCat]={}
   TOCAFrameOptionsSlot[totemCat]= CreateFrame("Button", nil, TOCAFrameOptions, "BackdropTemplate")
   TOCAFrameOptionsSlot[totemCat]:SetSize(TOCASlot_w, TOCASlot_h)
-  TOCAFrameOptionsSlot[totemCat]:SetPoint("CENTER", -100+TOCASlotOptions_x, -50)
+  TOCAFrameOptionsSlot[totemCat]:SetPoint("CENTER", -100+TOCASlotOptions_x, 20)
   TOCAFrameOptionsSlot[totemCat]:SetBackdrop({
     bgFile  = "Interface/ToolTips/CHATBUBBLE-BACKGROUND",
     edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
@@ -257,18 +259,34 @@ for totemCat,v in ipairs(TOCATotems) do
     tile    = true,
     insets  = {left=2, right=2, top=2, bottom=2},
   })
+  TOCAFrameOptionsSlotSelect[totemCat]= CreateFrame("Button", nil, TOCAFrameOptions, "BackdropTemplate")
+  TOCAFrameOptionsSlotSelect[totemCat]:SetSize(28, 15)
+  TOCAFrameOptionsSlotSelect[totemCat]:SetPoint("CENTER", -100+TOCASlotOptions_x, 0)
+  TOCAFrameOptionsSlotSelect[totemCat]:SetBackdrop({
+    bgFile  = "Interface/ToolTips/CHATBUBBLE-BACKGROUND",
+    edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
+    edgeSize= 12,
+    tile    = true,
+    insets  = {left=2, right=2, top=2, bottom=2},
+  })
+  TOCAFrameOptionsSlotSelect[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
+  TOCAFrameOptionsSlotSelect[totemCat]:SetScript("OnEnter", function()
+    TOCAFrameOptionsSlotSelect[totemCat]:SetBackdropBorderColor(1, 1, 1, 1)
+  end)
+  TOCAFrameOptionsSlotSelect[totemCat]:SetScript("OnLeave", function()
+    TOCAFrameOptionsSlotSelect[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
+  end)
+  TOCAFrameOptionsSlotSelect[totemCat].icon = TOCAFrameOptionsSlotSelect[totemCat]:CreateTexture(nil, "ARTWORK")
+  TOCAFrameOptionsSlotSelect[totemCat].icon:SetSize(18, 14)
+  TOCAFrameOptionsSlotSelect[totemCat].icon:SetPoint("CENTER", 0, -3)
+  TOCAFrameOptionsSlotSelect[totemCat].icon:SetTexture("Interface/Buttons/Arrow-Down-Down")
+
   TOCAFrameOptionsSlot[totemCat]:SetBackdropColor(0, 0, 0, 0.8)
   TOCAFrameOptionsSlot[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
   TOCAFrameOptionsTotem[totemCat]={}
   TOCAFrameOptionsTotem[totemCat] = CreateFrame("Button", nil, TOCAFrameOptionsSlot[totemCat], "BackdropTemplate");
   TOCAFrameOptionsTotem[totemCat]:SetSize(TOCASlot_w, TOCASlot_h)
   TOCAFrameOptionsTotem[totemCat]:SetPoint("CENTER", 0, 0)
-  TOCAFrameOptionsTotem[totemCat]:SetScript("OnEnter", function()
-    TOCAFrameOptionsSlot[totemCat]:SetBackdropBorderColor(1, 1, 1, 1)
-  end)
-  TOCAFrameOptionsTotem[totemCat]:SetScript("OnLeave", function()
-    TOCAFrameOptionsSlot[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
-  end)
 end
 
 TOCAFrameProfile = CreateFrame("EditBox", nil, TOCAFrameOptions, "BackdropTemplate")
@@ -280,7 +298,7 @@ TOCAFrameProfile:SetBackdrop({
   insets  = {left=-2, right=6, top=2, bottom=2},
 })
 TOCAFrameProfile:SetBackdropColor(0, 0, 0, 1)
-TOCAFrameProfile:SetPoint("CENTER", 0, -50)
+TOCAFrameProfile:SetPoint("CENTER", 0, -26)
 TOCAFrameProfile:ClearFocus(self)
 TOCAFrameProfile:SetAutoFocus(false)
 TOCAFrameProfile.border = CreateFrame("Frame", nil, TOCAFrameProfile, "BackdropTemplate")
@@ -298,21 +316,21 @@ TOCADDMenu = {"Default"}
 TOCADD = CreateFrame("Frame", nil, TOCAFrameMain, "UIDropDownMenuTemplate")
 --TOCADD:SetFrameLevel(50)
 TOCADD:SetPoint("CENTER", 0, -30)
---ddBossList[DNAInstance[i][1]].displayMode = "MENU"
+TOCADD.displayMode = "MENU"
 TOCADD.text = TOCADD:CreateFontString(nil, "ARTWORK")
 TOCADD.text:SetFont("Fonts\\FRIZQT__.TTF", 11)
 TOCADD.text:SetPoint("TOPLEFT", TOCADD, "TOPLEFT", 25, -8)
 TOCADD.text:SetText(TOCADDMenu[1])
 TOCADD.onClick = function(self, checked)
   TOCADD.text:SetText(self.value)
-  --print("click")
+  --print(self.value)
 end
 TOCADD.initialize = function(self, level)
   local info = UIDropDownMenu_CreateInfo()
   local i = 0
   for k,v in pairs(TOCADDMenu) do
     info.notCheckable = 1
-    info.padding = 50
+    info.padding = 10
     info.text = v
     info.value= v
     info.fontObject = GameFontWhite
@@ -323,6 +341,34 @@ TOCADD.initialize = function(self, level)
   end
 end
 UIDropDownMenu_SetWidth(TOCADD, TOCAGlobal.width-60)
+
+TOCADDOpt = CreateFrame("Frame", nil, TOCAFrameOptions, "UIDropDownMenuTemplate")
+TOCADDOpt:SetPoint("CENTER", 0, 50)
+TOCADDOpt.displayMode = "MENU"
+TOCADDOpt.text = TOCADDOpt:CreateFontString(nil, "ARTWORK")
+TOCADDOpt.text:SetFont("Fonts\\FRIZQT__.TTF", 11)
+TOCADDOpt.text:SetPoint("TOPLEFT", TOCADDOpt, "TOPLEFT", 25, -8)
+TOCADDOpt.text:SetText(TOCADDMenu[1])
+TOCADDOpt.onClick = function(self, checked)
+  TOCADDOpt.text:SetText(self.value)
+  --print(self.value)
+end
+TOCADDOpt.initialize = function(self, level)
+  local info = UIDropDownMenu_CreateInfo()
+  local i = 0
+  for k,v in pairs(TOCADDMenu) do
+    info.notCheckable = 1
+    info.padding = 10
+    info.text = v
+    info.value= v
+    info.fontObject = GameFontWhite
+    info.justifyH = "LEFT"
+    info.disabled = false
+    info.func = self.onClick
+    UIDropDownMenu_AddButton(info, level)
+  end
+end
+UIDropDownMenu_SetWidth(TOCADDOpt, TOCAGlobal.width-60)
 
 SLASH_TOCA1 = TCCMD
 function SlashCmdList.TOCA(cmd)
