@@ -15,36 +15,35 @@ the copyright holders.
 
 TOCATotems = {}
 TOCATotems.FIRE = {
-  {"Fire Nova Totem",       "Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
-  {"Flametongue Totem",     "Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
-  {"Frost Resistance Totem","Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
-  {"Magma Totem",      "Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
-  {"Searing Totem",    "Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
-  {"Totem of Wrath",    "Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
+  {"Fire Nova Totem",       "spell_fire_sealoffire"},
+  {"Flametongue Totem",     "spell_nature_guardianward"},
+  {"Frost Resistance Totem","spell_frostresistancetotem_01"},
+  {"Magma Totem",           "spell_fire_selfdestruct"},
+  {"Searing Totem",         "spell_fire_searingtotem"},
+  {"Totem of Wrath",        "spell_fire_totemofwrath"},
 }
 TOCATotems.EARTH = {
-  {"Earthbind Totem",        "Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
-  {"Stoneclaw Totem",        "Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
-  {"Stoneskin Totem",        "Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
-  {"Strength of Earth Totem","Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
-  {"Tremor Totem","Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
+  {"Earthbind Totem",        "spell_nature_strengthofearthtotem02"},
+  {"Stoneclaw Totem",        "spell_nature_stoneclawtotem"},
+  {"Stoneskin Totem",        "spell_nature_stoneskintotem"},
+  {"Strength of Earth Totem","spell_nature_earthbindtotem"},
+  {"Tremor Totem",           "spell_nature_tremortotem"},
 }
 TOCATotems.WATER = {
-  {"Disease Cleansing Totem","Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
-  {"Fire Resistance Totem",  "Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
-  {"Healing Stream Totem",   "Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
-  {"Mana Spring Totem",      "Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
-  {"Poison Cleansing Totem", "Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
+  {"Disease Cleansing Totem","spell_nature_diseasecleansingtotem"},
+  {"Fire Resistance Totem",  "spell_fireresistancetotem_01"},
+  {"Healing Stream Totem",   "inv_spear_04"},
+  {"Mana Spring Totem",      "spell_nature_manaregentotem"},
+  {"Poison Cleansing Totem", "spell_nature_poisoncleansingtotem"},
 }
 TOCATotems.AIR = {
-  {"Grace of Air Totem", "Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
-  {"Grounding Totem", "Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
-  {"Healing Stream Totem", "Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
-  {"Nature Resitance Totem", "Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
-  {"Sentry Totem", "Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
-  {"Tranquil Air Totem", "Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
-  {"Windfury Totem", "Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
-  {"Windwall Totem", "Interface/GLUES/LoadingScreens/LoadScreenMoltenCore"},
+  {"Grace of Air Totem",     "spell_nature_invisibilitytotem"},
+  {"Grounding Totem",        "spell_nature_groundingtotem"},
+  {"Nature Resitance Totem", "spell_nature_natureresistancetotem"},
+  {"Sentry Totem",           "spell_nature_removecurse"},
+  {"Tranquil Air Totem",     "spell_nature_brilliance"},
+  {"Windfury Totem",         "spell_nature_windfury"},
+  {"Windwall Totem",         "spell_nature_earthbind"},
 }
 
 function pairsByKeys (t, f)
