@@ -9,3 +9,4 @@
 core/TotemLibrary.lua
 core/TotemGlobal.lua
 TotemCaddy.lua
+core/TotemSets.lua

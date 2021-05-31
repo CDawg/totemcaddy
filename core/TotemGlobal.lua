@@ -18,8 +18,8 @@ TOCA.Global = {
  author = "Porthios of Myzrael",
  version= 2.15,
  command= "toca",
- width  = 200,
- height = 90,
+ width  = 210,
+ height = 100,
  font   = "Fonts/FRIZQT__.TTF",
 }
 TCCMD = "/"..TOCA.Global.command
@@ -39,6 +39,8 @@ TOCA.Backdrop.Button= {
   insets  = {left=2, right=2, top=2, bottom=2},
 }
 
+TOCA.Button={}
+
 --defaults
 TOCASlotAIR  = "Grace of Air Totem"
 TOCASlotEARTH= "Stoneclaw Totem"
@@ -54,7 +56,7 @@ function TOCA.UpdateTotemSet()
     insets  = {left=2, right=2, top=2, bottom=2},
   }
   TOCA.Slot["AIR"]:SetBackdrop(totemIcon)
-  TOCA.FrameOptionsSlot["AIR"]:SetBackdrop(totemIcon)
+  TOCA.FrameSetsSlot["AIR"]:SetBackdrop(totemIcon)
 
   local totemIconKey = multiKeyFromValue(TOCA.totems.EARTH,  TOCASlotEARTH, 1)
   local totemIcon = {
@@ -64,7 +66,7 @@ function TOCA.UpdateTotemSet()
     insets  = {left=2, right=2, top=2, bottom=2},
   }
   TOCA.Slot["EARTH"]:SetBackdrop(totemIcon)
-  TOCA.FrameOptionsSlot["EARTH"]:SetBackdrop(totemIcon)
+  TOCA.FrameSetsSlot["EARTH"]:SetBackdrop(totemIcon)
 
   local totemIconKey = multiKeyFromValue(TOCA.totems.FIRE,  TOCASlotFIRE, 1)
   local totemIcon = {
@@ -74,7 +76,7 @@ function TOCA.UpdateTotemSet()
     insets  = {left=2, right=2, top=2, bottom=2},
   }
   TOCA.Slot["FIRE"]:SetBackdrop(totemIcon)
-  TOCA.FrameOptionsSlot["FIRE"]:SetBackdrop(totemIcon)
+  TOCA.FrameSetsSlot["FIRE"]:SetBackdrop(totemIcon)
 
   local totemIconKey = multiKeyFromValue(TOCA.totems.WATER,  TOCASlotWATER, 1)
   local totemIcon = {
@@ -84,7 +86,7 @@ function TOCA.UpdateTotemSet()
     insets  = {left=2, right=2, top=2, bottom=2},
   }
   TOCA.Slot["WATER"]:SetBackdrop(totemIcon)
-  TOCA.FrameOptionsSlot["WATER"]:SetBackdrop(totemIcon)
+  TOCA.FrameSetsSlot["WATER"]:SetBackdrop(totemIcon)
 end
 
 function TOCA.Init()
@@ -107,18 +109,30 @@ function TOCA.Init()
     if (TOCADB[TOCA.player.combine]["LASTSAVED"] == nil) then
       TOCADB[TOCA.player.combine]["LASTSAVED"] = "Default"
     end
+    if (TOCADB[TOCA.player.combine]["DISABLED"] == nil) then
+      TOCADB[TOCA.player.combine]["DISABLED"] = "NO"
+    end
     print(TOCA.Global.title .. " Building Profile: " .. TOCA.player.combine)
     TOCADB[TOCA.player.combine]["PROFILES"]["Default"] = {TOCA_AIR=TOCASlotAIR, TOCA_EARTH=TOCASlotEARTH, TOCA_FIRE=TOCASlotFIRE, TOCA_WATER=TOCASlotWATER}
     TOCA.UpdateTotemSet()
   else
     print(TOCA.Global.title .. " Loading Profile: " .. TOCA.player.combine)
+    if (TOCADB[TOCA.player.combine]["DISABLED"] == "YES") then
+      TOCA.FrameMain:Hide()
+    end
     if (TOCADB[TOCA.player.combine]["LASTSAVED"]) then
       --print(TOCADB[TOCA.player.combine]["LASTSAVED"])
-      TOCA.SetDDMenu(TOCA.DD.Main, TOCADB[TOCA.player.combine]["LASTSAVED"])
+      TOCA.SetDDMenu(TOCA.Dropdown.Main, TOCADB[TOCA.player.combine]["LASTSAVED"])
+    end
+    if (TOCADB[player.combine]["CONFIG"]["MAINPOS"]) then
+      local TOCAFrameMainPos = {}
+      TOCAFrameMainPos = split(TOCADB[TOCA.player.combine]["CONFIG"]["MAINPOS"], ",")
+      TOCA.FrameMain:ClearAllPoints()
+      TOCA.FrameMain:SetPoint(TOCAFrameMainPos[1], tonumber(TOCAFrameMainPos[2]), tonumber(TOCAFrameMainPos[3]))
     end
     TOCA.UpdateTotemSet()
-    TOCA.UpdateDDMenu(TOCA.DD.Main)
-    TOCA.UpdateDDMenu(TOCA.DD.Options)
+    TOCA.UpdateDDMenu(TOCA.Dropdown.Main)
+    TOCA.UpdateDDMenu(TOCA.Dropdown.Sets)
   end
 end
 
@@ -146,8 +160,8 @@ function TOCA.SetDDMenu(DDFrame, value)
     end
   end
   --just update both
-  TOCA.DD.Main.text:SetText(value)
-  TOCA.DD.Options.text:SetText(value)
+  TOCA.Dropdown.Main.text:SetText(value)
+  TOCA.Dropdown.Sets.text:SetText(value)
   TOCADB[TOCA.player.combine]["LASTSAVED"] = value
   TOCA.UpdateTotemSet()
   --print("TOCA.SetDDMenu " .. value)
@@ -176,15 +190,17 @@ function TOCA.UpdateDDMenu(DDFrame, value)
     end
   end
   if (value) then
-    TOCA.DD.Main.text:SetText(value)
-    TOCA.DD.Options.text:SetText(value)
+    TOCA.Dropdown.Main.text:SetText(value)
+    TOCA.Dropdown.Sets.text:SetText(value)
   end
 end
 
 function TOCA.CloseAllMenus()
   for k,v in pairs(TOCA.totems) do
-    TOCA.FrameOptionsSlotSelectMenu[k]:Hide()
+    TOCA.SlotSelectMenu[k]:Hide()
+    TOCA.FrameSetsSlotSelectMenu[k]:Hide()
   end
+  TOCA.FrameMainExt:Hide()
 end
 
 _GTooltip = CreateFrame("frame", "_GTootlip", UIParent, "BackdropTemplate")
@@ -215,22 +231,47 @@ function TOCA.tooltip(frame, msg, display)
   end
 end
 
+--TOCA.HasTotemOut = 0
+TOCA.TotemPresent={}
+TOCA.TotemName={}
+TOCA.TotemStartTime={}
+TOCA.TotemDuration={}
+function TOCA.TotemDetails()
+  --TOCA.HasTotemOut = 0
+  TOCA.CallFlash:Hide()
+  for i=1, 4 do
+    TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
+    if (TOCA.TotemPresent[i]) then
+      TOCA.CallFlash:Show()
+    end
+  end
+end
+
 SLASH_TOCA1 = TCCMD
 function SlashCmdList.TOCA(cmd)
   if ((cmd == nil) or (cmd == "")) then
-    print(TOCA.Global.title .. " commands:")
-    print("show = display Totem Caddy (regardless of class)")
-    print("hide = close Totem Caddy")
-    print("profile = display the current saved profile")
-    print("config = open Totem Caddy options")
+    print(TOCA.Global.title .. " v" .. TOCA.Global.version)
+    print("Commands:")
+    print("|cffffff00show:|r Display Totem Caddy (regardless of class)")
+    print("|cffffff00hide:|r Close Totem Caddy")
+    print("|cffffff00sets:|r Open Totem Caddy Totem Set Configurations")
+    print("|cffffff00profile:|r Display the current saved profile")
+    --print("config = Open Totem Caddy General Configurations")
   end
   if (cmd == "show") then
     TOCA.FrameMain:Show()
+    TOCADB[TOCA.player.combine]["DISABLED"] = "NO"
   end
   if (cmd == "hide") then
     TOCA.FrameMain:Hide()
   end
+  if (cmd == "sets") then
+    TOCA.FrameSets:Show()
+  end
+  if (cmd == "profile") then
+    print(TOCA.Global.title .. "|r Profile: " .. TOCA.player.combine)
+  end
   if (cmd == "config") then
-    TOCA.FrameOptions:Show()
+    TOCA.FrameConfig:Show()
   end
 end
