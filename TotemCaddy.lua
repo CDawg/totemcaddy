@@ -29,7 +29,7 @@ end)
 TOCA.FrameMain:SetScript("OnDragStop", function()
   TOCA.FrameMain:StopMovingOrSizing()
   local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.FrameMain:GetPoint()
-  TOCADB[TOCA.Player.combine]["CONFIG"]["MAINPOS"] = point .. "," .. xOfs .. "," .. yOfs
+  TOCADB[TOCA.player.combine]["CONFIG"]["MAINPOS"] = point .. "," .. xOfs .. "," .. yOfs
 end)
 TOCA.Main = CreateFrame("Frame")
 TOCA.Main:RegisterEvent("ADDON_LOADED")
@@ -47,8 +47,7 @@ TOCA.Totem={}
 TOCA.Slot_w=35
 TOCA.Slot_h=35
 TOCA.Slot_x=-TOCA.Slot_w/2
---for totemCat,v in pairs(TOCA.Totems) do
-for totemCat,v in pairsByKeys(TOCA.Totems) do
+for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.Slot_x = TOCA.Slot_x +TOCA.Slot_w+5
   TOCA.Slot[totemCat]={}
   TOCA.Slot[totemCat]= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTemplate")
@@ -82,7 +81,7 @@ for totemCat,v in pairsByKeys(TOCA.Totems) do
   end)
 end
 
---print(multiKeyFromValue(TOCA.Totems.EARTH, "Tremor Totem", 1))
+--print(multiKeyFromValue(TOCA.totems.EARTH, "Tremor Totem", 1))
 
 TOCA.Call_w=40
 TOCA.Call_h=40
@@ -175,6 +174,9 @@ TOCA.FrameOptions.title:SetText(TOCA.Global.title .. " Options  v" .. TOCA.Globa
 TOCA.FrameOptions:SetScript("OnClick", function()
   TOCA.CloseAllMenus()
 end)
+TOCA.FrameOptions:SetScript("OnLeave", function(self)
+  TOCA.CloseAllMenus()
+end)
 TOCA.FrameOptions:Hide()
 
 TOCA.FrameOptionsBtnClose= CreateFrame("Button", nil, TOCA.FrameOptions, "BackdropTemplate")
@@ -214,21 +216,26 @@ TOCA.FrameOptionsBtnSave:SetScript("OnClick", function()
   TOCA.FrameOptionsProfile.border:SetBackdropBorderColor(1, 1, 1, 0.8)
   local profileSaveText = TOCA.FrameOptionsProfile:GetText()
   if ((profileSaveText == " ") or (profileSaveText == "") or (profileSaveText == nil)) then
-    print(TOCA.Global.title .. " Profile Saved: " .. TOCA.DD.Options.text:GetText())
-    TOCADB[TOCA.Player.combine]["PROFILES"][TOCA.DD.Options.text:GetText()] = {TOCA_AIR=TOCASlotAIR, TOCA_EARTH=TOCASlotEARTH, TOCA_FIRE=TOCASlotFIRE, TOCA_WATER=TOCASlotWATER}
+    print(TOCA.Global.title .. " Totem Set Updated: " .. TOCA.DD.Options.text:GetText())
+    TOCADB[TOCA.player.combine]["PROFILES"][TOCA.DD.Options.text:GetText()] = {TOCA_AIR=TOCASlotAIR, TOCA_EARTH=TOCASlotEARTH, TOCA_FIRE=TOCASlotFIRE, TOCA_WATER=TOCASlotWATER}
   else
-    if(profileSaveText:match("[^%w%s]")) then
+    if (profileSaveText:match("[^%w%s]")) then
       TOCA.FrameOptionsProfile.border:SetBackdropBorderColor(1, 0.2, 0.2, 1)
       print(TOCA.Global.title .. "|cffff0000 Unable to save profile with non alphanumeric characters!")
     else
-      print(TOCA.Global.title .. " Profile Saved: " .. profileSaveText)
-      TOCADB[TOCA.Player.combine]["PROFILES"][profileSaveText] = {TOCA_AIR=TOCASlotAIR, TOCA_EARTH=TOCASlotEARTH, TOCA_FIRE=TOCASlotFIRE, TOCA_WATER=TOCASlotWATER}
-      UIDropDownMenu_SetText(TOCA.DD.Main, profileSaveText)
+      if (TOCADB[TOCA.player.combine]["PROFILES"][profileSaveText]) then
+        print(TOCA.Global.title .. " Totem Set Updated: " .. profileSaveText)
+      else
+        print(TOCA.Global.title .. " Totem Set Saved: " .. profileSaveText)
+      end
+      TOCADB[TOCA.player.combine]["PROFILES"][profileSaveText] = {TOCA_AIR=TOCASlotAIR, TOCA_EARTH=TOCASlotEARTH, TOCA_FIRE=TOCASlotFIRE, TOCA_WATER=TOCASlotWATER}
+      TOCA.UpdateDDMenu(TOCA.DD.Options)
+      TOCA.UpdateDDMenu(TOCA.DD.Main)
     end
   end
 end)
 TOCA.FrameOptionsBtnSave.text = TOCA.FrameOptionsBtnSave:CreateFontString(nil, "ARTWORK")
-TOCA.FrameOptionsBtnSave.text:SetFont("Fonts\\FRIZQT__.TTF", 11)
+TOCA.FrameOptionsBtnSave.text:SetFont(TOCA.Global.font, 11)
 TOCA.FrameOptionsBtnSave.text:SetPoint("CENTER", 0, 0)
 TOCA.FrameOptionsBtnSave.text:SetText("Save")
 
@@ -245,13 +252,22 @@ TOCA.FrameOptionsBtnDelete:SetScript("OnLeave", function(self)
   self:SetBackdropBorderColor(1, 1, 1, 0.6)
 end)
 TOCA.FrameOptionsBtnDelete:SetScript("OnClick", function()
-  TOCA.CloseAllMenus()
-  if (TOCA.DD.Options.text:GetText() == "Default") then
-    print(TOCA.Global.title .. "|cffff0000 Unable to remove profile: " .. TOCA.DD.Options.text:GetText())
+  local profileSaveText = TOCA.DD.Options.text:GetText()
+  if (profileSaveText == "Default") then
+    print(TOCA.Global.title .. "|cffff0000 Unable to remove profile: " .. profileSaveText)
+  else
+    if (TOCADB[TOCA.player.combine]["PROFILES"][profileSaveText]) then
+      TOCADB[TOCA.player.combine]["PROFILES"][profileSaveText] = nil
+      TOCA.UpdateDDMenu(TOCA.DD.Options)
+      TOCA.UpdateDDMenu(TOCA.DD.Main)
+      print(TOCA.Global.title .. " Totem Set Deleted: " .. profileSaveText)
+      TOCA.SetDDMenu(TOCA.DD.Main, "Default")
+    end
   end
+  TOCA.CloseAllMenus()
 end)
 TOCA.FrameOptionsBtnDelete.text = TOCA.FrameOptionsBtnDelete:CreateFontString(nil, "ARTWORK")
-TOCA.FrameOptionsBtnDelete.text:SetFont("Fonts\\FRIZQT__.TTF", 11)
+TOCA.FrameOptionsBtnDelete.text:SetFont(TOCA.Global.font, 11)
 TOCA.FrameOptionsBtnDelete.text:SetPoint("CENTER", 0, 0)
 TOCA.FrameOptionsBtnDelete.text:SetText("Delete")
 
@@ -260,9 +276,8 @@ TOCA.FrameOptionsTotem={}
 TOCA.FrameOptionsSlotSelect={}
 TOCA.FrameOptionsSlotSelectMenu={}
 TOCA.FrameOptionsSlotSelectTotem={}
-
 TOCA.SlotOptions_x = 0
-for totemCat,v in pairsByKeys(TOCA.Totems) do
+for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.SlotOptions_x = TOCA.SlotOptions_x + TOCA.Slot_w+4
   TOCA.FrameOptionsSlot[totemCat]={}
   TOCA.FrameOptionsSlot[totemCat]= CreateFrame("Button", nil, TOCA.FrameOptions, "BackdropTemplate")
@@ -290,7 +305,7 @@ for totemCat,v in pairsByKeys(TOCA.Totems) do
   TOCA.FrameOptionsSlotSelect[totemCat].icon:SetPoint("CENTER", 0, -3)
   TOCA.FrameOptionsSlotSelect[totemCat].icon:SetTexture("Interface/Buttons/Arrow-Down-Down")
 
-  local totemCategoryCount = getn(TOCA.Totems[totemCat])
+  local totemCategoryCount = getn(TOCA.totems[totemCat])
   TOCA.FrameOptionsSlotSelectMenu[totemCat]= CreateFrame("Frame", nil, TOCA.FrameOptionsSlotSelect[totemCat], "BackdropTemplate")
   TOCA.FrameOptionsSlotSelectMenu[totemCat]:SetSize(40, (totemCategoryCount*40)+30)
   TOCA.FrameOptionsSlotSelectMenu[totemCat]:SetPoint("TOPLEFT", -6, -10)
@@ -322,7 +337,7 @@ for totemCat,v in pairsByKeys(TOCA.Totems) do
 
   local totemSpellCount={}
   totemSpellCount[totemCat] = 0
-  for i,totemSpell in pairs(TOCA.Totems[totemCat]) do
+  for i,totemSpell in pairs(TOCA.totems[totemCat]) do
     --print(totemCat .. i .. " " .. totemSpell[1])
     totemSpellCount[totemCat] = totemSpellCount[totemCat]+35
     TOCA.FrameOptionsSlotSelectTotem[totemCat]={}
@@ -337,6 +352,7 @@ for totemCat,v in pairsByKeys(TOCA.Totems) do
     })
     TOCA.FrameOptionsSlotSelectTotem[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
     TOCA.FrameOptionsSlotSelectTotem[totemCat][i]:SetScript("OnEnter", function(self)
+      TOCA.tooltip(TOCA.FrameOptionsSlotSelectTotem[totemCat][i], totemSpell[1])
       self:SetBackdropBorderColor(1, 1, 0.8, 1)
     end)
     TOCA.FrameOptionsSlotSelectTotem[totemCat][i]:SetScript("OnLeave", function(self)
@@ -363,7 +379,7 @@ for totemCat,v in pairsByKeys(TOCA.Totems) do
         edgeSize= 12,
         insets  = {left=2, right=2, top=2, bottom=2},
       })
-      TOCA.Totem[totemCat]:SetAttribute("spell", totemSpell[1]) -- default
+      --TOCA.Totem[totemCat]:SetAttribute("spell", totemSpell[1]) -- default
       TOCA.CloseAllMenus()
     end)
   end
@@ -399,32 +415,15 @@ end)
 
 TOCA.DD = {}
 TOCA.DD.Menu = {"Default"}
-
 TOCA.DD.Main = CreateFrame("Frame", nil, TOCA.FrameMain, "UIDropDownMenuTemplate")
 TOCA.DD.Main:SetPoint("CENTER", 0, -30)
 TOCA.DD.Main.displayMode = "MENU"
 TOCA.DD.Main.text = TOCA.DD.Main:CreateFontString(nil, "ARTWORK")
-TOCA.DD.Main.text:SetFont("Fonts\\FRIZQT__.TTF", 11)
+TOCA.DD.Main.text:SetFont(TOCA.Global.font, 11)
 TOCA.DD.Main.text:SetPoint("TOPLEFT", TOCA.DD.Main, "TOPLEFT", 25, -8)
 TOCA.DD.Main.text:SetText(TOCA.DD.Menu[1])
 TOCA.DD.Main.onClick = function(self, checked)
-  TOCA.DD.Main.text:SetText(self.value)
-  --print(self.value)
-end
-TOCA.DD.Main.initialize = function(self, level)
-  local info = UIDropDownMenu_CreateInfo()
-  local i = 0
-  for k,v in pairs(TOCA.DD.Menu) do
-    info.notCheckable = 1
-    info.padding = 2
-    info.text = v
-    info.value= v
-    info.fontObject = GameFontWhite
-    info.justifyH = "LEFT"
-    info.disabled = false
-    info.func = self.onClick
-    UIDropDownMenu_AddButton(info, level)
-  end
+  TOCA.SetDDMenu(TOCA.DD.Main, self.value)
 end
 UIDropDownMenu_SetWidth(TOCA.DD.Main, TOCA.Global.width-60)
 
@@ -432,27 +431,13 @@ TOCA.DD.Options = CreateFrame("Frame", nil, TOCA.FrameOptions, "UIDropDownMenuTe
 TOCA.DD.Options:SetPoint("CENTER", 0, 50)
 TOCA.DD.Options.displayMode = "MENU"
 TOCA.DD.Options.text = TOCA.DD.Options:CreateFontString(nil, "ARTWORK")
-TOCA.DD.Options.text:SetFont("Fonts\\FRIZQT__.TTF", 11)
+TOCA.DD.Options.text:SetFont(TOCA.Global.font, 11)
 TOCA.DD.Options.text:SetPoint("TOPLEFT", TOCA.DD.Options, "TOPLEFT", 25, -8)
 TOCA.DD.Options.text:SetText(TOCA.DD.Menu[1])
 TOCA.FrameOptionsProfile:SetText(TOCA.DD.Menu[1])
 TOCA.DD.Options.onClick = function(self, checked)
-  TOCA.DD.Options.text:SetText(self.value)
+  --TOCA.DD.Options.text:SetText(self.value)
+  TOCA.SetDDMenu(TOCA.DD.Options, self.value)
   TOCA.FrameOptionsProfile:SetText(self.value)
-end
-TOCA.DD.Options.initialize = function(self, level)
-  local info = UIDropDownMenu_CreateInfo()
-  local i = 0
-  for k,v in pairs(TOCA.DD.Menu) do
-    info.notCheckable = 1
-    info.padding = 2
-    info.text = v
-    info.value= v
-    info.fontObject = GameFontWhite
-    info.justifyH = "LEFT"
-    info.disabled = false
-    info.func = self.onClick
-    UIDropDownMenu_AddButton(info, level)
-  end
 end
 UIDropDownMenu_SetWidth(TOCA.DD.Options, TOCA.Global.width-60)

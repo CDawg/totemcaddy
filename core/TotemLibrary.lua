@@ -14,8 +14,8 @@ the copyright holders.
 ]==]--
 
 TOCA={}
-TOCA.Totems = {}
-TOCA.Totems.FIRE = {
+TOCA.totems = {}
+TOCA.totems.FIRE = {
   {"Fire Nova Totem",       "spell_fire_sealoffire"},
   {"Flametongue Totem",     "spell_nature_guardianward"},
   {"Frost Resistance Totem","spell_frostresistancetotem_01"},
@@ -23,21 +23,21 @@ TOCA.Totems.FIRE = {
   {"Searing Totem",         "spell_fire_searingtotem"},
   {"Totem of Wrath",        "spell_fire_totemofwrath"},
 }
-TOCA.Totems.EARTH = {
+TOCA.totems.EARTH = {
   {"Earthbind Totem",        "spell_nature_strengthofearthtotem02"},
   {"Stoneclaw Totem",        "spell_nature_stoneclawtotem"},
   {"Stoneskin Totem",        "spell_nature_stoneskintotem"},
   {"Strength of Earth Totem","spell_nature_earthbindtotem"},
   {"Tremor Totem",           "spell_nature_tremortotem"},
 }
-TOCA.Totems.WATER = {
+TOCA.totems.WATER = {
   {"Disease Cleansing Totem","spell_nature_diseasecleansingtotem"},
   {"Fire Resistance Totem",  "spell_fireresistancetotem_01"},
   {"Healing Stream Totem",   "inv_spear_04"},
   {"Mana Spring Totem",      "spell_nature_manaregentotem"},
   {"Poison Cleansing Totem", "spell_nature_poisoncleansingtotem"},
 }
-TOCA.Totems.AIR = {
+TOCA.totems.AIR = {
   {"Grace of Air Totem",     "spell_nature_invisibilitytotem"},
   {"Grounding Totem",        "spell_nature_groundingtotem"},
   {"Nature Resistance Totem","spell_nature_natureresistancetotem"},
@@ -71,10 +71,10 @@ function multiKeyFromValue(_array, value, index)
   return nil
 end
 
-TOCA.Player = {
+TOCA.player = {
   name   = UnitName("player"),
   realm  = GetRealmName(),
   class  = UnitClass("player"),
   faction= UnitFactionGroup("player"),
 }
-TOCA.Player.combine = TOCA.Player.name .. "-" .. TOCA.Player.realm
+TOCA.player.combine = TOCA.player.name .. "-" .. TOCA.player.realm
