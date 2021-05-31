@@ -113,7 +113,7 @@ function TOCA.Init()
   else
     print(TOCA.Global.title .. " Loading Profile: " .. TOCA.player.combine)
     if (TOCADB[TOCA.player.combine]["LASTSAVED"]) then
-      print(TOCADB[TOCA.player.combine]["LASTSAVED"])
+      --print(TOCADB[TOCA.player.combine]["LASTSAVED"])
       TOCA.SetDDMenu(TOCA.DD.Main, TOCADB[TOCA.player.combine]["LASTSAVED"])
     end
     TOCA.UpdateTotemSet()
@@ -123,10 +123,10 @@ function TOCA.Init()
 end
 
 function TOCA.SetDDMenu(DDFrame, value)
-  print("DD " .. value)
+  --print("DD " .. value)
   if (TOCADB[TOCA.player.combine]["PROFILES"][value]) then
     for k,v in pairs(TOCADB[TOCA.player.combine]["PROFILES"][value]) do
-      print("debug profile " .. k)
+      --print("debug profile " .. k)
       if (k == "TOCA_AIR") then
         TOCASlotAIR = v
         TOCA.Totem["AIR"]:SetAttribute("spell", v)
@@ -144,18 +144,14 @@ function TOCA.SetDDMenu(DDFrame, value)
         TOCA.Totem["WATER"]:SetAttribute("spell", v)
       end
     end
-  --else --use the generic default values
   end
-  --DDFrame.text:SetText(value)
   --just update both
   TOCA.DD.Main.text:SetText(value)
   TOCA.DD.Options.text:SetText(value)
   TOCADB[TOCA.player.combine]["LASTSAVED"] = value
   TOCA.UpdateTotemSet()
-  print("TOCA.SetDDMenu " .. value)
+  --print("TOCA.SetDDMenu " .. value)
 end
-
---haveTotem, totemName, startTime, duration = GetTotemInfo(1 through 4)
 
 function TOCA.UpdateDDMenu(DDFrame, value)
   local DDArray = {"Default"}
@@ -194,7 +190,7 @@ end
 _GTooltip = CreateFrame("frame", "_GTootlip", UIParent, "BackdropTemplate")
 _GTooltip:SetWidth(50)
 _GTooltip:SetHeight(24)
-_GTooltip:SetPoint("TOPLEFT", 50, 0)
+_GTooltip:SetFrameStrata("TOOLTIP")
 _GTooltip:SetBackdrop(TOCA.Backdrop.General)
 _GTooltip:SetBackdropColor(0, 0, 0, 0.8)
 _GTooltip:SetBackdropBorderColor(1, 1, 1, 0.8)
@@ -204,17 +200,18 @@ _GTooltip.text:SetPoint("CENTER", 0, 0)
 _GTooltip.text:SetText("Unknown")
 _GTooltip:Hide()
 
-function TOCA.tooltip(frame, msg)
-  _GTooltip:Hide()
+function TOCA.tooltip(frame, msg, display)
   if (frame) then
     local msglen = string.len (msg)
-    _GTooltip:SetWidth(msglen*8)
-    local point, relativeTo, relativePoint, xOfs, yOfs = frame:GetPoint()
-    -- = point .. "," .. xOfs .. "," .. yOfs
-    _GTooltip:SetPoint(point, xOfs, yOfs)
+    local scale,x,y=frame:GetEffectiveScale(),GetCursorPosition()
+    _GTooltip:SetWidth(msglen*8.2)
+    _GTooltip:SetPoint("BOTTOMLEFT", nil, "BOTTOMLEFT", x/scale+40, y/scale-10)
     _GTooltip.text:SetText(msg)
-    --if (display == "show") then
-    _GTooltip:Show()
+    if (display == "show") then
+      _GTooltip:Show()
+    else
+      _GTooltip:Hide()
+    end
   end
 end
 

@@ -78,10 +78,14 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   end)
   TOCA.Totem[totemCat]:SetScript("OnLeave", function()
     TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
+    --[==[
+    if (totemCat == "WATER") then
+      local haveTotem, totemName, startTime, duration = GetTotemInfo(3)
+      print(haveTotem)
+    end
+    ]==]--
   end)
 end
-
---print(multiKeyFromValue(TOCA.totems.EARTH, "Tremor Totem", 1))
 
 TOCA.Call_w=40
 TOCA.Call_h=40
@@ -216,7 +220,7 @@ TOCA.FrameOptionsBtnSave:SetScript("OnClick", function()
   TOCA.FrameOptionsProfile.border:SetBackdropBorderColor(1, 1, 1, 0.8)
   local profileSaveText = TOCA.FrameOptionsProfile:GetText()
   if ((profileSaveText == " ") or (profileSaveText == "") or (profileSaveText == nil)) then
-    print(TOCA.Global.title .. " Totem Set Updated: " .. TOCA.DD.Options.text:GetText())
+    print(TOCA.Global.title .. " Totem Set Updated: |cffffff00" .. TOCA.DD.Options.text:GetText())
     TOCADB[TOCA.player.combine]["PROFILES"][TOCA.DD.Options.text:GetText()] = {TOCA_AIR=TOCASlotAIR, TOCA_EARTH=TOCASlotEARTH, TOCA_FIRE=TOCASlotFIRE, TOCA_WATER=TOCASlotWATER}
   else
     if (profileSaveText:match("[^%w%s]")) then
@@ -224,9 +228,9 @@ TOCA.FrameOptionsBtnSave:SetScript("OnClick", function()
       print(TOCA.Global.title .. "|cffff0000 Unable to save profile with non alphanumeric characters!")
     else
       if (TOCADB[TOCA.player.combine]["PROFILES"][profileSaveText]) then
-        print(TOCA.Global.title .. " Totem Set Updated: " .. profileSaveText)
+        print(TOCA.Global.title .. " Totem Set Updated: |cffffff00" .. profileSaveText)
       else
-        print(TOCA.Global.title .. " Totem Set Saved: " .. profileSaveText)
+        print(TOCA.Global.title .. " Totem Set Saved: |cffffff00" .. profileSaveText)
       end
       TOCADB[TOCA.player.combine]["PROFILES"][profileSaveText] = {TOCA_AIR=TOCASlotAIR, TOCA_EARTH=TOCASlotEARTH, TOCA_FIRE=TOCASlotFIRE, TOCA_WATER=TOCASlotWATER}
       TOCA.UpdateDDMenu(TOCA.DD.Options)
@@ -260,7 +264,7 @@ TOCA.FrameOptionsBtnDelete:SetScript("OnClick", function()
       TOCADB[TOCA.player.combine]["PROFILES"][profileSaveText] = nil
       TOCA.UpdateDDMenu(TOCA.DD.Options)
       TOCA.UpdateDDMenu(TOCA.DD.Main)
-      print(TOCA.Global.title .. " Totem Set Deleted: " .. profileSaveText)
+      print(TOCA.Global.title .. " Totem Set Deleted: |cffffff00" .. profileSaveText)
       TOCA.SetDDMenu(TOCA.DD.Main, "Default")
     end
   end
@@ -352,10 +356,11 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     })
     TOCA.FrameOptionsSlotSelectTotem[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
     TOCA.FrameOptionsSlotSelectTotem[totemCat][i]:SetScript("OnEnter", function(self)
-      TOCA.tooltip(TOCA.FrameOptionsSlotSelectTotem[totemCat][i], totemSpell[1])
+      TOCA.tooltip(self, totemSpell[1], "show")
       self:SetBackdropBorderColor(1, 1, 0.8, 1)
     end)
     TOCA.FrameOptionsSlotSelectTotem[totemCat][i]:SetScript("OnLeave", function(self)
+      TOCA.tooltip(self, totemSpell[1], "hide")
       self:SetBackdropBorderColor(1, 1, 1, 0.6)
     end)
     TOCA.FrameOptionsSlotSelectTotem[totemCat][i]:SetScript("OnClick", function()
