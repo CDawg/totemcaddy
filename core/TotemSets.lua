@@ -13,7 +13,6 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
-
 TOCA.FrameSets = CreateFrame("Button", "TOCA.FrameSets", UIParent, "BackdropTemplate")
 TOCA.FrameSets:SetWidth(300)
 TOCA.FrameSets:SetHeight(200)
@@ -32,6 +31,27 @@ TOCA.FrameSets:SetScript("OnLeave", function(self)
   TOCA.CloseAllMenus()
 end)
 TOCA.FrameSets:Hide()
+
+TOCA.Button.CloseFrameMainExt={}
+TOCA.Button.CloseFrameMainExt= CreateFrame("Button", nil, TOCA.FrameMainExt, "BackdropTemplate")
+TOCA.Button.CloseFrameMainExt:SetSize(80, 24)
+TOCA.Button.CloseFrameMainExt:SetPoint("CENTER", 0, -15)
+TOCA.Button.CloseFrameMainExt:SetBackdrop(TOCA.Backdrop.Button)
+TOCA.Button.CloseFrameMainExt:SetBackdropBorderColor(1, 1, 1, 0.6)
+TOCA.Button.CloseFrameMainExt:SetBackdropColor(0.6, 0, 0, 1)
+TOCA.Button.CloseFrameMainExt.text = TOCA.Button.CloseFrameMainExt:CreateFontString(nil, "ARTWORK")
+TOCA.Button.CloseFrameMainExt.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
+TOCA.Button.CloseFrameMainExt.text:SetPoint("CENTER", 0, 0)
+TOCA.Button.CloseFrameMainExt.text:SetText("Cancel")
+TOCA.Button.CloseFrameMainExt:SetScript("OnClick", function()
+  TOCA.CloseAllMenus()
+end)
+TOCA.Button.CloseFrameMainExt:SetScript("OnEnter", function(self)
+  self:SetBackdropBorderColor(1, 1, 1, 1)
+end)
+TOCA.Button.CloseFrameMainExt:SetScript("OnLeave", function(self)
+  self:SetBackdropBorderColor(1, 1, 1, 0.6)
+end)
 
 TOCA.FrameSetsBtnClose= CreateFrame("Button", nil, TOCA.FrameSets, "BackdropTemplate")
 TOCA.FrameSetsBtnClose:SetSize(18, 18)
@@ -266,7 +286,6 @@ TOCA.FrameSetsProfile:SetScript("OnKeyUp", function(self)
   TOCA.CloseAllMenus()
 end)
 
-
 TOCA.Dropdown.Sets = CreateFrame("Frame", nil, TOCA.FrameSets, "UIDropDownMenuTemplate")
 TOCA.Dropdown.Sets:SetPoint("CENTER", 0, 50)
 TOCA.Dropdown.Sets.displayMode = "MENU"
@@ -280,4 +299,4 @@ TOCA.Dropdown.Sets.onClick = function(self, checked)
   TOCA.SetDDMenu(TOCA.Dropdown.Sets, self.value)
   TOCA.FrameSetsProfile:SetText(self.value)
 end
-UIDropDownMenu_SetWidth(TOCA.Dropdown.Sets, TOCA.Global.width-70)
+UIDropDownMenu_SetWidth(TOCA.Dropdown.Sets, 140)

@@ -18,15 +18,30 @@ TOCA.Global = {
  author = "Porthios of Myzrael",
  version= 2.16,
  command= "toca",
- width  = 210,
+ width  = 180,
  height = 100,
  font   = "Fonts/FRIZQT__.TTF",
 }
 TCCMD = "/"..TOCA.Global.command
 
 TOCA.Backdrop={}
-TOCA.Backdrop.General = {
+
+TOCA.Backdrop.General = { --also used for gray out
   bgFile  = "Interface/ToolTips/CHATBUBBLE-BACKGROUND",
+  edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
+  edgeSize= 12,
+  insets  = {left=2, right=2, top=2, bottom=2},
+}
+
+TOCA.Backdrop.empty= { --also used for gray out
+  bgFile  = "",
+  edgeFile= "",
+  edgeSize= 12,
+  insets  = {left=2, right=2, top=2, bottom=2},
+}
+
+TOCA.Backdrop.highlight = {
+  bgFile  = "Interface/Buttons/ButtonHilight-Square",
   edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
   edgeSize= 12,
   insets  = {left=2, right=2, top=2, bottom=2},
@@ -41,6 +56,8 @@ TOCA.Backdrop.Button = {
 
 TOCA.Button={}
 TOCA.Checkbox={}
+
+TOCA.MenuIsOpen = 0
 
 --defaults
 TOCASlotAIR  = "Grace of Air Totem"
