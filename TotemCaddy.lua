@@ -16,7 +16,7 @@ the copyright holders.
 TOCA.FrameMain = CreateFrame("Frame", TOCA.FrameMain, UIParent, "BackdropTemplate")
 TOCA.FrameMain:SetWidth(TOCA.Global.width)
 TOCA.FrameMain:SetHeight(TOCA.Global.height)
-TOCA.FrameMain:SetPoint("CENTER", 0, 0)
+TOCA.FrameMain:SetPoint("CENTER", 0, -140)
 TOCA.FrameMain:SetBackdrop(TOCA.Backdrop.General)
 TOCA.FrameMain:SetBackdropColor(0, 0, 0, 0.8)
 TOCA.FrameMain:SetBackdropBorderColor(1, 1, 1, 0.6)
@@ -48,6 +48,10 @@ TOCA.Main:RegisterEvent("UNIT_SPELLCAST_SENT")
 TOCA.Main:SetScript("OnEvent", function(self, event, prefix)
   if ((event == "ADDON_LOADED") and (prefix == "TotemCaddy")) then
     print(TOCA.Global.title .. " v" .. TOCA.Global.version .. " Initializing by " .. TOCA.Global.author .. ". Type /" .. TOCA.Global.command .. " for commands.")
+    TOCA.Init()
+  end
+
+  if (event == "PLAYER_LOGIN") then
     TOCA.Init()
   end
   if ((event == "UNIT_SPELLCAST_START") or

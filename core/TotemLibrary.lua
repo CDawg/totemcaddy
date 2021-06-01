@@ -47,6 +47,14 @@ TOCA.totems.AIR = {
   {"Windwall Totem",         "spell_nature_earthbind"},
 }
 
+function split(s, delimiter)
+  result = {}
+  for match in (s..delimiter):gmatch("(.-)"..delimiter) do
+    table.insert(result, match)
+  end
+  return result
+end
+
 function pairsByKeys (t, f)
   local a = {}
   for n in pairs(t) do table.insert(a, n) end

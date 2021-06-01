@@ -16,7 +16,7 @@ the copyright holders.
 TOCA.Global = {
  title  = "|cff006aa6Totem Caddy|r",
  author = "Porthios of Myzrael",
- version= 2.15,
+ version= 2.16,
  command= "toca",
  width  = 210,
  height = 100,
@@ -32,7 +32,7 @@ TOCA.Backdrop.General = {
   insets  = {left=2, right=2, top=2, bottom=2},
 }
 
-TOCA.Backdrop.Button= {
+TOCA.Backdrop.Button = {
   bgFile  = "Interface/Buttons/GoldGradiant",
   edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
   edgeSize= 12,
@@ -40,6 +40,7 @@ TOCA.Backdrop.Button= {
 }
 
 TOCA.Button={}
+TOCA.Checkbox={}
 
 --defaults
 TOCASlotAIR  = "Grace of Air Totem"
@@ -94,6 +95,8 @@ function TOCA.Init()
   TOCA.FrameMain:Hide()
   if (eC == "SHAMAN") then
     TOCA.FrameMain:Show()
+  else
+    TOCA.FrameHelp:Hide()
   end
   if (TOCADB == nil) then
     TOCADB = {}
@@ -112,6 +115,9 @@ function TOCA.Init()
     if (TOCADB[TOCA.player.combine]["DISABLED"] == nil) then
       TOCADB[TOCA.player.combine]["DISABLED"] = "NO"
     end
+    if (TOCADB[TOCA.player.combine]["HELP"] == nil) then
+      TOCADB[TOCA.player.combine]["HELP"] = "YES"
+    end
     print(TOCA.Global.title .. " Building Profile: " .. TOCA.player.combine)
     TOCADB[TOCA.player.combine]["PROFILES"]["Default"] = {TOCA_AIR=TOCASlotAIR, TOCA_EARTH=TOCASlotEARTH, TOCA_FIRE=TOCASlotFIRE, TOCA_WATER=TOCASlotWATER}
     TOCA.UpdateTotemSet()
@@ -124,7 +130,10 @@ function TOCA.Init()
       --print(TOCADB[TOCA.player.combine]["LASTSAVED"])
       TOCA.SetDDMenu(TOCA.Dropdown.Main, TOCADB[TOCA.player.combine]["LASTSAVED"])
     end
-    if (TOCADB[player.combine]["CONFIG"]["MAINPOS"]) then
+    if (TOCADB[TOCA.player.combine]["HELP"] == TOCA.Global.version) then
+      TOCA.FrameHelp:Hide()
+    end
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["MAINPOS"]) then
       local TOCAFrameMainPos = {}
       TOCAFrameMainPos = split(TOCADB[TOCA.player.combine]["CONFIG"]["MAINPOS"], ",")
       TOCA.FrameMain:ClearAllPoints()
