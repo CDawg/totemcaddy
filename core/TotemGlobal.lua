@@ -16,11 +16,12 @@ the copyright holders.
 TOCA.Global = {
  title  = "|cff006aa6Totem Caddy|r",
  author = "Porthios of Myzrael",
- version= 2.16,
+ version= 2.24,
  command= "toca",
- width  = 180,
- height = 100,
+ width  = 158,
+ height = 85,
  font   = "Fonts/FRIZQT__.TTF",
+ dir    = "Interface/Addons/TotemCaddy/",
 }
 TCCMD = "/"..TOCA.Global.command
 
@@ -30,6 +31,13 @@ TOCA.Backdrop.General = { --also used for gray out
   bgFile  = "Interface/ToolTips/CHATBUBBLE-BACKGROUND",
   edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
   edgeSize= 12,
+  insets  = {left=2, right=2, top=2, bottom=2},
+}
+
+TOCA.Backdrop.Main = { --also used for gray out
+  bgFile  = "Interface/ToolTips/CHATBUBBLE-BACKGROUND",
+  edgeFile= "Interface/TUTORIALFRAME/TUTORIALFRAMEBORDER",
+  edgeSize= 20,
   insets  = {left=2, right=2, top=2, bottom=2},
 }
 
@@ -54,10 +62,22 @@ TOCA.Backdrop.Button = {
   insets  = {left=2, right=2, top=2, bottom=2},
 }
 
+TOCA.Backdrop.RGB = {
+  bgFile  = "Interface/Tooltips/UI-Tooltip-Background",
+  edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
+  edgeSize= 12,
+  insets  = {left=2, right=2, top=2, bottom=2},
+}
+
 TOCA.Button={}
 TOCA.Checkbox={}
 
-TOCA.MenuIsOpen = 0
+TOCA.MenuIsOpenMain = 0
+TOCA.MenuIsOpenSets = 0
+
+TOCA.Slot_w=35
+TOCA.Slot_h=35
+TOCA.Slot_x=-TOCA.Slot_w/2
 
 --defaults
 TOCASlotAIR  = "Grace of Air Totem"
@@ -107,6 +127,29 @@ function TOCA.UpdateTotemSet()
   TOCA.FrameSetsSlot["WATER"]:SetBackdrop(totemIcon)
 end
 
+TOCA.SlotSelectTotemDisabled={}
+TOCA.FrameSetsSlotDisabled={}
+for totemCat,v in pairsByKeys(TOCA.totems) do
+  TOCA.SlotSelectTotemDisabled[totemCat]={}
+  TOCA.FrameSetsSlotDisabled[totemCat]={}
+end
+
+function TOCA.EnableKnownTotems()
+  for totemCat,v in pairsByKeys(TOCA.totems) do
+    for i,totemSpell in pairs(TOCA.totems[totemCat]) do
+      TOCA.SlotSelectTotemDisabled[totemCat][i]:Show()
+      TOCA.FrameSetsSlotDisabled[totemCat][i]:Show()
+      local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(totemSpell[1])
+      if (name) then
+        --print(name)
+        TOCA.SlotSelectTotemDisabled[totemCat][i]:Hide()
+        TOCA.FrameSetsSlotDisabled[totemCat][i]:Hide()
+      end
+    end
+  end
+  --print("TOCA.EnableKnownTotems()")
+end
+
 function TOCA.Init()
   local lC, eC, cI = UnitClass("player")
   TOCA.FrameMain:Hide()
@@ -144,8 +187,8 @@ function TOCA.Init()
       TOCA.FrameMain:Hide()
     end
     if (TOCADB[TOCA.player.combine]["LASTSAVED"]) then
-      --print(TOCADB[TOCA.player.combine]["LASTSAVED"])
       TOCA.SetDDMenu(TOCA.Dropdown.Main, TOCADB[TOCA.player.combine]["LASTSAVED"])
+      TOCA.FrameSetsProfile:SetText(TOCADB[TOCA.player.combine]["LASTSAVED"])
     end
     if (TOCADB[TOCA.player.combine]["HELP"] == TOCA.Global.version) then
       TOCA.FrameHelp:Hide()
@@ -226,34 +269,66 @@ function TOCA.CloseAllMenus()
     TOCA.SlotSelectMenu[k]:Hide()
     TOCA.FrameSetsSlotSelectMenu[k]:Hide()
   end
-  TOCA.FrameMainExt:Hide()
 end
 
-_GTooltip = CreateFrame("frame", "_GTootlip", UIParent, "BackdropTemplate")
-_GTooltip:SetWidth(50)
-_GTooltip:SetHeight(24)
+local _GTooltipMaxHeight = 82
+_GTooltip = CreateFrame("frame", _GTootlip, UIParent, "BackdropTemplate")
+_GTooltip:SetWidth(260)
+_GTooltip:SetHeight(_GTooltipMaxHeight)
 _GTooltip:SetFrameStrata("TOOLTIP")
 _GTooltip:SetBackdrop(TOCA.Backdrop.General)
-_GTooltip:SetBackdropColor(0, 0, 0, 0.8)
-_GTooltip:SetBackdropBorderColor(1, 1, 1, 0.8)
+_GTooltip:SetBackdropColor(0, 0, 1, 1)
+_GTooltip:SetBackdropBorderColor(1, 1, 1, 1)
+_GTooltip:SetPoint("BOTTOMRIGHT", -160, 150)
+_GTooltip.title = _GTooltip:CreateFontString(nil, "ARTWORK")
+_GTooltip.title:SetFont(TOCA.Global.font, 14)
+_GTooltip.title:SetPoint("TOPLEFT", 10, -10)
+_GTooltip.title:SetText("")
+_GTooltip.tools = _GTooltip:CreateFontString(nil, "ARTWORK")
+_GTooltip.tools:SetFont(TOCA.Global.font, 12)
+_GTooltip.tools:SetPoint("TOPLEFT", 12, -30)
+_GTooltip.tools:SetText("")
 _GTooltip.text = _GTooltip:CreateFontString(nil, "ARTWORK")
-_GTooltip.text:SetFont(TOCA.Global.font, 11)
-_GTooltip.text:SetPoint("CENTER", 0, 0)
-_GTooltip.text:SetText("Unknown")
+_GTooltip.text:SetFont(TOCA.Global.font, 12)
+_GTooltip.text:SetPoint("TOPLEFT", 12, -50)
+_GTooltip.text:SetText("")
+_GTooltip.text:SetTextColor(1, 1, 0.2, 1)
 _GTooltip:Hide()
 
-function TOCA.tooltip(frame, msg, display)
-  if (frame) then
-    local msglen = string.len (msg)
-    local scale,x,y=frame:GetEffectiveScale(),GetCursorPosition()
-    _GTooltip:SetWidth(msglen*8.2)
-    _GTooltip:SetPoint("BOTTOMLEFT", nil, "BOTTOMLEFT", x/scale+40, y/scale-10)
-    _GTooltip.text:SetText(msg)
-    if (display == "show") then
-      _GTooltip:Show()
-    else
-      _GTooltip:Hide()
+local function adjustTooltipHeight(s, x, indent)
+  x = x or 79
+  indent = indent or ""
+  local t = {""}
+  local function cleanse(s) return s:gsub("@x%d%d%d",""):gsub("@r","") end
+  for prefix, word, suffix, newline in s:gmatch("([ \t]*)(%S*)([ \t]*)(\n?)") do
+    if (#t >= 2) then
+      _GTooltip:SetHeight(_GTooltipMaxHeight + (8 * #t))
     end
+    if #(cleanse(t[#t])) + #prefix + #cleanse(word) > x and #t > 0 then
+      table.insert(t, word..suffix)
+    else
+      t[#t] = t[#t]..prefix..word..suffix
+    end
+    if #newline > 0 then
+      table.insert(t, "")
+    end
+  end
+  return indent..table.concat(t, "\n"..indent)
+end
+
+function TOCA.tooltip(frame, msg, tools, msgtooltip)
+  _GTooltip:Show()
+  _GTooltip:SetHeight(_GTooltipMaxHeight)
+  if (frame) then
+    _GTooltip.title:SetText(msg)
+    local toolsMsg = tools.lower(tools)
+    toolsMsg = firstToUpper(toolsMsg)
+    _GTooltip.tools:SetText("Tools: " .. toolsMsg .. " Totem")
+    if (tools == "") then
+      _GTooltip.tools:SetText("")
+    end
+    _GTooltip.text:SetText(adjustTooltipHeight(msgtooltip, 34))
+    _GTooltip:Show()
   end
 end
 
@@ -262,13 +337,25 @@ TOCA.TotemPresent={}
 TOCA.TotemName={}
 TOCA.TotemStartTime={}
 TOCA.TotemDuration={}
-function TOCA.TotemDetails()
-  --TOCA.HasTotemOut = 0
+function TOCA.TotemBarUpdate()
+  --local playerPos = GetUnitSpeed("player")
+  local percMana = (UnitPower("player")/UnitPowerMax("player"))*100
+  local percMana = floor(percMana+0.5)
+  --print("mana: " .. percMana)
+  --Fire = 1 Earth = 2 Water = 3 Air = 4
   TOCA.CallFlash:Hide()
+  for totemCat,v in pairsByKeys(TOCA.totems) do
+    TOCA.Slot.deactive[totemCat]:Hide()
+    if (percMana <= 3) then
+      TOCA.Slot.deactive[totemCat]:Show()
+    end
+  end
+
   for i=1, 4 do
     TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
     if (TOCA.TotemPresent[i]) then
       TOCA.CallFlash:Show()
+      --TOCA.TotemStartTime[i]
     end
   end
 end
@@ -278,26 +365,24 @@ function SlashCmdList.TOCA(cmd)
   if ((cmd == nil) or (cmd == "")) then
     print(TOCA.Global.title .. " v" .. TOCA.Global.version)
     print("Commands:")
-    print("|cffffff00show:|r Display Totem Caddy (regardless of class)")
-    print("|cffffff00hide:|r Close Totem Caddy")
-    print("|cffffff00sets:|r Open Totem Caddy Totem Set Configurations")
-    print("|cffffff00profile:|r Display the current saved profile")
+    print("|cffffff00show:|r Display Totem Caddy (regardless of class).")
+    print("|cffffff00hide:|r Close Totem Caddy.")
+    print("|cffffff00sets:|r Open Totem Caddy Totem Set Configurations.")
+    print("|cffffff00profile:|r Display the current saved profile.")
+    print("|cffffff00help:|r Display the help introduction.")
     --print("config = Open Totem Caddy General Configurations")
-  end
-  if (cmd == "show") then
+  elseif (cmd == "show") then
     TOCA.FrameMain:Show()
     TOCADB[TOCA.player.combine]["DISABLED"] = "NO"
-  end
-  if (cmd == "hide") then
+  elseif (cmd == "hide") then
     TOCA.FrameMain:Hide()
-  end
-  if (cmd == "sets") then
+  elseif (cmd == "sets") then
     TOCA.FrameSets:Show()
-  end
-  if (cmd == "profile") then
+  elseif (cmd == "profile") then
     print(TOCA.Global.title .. "|r Profile: " .. TOCA.player.combine)
-  end
-  if (cmd == "config") then
+  elseif (cmd == "config") then
     TOCA.FrameConfig:Show()
+  elseif (cmd == "help") then
+    TOCA.FrameHelp:Show()
   end
 end
