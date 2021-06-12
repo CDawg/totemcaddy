@@ -119,6 +119,8 @@ getglobal(TOCA.Slider.Opacity:GetName() .. 'High'):SetText('1.0')
 getglobal(TOCA.Slider.Opacity:GetName() .. 'Text'):SetText('Opacity')
 TOCA.Slider.Opacity:SetScript("OnValueChanged", function()
   TOCA.FrameMain.Background:SetAlpha(TOCA.Round(TOCA.Slider.Opacity:GetValue(), 2))
+  TOCA.Button.TotemicCall.ECL:SetAlpha(TOCA.Round(TOCA.Slider.Opacity:GetValue(), 2))
+  TOCA.Button.TotemicCall.ECR:SetAlpha(TOCA.Round(TOCA.Slider.Opacity:GetValue(), 2))
   TOCA.Slider.Opacity.Val:SetText(TOCA.Round(TOCA.Slider.Opacity:GetValue(), 2))
 end)
 
