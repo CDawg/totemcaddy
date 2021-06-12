@@ -142,6 +142,7 @@ TOCA.Button.TotemicCallAtt:SetScript("OnLeave", function(self)
   _GTooltip:Hide()
 end)
 
+--classic style
 TOCA.Slot={}
 TOCA.Slot.deactive={}
 TOCA.Slot.highlight={}
@@ -318,6 +319,20 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.SlotSelectTotemDisabled[totemCat][i]:SetBackdropColor(0, 0, 0, 1)
     TOCA.SlotSelectTotemDisabled[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0)
     TOCA.SlotSelectTotemDisabled[totemCat][i]:SetFrameStrata("TOOLTIP")
+  end
+end
+
+TOCA.SlotExplode={}
+for totemCat,v in pairsByKeys(TOCA.totems) do
+  for i,totemSpell in pairs(TOCA.totems[totemCat]) do
+    TOCA.SlotExplode[totemCat]={}
+    --TOCA.SlotExplode[totemCat]
+    --TOCA.TotemExplode[totemCat] = CreateFrame("Button", nil, TOCA.SlotExplode[totemCat], "SecureActionButtonTemplate");
+    --TOCA.TotemExplode[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
+    --TOCA.TotemExplode[totemCat]:SetPoint("CENTER", 0, 0)
+    --TOCA.TotemExplode[totemCat]:SetAttribute("type", "spell")
+    --TOCA.TotemExplode[totemCat]:SetAttribute("spell", totemSpell)
+    print(totemSpell[1])
   end
 end
 
