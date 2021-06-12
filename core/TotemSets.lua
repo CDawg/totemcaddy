@@ -13,74 +13,39 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
-TOCA.FrameOptions = CreateFrame("Frame", TOCA.FrameOptions, UIParent, "BackdropTemplate")
-TOCA.FrameOptions:SetWidth(300)
-TOCA.FrameOptions:SetHeight(200)
-TOCA.FrameOptions:SetPoint("CENTER", 0, 50)
-TOCA.FrameOptions:SetBackdrop(TOCA.Backdrop.General)
-TOCA.FrameOptions:SetBackdropColor(0, 0, 0, 0.8)
-TOCA.FrameOptions:SetBackdropBorderColor(1, 1, 1, 0.6)
---[==[
-TOCA.FrameSets.title = TOCA.FrameSets:CreateFontString(nil, "ARTWORK")
-TOCA.FrameSets.title:SetFont(TOCA.Global.font, 14, "OUTLINE")
-TOCA.FrameSets.title:SetPoint("TOPLEFT", 10, -10)
-TOCA.FrameSets.title:SetText(TOCA.Global.title .. " Set Builder")
-]==]--
-TOCA.FrameOptions:Hide()
-
-TOCA.FrameSets = CreateFrame("Button", TOCA.FrameSets, UIParent, "BackdropTemplate")
+TOCA.FrameSets = CreateFrame("Button", TOCA.FrameSets, TOCA.FrameOptions, "BackdropTemplate")
 TOCA.FrameSets:SetWidth(300)
-TOCA.FrameSets:SetHeight(200)
-TOCA.FrameSets:SetPoint("CENTER", 0, 50)
-TOCA.FrameSets:SetBackdrop(TOCA.Backdrop.General)
+TOCA.FrameSets:SetHeight(180)
+TOCA.FrameSets:SetPoint("CENTER", 170, 100)
+--[==[
+TOCA.FrameSets:SetBackdrop(TOCA.Backdrop.BorderOnly)
 TOCA.FrameSets:SetBackdropColor(0, 0, 0, 0.8)
 TOCA.FrameSets:SetBackdropBorderColor(1, 1, 1, 0.6)
+]==]--
 TOCA.FrameSets.title = TOCA.FrameSets:CreateFontString(nil, "ARTWORK")
-TOCA.FrameSets.title:SetFont(TOCA.Global.font, 14, "OUTLINE")
-TOCA.FrameSets.title:SetPoint("TOPLEFT", 10, -10)
-TOCA.FrameSets.title:SetText(TOCA.Global.title .. " Set Builder")
+TOCA.FrameSets.title:SetFont(TOCA.Global.font, 12, "OUTLINE")
+TOCA.FrameSets.title:SetPoint("CENTER", 0, 80)
+TOCA.FrameSets.title:SetText("Totem Set Builder")
 TOCA.FrameSets:SetScript("OnClick", function()
   TOCA.CloseAllMenus()
 end)
 TOCA.FrameSets:SetScript("OnLeave", function(self)
   TOCA.CloseAllMenus()
 end)
-TOCA.FrameSets:Hide()
 
-TOCA.FrameSetsBtnClose= CreateFrame("Button", nil, TOCA.FrameSets, "BackdropTemplate")
-TOCA.FrameSetsBtnClose:SetSize(18, 18)
-TOCA.FrameSetsBtnClose:SetPoint("TOPRIGHT", -2, -2)
-TOCA.FrameSetsBtnClose:SetBackdrop(TOCA.Backdrop.Button)
-TOCA.FrameSetsBtnClose:SetBackdropColor(0.6, 0, 0, 1)
-TOCA.FrameSetsBtnClose:SetBackdropBorderColor(1, 1, 1, 0.6)
-TOCA.FrameSetsBtnClose.icon = TOCA.FrameSetsBtnClose:CreateTexture(nil, "ARTWORK")
-TOCA.FrameSetsBtnClose.icon:SetSize(12, 12)
-TOCA.FrameSetsBtnClose.icon:SetPoint("CENTER", 0, 0)
-TOCA.FrameSetsBtnClose.icon:SetTexture("Interface/Buttons/UI-StopButton")
-TOCA.FrameSetsBtnClose:SetScript("OnEnter", function(self)
+TOCA.Button.FrameSetsSave= CreateFrame("Button", nil, TOCA.FrameSets, "BackdropTemplate")
+TOCA.Button.FrameSetsSave:SetSize(100, 25)
+TOCA.Button.FrameSetsSave:SetPoint("CENTER", 55, -60)
+TOCA.Button.FrameSetsSave:SetBackdrop(TOCA.Backdrop.Button)
+TOCA.Button.FrameSetsSave:SetBackdropColor(0, 0.7, 0, 1)
+TOCA.Button.FrameSetsSave:SetBackdropBorderColor(1, 1, 1, 0.6)
+TOCA.Button.FrameSetsSave:SetScript("OnEnter", function(self)
   self:SetBackdropBorderColor(1, 1, 0.8, 1)
 end)
-TOCA.FrameSetsBtnClose:SetScript("OnLeave", function(self)
+TOCA.Button.FrameSetsSave:SetScript("OnLeave", function(self)
   self:SetBackdropBorderColor(1, 1, 1, 0.6)
 end)
-TOCA.FrameSetsBtnClose:SetScript("OnClick", function()
-  TOCA.CloseAllMenus()
-  TOCA.FrameSets:Hide()
-end)
-
-TOCA.FrameSetsBtnSave= CreateFrame("Button", nil, TOCA.FrameSets, "BackdropTemplate")
-TOCA.FrameSetsBtnSave:SetSize(80, 25)
-TOCA.FrameSetsBtnSave:SetPoint("CENTER", 40, -60)
-TOCA.FrameSetsBtnSave:SetBackdrop(TOCA.Backdrop.Button)
-TOCA.FrameSetsBtnSave:SetBackdropColor(0, 0.7, 0, 1)
-TOCA.FrameSetsBtnSave:SetBackdropBorderColor(1, 1, 1, 0.6)
-TOCA.FrameSetsBtnSave:SetScript("OnEnter", function(self)
-  self:SetBackdropBorderColor(1, 1, 0.8, 1)
-end)
-TOCA.FrameSetsBtnSave:SetScript("OnLeave", function(self)
-  self:SetBackdropBorderColor(1, 1, 1, 0.6)
-end)
-TOCA.FrameSetsBtnSave:SetScript("OnClick", function()
+TOCA.Button.FrameSetsSave:SetScript("OnClick", function()
   TOCA.FrameSetsProfile.border:SetBackdropBorderColor(1, 1, 1, 0.8)
   local profileSaveText = TOCA.FrameSetsProfile:GetText()
   if ((profileSaveText == " ") or (profileSaveText == "") or (profileSaveText == nil)) then
@@ -102,26 +67,70 @@ TOCA.FrameSetsBtnSave:SetScript("OnClick", function()
     end
   end
 end)
-TOCA.FrameSetsBtnSave.text = TOCA.FrameSetsBtnSave:CreateFontString(nil, "ARTWORK")
-TOCA.FrameSetsBtnSave.text:SetFont(TOCA.Global.font, 11)
-TOCA.FrameSetsBtnSave.text:SetPoint("CENTER", 0, 0)
-TOCA.FrameSetsBtnSave.text:SetText("Save")
+TOCA.Button.FrameSetsSaveText = TOCA.Button.FrameSetsSave:CreateFontString(nil, "ARTWORK")
+TOCA.Button.FrameSetsSaveText:SetFont(TOCA.Global.font, 11)
+TOCA.Button.FrameSetsSaveText:SetPoint("CENTER", 0, 0)
+TOCA.Button.FrameSetsSaveText:SetText("Save")
 
-TOCA.FrameSetsBtnDelete= CreateFrame("Button", nil, TOCA.FrameSets, "BackdropTemplate")
-TOCA.FrameSetsBtnDelete:SetSize(80, 25)
-TOCA.FrameSetsBtnDelete:SetPoint("CENTER", -40, -60)
-TOCA.FrameSetsBtnDelete:SetBackdrop(TOCA.Backdrop.Button)
-TOCA.FrameSetsBtnDelete:SetBackdropColor(0.6, 0, 0, 1)
-TOCA.FrameSetsBtnDelete:SetBackdropBorderColor(1, 1, 1, 0.6)
-TOCA.FrameSetsBtnDelete:SetScript("OnEnter", function(self)
+TOCA.Button.FrameSetsDeleteOpenPrompt= CreateFrame("Button", nil, TOCA.FrameSets, "BackdropTemplate")
+TOCA.Button.FrameSetsDeleteOpenPrompt:SetSize(100, 25)
+TOCA.Button.FrameSetsDeleteOpenPrompt:SetPoint("CENTER", -55, -60)
+TOCA.Button.FrameSetsDeleteOpenPrompt:SetBackdrop(TOCA.Backdrop.Button)
+TOCA.Button.FrameSetsDeleteOpenPrompt:SetBackdropColor(0.6, 0, 0, 1)
+TOCA.Button.FrameSetsDeleteOpenPrompt:SetBackdropBorderColor(1, 1, 1, 0.6)
+TOCA.Button.FrameSetsDeleteOpenPrompt:SetScript("OnEnter", function(self)
   self:SetBackdropBorderColor(1, 1, 0.8, 1)
 end)
-TOCA.FrameSetsBtnDelete:SetScript("OnLeave", function(self)
+TOCA.Button.FrameSetsDeleteOpenPrompt:SetScript("OnLeave", function(self)
   self:SetBackdropBorderColor(1, 1, 1, 0.6)
 end)
-TOCA.FrameSetsBtnDelete:SetScript("OnClick", function()
+TOCA.Button.FrameSetsDeleteOpenPrompt:SetScript("OnClick", function()
   local profileSaveText = TOCA.Dropdown.Sets.text:GetText()
-  if (profileSaveText == "Default") then
+  if (profileSaveText == TOCA.Dropdown.Menu[1]) then
+    print(TOCA.Global.title .. "|cffff0000 Unable to remove profile:|r " .. profileSaveText)
+  else
+    TOCA.Prompt.DeleteSetText:SetText('Delete Totem Set "' .. profileSaveText .. '" ?')
+    TOCA.Prompt.DeleteSet:Show()
+    --TOCA.FrameSets:Hide()
+    TOCA.FrameOptions:SetAlpha(0.50)
+  end
+end)
+TOCA.Button.FrameSetsDeleteOpenPromptText = TOCA.Button.FrameSetsDeleteOpenPrompt:CreateFontString(nil, "ARTWORK")
+TOCA.Button.FrameSetsDeleteOpenPromptText:SetFont(TOCA.Global.font, 11)
+TOCA.Button.FrameSetsDeleteOpenPromptText:SetPoint("CENTER", 0, 0)
+TOCA.Button.FrameSetsDeleteOpenPromptText:SetText("Delete")
+
+
+--PROMPT BO
+TOCA.Prompt.DeleteSet = CreateFrame("Frame", TOCA.Prompt.DeleteSet, UIParent, "BackdropTemplate")
+TOCA.Prompt.DeleteSet:SetWidth(340)
+TOCA.Prompt.DeleteSet:SetHeight(100)
+TOCA.Prompt.DeleteSet:SetPoint("CENTER", 0, 50)
+TOCA.Prompt.DeleteSet:SetBackdrop(TOCA.Backdrop.General)
+TOCA.Prompt.DeleteSet:SetBackdropColor(0, 0, 0, 1)
+TOCA.Prompt.DeleteSet:SetBackdropBorderColor(1, 1, 1, 0.6)
+TOCA.Prompt.DeleteSet:SetFrameStrata("DIALOG")
+TOCA.Prompt.DeleteSetText = TOCA.Prompt.DeleteSet:CreateFontString(nil, "ARTWORK")
+TOCA.Prompt.DeleteSetText:SetFont(TOCA.Global.font, 14, "OUTLINE")
+TOCA.Prompt.DeleteSetText:SetPoint("CENTER", 0, 20)
+TOCA.Prompt.DeleteSetText:SetText("...")
+TOCA.Prompt.DeleteSet:Hide()
+
+TOCA.Button.FrameSetsDelete= CreateFrame("Button", nil, TOCA.Prompt.DeleteSet, "BackdropTemplate")
+TOCA.Button.FrameSetsDelete:SetSize(100, 25)
+TOCA.Button.FrameSetsDelete:SetPoint("CENTER", 60, -20)
+TOCA.Button.FrameSetsDelete:SetBackdrop(TOCA.Backdrop.Button)
+TOCA.Button.FrameSetsDelete:SetBackdropColor(0.6, 0, 0, 1)
+TOCA.Button.FrameSetsDelete:SetBackdropBorderColor(1, 1, 1, 0.6)
+TOCA.Button.FrameSetsDelete:SetScript("OnEnter", function(self)
+  self:SetBackdropBorderColor(1, 1, 0.8, 1)
+end)
+TOCA.Button.FrameSetsDelete:SetScript("OnLeave", function(self)
+  self:SetBackdropBorderColor(1, 1, 1, 0.6)
+end)
+TOCA.Button.FrameSetsDelete:SetScript("OnClick", function()
+  local profileSaveText = TOCA.Dropdown.Sets.text:GetText()
+  if (profileSaveText == TOCA.Dropdown.Menu[1]) then
     print(TOCA.Global.title .. "|cffff0000 Unable to remove profile:|r " .. profileSaveText)
   else
     if (TOCADB[TOCA.player.combine]["PROFILES"][profileSaveText]) then
@@ -129,16 +138,42 @@ TOCA.FrameSetsBtnDelete:SetScript("OnClick", function()
       TOCA.UpdateDDMenu(TOCA.Dropdown.Sets)
       TOCA.UpdateDDMenu(TOCA.Dropdown.Main)
       print(TOCA.Global.title .. " Totem Set Deleted: |cffffff00" .. profileSaveText)
-      TOCA.SetDDMenu(TOCA.Dropdown.Main, "Default")
+      TOCA.SetDDMenu(TOCA.Dropdown.Main, TOCA.Dropdown.Menu[1])
       TOCA.FrameSetsProfile:SetText("")
+      TOCA.Prompt.DeleteSet:Hide()
+      TOCA.FrameOptions:SetAlpha(1)
     end
   end
   TOCA.CloseAllMenus()
 end)
-TOCA.FrameSetsBtnDelete.text = TOCA.FrameSetsBtnDelete:CreateFontString(nil, "ARTWORK")
-TOCA.FrameSetsBtnDelete.text:SetFont(TOCA.Global.font, 11)
-TOCA.FrameSetsBtnDelete.text:SetPoint("CENTER", 0, 0)
-TOCA.FrameSetsBtnDelete.text:SetText("Delete")
+TOCA.Button.FrameSetsDeleteText = TOCA.Button.FrameSetsDelete:CreateFontString(nil, "ARTWORK")
+TOCA.Button.FrameSetsDeleteText:SetFont(TOCA.Global.font, 11)
+TOCA.Button.FrameSetsDeleteText:SetPoint("CENTER", 0, 0)
+TOCA.Button.FrameSetsDeleteText:SetText("Yes")
+
+TOCA.Button.FrameSetsCancel= CreateFrame("Button", nil, TOCA.Prompt.DeleteSet, "BackdropTemplate")
+TOCA.Button.FrameSetsCancel:SetSize(100, 25)
+TOCA.Button.FrameSetsCancel:SetPoint("CENTER", -60, -20)
+TOCA.Button.FrameSetsCancel:SetBackdrop(TOCA.Backdrop.Button)
+TOCA.Button.FrameSetsCancel:SetBackdropColor(0.6, 0, 0, 1)
+TOCA.Button.FrameSetsCancel:SetBackdropBorderColor(1, 1, 1, 0.6)
+TOCA.Button.FrameSetsCancel:SetScript("OnEnter", function(self)
+  self:SetBackdropBorderColor(1, 1, 0.8, 1)
+end)
+TOCA.Button.FrameSetsCancel:SetScript("OnLeave", function(self)
+  self:SetBackdropBorderColor(1, 1, 1, 0.6)
+end)
+TOCA.Button.FrameSetsCancel:SetScript("OnClick", function()
+  --TOCA.FrameSets:Show()
+  TOCA.Prompt.DeleteSet:Hide()
+  TOCA.FrameOptions:SetAlpha(1)
+end)
+TOCA.Button.FrameSetsCancelText = TOCA.Button.FrameSetsCancel:CreateFontString(nil, "ARTWORK")
+TOCA.Button.FrameSetsCancelText:SetFont(TOCA.Global.font, 11)
+TOCA.Button.FrameSetsCancelText:SetPoint("CENTER", 0, 0)
+TOCA.Button.FrameSetsCancelText:SetText("No")
+--PROMPT EO
+
 
 TOCA.FrameSetsSlot={}
 TOCA.FrameSetsTotem={}
@@ -227,8 +262,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     })
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetScript("OnEnter", function(self)
-      --TOCA.tooltip(self, totemSpell[1], "show")
-      TOCA.tooltip(self, totemSpell[1], totemCat, totemSpell[3])
+      TOCA.tooltip(totemSpell[1], totemCat, totemSpell[3])
       self:SetBackdropBorderColor(1, 1, 0.8, 1)
     end)
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetScript("OnLeave", function(self)
@@ -295,7 +329,7 @@ TOCA.FrameSetsProfile:SetScript("OnKeyUp", function(self)
 end)
 
 TOCA.Dropdown.Sets = CreateFrame("Frame", nil, TOCA.FrameSets, "UIDropDownMenuTemplate")
-TOCA.Dropdown.Sets:SetPoint("CENTER", 0, 50)
+TOCA.Dropdown.Sets:SetPoint("CENTER", -4, 50)
 TOCA.Dropdown.Sets.displayMode = "MENU"
 TOCA.Dropdown.Sets.text = TOCA.Dropdown.Sets:CreateFontString(nil, "ARTWORK")
 TOCA.Dropdown.Sets.text:SetFont(TOCA.Global.font, 11)
@@ -307,4 +341,76 @@ TOCA.Dropdown.Sets.onClick = function(self, checked)
   TOCA.SetDDMenu(TOCA.Dropdown.Sets, self.value)
   TOCA.FrameSetsProfile:SetText(self.value)
 end
-UIDropDownMenu_SetWidth(TOCA.Dropdown.Sets, 140)
+UIDropDownMenu_SetWidth(TOCA.Dropdown.Sets, 135)
+
+
+---- TOTEM ORDER -----
+--[==[
+TOCA.SlotOrderTitle = TOCA.FrameOptions:CreateFontString(nil, "ARTWORK")
+TOCA.SlotOrderTitle:SetFont(TOCA.Global.font, 12)
+TOCA.SlotOrderTitle:SetPoint("CENTER", 170, -20)
+TOCA.SlotOrderTitle:SetText("Totem Order")
+
+TOCA.SlotOrderBack={}
+TOCA.Dropdown.OrderSet={}
+TOCA.Dropdown.OrderSetMenu={"AIR", "EARTH", "FIRE", "WATER"}
+
+local totemNum = 0
+for totemCat,v in pairsByKeys(TOCA.totems) do
+  TOCA.SlotSets_x = TOCA.SlotSets_x + 68
+  totemNum = totemNum+1
+
+  --TOCA.SlotOrder[totemCat]={}
+  TOCA.SlotOrderBack[totemCat]= CreateFrame("Button", nil, TOCA.FrameOptions, "BackdropTemplate")
+  TOCA.SlotOrderBack[totemCat]:SetSize(40, 40)
+  TOCA.SlotOrderBack[totemCat]:SetPoint("CENTER", -90+TOCA.SlotSets_x, -60)
+  TOCA.SlotOrderBack[totemCat]:SetBackdrop(TOCA.Backdrop.General)
+  --TOCA.SlotOrderBack[totemCat]={}
+  TOCA.SlotOrderBack[totemCat].text = TOCA.SlotOrderBack[totemCat]:CreateFontString(nil, "ARTWORK")
+  TOCA.SlotOrderBack[totemCat].text:SetFont(TOCA.Global.font, 8)
+  TOCA.SlotOrderBack[totemCat].text:SetPoint("CENTER", 1, 0)
+  TOCA.SlotOrderBack[totemCat].text:SetText(totemCat)
+  if (totemCat == "AIR") then
+    TOCA.SlotOrderBack[totemCat].text:SetTextColor(1, 1, 1, 1)
+  end
+  if (totemCat == "EARTH") then
+    TOCA.SlotOrderBack[totemCat].text:SetTextColor(1, 0.7, 0.4, 1)
+  end
+  if (totemCat == "FIRE") then
+    TOCA.SlotOrderBack[totemCat].text:SetTextColor(0.8, 0.4, 0, 1)
+  end
+  if (totemCat == "WATER") then
+    TOCA.SlotOrderBack[totemCat].text:SetTextColor(0.4, 0.6, 1, 1)
+  end
+
+
+  TOCA.Dropdown.OrderSet[totemCat] = CreateFrame("Frame", nil, TOCA.FrameOptions, "UIDropDownMenuTemplate")
+  TOCA.Dropdown.OrderSet[totemCat]:SetPoint("CENTER", -150+TOCA.SlotSets_x, -50)
+  TOCA.Dropdown.OrderSet[totemCat].displayMode = "MENU"
+  TOCA.Dropdown.OrderSet[totemCat].text = TOCA.Dropdown.OrderSet[totemCat]:CreateFontString(nil, "ARTWORK")
+  TOCA.Dropdown.OrderSet[totemCat].text:SetFont(TOCA.Global.font, 10)
+  TOCA.Dropdown.OrderSet[totemCat].text:SetPoint("TOPLEFT", TOCA.Dropdown.OrderSet[totemCat], "TOPLEFT", 25, -8)
+  TOCA.Dropdown.OrderSet[totemCat].text:SetText(TOCA.Dropdown.OrderSetMenu[totemNum])
+  TOCA.Dropdown.OrderSet[totemCat].onClick = function(self, checked)
+    TOCA.Dropdown.OrderSet[totemCat].text:SetText(self.value)
+    --print(totemCat .. " = " .. self.value)
+    TOCA.BuildTotemOrder()
+  end
+  TOCA.Dropdown.OrderSet[totemCat].initialize = function(self, level)
+    local info = UIDropDownMenu_CreateInfo()
+    local i = 0
+    for k,v in pairs(TOCA.Dropdown.OrderSetMenu) do
+      info.notCheckable = 1
+      info.padding = 2
+      info.text = v
+      info.value= v
+      info.fontObject = GameFontWhite
+      info.justifyH = "LEFT"
+      info.disabled = false
+      info.func = self.onClick
+      UIDropDownMenu_AddButton(info, level)
+    end
+  end
+  UIDropDownMenu_SetWidth(TOCA.Dropdown.OrderSet[totemCat], 50)
+end
+]==]--
