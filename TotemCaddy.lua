@@ -17,11 +17,6 @@ TOCA.FrameMain = CreateFrame("Frame", TOCA.FrameMain, UIParent, "BackdropTemplat
 TOCA.FrameMain:SetWidth(TOCA.Global.width)
 TOCA.FrameMain:SetHeight(TOCA.Global.height)
 TOCA.FrameMain:SetPoint("CENTER", 0, -140)
---[==[
-TOCA.FrameMain:SetBackdrop(TOCA.Backdrop.Main)
-TOCA.FrameMain:SetBackdropColor(0, 0, 0, 0.8)
-TOCA.FrameMain:SetBackdropBorderColor(1, 1, 1, 0.6)
-]==]--
 TOCA.FrameMain:SetMovable(true)
 TOCA.FrameMain:EnableMouse(true)
 TOCA.FrameMain:RegisterForDrag("LeftButton")
@@ -55,11 +50,14 @@ TOCA.Main:RegisterEvent("UNIT_POWER_FREQUENT")
 TOCA.Main:RegisterEvent("UNIT_SPELLCAST_SENT")
 TOCA.Main:RegisterEvent("PLAYER_REGEN_ENABLED")
 TOCA.Main:RegisterEvent("PLAYER_REGEN_DISABLED")
-TOCA.Main:SetScript("OnEvent", function(self, event, prefix)
+TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket)
   if ((event == "ADDON_LOADED") and (prefix == "TotemCaddy")) then
     print(TOCA.Global.title .. " v" .. TOCA.Global.version .. " Initializing by " .. TOCA.Global.author .. ". Type /" .. TOCA.Global.command .. " for commands.")
     TOCA.Init()
   end
+
+  --DNAMain:SetScript("OnEvent", function(self, event, prefix, netpacket)
+    --if ((event == "ADDON_LOADED") and (prefix == "DNA")) then
 
   if ((event == "UNIT_SPELLCAST_START") or
   (event == "UNIT_SPELLCAST_STOP") or
@@ -134,12 +132,12 @@ TOCA.Button.TotemicCallAtt:SetScript("OnEnter", function(self)
   --TOCA.CloseAllMenus() --bug with the totemic call button overlapping
   TOCA.Button.TotemicCall:SetBackdropBorderColor(1, 1, 1, 1)
   TOCA.Button.TotemicCall.highlight:Show()
-  TOCA.tooltip("Totemic Call", "", "Returns your totems to the earth, giving you 25% of the mana required to cast each totem destroyed by Totemic Call.")
+  TOCA.TooltipDisplay("Totemic Call", "", "Returns your totems to the earth, giving you 25% of the mana required to cast each totem destroyed by Totemic Call.")
 end)
 TOCA.Button.TotemicCallAtt:SetScript("OnLeave", function(self)
   TOCA.Button.TotemicCall:SetBackdropBorderColor(1, 1, 1, 0.6)
   TOCA.Button.TotemicCall.highlight:Hide()
-  _GTooltip:Hide()
+  TOCA.Tooltip:Hide()
 end)
 
 --classic style
@@ -195,16 +193,16 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 1)
     TOCA.Slot.highlight[totemCat]:Show()
     if (totemCat == "AIR") then
-      TOCA.tooltip(TOCASlotAIR, totemCat, TOCA.totems[totemCat][multiKeyFromValue(TOCA.totems[totemCat], TOCASlotAIR, 1)][3])
+      TOCA.TooltipDisplay(TOCASlotAIR, totemCat, TOCA.totems[totemCat][multiKeyFromValue(TOCA.totems[totemCat], TOCASlotAIR, 1)][3])
     end
     if (totemCat == "EARTH") then
-      TOCA.tooltip(TOCASlotEARTH, totemCat, TOCA.totems[totemCat][multiKeyFromValue(TOCA.totems[totemCat], TOCASlotEARTH, 1)][3])
+      TOCA.TooltipDisplay(TOCASlotEARTH, totemCat, TOCA.totems[totemCat][multiKeyFromValue(TOCA.totems[totemCat], TOCASlotEARTH, 1)][3])
     end
     if (totemCat == "FIRE") then
-      TOCA.tooltip(TOCASlotFIRE, totemCat, TOCA.totems[totemCat][multiKeyFromValue(TOCA.totems[totemCat], TOCASlotFIRE, 1)][3])
+      TOCA.TooltipDisplay(TOCASlotFIRE, totemCat, TOCA.totems[totemCat][multiKeyFromValue(TOCA.totems[totemCat], TOCASlotFIRE, 1)][3])
     end
     if (totemCat == "WATER") then
-      TOCA.tooltip(TOCASlotWATER, totemCat, TOCA.totems[totemCat][multiKeyFromValue(TOCA.totems[totemCat], TOCASlotWATER, 1)][3])
+      TOCA.TooltipDisplay(TOCASlotWATER, totemCat, TOCA.totems[totemCat][multiKeyFromValue(TOCA.totems[totemCat], TOCASlotWATER, 1)][3])
     end
   end)
   TOCA.Totem[totemCat]:SetScript("OnLeave", function()
@@ -278,11 +276,11 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     })
     TOCA.SlotSelectTotem[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
     TOCA.SlotSelectTotem[totemCat][i]:SetScript("OnEnter", function(self)
-      TOCA.tooltip(totemSpell[1], totemCat, totemSpell[3])
+      TOCA.TooltipDisplay(totemSpell[1], totemCat, totemSpell[3])
       self:SetBackdropBorderColor(1, 1, 0.8, 1)
     end)
     TOCA.SlotSelectTotem[totemCat][i]:SetScript("OnLeave", function(self)
-      _GTooltip:Hide()
+      TOCA.Tooltip:Hide()
       self:SetBackdropBorderColor(1, 1, 1, 0.6)
     end)
     TOCA.SlotSelectTotem[totemCat][i]:SetScript("OnClick", function()
@@ -323,6 +321,23 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 end
 
 TOCA.SlotExplode={}
+--Spell_Nature_BloodLust
+TOCA.FrameExplode = CreateFrame("Frame", "TOCA.FrameExplode", UIParent, "BackdropTemplate")
+TOCA.FrameExplode:SetWidth(TOCA.Global.width)
+TOCA.FrameExplode:SetHeight(TOCA.Global.height)
+TOCA.FrameExplode:SetPoint("CENTER", 0, 200)
+TOCA.FrameExplode:SetMovable(true)
+TOCA.FrameExplode:EnableMouse(true)
+TOCA.FrameExplode:RegisterForDrag("LeftButton")
+TOCA.FrameExplode:SetScript("OnDragStart", function()
+  TOCA.FrameExplode:StartMoving()
+end)
+TOCA.FrameExplode:SetScript("OnDragStop", function()
+  TOCA.FrameExplode:StopMovingOrSizing()
+  local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.FrameExplode:GetPoint()
+  TOCADB[TOCA.player.combine]["CONFIG"]["EXPLODEPOS"] = point .. "," .. xOfs .. "," .. yOfs
+end)
+TOCA.FrameExplode:Hide()
 for totemCat,v in pairsByKeys(TOCA.totems) do
   for i,totemSpell in pairs(TOCA.totems[totemCat]) do
     TOCA.SlotExplode[totemCat]={}
@@ -332,7 +347,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     --TOCA.TotemExplode[totemCat]:SetPoint("CENTER", 0, 0)
     --TOCA.TotemExplode[totemCat]:SetAttribute("type", "spell")
     --TOCA.TotemExplode[totemCat]:SetAttribute("spell", totemSpell)
-    print(totemSpell[1])
+    --print(totemSpell[1])
   end
 end
 

@@ -27,6 +27,7 @@ TOCA.FrameHelp.text={}
 
 TOCA.helpMessage = {
   "Welcome to " .. TOCA.Global.title .. "|r v" .. TOCA.Global.version,
+  "Please note: This is a BETA version. Improvements will be made as time continues. Enjoy!",
   "Let's get started by dragging the Totem Caddy anywhere on your screen saving the position.",
   "You can select totems in order [AIR,EARTH,FIRE,WATER] by selecting the top arrows above the current totem icons.",
   "The set of totems are by default, but you can create your own totem sets in the options window.",
@@ -39,7 +40,7 @@ for k, v in pairs(TOCA.helpMessage) do
 end
 
 TOCA.TextFrame_w = FrameHelp_w-20
-TOCA.TextFrame_h = FrameHelp_h-65
+TOCA.TextFrame_h = FrameHelp_h-10
 TOCA.TextFrame = CreateFrame("Frame", nil, TOCA.FrameHelp)
 TOCA.TextFrame:SetWidth(TOCA.TextFrame_w)
 TOCA.TextFrame:SetHeight(TOCA.TextFrame_h)
@@ -49,7 +50,7 @@ TOCA.TextFrameScrollFrame={}
 --TOCA.TextFrameScrollFrame = CreateFrame("Frame", TOCA.TextFrameScrollFrame, TOCA.TextFrame, "InsetFrameTemplate")
 TOCA.TextFrameScrollFrame = CreateFrame("Frame", TOCA.TextFrameScrollFrame, TOCA.TextFrame, "BackdropTemplate")
 TOCA.TextFrameScrollFrame:SetWidth(TOCA.TextFrame_w+10)
-TOCA.TextFrameScrollFrame:SetHeight(TOCA.TextFrame_h-30)
+TOCA.TextFrameScrollFrame:SetHeight(TOCA.TextFrame_h-65)
 TOCA.TextFrameScrollFrame:SetPoint("CENTER", 0, 0)
 TOCA.TextFrameScrollFrame:SetBackdrop(TOCA.Backdrop.General)
 TOCA.TextFrameScrollFrame:SetBackdropBorderColor(1, 1, 1, 0.4)

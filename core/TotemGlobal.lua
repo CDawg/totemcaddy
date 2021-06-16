@@ -16,7 +16,7 @@ the copyright holders.
 TOCA.Global = {
  title  = "|cff006aa6Totem Caddy|r",
  author = "Porthios of Myzrael",
- version= 2.26,
+ version= 2.28,
  command= "toca",
  width  = 150,
  height = 85,
@@ -82,6 +82,7 @@ TOCA.Slider={}
 TOCA.Prompt={}
 TOCA.Dropdown = {}
 TOCA.Dropdown.Menu = {"Default"}
+TOCA.Tooltip = {}
 
 TOCA.MenuIsOpenMain = 0
 TOCA.MenuIsOpenSets = 0
@@ -239,6 +240,18 @@ function TOCA.Init()
       TOCA.FrameMain:ClearAllPoints()
       TOCA.FrameMain:SetPoint(TOCAFrameMainPos[1], tonumber(TOCAFrameMainPos[2]), tonumber(TOCAFrameMainPos[3]))
     end
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPLODEPOS"]) then
+      local TOCAFrameExplodePos = {}
+      TOCAFrameExplodePos = split(TOCADB[TOCA.player.combine]["CONFIG"]["EXPLODEPOS"], ",")
+      TOCA.FrameExplode:ClearAllPoints()
+      TOCA.FrameExplode:SetPoint(TOCAFrameExplodePos[1], tonumber(TOCAFrameExplodePos[2]), tonumber(TOCAFrameExplodePos[3]))
+    end
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLPOS"]) then
+      local TOCAFrameToolPos = {}
+      TOCAFrameToolPos = split(TOCADB[TOCA.player.combine]["CONFIG"]["TOOLPOS"], ",")
+      TOCA.Tooltip:ClearAllPoints()
+      TOCA.Tooltip:SetPoint(TOCAFrameToolPos[1], tonumber(TOCAFrameToolPos[2]), tonumber(TOCAFrameToolPos[3]))
+    end
     TOCA.UpdateTotemSet()
     TOCA.UpdateDDMenu(TOCA.Dropdown.Main)
     TOCA.UpdateDDMenu(TOCA.Dropdown.Sets)
@@ -309,32 +322,43 @@ function TOCA.CloseAllMenus()
     TOCA.SlotSelectMenu[k]:Hide()
     TOCA.FrameSetsSlotSelectMenu[k]:Hide()
   end
-  _GTooltip:Hide()
+  TOCA.Tooltip:Hide()
 end
 
-local _GTooltipMaxHeight = 82
-_GTooltip = CreateFrame("frame", _GTootlip, UIParent, "BackdropTemplate")
-_GTooltip:SetWidth(260)
-_GTooltip:SetHeight(_GTooltipMaxHeight)
-_GTooltip:SetFrameStrata("TOOLTIP")
-_GTooltip:SetBackdrop(TOCA.Backdrop.General)
-_GTooltip:SetBackdropColor(0, 0, 1, 1)
-_GTooltip:SetBackdropBorderColor(1, 1, 1, 1)
-_GTooltip:SetPoint("BOTTOMRIGHT", -160, 150)
-_GTooltip.title = _GTooltip:CreateFontString(nil, "ARTWORK")
-_GTooltip.title:SetFont(TOCA.Global.font, 14)
-_GTooltip.title:SetPoint("TOPLEFT", 10, -10)
-_GTooltip.title:SetText("")
-_GTooltip.tools = _GTooltip:CreateFontString(nil, "ARTWORK")
-_GTooltip.tools:SetFont(TOCA.Global.font, 12)
-_GTooltip.tools:SetPoint("TOPLEFT", 12, -30)
-_GTooltip.tools:SetText("")
-_GTooltip.text = _GTooltip:CreateFontString(nil, "ARTWORK")
-_GTooltip.text:SetFont(TOCA.Global.font, 12)
-_GTooltip.text:SetPoint("TOPLEFT", 12, -50)
-_GTooltip.text:SetText("")
-_GTooltip.text:SetTextColor(1, 1, 0.2, 1)
-_GTooltip:Hide()
+local TooltipMaxHeight = 82
+TOCA.Tooltip = CreateFrame("frame", "TOCA.Tooltip", UIParent, "BackdropTemplate")
+TOCA.Tooltip:SetWidth(260)
+TOCA.Tooltip:SetHeight(TooltipMaxHeight)
+TOCA.Tooltip:SetFrameStrata("TOOLTIP")
+TOCA.Tooltip:SetBackdrop(TOCA.Backdrop.General)
+TOCA.Tooltip:SetBackdropColor(0, 0, 1, 1)
+TOCA.Tooltip:SetBackdropBorderColor(1, 1, 1, 1)
+TOCA.Tooltip:SetPoint("BOTTOMRIGHT", -160, 150)
+TOCA.Tooltip:SetMovable(true)
+TOCA.Tooltip:EnableMouse(true)
+TOCA.Tooltip:RegisterForDrag("LeftButton")
+TOCA.Tooltip:SetScript("OnDragStart", function()
+  TOCA.Tooltip:StartMoving()
+end)
+TOCA.Tooltip:SetScript("OnDragStop", function()
+  TOCA.Tooltip:StopMovingOrSizing()
+  local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.Tooltip:GetPoint()
+  TOCADB[TOCA.player.combine]["CONFIG"]["TOOLPOS"] = point .. "," .. xOfs .. "," .. yOfs
+end)
+TOCA.Tooltip.title = TOCA.Tooltip:CreateFontString(nil, "ARTWORK")
+TOCA.Tooltip.title:SetFont(TOCA.Global.font, 14)
+TOCA.Tooltip.title:SetPoint("TOPLEFT", 10, -10)
+TOCA.Tooltip.title:SetText("")
+TOCA.Tooltip.tools = TOCA.Tooltip:CreateFontString(nil, "ARTWORK")
+TOCA.Tooltip.tools:SetFont(TOCA.Global.font, 12)
+TOCA.Tooltip.tools:SetPoint("TOPLEFT", 12, -30)
+TOCA.Tooltip.tools:SetText("")
+TOCA.Tooltip.text = TOCA.Tooltip:CreateFontString(nil, "ARTWORK")
+TOCA.Tooltip.text:SetFont(TOCA.Global.font, 12)
+TOCA.Tooltip.text:SetPoint("TOPLEFT", 12, -50)
+TOCA.Tooltip.text:SetText("")
+TOCA.Tooltip.text:SetTextColor(1, 1, 0.2, 1)
+TOCA.Tooltip:Hide()
 
 local function adjustTooltipHeight(s, x, indent)
   x = x or 79
@@ -343,7 +367,7 @@ local function adjustTooltipHeight(s, x, indent)
   local function cleanse(s) return s:gsub("@x%d%d%d",""):gsub("@r","") end
   for prefix, word, suffix, newline in s:gmatch("([ \t]*)(%S*)([ \t]*)(\n?)") do
     if (#t >= 2) then
-      _GTooltip:SetHeight(_GTooltipMaxHeight + (8 * #t))
+      TOCA.Tooltip:SetHeight(TooltipMaxHeight + (8 * #t))
     end
     if #(cleanse(t[#t])) + #prefix + #cleanse(word) > x and #t > 0 then
       table.insert(t, word..suffix)
@@ -357,18 +381,18 @@ local function adjustTooltipHeight(s, x, indent)
   return indent..table.concat(t, "\n"..indent)
 end
 
-function TOCA.tooltip(msg, tools, msgtooltip)
-  _GTooltip:Show()
-  _GTooltip:SetHeight(_GTooltipMaxHeight)
-  _GTooltip.title:SetText(msg)
+function TOCA.TooltipDisplay(msg, tools, msgtooltip)
+  TOCA.Tooltip:Show()
+  TOCA.Tooltip:SetHeight(TooltipMaxHeight)
+  TOCA.Tooltip.title:SetText(msg)
   local toolsMsg = tools.lower(tools)
   toolsMsg = firstToUpper(toolsMsg)
-  _GTooltip.tools:SetText("Tools: " .. toolsMsg .. " Totem")
+  TOCA.Tooltip.tools:SetText("Tools: " .. toolsMsg .. " Totem")
   if (tools == "") then
-    _GTooltip.tools:SetText("")
+    TOCA.Tooltip.tools:SetText("")
   end
-  _GTooltip.text:SetText(adjustTooltipHeight(msgtooltip, 34))
-  _GTooltip:Show()
+  TOCA.Tooltip.text:SetText(adjustTooltipHeight(msgtooltip, 34))
+  TOCA.Tooltip:Show()
 end
 
 --TOCA.HasTotemOut = 0
@@ -413,10 +437,8 @@ function SlashCmdList.TOCA(cmd)
     print("|cffffff00options:|r Open Totem Caddy Options.")
     print("|cffffff00show:|r Display Totem Caddy (regardless of class).")
     print("|cffffff00hide:|r Close Totem Caddy.")
-    --print("|cffffff00sets:|r Open Totem Caddy Totem Set Configurations.")
     print("|cffffff00profile:|r Display the current saved profile.")
     print("|cffffff00help:|r Display the help introduction.")
-    --print("config = Open Totem Caddy General Configurations")
   elseif (cmd == "show") then
     TOCA.FrameMain:Show()
     TOCADB[TOCA.player.combine]["DISABLED"] = "NO"
@@ -426,7 +448,7 @@ function SlashCmdList.TOCA(cmd)
     TOCA.FrameSets:Show()
   elseif (cmd == "profile") then
     print(TOCA.Global.title .. "|r Profile: " .. TOCA.player.combine)
-  elseif (cmd == "options") then
+  elseif ((cmd == "options") or (cmd == "config")) then
     TOCA.FrameOptions:Show()
   elseif (cmd == "help") then
     TOCA.FrameHelp:Show()
