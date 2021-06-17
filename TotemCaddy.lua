@@ -29,7 +29,7 @@ TOCA.FrameMain:SetScript("OnDragStop", function()
   TOCADB[TOCA.player.combine]["CONFIG"]["MAINPOS"] = point .. "," .. xOfs .. "," .. yOfs
 end)
 
-TOCA.FrameMain.Background = CreateFrame("Frame", TOCA.FrameMain.Background, TOCA.FrameMain, "BackdropTemplate", -5)
+TOCA.FrameMain.Background = CreateFrame("Frame", TOCA.FrameMain.Background, TOCA.FrameMain, "BackdropTemplate", -7)
 TOCA.FrameMain.Background:SetWidth(TOCA.Global.width)
 TOCA.FrameMain.Background:SetHeight(TOCA.Global.height)
 TOCA.FrameMain.Background:SetPoint("CENTER", -1, 0)
@@ -332,13 +332,13 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
       --TOCA.Totem[totemCat]:SetAttribute("spell", totemSpell[1]) -- default
       TOCA.CloseAllMenus()
     end)
-    TOCA.SlotSelectTotemDisabled[totemCat][i]= CreateFrame("Frame", nil, TOCA.SlotSelectTotem[totemCat][i], "BackdropTemplate", 7)
+    TOCA.SlotSelectTotemDisabled[totemCat][i]= CreateFrame("Frame", nil, TOCA.SlotSelectTotem[totemCat][i], "BackdropTemplate", -6)
     TOCA.SlotSelectTotemDisabled[totemCat][i]:SetSize(35, 35)
     TOCA.SlotSelectTotemDisabled[totemCat][i]:SetPoint("CENTER", 0, 0)
     TOCA.SlotSelectTotemDisabled[totemCat][i]:SetBackdrop(TOCA.Backdrop.RGB)
     TOCA.SlotSelectTotemDisabled[totemCat][i]:SetBackdropColor(0, 0, 0, 1)
     TOCA.SlotSelectTotemDisabled[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0)
-    TOCA.SlotSelectTotemDisabled[totemCat][i]:SetFrameStrata("TOOLTIP")
+    --TOCA.SlotSelectTotemDisabled[totemCat][i]:SetFrameStrata("LOW")
   end
 end
 

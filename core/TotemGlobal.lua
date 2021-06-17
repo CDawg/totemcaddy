@@ -160,8 +160,8 @@ end
 function TOCA.EnableKnownTotems()
   for totemCat,v in pairsByKeys(TOCA.totems) do
     for i,totemSpell in pairs(TOCA.totems[totemCat]) do
-      TOCA.SlotSelectTotemDisabled[totemCat][i]:Show()
-      TOCA.FrameSetsSlotDisabled[totemCat][i]:Show()
+      --TOCA.SlotSelectTotemDisabled[totemCat][i]:Show()
+      --TOCA.FrameSetsSlotDisabled[totemCat][i]:Show()
       local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(totemSpell[1])
       if (name) then
         --print(name)
