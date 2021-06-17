@@ -39,9 +39,11 @@ TOCA.FrameMain.Background:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.FrameMain.Background:SetFrameStrata("BACKGROUND")
 
 TOCA.Main = CreateFrame("Frame")
+local success = C_ChatInfo.RegisterAddonMessagePrefix(TOCA.Global.prefix)
 TOCA.Main:RegisterEvent("ADDON_LOADED")
 TOCA.Main:RegisterEvent("PLAYER_LOGIN")
 TOCA.Main:RegisterEvent("PLAYER_TOTEM_UPDATE")
+TOCA.Main:RegisterEvent("CHAT_MSG_ADDON")
 TOCA.Main:RegisterEvent("UNIT_SPELLCAST_START")
 TOCA.Main:RegisterEvent("UNIT_SPELLCAST_STOP")
 TOCA.Main:RegisterEvent("UNIT_AURA")
@@ -51,13 +53,10 @@ TOCA.Main:RegisterEvent("UNIT_SPELLCAST_SENT")
 TOCA.Main:RegisterEvent("PLAYER_REGEN_ENABLED")
 TOCA.Main:RegisterEvent("PLAYER_REGEN_DISABLED")
 TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket)
-  if ((event == "ADDON_LOADED") and (prefix == "TotemCaddy")) then
-    print(TOCA.Global.title .. " v" .. TOCA.Global.version .. " Initializing by " .. TOCA.Global.author .. ". Type /" .. TOCA.Global.command .. " for commands.")
+  if ((event == "ADDON_LOADED") and (prefix == TOCA.Global.prefix)) then
+    TOCA.ChatNotification("v" .. TOCA.Global.version .. " Initializing by " .. TOCA.Global.author .. ". Type /" .. TOCA.Global.command .. " for commands.")
     TOCA.Init()
   end
-
-  --DNAMain:SetScript("OnEvent", function(self, event, prefix, netpacket)
-    --if ((event == "ADDON_LOADED") and (prefix == "DNA")) then
 
   if ((event == "UNIT_SPELLCAST_START") or
   (event == "UNIT_SPELLCAST_STOP") or
@@ -79,15 +78,38 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket)
     TOCA.TotemBarUpdate()
   end
 
-  --[==[
-  if (event== "PLAYER_REGEN_DISABLED") then --entered combat
+  if (event == "PLAYER_LOGIN") then
+    TOCA.SendPacket(TOCA.Prefix.version .. TOCA.Global.version, true)
   end
-  if (event == "PLAYER_REGEN_ENABLED") then --left combat
-  end
-  ]==]--
-  --print(event)
-end)
 
+  for totemCat,v in pairsByKeys(TOCA.totems) do
+    if (event== "PLAYER_REGEN_DISABLED") then
+      TOCA.SlotSelect[totemCat]:Hide()
+      TOCA.Button.DropdownMain:Hide()
+    end
+    if (event == "PLAYER_REGEN_ENABLED") then
+      TOCA.SlotSelect[totemCat]:Show()
+      TOCA.Button.DropdownMain:Show()
+    end
+  end
+
+  if (event == "CHAT_MSG_ADDON") then
+    if (prefix == TOCA.Global.prefix) then
+        if (TOCA.version_alerted == 0) then
+        local getPacket = TOCA.ParsePacket(netpacket, TOCA.Prefix.version)
+        if (getPacket) then
+          local latest_version = tonumber(getPacket)
+          local my_version = tonumber(TOCA.Global.version)
+          if (latest_version > my_version) then --2 minor
+            TOCA.ChatNotification("|cffeca63dYou have an outdated version! Latest version: " .. latest_version)
+            TOCA.version_alerted = tonumber(latest_version)
+          end
+        end
+      end
+    end
+  end
+
+end)
 
 TOCA.Button.TotemicCall_w=40
 TOCA.Button.TotemicCall_h=40
@@ -393,6 +415,7 @@ TOCA.Button.CloseMain:SetScript("OnClick", function()
   TOCA.FrameMain:Hide()
   TOCADB[TOCA.player.combine]["DISABLED"] = "YES"
   print(TOCA.Global.title .. " closed. Type '"..TCCMD.." show' to reopen.")
+  TOCA.ChatNotification("closed. Type '"..TCCMD.." show' to reopen.")
 end)
 
 TOCA.Button.DropdownMain= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTemplate")

@@ -16,17 +16,22 @@ the copyright holders.
 TOCA.Global = {
  title  = "|cff006aa6Totem Caddy|r",
  author = "Porthios of Myzrael",
- version= 2.28,
+ version= 2.29,
  command= "toca",
  width  = 150,
  height = 85,
  font   = "Fonts/FRIZQT__.TTF",
  dir    = "Interface/Addons/TotemCaddy/",
+ prefix = "TotemCaddy",
 }
+
+TOCA.Prefix = {
+  version = "0xEFVe",
+}
+
 TCCMD = "/"..TOCA.Global.command
 
 TOCA.Backdrop={}
-
 TOCA.Backdrop.General = { --also used for gray out
   bgFile  = "Interface/ToolTips/CHATBUBBLE-BACKGROUND",
   edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
@@ -76,6 +81,7 @@ TOCA.Backdrop.BorderOnly= { --also used for gray out
   insets  = {left=2, right=2, top=2, bottom=2},
 }
 
+TOCA.version_alerted = 0
 TOCA.Button={}
 TOCA.Checkbox={}
 TOCA.Slider={}
@@ -419,6 +425,34 @@ function TOCA.TotemBarUpdate()
     if (TOCA.TotemPresent[i]) then
       TOCA.Button.TotemicCall.flash:Show()
       --TOCA.TotemStartTime[i]
+    end
+  end
+end
+
+function TOCA.ChatNotification(msg)
+  print(TOCA.Global.title .. " " .. msg)
+end
+
+function TOCA.SendPacket(packet, filtered, rec)
+  filteredPacket = nil
+  local msg_to = "GUILD"
+  if (rec) then
+    msg_to = rec
+  end
+  if (filtered) then
+    filteredPacket = packet:gsub("%s+", "") --filter spaces
+  else
+    filteredPacket = packet
+  end
+  C_ChatInfo.SendAddonMessage(TOCA.Global.prefix, filteredPacket, msg_to)
+  --print("sending packet " .. filteredPacket)
+end
+
+function TOCA.ParsePacket(netpacket, code)
+  if (netpacket) then
+    if (string.sub(netpacket, 1, strlen(code)) == code) then
+      parse = string.gsub(netpacket, code, "")
+      return parse
     end
   end
 end
