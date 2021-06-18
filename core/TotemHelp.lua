@@ -27,7 +27,7 @@ TOCA.FrameHelp.text={}
 
 TOCA.helpMessage = {
   "Welcome to " .. TOCA.Global.title .. "|r v" .. TOCA.Global.version,
-  "Please note: This is a BETA version. Improvements will be made as time continues. Enjoy!",
+  "Please note: Totem Caddy is still evolving. Improvements will be made as time continues. Enjoy!",
   "Let's get started by dragging the Totem Caddy anywhere on your screen saving the position.",
   "You can select totems in order [AIR,EARTH,FIRE,WATER] by selecting the top arrows above the current totem icons.",
   "The set of totems are by default, but you can create your own totem sets in the options window.",

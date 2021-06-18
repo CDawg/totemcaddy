@@ -16,7 +16,7 @@ the copyright holders.
 TOCA.Global = {
  title  = "|cff006aa6Totem Caddy|r",
  author = "Porthios of Myzrael",
- version= 2.29,
+ version= 2.30,
  command= "toca",
  width  = 150,
  height = 85,
@@ -89,9 +89,16 @@ TOCA.Prompt={}
 TOCA.Dropdown = {}
 TOCA.Dropdown.Menu = {"Default"}
 TOCA.Tooltip = {}
-
 TOCA.MenuIsOpenMain = 0
 TOCA.MenuIsOpenSets = 0
+
+TOCA.Framelevel = {
+  Background=0,
+  Foreground=1,
+  Buttons   =2,
+  Menu      =3,
+  Cover     =4,
+}
 
 TOCA.Slot_w=35
 TOCA.Slot_h=35
@@ -160,8 +167,8 @@ end
 function TOCA.EnableKnownTotems()
   for totemCat,v in pairsByKeys(TOCA.totems) do
     for i,totemSpell in pairs(TOCA.totems[totemCat]) do
-      --TOCA.SlotSelectTotemDisabled[totemCat][i]:Show()
-      --TOCA.FrameSetsSlotDisabled[totemCat][i]:Show()
+      TOCA.SlotSelectTotemDisabled[totemCat][i]:Show()
+      TOCA.FrameSetsSlotDisabled[totemCat][i]:Show()
       local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(totemSpell[1])
       if (name) then
         --print(name)

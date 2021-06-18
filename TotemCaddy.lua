@@ -36,7 +36,7 @@ TOCA.FrameMain.Background:SetPoint("CENTER", -1, 0)
 TOCA.FrameMain.Background:SetBackdrop(TOCA.Backdrop.Main)
 TOCA.FrameMain.Background:SetBackdropColor(0, 0, 0, 0.8)
 TOCA.FrameMain.Background:SetBackdropBorderColor(1, 1, 1, 0.6)
-TOCA.FrameMain.Background:SetFrameStrata("BACKGROUND")
+TOCA.FrameMain.Background:SetFrameLevel(TOCA.Framelevel.Background)
 
 TOCA.Main = CreateFrame("Frame")
 local success = C_ChatInfo.RegisterAddonMessagePrefix(TOCA.Global.prefix)
@@ -122,7 +122,7 @@ TOCA.Button.TotemicCall:SetBackdrop({
   edgeSize= 12,
   insets  = {left=2, right=2, top=2, bottom=2},
 })
-TOCA.Button.TotemicCall:SetFrameLevel(10)
+TOCA.Button.TotemicCall:SetFrameLevel(TOCA.Framelevel.Foreground)
 TOCA.Button.TotemicCall.flash = TOCA.Button.TotemicCall:CreateTexture(nil, "ARTWORK")
 TOCA.Button.TotemicCall.flash:SetSize(80, 80)
 TOCA.Button.TotemicCall.flash:SetPoint("CENTER", 0, 0)
@@ -249,7 +249,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.SlotSelect[totemCat]:SetPoint("CENTER", 0, 20)
   TOCA.SlotSelect[totemCat]:SetBackdrop(TOCA.Backdrop.General)
   TOCA.SlotSelect[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
-  TOCA.SlotSelect[totemCat]:SetFrameStrata("DIALOG")
+  TOCA.SlotSelect[totemCat]:SetFrameLevel(TOCA.Framelevel.Buttons)
   TOCA.SlotSelect[totemCat]:SetScript("OnEnter", function(self)
     self:SetBackdropBorderColor(1, 1, 0.8, 1)
   end)
@@ -277,8 +277,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.SlotSelectMenu[totemCat]:SetPoint("BOTTOMLEFT", -3, 10)
   TOCA.SlotSelectMenu[totemCat]:SetBackdrop(TOCA.Backdrop.General)
   TOCA.SlotSelectMenu[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
-  TOCA.SlotSelectMenu[totemCat]:SetFrameStrata("DIALOG")
-  TOCA.SlotSelectMenu[totemCat]:SetFrameLevel(400)
+  TOCA.SlotSelectMenu[totemCat]:SetFrameLevel(TOCA.Framelevel.Menu)
   TOCA.SlotSelectMenu[totemCat]:Hide()
 
   local totemSpellCount={}
@@ -290,6 +289,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.SlotSelectTotem[totemCat][i]= CreateFrame("Button", nil, TOCA.SlotSelectMenu[totemCat], "BackdropTemplate")
     TOCA.SlotSelectTotem[totemCat][i]:SetSize(35, 35)
     TOCA.SlotSelectTotem[totemCat][i]:SetPoint("TOPLEFT", 2.5, -totemSpellCount[totemCat]+20)
+    TOCA.SlotSelectTotem[totemCat][i]:SetFrameLevel(TOCA.Framelevel.Menu)
     TOCA.SlotSelectTotem[totemCat][i]:SetBackdrop({
       bgFile  = "interface/icons/" .. totemSpell[2],
       edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
@@ -329,7 +329,6 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
         edgeSize= 12,
         insets  = {left=2, right=2, top=2, bottom=2},
       })
-      --TOCA.Totem[totemCat]:SetAttribute("spell", totemSpell[1]) -- default
       TOCA.CloseAllMenus()
     end)
     TOCA.SlotSelectTotemDisabled[totemCat][i]= CreateFrame("Frame", nil, TOCA.SlotSelectTotem[totemCat][i], "BackdropTemplate", -6)
@@ -338,7 +337,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.SlotSelectTotemDisabled[totemCat][i]:SetBackdrop(TOCA.Backdrop.RGB)
     TOCA.SlotSelectTotemDisabled[totemCat][i]:SetBackdropColor(0, 0, 0, 1)
     TOCA.SlotSelectTotemDisabled[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0)
-    --TOCA.SlotSelectTotemDisabled[totemCat][i]:SetFrameStrata("LOW")
+    TOCA.SlotSelectTotemDisabled[totemCat][i]:SetFrameLevel(TOCA.Framelevel.Cover)
   end
 end
 
@@ -372,6 +371,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     --print(totemSpell[1])
   end
 end
+TOCA.FrameExplode:Hide()
 
 TOCA.Button.Options= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTemplate")
 TOCA.Button.Options:SetSize(16, 16)
@@ -423,7 +423,7 @@ TOCA.Button.DropdownMain:SetSize(143, 16)
 TOCA.Button.DropdownMain:SetPoint("CENTER", 0, -32)
 TOCA.Button.DropdownMain:SetBackdrop(TOCA.Backdrop.General)
 TOCA.Button.DropdownMain:SetBackdropBorderColor(1, 1, 1, 0.6)
-TOCA.Button.DropdownMain:SetFrameStrata("DIALOG")
+TOCA.Button.DropdownMain:SetFrameLevel(TOCA.Framelevel.Buttons)
 TOCA.Button.DropdownMain.icon = TOCA.Button.DropdownMain:CreateTexture(nil, "ARTWORK")
 TOCA.Button.DropdownMain.icon:SetSize(26, 18)
 TOCA.Button.DropdownMain.icon:SetPoint("CENTER", 0, -3)
