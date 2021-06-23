@@ -50,7 +50,7 @@ TOCA.Button.FrameSetsSave:SetScript("OnClick", function()
   local profileSaveText = TOCA.FrameSetsProfile:GetText()
   if ((profileSaveText == " ") or (profileSaveText == "") or (profileSaveText == nil)) then
     print(TOCA.Global.title .. " Totem Set Updated: |cffffff00" .. TOCA.Dropdown.Sets.text:GetText())
-    TOCADB[TOCA.player.combine]["PROFILES"][TOCA.Dropdown.Sets.text:GetText()] = {TOCA_AIR=TOCASlotAIR, TOCA_EARTH=TOCASlotEARTH, TOCA_FIRE=TOCASlotFIRE, TOCA_WATER=TOCASlotWATER}
+    TOCADB[TOCA.player.combine]["PROFILES"][TOCA.Dropdown.Sets.text:GetText()] = {TOCA_AIR=TOCASlotOne, TOCA_EARTH=TOCASlotTwo, TOCA_FIRE=TOCASlotThree, TOCA_WATER=TOCASlotFour}
   else
     if (profileSaveText:match("[^%w%s]")) then
       TOCA.FrameSetsProfile.border:SetBackdropBorderColor(1, 0.2, 0.2, 1)
@@ -61,7 +61,7 @@ TOCA.Button.FrameSetsSave:SetScript("OnClick", function()
       else
         print(TOCA.Global.title .. " Totem Set Saved: |cffffff00" .. profileSaveText)
       end
-      TOCADB[TOCA.player.combine]["PROFILES"][profileSaveText] = {TOCA_AIR=TOCASlotAIR, TOCA_EARTH=TOCASlotEARTH, TOCA_FIRE=TOCASlotFIRE, TOCA_WATER=TOCASlotWATER}
+      TOCADB[TOCA.player.combine]["PROFILES"][profileSaveText] = {TOCA_AIR=TOCASlotOne, TOCA_EARTH=TOCASlotTwo, TOCA_FIRE=TOCASlotThree, TOCA_WATER=TOCASlotFour}
       TOCA.UpdateDDMenu(TOCA.Dropdown.Sets)
       TOCA.UpdateDDMenu(TOCA.Dropdown.Main)
     end
@@ -109,7 +109,7 @@ TOCA.Prompt.DeleteSet:SetPoint("CENTER", 0, 50)
 TOCA.Prompt.DeleteSet:SetBackdrop(TOCA.Backdrop.General)
 TOCA.Prompt.DeleteSet:SetBackdropColor(0, 0, 0, 1)
 TOCA.Prompt.DeleteSet:SetBackdropBorderColor(1, 1, 1, 0.6)
-TOCA.Prompt.DeleteSet:SetFrameStrata("DIALOG")
+TOCA.Prompt.DeleteSet:SetFrameStrata("TOOLTIP")
 TOCA.Prompt.DeleteSetText = TOCA.Prompt.DeleteSet:CreateFontString(nil, "ARTWORK")
 TOCA.Prompt.DeleteSetText:SetFont(TOCA.Global.font, 14, "OUTLINE")
 TOCA.Prompt.DeleteSetText:SetPoint("CENTER", 0, 20)
@@ -272,16 +272,16 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetScript("OnClick", function()
       --print(totemCat .. " ".. i .. " " .. totemSpell[1])
       if (totemCat == "AIR") then
-        TOCASlotAIR = totemSpell[1]
+        TOCASlotOne = totemSpell[1]
       end
       if (totemCat == "EARTH") then
-        TOCASlotEARTH = totemSpell[1]
+        TOCASlotTwo = totemSpell[1]
       end
       if (totemCat == "FIRE") then
-        TOCASlotFIRE = totemSpell[1]
+        TOCASlotThree = totemSpell[1]
       end
       if (totemCat == "WATER") then
-        TOCASlotWATER = totemSpell[1]
+        TOCASlotFour = totemSpell[1]
       end
       TOCA.FrameSetsSlot[totemCat]:SetBackdrop({
         bgFile  = "interface/icons/" .. totemSpell[2],
@@ -344,45 +344,80 @@ end
 UIDropDownMenu_SetWidth(TOCA.Dropdown.Sets, 135)
 
 
----- TOTEM ORDER -----
---[==[
 TOCA.SlotOrderTitle = TOCA.FrameOptions:CreateFontString(nil, "ARTWORK")
 TOCA.SlotOrderTitle:SetFont(TOCA.Global.font, 12)
-TOCA.SlotOrderTitle:SetPoint("CENTER", 170, -20)
+TOCA.SlotOrderTitle:SetPoint("CENTER", 170, -10)
 TOCA.SlotOrderTitle:SetText("Totem Order")
 
+TOCA.SlotOrderIcon={}
 TOCA.SlotOrderBack={}
 TOCA.Dropdown.OrderSet={}
 TOCA.Dropdown.OrderSetMenu={"AIR", "EARTH", "FIRE", "WATER"}
 
 local totemNum = 0
+movingTotem= "nil"
+overTotem = "nil"
 for totemCat,v in pairsByKeys(TOCA.totems) do
+  --TOCA.SlotSets_x = TOCA.SlotSets_x + 42
   TOCA.SlotSets_x = TOCA.SlotSets_x + 68
   totemNum = totemNum+1
 
-  --TOCA.SlotOrder[totemCat]={}
+  --[==[
   TOCA.SlotOrderBack[totemCat]= CreateFrame("Button", nil, TOCA.FrameOptions, "BackdropTemplate")
-  TOCA.SlotOrderBack[totemCat]:SetSize(40, 40)
-  TOCA.SlotOrderBack[totemCat]:SetPoint("CENTER", -90+TOCA.SlotSets_x, -60)
+  TOCA.SlotOrderBack[totemCat]:SetSize(44, 44)
+  TOCA.SlotOrderBack[totemCat]:SetPoint("CENTER", -90+TOCA.SlotSets_x, -80)
   TOCA.SlotOrderBack[totemCat]:SetBackdrop(TOCA.Backdrop.General)
-  --TOCA.SlotOrderBack[totemCat]={}
+  TOCA.SlotOrderBack[totemCat]:SetFrameLevel(TOCA.Framelevel.Background)
+  TOCA.SlotOrderBack[totemCat]:EnableMouse(true)
   TOCA.SlotOrderBack[totemCat].text = TOCA.SlotOrderBack[totemCat]:CreateFontString(nil, "ARTWORK")
   TOCA.SlotOrderBack[totemCat].text:SetFont(TOCA.Global.font, 8)
   TOCA.SlotOrderBack[totemCat].text:SetPoint("CENTER", 1, 0)
-  TOCA.SlotOrderBack[totemCat].text:SetText(totemCat)
+  TOCA.SlotOrderBack[totemCat].text:SetText(totemNum)
+  TOCA.SlotOrderBack[totemCat]:SetScript("OnEnter", function(self)
+    --overTotem = totemCat
+    print(self.text:GetText())
+  end)
+  TOCA.SlotOrderBack[totemCat]:SetScript("OnLeave", function()
+    --overTotem = totemCat
+  end)
+
+  TOCA.SlotOrderIcon[totemCat]= CreateFrame("Button", nil, TOCA.SlotOrderBack[totemCat], "BackdropTemplate")
+  TOCA.SlotOrderIcon[totemCat]:SetSize(40, 40)
+  TOCA.SlotOrderIcon[totemCat]:SetPoint("CENTER", 0, 0)
+  TOCA.SlotOrderIcon[totemCat]:SetBackdrop(TOCA.Backdrop.General)
+  TOCA.SlotOrderIcon[totemCat]:SetFrameLevel(TOCA.Framelevel.Buttons)
+  TOCA.SlotOrderIcon[totemCat]:SetBackdropBorderColor(1, 1, 0.6, 1)
+  TOCA.SlotOrderIcon[totemCat].text = TOCA.SlotOrderIcon[totemCat]:CreateFontString(nil, "ARTWORK")
+  TOCA.SlotOrderIcon[totemCat].text:SetFont(TOCA.Global.font, 8)
+  TOCA.SlotOrderIcon[totemCat].text:SetPoint("CENTER", 1, 0)
+  TOCA.SlotOrderIcon[totemCat].text:SetText(totemCat)
   if (totemCat == "AIR") then
-    TOCA.SlotOrderBack[totemCat].text:SetTextColor(1, 1, 1, 1)
+    TOCA.SlotOrderIcon[totemCat].text:SetTextColor(1, 1, 1, 1)
   end
   if (totemCat == "EARTH") then
-    TOCA.SlotOrderBack[totemCat].text:SetTextColor(1, 0.7, 0.4, 1)
+    TOCA.SlotOrderIcon[totemCat].text:SetTextColor(1, 0.7, 0.4, 1)
   end
   if (totemCat == "FIRE") then
-    TOCA.SlotOrderBack[totemCat].text:SetTextColor(0.8, 0.4, 0, 1)
+    TOCA.SlotOrderIcon[totemCat].text:SetTextColor(0.8, 0.4, 0, 1)
   end
   if (totemCat == "WATER") then
-    TOCA.SlotOrderBack[totemCat].text:SetTextColor(0.4, 0.6, 1, 1)
+    TOCA.SlotOrderIcon[totemCat].text:SetTextColor(0.4, 0.6, 1, 1)
   end
-
+  TOCA.SlotOrderIcon[totemCat]:SetMovable(true)
+  TOCA.SlotOrderIcon[totemCat]:EnableMouse(true)
+  TOCA.SlotOrderIcon[totemCat]:RegisterForDrag("LeftButton")
+  TOCA.SlotOrderIcon[totemCat]:SetScript("OnDragStart", function(self)
+    TOCA.SlotOrderIcon[totemCat]:StartMoving()
+    movingTotem = self.text:GetText()
+  end)
+  TOCA.SlotOrderIcon[totemCat]:SetScript("OnDragStop", function()
+    print(movingTotem .. " on top of " .. TOCA.SlotOrderBack[totemCat].text:GetText())
+    TOCA.SlotOrderIcon[totemCat]:StopMovingOrSizing()
+  end)
+  TOCA.SlotOrderIcon[totemCat]:SetScript("OnUpdate", function(self)
+    movingTotem = self.text:GetText()
+  end)
+  ]==]--
 
   TOCA.Dropdown.OrderSet[totemCat] = CreateFrame("Frame", nil, TOCA.FrameOptions, "UIDropDownMenuTemplate")
   TOCA.Dropdown.OrderSet[totemCat]:SetPoint("CENTER", -150+TOCA.SlotSets_x, -50)
@@ -412,5 +447,5 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     end
   end
   UIDropDownMenu_SetWidth(TOCA.Dropdown.OrderSet[totemCat], 50)
+
 end
-]==]--

@@ -199,32 +199,32 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.Totem[totemCat]:SetAttribute("type", "spell")
   local thisTotemSpell = ""
   if (totemCat == "AIR") then
-    TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotAIR)
+    TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotOne)
   end
   if (totemCat == "EARTH") then
-    TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotEARTH)
+    TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotTwo)
   end
   if (totemCat == "FIRE") then
-    TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotFIRE)
+    TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotThree)
   end
   if (totemCat == "WATER") then
-    TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotWATER)
+    TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotFour)
   end
   TOCA.Totem[totemCat]:SetScript("OnEnter", function()
     TOCA.CloseAllMenus()
     TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 1)
     TOCA.Slot.highlight[totemCat]:Show()
     if (totemCat == "AIR") then
-      TOCA.TooltipDisplay(TOCASlotAIR, totemCat, TOCA.totems[totemCat][multiKeyFromValue(TOCA.totems[totemCat], TOCASlotAIR, 1)][3])
+      TOCA.TooltipDisplay(TOCASlotOne, totemCat, TOCA.totems[totemCat][multiKeyFromValue(TOCA.totems[totemCat], TOCASlotOne, 1)][3])
     end
     if (totemCat == "EARTH") then
-      TOCA.TooltipDisplay(TOCASlotEARTH, totemCat, TOCA.totems[totemCat][multiKeyFromValue(TOCA.totems[totemCat], TOCASlotEARTH, 1)][3])
+      TOCA.TooltipDisplay(TOCASlotTwo, totemCat, TOCA.totems[totemCat][multiKeyFromValue(TOCA.totems[totemCat], TOCASlotTwo, 1)][3])
     end
     if (totemCat == "FIRE") then
-      TOCA.TooltipDisplay(TOCASlotFIRE, totemCat, TOCA.totems[totemCat][multiKeyFromValue(TOCA.totems[totemCat], TOCASlotFIRE, 1)][3])
+      TOCA.TooltipDisplay(TOCASlotThree, totemCat, TOCA.totems[totemCat][multiKeyFromValue(TOCA.totems[totemCat], TOCASlotThree, 1)][3])
     end
     if (totemCat == "WATER") then
-      TOCA.TooltipDisplay(TOCASlotWATER, totemCat, TOCA.totems[totemCat][multiKeyFromValue(TOCA.totems[totemCat], TOCASlotWATER, 1)][3])
+      TOCA.TooltipDisplay(TOCASlotFour, totemCat, TOCA.totems[totemCat][multiKeyFromValue(TOCA.totems[totemCat], TOCASlotFour, 1)][3])
     end
   end)
   TOCA.Totem[totemCat]:SetScript("OnLeave", function()
@@ -289,7 +289,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.SlotSelectTotem[totemCat][i]= CreateFrame("Button", nil, TOCA.SlotSelectMenu[totemCat], "BackdropTemplate")
     TOCA.SlotSelectTotem[totemCat][i]:SetSize(35, 35)
     TOCA.SlotSelectTotem[totemCat][i]:SetPoint("TOPLEFT", 2.5, -totemSpellCount[totemCat]+20)
-    TOCA.SlotSelectTotem[totemCat][i]:SetFrameLevel(TOCA.Framelevel.Menu)
+    TOCA.SlotSelectTotem[totemCat][i]:SetFrameLevel(TOCA.Framelevel.Buttons)
     TOCA.SlotSelectTotem[totemCat][i]:SetBackdrop({
       bgFile  = "interface/icons/" .. totemSpell[2],
       edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
@@ -308,20 +308,20 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.SlotSelectTotem[totemCat][i]:SetScript("OnClick", function()
       --print(totemCat .. " ".. i .. " " .. totemSpell[1])
       if (totemCat == "AIR") then
-        TOCASlotAIR = totemSpell[1]
-        TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotAIR)
+        TOCASlotOne = totemSpell[1]
+        TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotOne)
       end
       if (totemCat == "EARTH") then
-        TOCASlotEARTH = totemSpell[1]
-        TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotEARTH)
+        TOCASlotTwo = totemSpell[1]
+        TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotTwo)
       end
       if (totemCat == "FIRE") then
-        TOCASlotFIRE = totemSpell[1]
-        TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotFIRE)
+        TOCASlotThree = totemSpell[1]
+        TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotThree)
       end
       if (totemCat == "WATER") then
-        TOCASlotWATER = totemSpell[1]
-        TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotWATER)
+        TOCASlotFour = totemSpell[1]
+        TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotFour)
       end
       TOCA.Slot[totemCat]:SetBackdrop({
         bgFile  = "interface/icons/" .. totemSpell[2],

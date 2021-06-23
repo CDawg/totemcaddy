@@ -95,8 +95,8 @@ TOCA.MenuIsOpenSets = 0
 TOCA.Framelevel = {
   Background=0,
   Foreground=1,
-  Buttons   =2,
-  Menu      =3,
+  Menu      =2,
+  Buttons   =3,
   Cover     =4,
 }
 
@@ -105,10 +105,10 @@ TOCA.Slot_h=35
 TOCA.Slot_x=-TOCA.Slot_w/2
 
 --defaults
-TOCASlotAIR  = "Grace of Air Totem"
-TOCASlotEARTH= "Stoneclaw Totem"
-TOCASlotFIRE = "Magma Totem"
-TOCASlotWATER= "Mana Spring Totem"
+TOCASlotOne  = "Grace of Air Totem"
+TOCASlotTwo  = "Stoneclaw Totem"
+TOCASlotThree= "Magma Totem"
+TOCASlotFour = "Mana Spring Totem"
 
 function TOCA.Round(num, numDecimalPlaces)
   local mult = 10^(numDecimalPlaces or 0)
@@ -116,7 +116,7 @@ function TOCA.Round(num, numDecimalPlaces)
 end
 
 function TOCA.UpdateTotemSet()
-  local totemIconKey = multiKeyFromValue(TOCA.totems.AIR,  TOCASlotAIR, 1)
+  local totemIconKey = multiKeyFromValue(TOCA.totems.AIR,  TOCASlotOne, 1)
   local totemIcon = {
     bgFile  = "interface/icons/" .. TOCA.totems.AIR[totemIconKey][2],
     edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
@@ -126,7 +126,7 @@ function TOCA.UpdateTotemSet()
   TOCA.Slot["AIR"]:SetBackdrop(totemIcon)
   TOCA.FrameSetsSlot["AIR"]:SetBackdrop(totemIcon)
 
-  local totemIconKey = multiKeyFromValue(TOCA.totems.EARTH,  TOCASlotEARTH, 1)
+  local totemIconKey = multiKeyFromValue(TOCA.totems.EARTH,  TOCASlotTwo, 1)
   local totemIcon = {
     bgFile  = "interface/icons/" .. TOCA.totems.EARTH[totemIconKey][2],
     edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
@@ -136,7 +136,7 @@ function TOCA.UpdateTotemSet()
   TOCA.Slot["EARTH"]:SetBackdrop(totemIcon)
   TOCA.FrameSetsSlot["EARTH"]:SetBackdrop(totemIcon)
 
-  local totemIconKey = multiKeyFromValue(TOCA.totems.FIRE,  TOCASlotFIRE, 1)
+  local totemIconKey = multiKeyFromValue(TOCA.totems.FIRE,  TOCASlotThree, 1)
   local totemIcon = {
     bgFile  = "interface/icons/" .. TOCA.totems.FIRE[totemIconKey][2],
     edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
@@ -146,7 +146,7 @@ function TOCA.UpdateTotemSet()
   TOCA.Slot["FIRE"]:SetBackdrop(totemIcon)
   TOCA.FrameSetsSlot["FIRE"]:SetBackdrop(totemIcon)
 
-  local totemIconKey = multiKeyFromValue(TOCA.totems.WATER,  TOCASlotWATER, 1)
+  local totemIconKey = multiKeyFromValue(TOCA.totems.WATER,  TOCASlotFour, 1)
   local totemIcon = {
     bgFile  = "interface/icons/" .. TOCA.totems.WATER[totemIconKey][2],
     edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
@@ -209,7 +209,7 @@ function TOCA.Init()
       TOCADB[TOCA.player.combine]["HELP"] = "YES"
     end
     print(TOCA.Global.title .. " Building Profile: " .. TOCA.player.combine)
-    TOCADB[TOCA.player.combine]["PROFILES"][TOCA.Dropdown.Menu[1]] = {TOCA_AIR=TOCASlotAIR, TOCA_EARTH=TOCASlotEARTH, TOCA_FIRE=TOCASlotFIRE, TOCA_WATER=TOCASlotWATER}
+    TOCADB[TOCA.player.combine]["PROFILES"][TOCA.Dropdown.Menu[1]] = {TOCA_AIR=TOCASlotOne, TOCA_EARTH=TOCASlotTwo, TOCA_FIRE=TOCASlotThree, TOCA_WATER=TOCASlotFour}
     TOCA.UpdateTotemSet()
   else
     print(TOCA.Global.title .. " Loading Profile: " .. TOCA.player.combine)
@@ -277,19 +277,19 @@ function TOCA.SetDDMenu(DDFrame, value)
     for k,v in pairs(TOCADB[TOCA.player.combine]["PROFILES"][value]) do
       --print("debug profile " .. k)
       if (k == "TOCA_AIR") then
-        TOCASlotAIR = v
+        TOCASlotOne = v
         TOCA.Totem["AIR"]:SetAttribute("spell", v)
       end
       if (k == "TOCA_EARTH") then
-        TOCASlotEARTH = v
+        TOCASlotTwo = v
         TOCA.Totem["EARTH"]:SetAttribute("spell", v)
       end
       if (k == "TOCA_FIRE") then
-        TOCASlotFIRE = v
+        TOCASlotThree = v
         TOCA.Totem["FIRE"]:SetAttribute("spell", v)
       end
       if (k == "TOCA_WATER") then
-        TOCASlotWATER = v
+        TOCASlotFour = v
         TOCA.Totem["WATER"]:SetAttribute("spell", v)
       end
     end
@@ -464,7 +464,9 @@ function TOCA.ParsePacket(netpacket, code)
   end
 end
 
+TOCA.TotemBuildOrder = nil
 function TOCA.BuildTotemOrder()
+  TOCA.TotemBuildOrder = ""
   for totemCat,v in pairsByKeys(TOCA.totems) do
     print(TOCA.Dropdown.OrderSet[totemCat].text:GetText())
   end

@@ -21,6 +21,7 @@ TOCA.FrameOptions:SetWidth(TOCA.FrameOptions_w)
 TOCA.FrameOptions:SetHeight(TOCA.FrameOptions_h)
 TOCA.FrameOptions:SetPoint("CENTER", 0, 20)
 TOCA.FrameOptions:SetBackdrop(TOCA.Backdrop.General)
+TOCA.FrameOptions:SetFrameStrata("DIALOG")
 TOCA.FrameOptions:SetBackdropColor(0, 0, 0, 0.8)
 TOCA.FrameOptions:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.FrameOptions.title = TOCA.FrameOptions:CreateFontString(nil, "ARTWORK")
@@ -171,6 +172,7 @@ TOCA.Button.OptionsCloseText = TOCA.Button.OptionsClose:CreateFontString(nil, "A
 TOCA.Button.OptionsCloseText:SetFont(TOCA.Global.font, 11)
 TOCA.Button.OptionsCloseText:SetPoint("CENTER", 0, 0)
 TOCA.Button.OptionsCloseText:SetText("Close")
+TOCA.Button.OptionsClose:SetFrameStrata("TOOLTIP")
 
 TOCA.OptionsDivider = TOCA.FrameOptions:CreateTexture(nil, "ARTWORK")
 TOCA.OptionsDivider:SetSize(4, 340)
@@ -257,7 +259,6 @@ TOCA.Checkbox.EndCaps:SetScript("OnClick", function(self)
     TOCADB[TOCA.player.combine]["CONFIG"]["ENDCAPS"] = "OFF"
   end
 end)
-
 
 TOCA.Button.TooltipPosition= CreateFrame("Button", nil, TOCA.FrameOptions, "BackdropTemplate")
 TOCA.Button.TooltipPosition:SetSize(100, 25)
