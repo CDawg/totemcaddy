@@ -1,5 +1,5 @@
 --[==[
-Copyright ©2020 Porthios of Myzrael or Porthias of Myzrael
+Copyright ©2020 Porthias of Myzrael or Porthios of Myzrael
 
 The contents of this addon, excluding third-party resources, are
 copyrighted to Porthios with all rights reserved.
@@ -168,12 +168,22 @@ TOCA.Slot.deactive={}
 TOCA.Slot.highlight={}
 TOCA.Totem={}
 TOCA.TotemFlash={}
+TOCA.SlotPosX = {
+  18.5,
+  54.5,
+  90.5,
+  126.5,
+}
+local totemNum = 0
 for totemCat,v in pairsByKeys(TOCA.totems) do
+  totemNum = totemNum+1
+  --print(totemNum)
   TOCA.Slot_x = TOCA.Slot_x +36
   TOCA.Slot[totemCat]={}
   TOCA.Slot[totemCat]= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTemplate")
   TOCA.Slot[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
-  TOCA.Slot[totemCat]:SetPoint("TOPLEFT", -15+TOCA.Slot_x, -35)
+  --TOCA.Slot[totemCat]:SetPoint("TOPLEFT", -15+TOCA.Slot_x, -35)
+  TOCA.Slot[totemCat]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[totemNum], -35)
   TOCA.Slot[totemCat]:SetBackdrop(TOCA.Backdrop.General)
   TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
   TOCA.Slot.deactive[totemCat]= CreateFrame("Frame", nil, TOCA.Slot[totemCat], "BackdropTemplate")

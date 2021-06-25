@@ -1,5 +1,5 @@
 --[==[
-Copyright ©2020 Porthios of Myzrael or Porthias of Myzrael
+Copyright ©2020 Porthias of Myzrael or Porthios of Myzrael
 
 The contents of this addon, excluding third-party resources, are
 copyrighted to Porthios with all rights reserved.
@@ -14,7 +14,7 @@ the copyright holders.
 ]==]--
 
 local FrameHelp_w = 400
-local FrameHelp_h = 260
+local FrameHelp_h = 264
 TOCA.FrameHelp = CreateFrame("Frame", TOCA.FrameHelp, UIParent, "BackdropTemplate")
 TOCA.FrameHelp:SetWidth(FrameHelp_w)
 TOCA.FrameHelp:SetHeight(FrameHelp_h)
@@ -25,6 +25,61 @@ TOCA.FrameHelp:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.FrameHelp:SetFrameStrata("DIALOG")
 TOCA.FrameHelp.text={}
 
+TOCA.tabwidth = 110
+TOCA.Button.Tab={}
+TOCA.Button.TabBack={}
+TOCA.HelpTabs = {
+  "Help",
+  "Credit",
+}
+
+TOCA.FrameHelpPage={}
+for i=1, getn(TOCA.HelpTabs) do
+  TOCA.FrameHelpPage[TOCA.HelpTabs[i]] = CreateFrame("Frame", "TOCA.FrameHelp", TOCA.FrameHelp, "BackdropTemplate")
+  TOCA.FrameHelpPage[TOCA.HelpTabs[i]]:SetWidth(TOCA.FrameHelp:GetWidth())
+  TOCA.FrameHelpPage[TOCA.HelpTabs[i]]:SetHeight(TOCA.FrameHelp:GetHeight())
+  TOCA.FrameHelpPage[TOCA.HelpTabs[i]]:SetPoint("CENTER", 0, 0)
+
+  TOCA.Button.TabBack[i]= CreateFrame("Button", nil, TOCA.FrameHelp, "BackdropTemplate")
+  TOCA.Button.TabBack[i]:SetSize(TOCA.tabwidth-20, 28)
+  TOCA.Button.TabBack[i]:SetPoint("TOPLEFT", -80+i*92, 25)
+  TOCA.Button.TabBack[i]:SetBackdrop({
+    bgFile  = "Interface/ToolTips/CHATBUBBLE-BACKGROUND",
+    edgeFile= "",
+    edgeSize= 12,
+    insets  = {left=2, right=2, top=2, bottom=2},
+  })
+  TOCA.Button.Tab[i]= CreateFrame("Button", nil, TOCA.Button.TabBack[i], "BackdropTemplate")
+  TOCA.Button.Tab[i]:SetSize(TOCA.tabwidth, 32)
+  TOCA.Button.Tab[i]:SetPoint("CENTER", 0, 0)
+  TOCA.Button.Tab[i]:SetBackdrop({
+    bgFile  = "Interface/OPTIONSFRAME/UI-OptionsFrame-ActiveTab",
+    --edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
+    edgeFile= "",
+    edgeSize= 12,
+    insets  = {left=2, right=2, top=2, bottom=2},
+  })
+  --TOCA.Button.Tab[i]:SetBackdropColor(0.7, 0, 0, 1)
+  --TOCA.Button.Tab[i]:SetBackdropBorderColor(1, 1, 1, 0.6)
+  TOCA.Button.Tab[i].text = TOCA.Button.Tab[i]:CreateFontString(nil, "ARTWORK")
+  TOCA.Button.Tab[i].text:SetFont(TOCA.Global.font, 12, "OUTLINE")
+  TOCA.Button.Tab[i].text:SetPoint("CENTER", 0, 0)
+  TOCA.Button.Tab[i].text:SetText(TOCA.HelpTabs[i])
+  TOCA.Button.Tab[i]:SetScript("OnClick", function()
+    for i=1, getn(TOCA.HelpTabs) do
+      --TOCA.FrameHelpPage[TOCA.HelpTabs[i]]:Hide()
+      TOCA.Button.TabBack[i]:SetSize(TOCA.tabwidth-20, 28)
+      TOCA.TextFrame.text:SetText(TOCA.HelpMessageArray)
+    end
+    --TOCA.FrameHelpPage[TOCA.HelpTabs[i]]:Show()
+    TOCA.Button.TabBack[i]:SetSize(TOCA.tabwidth-20, 30)
+    if (TOCA.HelpTabs[i] == "Credit") then
+      TOCA.TextFrame.text:SetText(TOCA.CreditMessageArray)
+    end
+  end)
+end
+TOCA.Button.TabBack[1]:SetSize(TOCA.tabwidth-20, 30) --first tab
+
 TOCA.helpMessage = {
   "Welcome to " .. TOCA.Global.title .. "|r v" .. TOCA.Global.version,
   "Please note: Totem Caddy is still evolving. Improvements will be made as time continues. Enjoy!",
@@ -33,14 +88,26 @@ TOCA.helpMessage = {
   "The set of totems are by default, but you can create your own totem sets in the options window.",
   "For addition options or create totem sets:",
   "Select the cogwheel button, then select Totem Sets, You can select which totem for each category, give it a name, then select the bottom arrow on the main frame dropdown to access it.",
+  "You can also set the Totem Order by selecting the dropdown and rearranging them to your preference.",
+}
+TOCA.CreditMessage = {
+  "Special Thanks to some beta testers in my guild:",
+  "<Destructive Nature> of Myzrael\n",
+  "Especially to my shaman buddy Shockpopz of Myzrael",
+  "For all the valuable feedback!",
 }
 TOCA.HelpMessageArray = ""
-for k, v in pairs(TOCA.helpMessage) do
+for k,v in pairs(TOCA.helpMessage) do
   TOCA.HelpMessageArray = TOCA.HelpMessageArray .. v .. "\n\n"
+end
+TOCA.CreditMessageArray = ""
+for k,v in pairs(TOCA.CreditMessage) do
+  TOCA.CreditMessageArray = TOCA.CreditMessageArray .. v .. "\n\n"
 end
 
 TOCA.TextFrame_w = FrameHelp_w-20
 TOCA.TextFrame_h = FrameHelp_h-10
+--TOCA.TextFrame = CreateFrame("Frame", nil, TOCA.FrameHelpPage[TOCA.HelpTabs[1]])
 TOCA.TextFrame = CreateFrame("Frame", nil, TOCA.FrameHelp)
 TOCA.TextFrame:SetWidth(TOCA.TextFrame_w)
 TOCA.TextFrame:SetHeight(TOCA.TextFrame_h)
@@ -58,23 +125,23 @@ TOCA.TextFrameScrollFrame.Child = CreateFrame("ScrollFrame", nil, TOCA.TextFrame
 TOCA.TextFrameScrollFrame.Child:SetPoint("TOPLEFT", TOCA.TextFrameScrollFrame, "TOPLEFT", 3, -3)
 TOCA.TextFrameScrollFrame.Child:SetPoint("BOTTOMRIGHT", TOCA.TextFrameScrollFrame, "BOTTOMRIGHT", 10, 4)
 TOCA.TextFrameScrollFrameChildFrame = CreateFrame("Frame", TOCA.TextFrameScrollFrameChildFrame, TOCA.TextFrameScrollFrame.Child)
-TOCA.TextFrameScrollFrameChildFrame:SetSize(TOCA.TextFrame_w-40, TOCA.TextFrame_h-20)
+TOCA.TextFrameScrollFrameChildFrame:SetSize(TOCA.TextFrame_w-40, TOCA.TextFrame_h)
 TOCA.TextFrameScrollFrame.Child:SetScrollChild(TOCA.TextFrameScrollFrameChildFrame)
 TOCA.TextFrameScrollFrame.Child.ScrollBar:ClearAllPoints()
 TOCA.TextFrameScrollFrame.Child.ScrollBar:SetPoint("TOPLEFT", TOCA.TextFrameScrollFrame.Child, "TOPRIGHT", 0, -17)
 TOCA.TextFrameScrollFrame.Child.ScrollBar:SetPoint("BOTTOMRIGHT", TOCA.TextFrameScrollFrame.Child, "BOTTOMRIGHT", -42, 14)
 TOCA.TextFrame.text = CreateFrame("EditBox", nil, TOCA.TextFrameScrollFrameChildFrame)
 TOCA.TextFrame.text:SetWidth(TOCA.TextFrame_w-20)
-TOCA.TextFrame.text:SetHeight(20)
+TOCA.TextFrame.text:SetHeight(TOCA.TextFrame_h)
 TOCA.TextFrame.text:SetFontObject(GameFontWhite)
-TOCA.TextFrame.text:SetPoint("CENTER", 10, -30)
+TOCA.TextFrame.text:SetPoint("TOPLEFT", 4, -4)
 TOCA.TextFrame.text:SetMultiLine(true)
 TOCA.TextFrame.text:ClearFocus(self)
 TOCA.TextFrame.text:SetAutoFocus(false)
 TOCA.TextFrame.text:SetText(TOCA.HelpMessageArray)
 
 TOCA.Button.CloseFrameHelp= CreateFrame("Button", nil, TOCA.FrameHelp, "BackdropTemplate")
-TOCA.Button.CloseFrameHelp:SetSize(80, 25)
+TOCA.Button.CloseFrameHelp:SetSize(100, 25)
 TOCA.Button.CloseFrameHelp:SetPoint("CENTER", 0, -86)
 TOCA.Button.CloseFrameHelp:SetBackdrop(TOCA.Backdrop.Button)
 TOCA.Button.CloseFrameHelp:SetBackdropColor(0.7, 0, 0, 1)
@@ -93,17 +160,7 @@ TOCA.Button.CloseFrameHelp:SetScript("OnClick", function()
   TOCA.FrameHelp:Hide()
   TOCADB[TOCA.player.combine]["HELP"] = TOCA.Global.version
 end)
---TOCA.FrameHelp:Hide()
---[==[
-TOCA.Checkbox.DontShow={}
-TOCA.Checkbox.DontShow = CreateFrame("CheckButton", nil, TOCA.FrameHelp, "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.DontShow:SetPoint("CENTER", -80, -110)
-TOCA.Checkbox.DontShow:SetChecked(1)
-TOCA.Checkbox.DontShow.text = TOCA.Checkbox.DontShow:CreateFontString(nil, "ARTWORK")
-TOCA.Checkbox.DontShow.text:SetFont(TOCA.Global.font, 10, "OUTLINE")
-TOCA.Checkbox.DontShow.text:SetPoint("TOPLEFT", 25, -6)
-TOCA.Checkbox.DontShow.text:SetText("Don't Show this message again")
-]==]--
+
 TOCA.ShowAgain={}
 TOCA.ShowAgain[1] = TOCA.FrameHelp:CreateFontString(nil, "ARTWORK")
 TOCA.ShowAgain[1]:SetFont(TOCA.Global.font, 10, "OUTLINE")

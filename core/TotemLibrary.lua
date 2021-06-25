@@ -1,5 +1,5 @@
 --[==[
-Copyright ©2020 Porthios of Myzrael or Porthias of Myzrael
+Copyright ©2020 Porthias of Myzrael or Porthios of Myzrael
 
 The contents of this addon, excluding third-party resources, are
 copyrighted to Porthios with all rights reserved.

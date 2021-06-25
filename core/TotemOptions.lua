@@ -1,5 +1,5 @@
 --[==[
-Copyright ©2020 Porthios of Myzrael or Porthias of Myzrael
+Copyright ©2020 Porthias of Myzrael or Porthios of Myzrael
 
 The contents of this addon, excluding third-party resources, are
 copyrighted to Porthios with all rights reserved.
@@ -280,3 +280,48 @@ TOCA.Button.TooltipPositionText = TOCA.Button.TooltipPosition:CreateFontString(n
 TOCA.Button.TooltipPositionText:SetFont(TOCA.Global.font, 11)
 TOCA.Button.TooltipPositionText:SetPoint("CENTER", 0, 0)
 TOCA.Button.TooltipPositionText:SetText("Tooltip Position")
+
+TOCA.SlotOrderTitle = TOCA.FrameOptions:CreateFontString(nil, "ARTWORK")
+TOCA.SlotOrderTitle:SetFont(TOCA.Global.font, 12)
+TOCA.SlotOrderTitle:SetPoint("CENTER", 170, -20)
+TOCA.SlotOrderTitle:SetText("Totem Order")
+
+TOCA.SlotOrderIcon={}
+TOCA.SlotOrderBack={}
+TOCA.Dropdown.OrderSet={}
+
+movingTotem= "nil"
+overTotem = "nil"
+TOCA.SlotSets_x = 0
+for i=1, getn(TOCA.Dropdown.OrderSetMenu) do
+  TOCA.SlotSets_x = TOCA.SlotSets_x + 68
+  TOCA.Dropdown.OrderSet[i] = CreateFrame("Frame", nil, TOCA.FrameOptions, "UIDropDownMenuTemplate")
+  TOCA.Dropdown.OrderSet[i]:SetPoint("CENTER", TOCA.SlotSets_x, -50)
+  TOCA.Dropdown.OrderSet[i].displayMode = "MENU"
+  TOCA.Dropdown.OrderSet[i].text = TOCA.Dropdown.OrderSet[i]:CreateFontString(nil, "ARTWORK")
+  TOCA.Dropdown.OrderSet[i].text:SetFont(TOCA.Global.font, 10)
+  TOCA.Dropdown.OrderSet[i].text:SetPoint("TOPLEFT", TOCA.Dropdown.OrderSet[i], "TOPLEFT", 25, -8)
+  TOCA.Dropdown.OrderSet[i].text:SetText(TOCA.Dropdown.OrderSetMenu[i])
+  TOCA.Dropdown.OrderSet[i].onClick = function(self, checked)
+    TOCA.Dropdown.OrderSet[i].text:SetText(self.value)
+    --print(self.value)
+    TOCA.BuildTotemOrder()
+  end
+  TOCA.Dropdown.OrderSet[i].initialize = function(self, level)
+    local info = UIDropDownMenu_CreateInfo()
+    local i = 0
+    for k,v in pairs(TOCA.Dropdown.OrderSetMenu) do
+      info.notCheckable = 1
+      info.padding = 2
+      info.text = v
+      info.value= v
+      info.fontObject = GameFontWhite
+      info.justifyH = "LEFT"
+      info.disabled = false
+      info.func = self.onClick
+      UIDropDownMenu_AddButton(info, level)
+    end
+  end
+  UIDropDownMenu_SetWidth(TOCA.Dropdown.OrderSet[i], 50)
+  --print("TOCA.Dropdown.OrderSet[" .. totemNum)
+end

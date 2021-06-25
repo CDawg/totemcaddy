@@ -1,5 +1,5 @@
 --[==[
-Copyright ©2020 Porthios of Myzrael or Porthias of Myzrael
+Copyright ©2020 Porthias of Myzrael or Porthios of Myzrael
 
 The contents of this addon, excluding third-party resources, are
 copyrighted to Porthios with all rights reserved.
@@ -16,7 +16,7 @@ the copyright holders.
 TOCA.Global = {
  title  = "|cff006aa6Totem Caddy|r",
  author = "Porthios of Myzrael",
- version= 2.30,
+ version= 2.32,
  command= "toca",
  width  = 150,
  height = 85,
@@ -232,6 +232,10 @@ function TOCA.Init()
       TOCA.Button.TotemicCall.ECR:Hide()
       TOCA.Checkbox.EndCaps:SetChecked(nil)
     end
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMORDER"]) then
+      TOCA.SetTotemOrderDropdown()
+      TOCA.SetTotemOrder()
+    end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["OPACITY"]) then
       TOCA.Slider.Opacity:SetValue(TOCADB[TOCA.player.combine]["CONFIG"]["OPACITY"])
       TOCA.Slider.Opacity.Val:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["OPACITY"])
@@ -362,13 +366,18 @@ TOCA.Tooltip.title = TOCA.Tooltip:CreateFontString(nil, "ARTWORK")
 TOCA.Tooltip.title:SetFont(TOCA.Global.font, 14)
 TOCA.Tooltip.title:SetPoint("TOPLEFT", 10, -10)
 TOCA.Tooltip.title:SetText("")
+TOCA.Tooltip.cost = TOCA.Tooltip:CreateFontString(nil, "ARTWORK")
+TOCA.Tooltip.cost:SetFont(TOCA.Global.font, 12)
+TOCA.Tooltip.cost:SetPoint("TOPLEFT", 10, -30)
+TOCA.Tooltip.cost:SetText("")
 TOCA.Tooltip.tools = TOCA.Tooltip:CreateFontString(nil, "ARTWORK")
 TOCA.Tooltip.tools:SetFont(TOCA.Global.font, 12)
-TOCA.Tooltip.tools:SetPoint("TOPLEFT", 12, -30)
+TOCA.Tooltip.tools:SetPoint("TOPLEFT", 12, -45)
 TOCA.Tooltip.tools:SetText("")
 TOCA.Tooltip.text = TOCA.Tooltip:CreateFontString(nil, "ARTWORK")
 TOCA.Tooltip.text:SetFont(TOCA.Global.font, 12)
-TOCA.Tooltip.text:SetPoint("TOPLEFT", 12, -50)
+TOCA.Tooltip.text:SetNonSpaceWrap(1)
+TOCA.Tooltip.text:SetPoint("TOPLEFT", 12, -60)
 TOCA.Tooltip.text:SetText("")
 TOCA.Tooltip.text:SetTextColor(1, 1, 0.2, 1)
 TOCA.Tooltip:Hide()
@@ -380,7 +389,7 @@ local function adjustTooltipHeight(s, x, indent)
   local function cleanse(s) return s:gsub("@x%d%d%d",""):gsub("@r","") end
   for prefix, word, suffix, newline in s:gmatch("([ \t]*)(%S*)([ \t]*)(\n?)") do
     if (#t >= 2) then
-      TOCA.Tooltip:SetHeight(TooltipMaxHeight + (8 * #t))
+      TOCA.Tooltip:SetHeight(TooltipMaxHeight + (10 * #t))
     end
     if #(cleanse(t[#t])) + #prefix + #cleanse(word) > x and #t > 0 then
       table.insert(t, word..suffix)
@@ -394,18 +403,34 @@ local function adjustTooltipHeight(s, x, indent)
   return indent..table.concat(t, "\n"..indent)
 end
 
-function TOCA.TooltipDisplay(msg, tools, msgtooltip)
-  TOCA.Tooltip:Show()
-  TOCA.Tooltip:SetHeight(TooltipMaxHeight)
-  TOCA.Tooltip.title:SetText(msg)
-  local toolsMsg = tools.lower(tools)
-  toolsMsg = firstToUpper(toolsMsg)
-  TOCA.Tooltip.tools:SetText("Tools: " .. toolsMsg .. " Totem")
-  if (tools == "") then
-    TOCA.Tooltip.tools:SetText("")
+function TOCA.TooltipDisplay(spell, tools, msgtooltip)
+  local spellName, spellSubName, spellID = GetSpellBookItemName(spell)
+  if (spellID) then
+    local spellDesc = GetSpellDescription(spellID)
+    local spellPower= GetSpellPowerCost(spellID)
+    local spellCost = 0
+    for k,powerInfo in pairs(spellPower) do
+      spellCost = powerInfo.cost
+    end
+    TOCA.Tooltip:SetHeight(TooltipMaxHeight)
+    TOCA.Tooltip.title:SetText(spell)
+    TOCA.Tooltip.cost:SetText("")
+    if (spellCost) then
+      TOCA.Tooltip.cost:SetText(spellCost .. " Mana")
+    end
+    local toolsMsg = tools.lower(tools)
+    toolsMsg = firstToUpper(toolsMsg)
+    TOCA.Tooltip.tools:SetText("Tools: " .. toolsMsg .. " Totem")
+    if (tools == "") then
+      TOCA.Tooltip.tools:SetText("")
+    end
+    TOCA.Tooltip.text:SetText(adjustTooltipHeight(spellDesc, 34))
+    TOCA.Tooltip:Show()
+  else
+    TOCA.Tooltip:Show()
+    TOCA.Tooltip.title:SetText(spell)
+    TOCA.Tooltip.text:SetText(adjustTooltipHeight(msgtooltip, 34))
   end
-  TOCA.Tooltip.text:SetText(adjustTooltipHeight(msgtooltip, 34))
-  TOCA.Tooltip:Show()
 end
 
 --TOCA.HasTotemOut = 0
@@ -464,12 +489,44 @@ function TOCA.ParsePacket(netpacket, code)
   end
 end
 
-TOCA.TotemBuildOrder = nil
-function TOCA.BuildTotemOrder()
-  TOCA.TotemBuildOrder = ""
-  for totemCat,v in pairsByKeys(TOCA.totems) do
-    print(TOCA.Dropdown.OrderSet[totemCat].text:GetText())
+function TOCA.GetTotemOrder()
+  local buildOrder = ""
+  for k, v in ipairs(TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMORDER"]) do
+    buildOrder = buildOrder .. v
   end
+  return buildOrder
+end
+function TOCA.SetTotemOrder()
+  local buildOrder = TOCA.GetTotemOrder()
+  local totemOrder = split(buildOrder, ",")
+  for k,v in ipairs(totemOrder) do
+    --print("order " .. v .. " = " .. k)
+    TOCA.Slot[v]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[k], -35)
+    TOCA.FrameSetsSlot[v]:SetPoint("CENTER", -100+TOCA.SlotSetsPosX[k], 20)
+  end
+  --print(buildOrder)
+end
+
+function TOCA.SetTotemOrderDropdown() --handled on Init() ONLY
+  local buildOrder = TOCA.GetTotemOrder()
+  local totemOrder = split(buildOrder, ",")
+  for k,v in ipairs(totemOrder) do
+    TOCA.Dropdown.OrderSet[k].text:SetText(v)
+  end
+end
+
+TOCA.Dropdown.OrderSetMenu={"AIR", "EARTH", "FIRE", "WATER"}
+function TOCA.BuildTotemOrder()
+  local buildOrder = ""
+  local totemOrder = ""
+  for i=1, getn(TOCA.Dropdown.OrderSetMenu) do
+    totemOrder = totemOrder .. TOCA.Dropdown.OrderSet[i].text:GetText() .. ","
+  end
+  buildOrder = totemOrder
+  buildOrder = buildOrder:sub(1, -2)
+  --print(buildOrder)
+  TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMORDER"] = {buildOrder}
+  TOCA.SetTotemOrder()
 end
 
 SLASH_TOCA1 = TCCMD
