@@ -49,17 +49,17 @@ TOCA.Button.FrameSetsSave:SetScript("OnClick", function()
   TOCA.FrameSetsProfile.border:SetBackdropBorderColor(1, 1, 1, 0.8)
   local profileSaveText = TOCA.FrameSetsProfile:GetText()
   if ((profileSaveText == " ") or (profileSaveText == "") or (profileSaveText == nil)) then
-    print(TOCA.Global.title .. " Totem Set Updated: |cffffff00" .. TOCA.Dropdown.Sets.text:GetText())
+    TOCA.Notification("Totem Set Updated: |cffffff00" .. TOCA.Dropdown.Sets.text:GetText())
     TOCADB[TOCA.player.combine]["PROFILES"][TOCA.Dropdown.Sets.text:GetText()] = {TOCA_AIR=TOCASlotOne, TOCA_EARTH=TOCASlotTwo, TOCA_FIRE=TOCASlotThree, TOCA_WATER=TOCASlotFour}
   else
     if (profileSaveText:match("[^%w%s]")) then
       TOCA.FrameSetsProfile.border:SetBackdropBorderColor(1, 0.2, 0.2, 1)
-      print(TOCA.Global.title .. "|cffff0000 Unable to save profile with non alphanumeric characters!")
+      TOCA.Notification("|cffff0000 Unable to save profile with non alphanumeric characters!")
     else
       if (TOCADB[TOCA.player.combine]["PROFILES"][profileSaveText]) then
-        print(TOCA.Global.title .. " Totem Set Updated: |cffffff00" .. profileSaveText)
+        TOCA.Notification("Totem Set Updated: |cffffff00" .. profileSaveText)
       else
-        print(TOCA.Global.title .. " Totem Set Saved: |cffffff00" .. profileSaveText)
+        TOCA.Notification("Totem Set Saved: |cffffff00" .. profileSaveText)
       end
       TOCADB[TOCA.player.combine]["PROFILES"][profileSaveText] = {TOCA_AIR=TOCASlotOne, TOCA_EARTH=TOCASlotTwo, TOCA_FIRE=TOCASlotThree, TOCA_WATER=TOCASlotFour}
       TOCA.UpdateDDMenu(TOCA.Dropdown.Sets)
@@ -87,7 +87,7 @@ end)
 TOCA.Button.FrameSetsDeleteOpenPrompt:SetScript("OnClick", function()
   local profileSaveText = TOCA.Dropdown.Sets.text:GetText()
   if (profileSaveText == TOCA.Dropdown.Menu[1]) then
-    print(TOCA.Global.title .. "|cffff0000 Unable to remove profile:|r " .. profileSaveText)
+    TOCA.Notification("|cffff0000 Unable to remove profile:|r " .. profileSaveText)
   else
     TOCA.Prompt.DeleteSetText:SetText('Delete Totem Set "' .. profileSaveText .. '" ?')
     TOCA.Prompt.DeleteSet:Show()
@@ -131,13 +131,13 @@ end)
 TOCA.Button.FrameSetsDelete:SetScript("OnClick", function()
   local profileSaveText = TOCA.Dropdown.Sets.text:GetText()
   if (profileSaveText == TOCA.Dropdown.Menu[1]) then
-    print(TOCA.Global.title .. "|cffff0000 Unable to remove profile:|r " .. profileSaveText)
+    TOCA.Notification("|cffff0000 Unable to remove profile:|r " .. profileSaveText)
   else
     if (TOCADB[TOCA.player.combine]["PROFILES"][profileSaveText]) then
       TOCADB[TOCA.player.combine]["PROFILES"][profileSaveText] = nil
       TOCA.UpdateDDMenu(TOCA.Dropdown.Sets)
       TOCA.UpdateDDMenu(TOCA.Dropdown.Main)
-      print(TOCA.Global.title .. " Totem Set Deleted: |cffffff00" .. profileSaveText)
+      TOCA.Notification("Totem Set Deleted: |cffffff00" .. profileSaveText)
       TOCA.SetDDMenu(TOCA.Dropdown.Main, TOCA.Dropdown.Menu[1])
       TOCA.FrameSetsProfile:SetText("")
       TOCA.Prompt.DeleteSet:Hide()
@@ -223,7 +223,8 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 
   local totemCategoryCount = getn(TOCA.totems[totemCat])
   TOCA.FrameSetsSlotSelectMenu[totemCat]= CreateFrame("Frame", nil, TOCA.FrameSetsSlotSelect[totemCat], "BackdropTemplate")
-  TOCA.FrameSetsSlotSelectMenu[totemCat]:SetSize(40, (totemCategoryCount*40)+30)
+  --TOCA.FrameSetsSlotSelectMenu[totemCat]:SetSize(40, (totemCategoryCount*40)+30)
+  TOCA.FrameSetsSlotSelectMenu[totemCat]:SetSize(40, totemCategoryCount*36.2)
   TOCA.FrameSetsSlotSelectMenu[totemCat]:SetPoint("TOPLEFT", -2, -10)
   TOCA.FrameSetsSlotSelectMenu[totemCat]:SetBackdrop(TOCA.Backdrop.General)
   TOCA.FrameSetsSlotSelectMenu[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
@@ -231,6 +232,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.FrameSetsSlotSelectMenu[totemCat]:SetFrameStrata("DIALOG")
   TOCA.FrameSetsSlotSelectMenu[totemCat]:Hide()
 
+  --[==[
   TOCA.FrameSetsSlotSelectTotemCancel= CreateFrame("Button", nil, TOCA.FrameSetsSlotSelectMenu[totemCat], "BackdropTemplate")
   TOCA.FrameSetsSlotSelectTotemCancel:SetSize(35, 35)
   TOCA.FrameSetsSlotSelectTotemCancel:SetPoint("TOPLEFT", 2.5, -5)
@@ -250,16 +252,17 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.FrameSetsSlotSelectTotemCancel:SetScript("OnClick", function()
     TOCA.CloseAllMenus()
   end)
+  ]==]--
 
   local totemSpellCount={}
   totemSpellCount[totemCat] = 0
   for i,totemSpell in pairs(TOCA.totems[totemCat]) do
-    --print(totemCat .. i .. " " .. totemSpell[1])
+    --TOCA.Notification(totemCat .. i .. " " .. totemSpell[1], true)
     totemSpellCount[totemCat] = totemSpellCount[totemCat]+35
     TOCA.FrameSetsSlotSelectTotem[totemCat]={}
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]= CreateFrame("Button", nil, TOCA.FrameSetsSlotSelectMenu[totemCat], "BackdropTemplate")
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetSize(35, 35)
-    TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetPoint("TOPLEFT", 2.5, -totemSpellCount[totemCat]-5)
+    TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetPoint("TOPLEFT", 2.5, -totemSpellCount[totemCat]+30)
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetBackdrop({
       bgFile  = "interface/icons/" .. totemSpell[2],
       edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
@@ -276,7 +279,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
       self:SetBackdropBorderColor(1, 1, 1, 0.6)
     end)
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetScript("OnClick", function()
-      --print(totemCat .. " ".. i .. " " .. totemSpell[1])
+      --TOCA.Notification(totemCat .. " ".. i .. " " .. totemSpell[1], true)
       if (totemCat == "AIR") then
         TOCASlotOne = totemSpell[1]
       end
@@ -348,3 +351,43 @@ TOCA.Dropdown.Sets.onClick = function(self, checked)
   TOCA.FrameSetsProfile:SetText(self.value)
 end
 UIDropDownMenu_SetWidth(TOCA.Dropdown.Sets, 135)
+
+TOCA.Checkbox.Timers={}
+TOCA.Checkbox.Timers = CreateFrame("CheckButton", nil, TOCA.FrameOptions, "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.Timers:SetPoint("CENTER", 60, -80)
+TOCA.Checkbox.Timers:SetChecked(1)
+TOCA.Checkbox.Timers.text = TOCA.Checkbox.Timers:CreateFontString(nil, "ARTWORK")
+TOCA.Checkbox.Timers.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
+TOCA.Checkbox.Timers.text:SetPoint("TOPLEFT", 25, -6)
+TOCA.Checkbox.Timers.text:SetText("Display Totem Timers")
+TOCA.Checkbox.Timers:SetScript("OnClick", function(self)
+  if (self:GetChecked()) then
+    TOCADB[TOCA.player.combine]["CONFIG"]["TIMERS"] = "ON"
+    for i=1, 4 do
+      TOCA.Slot.Timer[i]:Show()
+    end
+  else
+    TOCADB[TOCA.player.combine]["CONFIG"]["TIMERS"] = "OFF"
+    for i=1, 4 do
+      TOCA.Slot.Timer[i]:Hide()
+    end
+  end
+end)
+
+TOCA.Checkbox.TimersInMinutes={}
+TOCA.Checkbox.TimersInMinutes = CreateFrame("CheckButton", nil, TOCA.FrameOptions, "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.TimersInMinutes:SetPoint("CENTER", 60, -105)
+TOCA.Checkbox.TimersInMinutes:SetChecked(1)
+TOCA.Checkbox.TimersInMinutes.text = TOCA.Checkbox.TimersInMinutes:CreateFontString(nil, "ARTWORK")
+TOCA.Checkbox.TimersInMinutes.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
+TOCA.Checkbox.TimersInMinutes.text:SetPoint("TOPLEFT", 25, -6)
+TOCA.Checkbox.TimersInMinutes.text:SetText("Display Totem Timers In Minutes")
+TOCA.Checkbox.TimersInMinutes:SetScript("OnClick", function(self)
+  if (self:GetChecked()) then
+    TOCADB[TOCA.player.combine]["CONFIG"]["TIMERSMINUTES"] = "ON"
+    TOCA.globalTimerInMinutes = true
+  else
+    TOCADB[TOCA.player.combine]["CONFIG"]["TIMERSMINUTES"] = "OFF"
+    TOCA.globalTimerInMinutes = false
+  end
+end)

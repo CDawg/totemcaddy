@@ -38,6 +38,8 @@ TOCA.FrameMain.Background:SetBackdropColor(0, 0, 0, 0.8)
 TOCA.FrameMain.Background:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.FrameMain.Background:SetFrameLevel(TOCA.Framelevel.Background)
 
+TOCA.KeyBindsSetOnLoad = 1
+
 TOCA.Main = CreateFrame("Frame")
 local success = C_ChatInfo.RegisterAddonMessagePrefix(TOCA.Global.prefix)
 TOCA.Main:RegisterEvent("ADDON_LOADED")
@@ -52,21 +54,37 @@ TOCA.Main:RegisterEvent("UNIT_POWER_FREQUENT")
 TOCA.Main:RegisterEvent("UNIT_SPELLCAST_SENT")
 TOCA.Main:RegisterEvent("PLAYER_REGEN_ENABLED")
 TOCA.Main:RegisterEvent("PLAYER_REGEN_DISABLED")
-TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket)
+TOCA.Main:RegisterEvent("PLAYER_DEAD")
+TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted, _spellID)
   if ((event == "ADDON_LOADED") and (prefix == TOCA.Global.prefix)) then
-    TOCA.ChatNotification("v" .. TOCA.Global.version .. " Initializing by " .. TOCA.Global.author .. ". Type /" .. TOCA.Global.command .. " for commands.")
+    TOCA.Notification("v" .. TOCA.Global.version .. " Initializing by " .. TOCA.Global.author .. ". Type /" .. TOCA.Global.command .. " for commands.")
     TOCA.Init()
   end
 
   if ((event == "UNIT_SPELLCAST_START") or
   (event == "UNIT_SPELLCAST_STOP") or
   (event == "UNIT_POWER_FREQUENT")) then
-    --print(event)
     TOCA.TotemBarUpdate()
+    --[==[
+    local spell, text, texture, startTimeMS, endTimeMS, isTradeSkill, castID, spellId = UnitCastingInfo("player")
+    if (spell) then
+      local finish = endTimeMS/1000 - GetTime()
+    end
+    ]==]--
   end
   --this needs to be handled on a different event
   if (event == "UNIT_SPELLCAST_SENT") then
     TOCA.TotemBarUpdate()
+    local isPlayer = UnitIsPlayer("player")
+    if ((isPlayer) and (_spellID)) then
+      if(_spellID == TOCA.spell.TOTEMIC_CALL) then
+        TOCA.TotemTimerReset("all")
+      end
+      if(_spellID) then
+        --TOCA.Notification("debug spell: " .. _spellID, true)
+        TOCA.TotemTimerResetBySpell(_spellID)
+      end
+    end
   end
   if (event == "UNIT_MAXPOWER") then
     TOCA.TotemBarUpdate()
@@ -76,10 +94,20 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket)
   end
   if (event == "PLAYER_TOTEM_UPDATE") then
     TOCA.TotemBarUpdate()
+    TOCA.TotemBarTimerStart()
+    TOCA.Notification("event " .. event, true)
+  end
+
+  if (event == "PLAYER_DEAD") then
+    TOCA.TotemTimerReset("all")
   end
 
   if (event == "PLAYER_LOGIN") then
     TOCA.SendPacket(TOCA.Prefix.version .. TOCA.Global.version, true)
+    if (TOCA.KeyBindsSetOnLoad == 1) then
+      TOCA.SetKeyBindOnLoad()
+      TOCA.KeyBindsSetOnLoad = 2
+    end
   end
 
   for totemCat,v in pairsByKeys(TOCA.totems) do
@@ -101,14 +129,13 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket)
           local latest_version = tonumber(getPacket)
           local my_version = tonumber(TOCA.Global.version)
           if (latest_version > my_version) then --2 minor
-            TOCA.ChatNotification("|cffeca63dYou have an outdated version! Latest version: " .. latest_version)
+            TOCA.Notification("|cffeca63dYou have an outdated version! Latest version: " .. latest_version)
             TOCA.version_alerted = tonumber(latest_version)
           end
         end
       end
     end
   end
-
 end)
 
 TOCA.Button.TotemicCall_w=40
@@ -168,6 +195,7 @@ TOCA.Slot.deactive={}
 TOCA.Slot.highlight={}
 TOCA.Totem={}
 TOCA.TotemFlash={}
+TOCA.Slot.Timer={}
 TOCA.SlotPosX = {
   18.5,
   54.5,
@@ -177,7 +205,6 @@ TOCA.SlotPosX = {
 local totemNum = 0
 for totemCat,v in pairsByKeys(TOCA.totems) do
   totemNum = totemNum+1
-  --print(totemNum)
   TOCA.Slot_x = TOCA.Slot_x +36
   TOCA.Slot[totemCat]={}
   TOCA.Slot[totemCat]= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTemplate")
@@ -198,11 +225,6 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.Slot.highlight[totemCat]:SetTexture("Interface/Buttons/ButtonHilight-Square")
   TOCA.Slot.highlight[totemCat]:SetBlendMode("ADD")
   TOCA.Slot.highlight[totemCat]:Hide()
-  TOCA.Slot.Timer = TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
-  TOCA.Slot.Timer:SetFont(TOCA.Global.font, 12, "OUTLINE")
-  TOCA.Slot.Timer:SetPoint("CENTER", 0, -8)
-  TOCA.Slot.Timer:SetText("1")
-  TOCA.Slot.Timer:Hide()
   TOCA.Totem[totemCat] = CreateFrame("Button", nil, TOCA.Slot[totemCat], "SecureActionButtonTemplate");
   TOCA.Totem[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
   TOCA.Totem[totemCat]:SetPoint("CENTER", 0, 0)
@@ -210,15 +232,33 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   local thisTotemSpell = ""
   if (totemCat == "AIR") then
     TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotOne)
+    TOCA.Slot.Timer[4]= TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
+    TOCA.Slot.Timer[4]:SetFont(TOCA.Global.font, 12, "OUTLINE")
+    TOCA.Slot.Timer[4]:SetPoint("CENTER", 0, -8)
+    TOCA.Slot.Timer[4]:SetText("")
   end
   if (totemCat == "EARTH") then
     TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotTwo)
+    TOCA.Slot.Timer[2]= TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
+    TOCA.Slot.Timer[2]:SetFont(TOCA.Global.font, 12, "OUTLINE")
+    TOCA.Slot.Timer[2]:SetPoint("CENTER", 0, -8)
+    TOCA.Slot.Timer[2]:SetText("")
   end
   if (totemCat == "FIRE") then
     TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotThree)
+    TOCA.Slot.Timer[1]= TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
+    TOCA.Slot.Timer[1]:SetFont(TOCA.Global.font, 12, "OUTLINE")
+    TOCA.Slot.Timer[1]:SetPoint("CENTER", 0, -8)
+    TOCA.Slot.Timer[1]:SetText("")
   end
   if (totemCat == "WATER") then
     TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotFour)
+    TOCA.Slot.Timer[3]= TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
+    TOCA.Slot.Timer[3]:SetFont(TOCA.Global.font, 12, "OUTLINE")
+    TOCA.Slot.Timer[3]:SetPoint("CENTER", 0, -8)
+    TOCA.Slot.Timer[3]:SetText("")
+    --TOCA.SetKeyBindOnLoad("TOTEM_WATER", TOCASlotFour)
+    TOCA.SetKeyBindReset("TOTEM_WATER", TOCASlotFour)
   end
   TOCA.Totem[totemCat]:SetScript("OnEnter", function()
     TOCA.CloseAllMenus()
@@ -283,8 +323,8 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 
   local totemCategoryCount = getn(TOCA.totems[totemCat])
   TOCA.SlotSelectMenu[totemCat]= CreateFrame("Frame", nil, TOCA.SlotSelect[totemCat], "BackdropTemplate")
-  TOCA.SlotSelectMenu[totemCat]:SetSize(40, (totemCategoryCount*38))
-  TOCA.SlotSelectMenu[totemCat]:SetPoint("BOTTOMLEFT", -3, 10)
+  TOCA.SlotSelectMenu[totemCat]:SetSize(40, (totemCategoryCount*36.2))
+  TOCA.SlotSelectMenu[totemCat]:SetPoint("BOTTOMLEFT", -3, 15)
   TOCA.SlotSelectMenu[totemCat]:SetBackdrop(TOCA.Backdrop.General)
   TOCA.SlotSelectMenu[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
   TOCA.SlotSelectMenu[totemCat]:SetFrameLevel(TOCA.Framelevel.Menu)
@@ -293,12 +333,11 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   local totemSpellCount={}
   totemSpellCount[totemCat] = 0
   for i,totemSpell in pairs(TOCA.totems[totemCat]) do
-    --print(totemCat .. i .. " " .. totemSpell[1])
     totemSpellCount[totemCat] = totemSpellCount[totemCat]+35
     TOCA.SlotSelectTotem[totemCat]={}
     TOCA.SlotSelectTotem[totemCat][i]= CreateFrame("Button", nil, TOCA.SlotSelectMenu[totemCat], "BackdropTemplate")
     TOCA.SlotSelectTotem[totemCat][i]:SetSize(35, 35)
-    TOCA.SlotSelectTotem[totemCat][i]:SetPoint("TOPLEFT", 2.5, -totemSpellCount[totemCat]+20)
+    TOCA.SlotSelectTotem[totemCat][i]:SetPoint("TOPLEFT", 2.5, -totemSpellCount[totemCat]+30)
     TOCA.SlotSelectTotem[totemCat][i]:SetFrameLevel(TOCA.Framelevel.Buttons)
     TOCA.SlotSelectTotem[totemCat][i]:SetBackdrop({
       bgFile  = "interface/icons/" .. totemSpell[2],
@@ -315,23 +354,30 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Tooltip:Hide()
       self:SetBackdropBorderColor(1, 1, 1, 0.6)
     end)
-    TOCA.SlotSelectTotem[totemCat][i]:SetScript("OnClick", function()
-      --print(totemCat .. " ".. i .. " " .. totemSpell[1])
+    TOCA.SlotSelectTotem[totemCat][i]:SetScript("OnClick", function(self)
       if (totemCat == "AIR") then
         TOCASlotOne = totemSpell[1]
         TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotOne)
+        TOCA.SetKeyBindReset("TOTEM_AIR", totemSpell[1])
+        TOCA.Notification("Setting AIR " .. totemSpell[1], true)
       end
       if (totemCat == "EARTH") then
         TOCASlotTwo = totemSpell[1]
         TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotTwo)
+        TOCA.SetKeyBindReset("TOTEM_EARTH", totemSpell[1])
+        TOCA.Notification("Setting EARTH " .. totemSpell[1], true)
       end
       if (totemCat == "FIRE") then
         TOCASlotThree = totemSpell[1]
         TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotThree)
+        TOCA.SetKeyBindReset("TOTEM_FIRE", totemSpell[1])
+        TOCA.Notification("Setting FIRE " .. totemSpell[1], true)
       end
       if (totemCat == "WATER") then
         TOCASlotFour = totemSpell[1]
         TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotFour)
+        TOCA.SetKeyBindReset("TOTEM_WATER", totemSpell[1])
+        TOCA.Notification("Setting WATER " .. totemSpell[1], true)
       end
       TOCA.Slot[totemCat]:SetBackdrop({
         bgFile  = "interface/icons/" .. totemSpell[2],
@@ -378,7 +424,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     --TOCA.TotemExplode[totemCat]:SetPoint("CENTER", 0, 0)
     --TOCA.TotemExplode[totemCat]:SetAttribute("type", "spell")
     --TOCA.TotemExplode[totemCat]:SetAttribute("spell", totemSpell)
-    --print(totemSpell[1])
+    --TOCA.Notification(totemSpell[1], true)
   end
 end
 TOCA.FrameExplode:Hide()
@@ -424,8 +470,7 @@ TOCA.Button.CloseMain:SetScript("OnClick", function()
   TOCA.CloseAllMenus()
   TOCA.FrameMain:Hide()
   TOCADB[TOCA.player.combine]["DISABLED"] = "YES"
-  print(TOCA.Global.title .. " closed. Type '"..TCCMD.." show' to reopen.")
-  TOCA.ChatNotification("closed. Type '"..TCCMD.." show' to reopen.")
+  TOCA.Notification("closed. Type '"..TCCMD.." show' to reopen.")
 end)
 
 TOCA.Button.DropdownMain= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTemplate")

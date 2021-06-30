@@ -29,7 +29,7 @@ TOCA.tabwidth = 110
 TOCA.Button.Tab={}
 TOCA.Button.TabBack={}
 TOCA.HelpTabs = {
-  "Help",
+  "Updates",
   "Credit",
 }
 
@@ -41,7 +41,7 @@ for i=1, getn(TOCA.HelpTabs) do
   TOCA.FrameHelpPage[TOCA.HelpTabs[i]]:SetPoint("CENTER", 0, 0)
 
   TOCA.Button.TabBack[i]= CreateFrame("Button", nil, TOCA.FrameHelp, "BackdropTemplate")
-  TOCA.Button.TabBack[i]:SetSize(TOCA.tabwidth-20, 28)
+  TOCA.Button.TabBack[i]:SetSize(TOCA.tabwidth-20, 29)
   TOCA.Button.TabBack[i]:SetPoint("TOPLEFT", -80+i*92, 25)
   TOCA.Button.TabBack[i]:SetBackdrop({
     bgFile  = "Interface/ToolTips/CHATBUBBLE-BACKGROUND",
@@ -68,7 +68,7 @@ for i=1, getn(TOCA.HelpTabs) do
   TOCA.Button.Tab[i]:SetScript("OnClick", function()
     for i=1, getn(TOCA.HelpTabs) do
       --TOCA.FrameHelpPage[TOCA.HelpTabs[i]]:Hide()
-      TOCA.Button.TabBack[i]:SetSize(TOCA.tabwidth-20, 28)
+      TOCA.Button.TabBack[i]:SetSize(TOCA.tabwidth-20, 29)
       TOCA.TextFrame.text:SetText(TOCA.HelpMessageArray)
     end
     --TOCA.FrameHelpPage[TOCA.HelpTabs[i]]:Show()
@@ -82,19 +82,22 @@ TOCA.Button.TabBack[1]:SetSize(TOCA.tabwidth-20, 30) --first tab
 
 TOCA.helpMessage = {
   "Welcome to " .. TOCA.Global.title .. "|r v" .. TOCA.Global.version,
-  "Please note: Totem Caddy is still evolving. Improvements will be made as time continues. Enjoy!",
+  "|cffffdf96Please note:|r Totem Caddy is still evolving. Improvements will be made as time continues. Enjoy!",
+  "|cffffdf96New Feature:|r Totem timers added for the totem category slots. Options to disable or view in seconds/minutes.",
+  "|cffffdf96New Feature:|r Totem slot keybindings for your totem category slots. If you assign key bindings to to the totem slots for the very first time, you may\nhave to do a '/reload'.",
+  "|cffffdf96First time using Totem Caddy?|r",
   "Let's get started by dragging the Totem Caddy anywhere on your screen saving the position.",
-  "You can select totems in order [AIR,EARTH,FIRE,WATER] by selecting the top arrows above the current totem icons.",
-  "The set of totems are by default, but you can create your own totem sets in the options window.",
+  "You can select totems in a category order (air, earth, fire, or water) by selecting the top arrows above the current totem icons.",
+  "The set of totems are by default, and the order is currently alphabetical. The totem order can changed under the Totem Sets in the options window.",
   "For addition options or create totem sets:",
-  "Select the cogwheel button, then select Totem Sets, You can select which totem for each category, give it a name, then select the bottom arrow on the main frame dropdown to access it.",
-  "You can also set the Totem Order by selecting the dropdown and rearranging them to your preference.",
+  "Select the cogwheel button or type /toca 'options', then select Totem Sets",
+  "You can select which totem for each category, give it a name, then select the bottom arrow on the main frame dropdown to access it.",
 }
 TOCA.CreditMessage = {
   "Special Thanks to some beta testers in my guild:",
-  "<Destructive Nature> of Myzrael\n",
-  "Especially to my shaman buddy Shockpopz of Myzrael",
-  "For all the valuable feedback!",
+  "|cff23782c<Destructive Nature>|r of Myzrael\n",
+  "Especially to my shaman buddy Shockpopz of Myzrael For all the valuable feedback!\n\n\n\n",
+  "Written by Porthias of Myzrael (a.k.a. Porthios)",
 }
 TOCA.HelpMessageArray = ""
 for k,v in pairs(TOCA.helpMessage) do

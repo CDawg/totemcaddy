@@ -16,7 +16,7 @@ the copyright holders.
 TOCA.Global = {
  title  = "|cff006aa6Totem Caddy|r",
  author = "Porthios of Myzrael",
- version= 2.32,
+ version= 2.35,
  command= "toca",
  width  = 150,
  height = 85,
@@ -24,6 +24,8 @@ TOCA.Global = {
  dir    = "Interface/Addons/TotemCaddy/",
  prefix = "TotemCaddy",
 }
+
+TOCA.DEBUG = false
 
 TOCA.Prefix = {
   version = "0xEFVe",
@@ -92,6 +94,8 @@ TOCA.Tooltip = {}
 TOCA.MenuIsOpenMain = 0
 TOCA.MenuIsOpenSets = 0
 
+TOCA.globalTimerInMinutes = true --default
+
 TOCA.Framelevel = {
   Background=0,
   Foreground=1,
@@ -109,6 +113,74 @@ TOCASlotOne  = "Grace of Air Totem"
 TOCASlotTwo  = "Stoneclaw Totem"
 TOCASlotThree= "Magma Totem"
 TOCASlotFour = "Mana Spring Totem"
+
+function TOCA.Notification(msg, debug)
+  if ((debug) and (TOCA.DEBUG)) then
+    print(TOCA.Global.title .. " DEBUG: " .. msg)
+  end
+  if (not debug) then
+    print(TOCA.Global.title .. " " .. msg)
+  end
+end
+
+function TOCA.BuildKeyBindsInit()
+  BINDING_HEADER_TOTEMCADDY = TOCA.Global.title
+  TOCA.KeyBindNames = {
+    TOTEM_RECALL= "Totem Recall",
+    TOTEM_AIR   = "Totem Slot: Air",
+    TOTEM_EARTH = "Totem Slot: Earth",
+    TOTEM_FIRE  = "Totem Slot: Fire",
+    TOTEM_WATER = "Totem Slot: Water",
+  }
+  for KeyBK,KeyBV in pairsByKeys(TOCA.KeyBindNames) do
+    _G["BINDING_NAME_"..KeyBK] = KeyBV
+  end
+  TOCA.Notification("TOCA.BuildKeyBindsInit()", true)
+end
+
+function TOCA.GetKeyBindings() --call after INIT all
+  for KeyBK,KeyBV in pairsByKeys(TOCA.KeyBindNames) do
+    local key1, key2 = GetBindingKey(KeyBK)
+    if (key1) then
+      TOCA.Notification(key1, true)
+    end
+  end
+end
+
+TOCA.KeyBindButton = CreateFrame("Button", nil, UIParent, "BackdropTemplate")
+TOCA.KeyBindButton:SetSize(4, 4)
+TOCA.KeyBindButton:SetPoint("TOPLEFT", -100, 0)
+
+TOCA.BuildKeyBindsInit()
+
+function TOCA.SetKeyBindReset(KeyBK, spell)
+  local key1, key2 = GetBindingKey(KeyBK)
+  if (key1) then
+    SetOverrideBindingSpell(TOCA.KeyBindButton, true, key1, spell)
+    TOCA.Notification("TOCA.SetKeyBindReset("..key1..", "..spell..")", true)
+  end
+  if (key2) then
+    SetOverrideBindingSpell(TOCA.KeyBindButton, true, key2, spell)
+    TOCA.Notification("TOCA.SetKeyBindReset("..key2..", "..spell..")", true)
+  end
+end
+
+function TOCA.SetKeyBindOnLoad()
+  TOCA.SetKeyBindReset("TOTEM_RECALL", "Totemic Call")
+  if (TOCASlotOne) then
+    TOCA.SetKeyBindReset("TOTEM_AIR", TOCASlotOne)
+  end
+  if (TOCASlotTwo) then
+    TOCA.SetKeyBindReset("TOTEM_EARTH", TOCASlotTwo)
+  end
+  if (TOCASlotThree) then
+    TOCA.SetKeyBindReset("TOTEM_FIRE", TOCASlotThree)
+  end
+  if (TOCASlotFour) then
+    TOCA.SetKeyBindReset("TOTEM_WATER", TOCASlotFour)
+  end
+  TOCA.Notification("TOCA.SetKeyBindOnLoad()", true)
+end
 
 function TOCA.Round(num, numDecimalPlaces)
   local mult = 10^(numDecimalPlaces or 0)
@@ -171,13 +243,11 @@ function TOCA.EnableKnownTotems()
       TOCA.FrameSetsSlotDisabled[totemCat][i]:Show()
       local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(totemSpell[1])
       if (name) then
-        --print(name)
         TOCA.SlotSelectTotemDisabled[totemCat][i]:Hide()
         TOCA.FrameSetsSlotDisabled[totemCat][i]:Hide()
       end
     end
   end
-  --print("TOCA.EnableKnownTotems()")
 end
 
 function TOCA.Init()
@@ -208,11 +278,11 @@ function TOCA.Init()
     if (TOCADB[TOCA.player.combine]["HELP"] == nil) then
       TOCADB[TOCA.player.combine]["HELP"] = "YES"
     end
-    print(TOCA.Global.title .. " Building Profile: " .. TOCA.player.combine)
+    TOCA.Notification("Building Profile: " .. TOCA.player.combine)
     TOCADB[TOCA.player.combine]["PROFILES"][TOCA.Dropdown.Menu[1]] = {TOCA_AIR=TOCASlotOne, TOCA_EARTH=TOCASlotTwo, TOCA_FIRE=TOCASlotThree, TOCA_WATER=TOCASlotFour}
     TOCA.UpdateTotemSet()
   else
-    print(TOCA.Global.title .. " Loading Profile: " .. TOCA.player.combine)
+    TOCA.Notification("Loading Profile: " .. TOCA.player.combine)
     if (TOCADB[TOCA.player.combine]["DISABLED"] == "YES") then
       TOCA.FrameMain:Hide()
     end
@@ -231,6 +301,16 @@ function TOCA.Init()
       TOCA.Button.TotemicCall.ECL:Hide()
       TOCA.Button.TotemicCall.ECR:Hide()
       TOCA.Checkbox.EndCaps:SetChecked(nil)
+    end
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["TIMERS"] == "OFF") then
+      for i=1, 4 do
+        TOCA.Slot.Timer[i]:Hide()
+      end
+      TOCA.Checkbox.Timers:SetChecked(nil)
+    end
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["TIMERSMINUTES"] == "OFF") then
+      TOCA.globalTimerInMinutes = false
+      TOCA.Checkbox.TimersInMinutes:SetChecked(nil)
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMORDER"]) then
       TOCA.SetTotemOrderDropdown()
@@ -276,25 +356,27 @@ function TOCA.Init()
 end
 
 function TOCA.SetDDMenu(DDFrame, value)
-  --print("DD " .. value)
   if (TOCADB[TOCA.player.combine]["PROFILES"][value]) then
     for k,v in pairs(TOCADB[TOCA.player.combine]["PROFILES"][value]) do
-      --print("debug profile " .. k)
+      --TOCA.Notification("debug profile " .. k, true)
       if (k == "TOCA_AIR") then
         TOCASlotOne = v
         TOCA.Totem["AIR"]:SetAttribute("spell", v)
+        TOCA.SetKeyBindReset("TOTEM_AIR", v)
       end
       if (k == "TOCA_EARTH") then
         TOCASlotTwo = v
-        TOCA.Totem["EARTH"]:SetAttribute("spell", v)
+        TOCA.SetKeyBindReset("TOTEM_EARTH", v)
       end
       if (k == "TOCA_FIRE") then
         TOCASlotThree = v
         TOCA.Totem["FIRE"]:SetAttribute("spell", v)
+        TOCA.SetKeyBindReset("TOTEM_FIRE", v)
       end
       if (k == "TOCA_WATER") then
         TOCASlotFour = v
         TOCA.Totem["WATER"]:SetAttribute("spell", v)
+        TOCA.SetKeyBindReset("TOTEM_WATER", v)
       end
     end
   end
@@ -303,7 +385,7 @@ function TOCA.SetDDMenu(DDFrame, value)
   TOCA.Dropdown.Sets.text:SetText(value)
   TOCADB[TOCA.player.combine]["LASTSAVED"] = value
   TOCA.UpdateTotemSet()
-  --print("TOCA.SetDDMenu " .. value)
+  TOCA.Notification("TOCA.SetDDMenu(...)", true)
 end
 
 function TOCA.UpdateDDMenu(DDFrame, value)
@@ -429,6 +511,8 @@ function TOCA.TooltipDisplay(spell, tools, msgtooltip)
   else
     TOCA.Tooltip:Show()
     TOCA.Tooltip.title:SetText(spell)
+    TOCA.Tooltip.cost:SetText("")
+    TOCA.Tooltip.tools:SetText("")
     TOCA.Tooltip.text:SetText(adjustTooltipHeight(msgtooltip, 34))
   end
 end
@@ -438,16 +522,92 @@ TOCA.TotemPresent={}
 TOCA.TotemName={}
 TOCA.TotemStartTime={}
 TOCA.TotemDuration={}
+TOCA.TotemFunc={}
+TOCA.TotemTimer={}
+
+for i=1, 4 do
+  TOCA.TotemTimer[i] = 0
+  TOCA.TotemDuration[i] = 0
+end
+
+function TOCA.TimerFrame(i)
+  TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
+  if (TOCA.TotemPresent[i]) then
+    TOCA.TotemTimer[i] = TOCA.TotemTimer[i] -1
+    if (TOCA.globalTimerInMinutes) then
+      TOCA.Slot.Timer[i]:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
+    else
+      TOCA.Slot.Timer[i]:SetText(TOCA.TotemTimer[i])
+    end
+  else
+    TOCA.Slot.Timer[i]:SetText("")
+  end
+end
+
+--build timers
+for i=1, 4 do
+  TOCA.TotemFunc[i] = 0
+  TOCA.TotemFunc[i] = C_Timer.NewTicker(0, function() TOCA.TimerFrame(i) end, 0)
+  TOCA.TotemFunc[i]:Cancel()
+end
+
+function TOCA.TotemBarTimerStart()
+  for i=1, 4 do
+    TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
+    if (TOCA.TotemTimer[i] <= 0) then
+      TOCA.TotemFunc[i] = C_Timer.NewTicker(1, function() TOCA.TimerFrame(i) end, TOCA.TotemDuration[i])
+      TOCA.TotemTimer[i] = TOCA.TotemDuration[i]
+    end
+  end
+end
+
+function TOCA.TotemTimerReset(i)
+  if (i == "all") then
+    for i=1, 4 do
+      TOCA.TotemFunc[i]:Cancel()
+      TOCA.TotemTimer[i] = 0
+      TOCA.Slot.Timer[i]:SetText("")
+    end
+  else
+    TOCA.TotemFunc[i]:Cancel()
+    TOCA.TotemTimer[i] = 0
+    TOCA.Slot.Timer[i]:SetText("")
+  end
+  TOCA.Notification("TOCA.TotemTimerReset("..i..")", true)
+end
+
+function TOCA.TotemTimerResetBySpell(spellID)
+  local spell = GetSpellInfo(spellID)
+  local totemCatSpell={}
+  if (spell) then
+    totemCatSpell.fire = multiKeyFromValue(TOCA.totems.FIRE, spell, 1)
+    if (totemCatSpell.fire) then
+      TOCA.TotemTimerReset(1)
+    end
+    totemCatSpell.earth = multiKeyFromValue(TOCA.totems.EARTH, spell, 1)
+    if (totemCatSpell.earth) then
+      TOCA.TotemTimerReset(2)
+    end
+    totemCatSpell.water = multiKeyFromValue(TOCA.totems.WATER, spell, 1)
+    if (totemCatSpell.water) then
+      TOCA.TotemTimerReset(3)
+    end
+    totemCatSpell.air = multiKeyFromValue(TOCA.totems.AIR, spell, 1)
+    if (totemCatSpell.air) then
+      TOCA.TotemTimerReset(4)
+    end
+  end
+end
+
 function TOCA.TotemBarUpdate()
   --local playerPos = GetUnitSpeed("player")
   local percMana = (UnitPower("player")/UnitPowerMax("player"))*100
   local percMana = floor(percMana+0.5)
-  --print("mana: " .. percMana)
-  --Fire = 1 Earth = 2 Water = 3 Air = 4
+  --TOCA.Notification("mana: " .. percMana, true)
   TOCA.Button.TotemicCall.flash:Hide()
   for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.Slot.deactive[totemCat]:Hide()
-    if (percMana <= 3) then
+    if (percMana <= 1) then
       TOCA.Slot.deactive[totemCat]:Show()
     end
   end
@@ -456,13 +616,8 @@ function TOCA.TotemBarUpdate()
     TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
     if (TOCA.TotemPresent[i]) then
       TOCA.Button.TotemicCall.flash:Show()
-      --TOCA.TotemStartTime[i]
     end
   end
-end
-
-function TOCA.ChatNotification(msg)
-  print(TOCA.Global.title .. " " .. msg)
 end
 
 function TOCA.SendPacket(packet, filtered, rec)
@@ -477,7 +632,7 @@ function TOCA.SendPacket(packet, filtered, rec)
     filteredPacket = packet
   end
   C_ChatInfo.SendAddonMessage(TOCA.Global.prefix, filteredPacket, msg_to)
-  --print("sending packet " .. filteredPacket)
+  TOCA.Notification("sending packet " .. filteredPacket, true)
 end
 
 function TOCA.ParsePacket(netpacket, code)
@@ -500,11 +655,9 @@ function TOCA.SetTotemOrder()
   local buildOrder = TOCA.GetTotemOrder()
   local totemOrder = split(buildOrder, ",")
   for k,v in ipairs(totemOrder) do
-    --print("order " .. v .. " = " .. k)
     TOCA.Slot[v]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[k], -35)
     TOCA.FrameSetsSlot[v]:SetPoint("CENTER", -100+TOCA.SlotSetsPosX[k], 20)
   end
-  --print(buildOrder)
 end
 
 function TOCA.SetTotemOrderDropdown() --handled on Init() ONLY
@@ -524,7 +677,6 @@ function TOCA.BuildTotemOrder()
   end
   buildOrder = totemOrder
   buildOrder = buildOrder:sub(1, -2)
-  --print(buildOrder)
   TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMORDER"] = {buildOrder}
   TOCA.SetTotemOrder()
 end
@@ -532,13 +684,13 @@ end
 SLASH_TOCA1 = TCCMD
 function SlashCmdList.TOCA(cmd)
   if ((cmd == nil) or (cmd == "")) then
-    print(TOCA.Global.title .. " v" .. TOCA.Global.version)
-    print("Commands:")
-    print("|cffffff00options:|r Open Totem Caddy Options.")
-    print("|cffffff00show:|r Display Totem Caddy (regardless of class).")
-    print("|cffffff00hide:|r Close Totem Caddy.")
-    print("|cffffff00profile:|r Display the current saved profile.")
-    print("|cffffff00help:|r Display the help introduction.")
+    TOCA.Notification(TOCA.Global.title .. " v" .. TOCA.Global.version)
+    TOCA.Notification("Commands:")
+    TOCA.Notification("|cffffff00options:|r Open Totem Caddy Options.")
+    TOCA.Notification("|cffffff00show:|r Display Totem Caddy (regardless of class).")
+    TOCA.Notification("|cffffff00hide:|r Close Totem Caddy.")
+    TOCA.Notification("|cffffff00profile:|r Display the current saved profile.")
+    TOCA.Notification("|cffffff00help:|r Display the help introduction.")
   elseif (cmd == "show") then
     TOCA.FrameMain:Show()
     TOCADB[TOCA.player.combine]["DISABLED"] = "NO"
@@ -547,7 +699,7 @@ function SlashCmdList.TOCA(cmd)
   elseif (cmd == "sets") then
     TOCA.FrameSets:Show()
   elseif (cmd == "profile") then
-    print(TOCA.Global.title .. "|r Profile: " .. TOCA.player.combine)
+    TOCA.Notification("|r Profile: " .. TOCA.player.combine)
   elseif ((cmd == "options") or (cmd == "config")) then
     TOCA.FrameOptions:Show()
   elseif (cmd == "help") then

@@ -1,0 +1,12 @@
+<Bindings>
+  <Binding name="TOTEM_RECALL" header="TOTEMCADDY" category="Totem Caddy">
+  </Binding>
+  <Binding name="TOTEM_AIR" category="Totem Caddy">
+  </Binding>
+  <Binding name="TOTEM_EARTH" category="Totem Caddy">
+  </Binding>
+  <Binding name="TOTEM_FIRE" category="Totem Caddy">
+  </Binding>
+  <Binding name="TOTEM_WATER" category="Totem Caddy">
+  </Binding>
+</Bindings>

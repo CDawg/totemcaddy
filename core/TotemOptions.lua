@@ -48,14 +48,12 @@ getglobal(TOCA.Slider.Scale:GetName() .. 'Low'):SetText('0.50')
 getglobal(TOCA.Slider.Scale:GetName() .. 'High'):SetText('2')
 getglobal(TOCA.Slider.Scale:GetName() .. 'Text'):SetText('Scale')
 TOCA.Slider.Scale:SetScript("OnValueChanged", function()
-  --print(TOCA.Round(TOCA.Slider.Scale:GetValue(), 2))
   TOCA.FrameMain:SetScale(TOCA.Round(TOCA.Slider.Scale:GetValue(), 2))
   TOCA.Slider.Scale.Val:SetText(TOCA.Round(TOCA.Slider.Scale:GetValue(), 2))
 end)
 TOCA.Slider.Scale:SetScript("OnLeave", function()
   local transparentVal = tonumber(TOCA.Slider.Scale:GetValue())
   TOCADB[TOCA.player.combine]["CONFIG"]["SCALE"] = TOCA.Round(TOCA.Slider.Scale:GetValue(), 2)
-  --print(TOCA.Round(TOCA.Slider.Scale:GetValue(), 2))
 end)
 TOCA.Button.ResetScale= CreateFrame("Button", nil, TOCA.FrameOptions, "BackdropTemplate")
 TOCA.Button.ResetScale:SetSize(25, 25)
@@ -128,7 +126,6 @@ end)
 TOCA.Slider.Opacity:SetScript("OnLeave", function()
   local transparentVal = tonumber(TOCA.Slider.Opacity:GetValue())
   TOCADB[TOCA.player.combine]["CONFIG"]["OPACITY"] = TOCA.Round(TOCA.Slider.Opacity:GetValue(), 2)
-  --print(TOCA.Round(TOCA.Slider.Opacity:GetValue(), 2))
 end)
 TOCA.Button.ResetOpacity= CreateFrame("Button", nil, TOCA.FrameOptions, "BackdropTemplate")
 TOCA.Button.ResetOpacity:SetSize(25, 25)
@@ -190,7 +187,7 @@ TOCA.Dropdown.FrameStrat.text:SetPoint("TOPLEFT", TOCA.Dropdown.FrameStrat, "TOP
 TOCA.Dropdown.FrameStrat.text:SetText(TOCA.Dropdown.FrameStrats[2])
 TOCA.Dropdown.FrameStrat.onClick = function(self, checked)
   TOCA.Dropdown.FrameStrat.text:SetText(self.value)
-  --print(self.value)
+  TOCA.Notification(self.value, true)
   TOCADB[TOCA.player.combine]["CONFIG"]["FRAMELEVEL"] = self.value
   TOCA.FrameMain:SetFrameStrata(self.value)
 end
@@ -236,7 +233,7 @@ TOCA.Checkbox.MainMenu:SetScript("OnClick", function(self)
     TOCA.Button.CloseMain:Hide()
     TOCA.Button.Options:Hide()
     TOCA.FrameMain.Background:SetPoint("CENTER", 0, 0)
-    print(TOCA.Global.title .. " Menu header disabled. Type '"..TCCMD.." options' to reopen.")
+    TOCA.Notification("Menu header disabled. Type '"..TCCMD.." options' to reopen.")
   end
 end)
 
@@ -283,7 +280,7 @@ TOCA.Button.TooltipPositionText:SetText("Tooltip Position")
 
 TOCA.SlotOrderTitle = TOCA.FrameOptions:CreateFontString(nil, "ARTWORK")
 TOCA.SlotOrderTitle:SetFont(TOCA.Global.font, 12)
-TOCA.SlotOrderTitle:SetPoint("CENTER", 170, -20)
+TOCA.SlotOrderTitle:SetPoint("CENTER", 170, -10)
 TOCA.SlotOrderTitle:SetText("Totem Order")
 
 TOCA.SlotOrderIcon={}
@@ -296,7 +293,7 @@ TOCA.SlotSets_x = 0
 for i=1, getn(TOCA.Dropdown.OrderSetMenu) do
   TOCA.SlotSets_x = TOCA.SlotSets_x + 68
   TOCA.Dropdown.OrderSet[i] = CreateFrame("Frame", nil, TOCA.FrameOptions, "UIDropDownMenuTemplate")
-  TOCA.Dropdown.OrderSet[i]:SetPoint("CENTER", TOCA.SlotSets_x, -50)
+  TOCA.Dropdown.OrderSet[i]:SetPoint("CENTER", TOCA.SlotSets_x, -40)
   TOCA.Dropdown.OrderSet[i].displayMode = "MENU"
   TOCA.Dropdown.OrderSet[i].text = TOCA.Dropdown.OrderSet[i]:CreateFontString(nil, "ARTWORK")
   TOCA.Dropdown.OrderSet[i].text:SetFont(TOCA.Global.font, 10)
@@ -304,7 +301,7 @@ for i=1, getn(TOCA.Dropdown.OrderSetMenu) do
   TOCA.Dropdown.OrderSet[i].text:SetText(TOCA.Dropdown.OrderSetMenu[i])
   TOCA.Dropdown.OrderSet[i].onClick = function(self, checked)
     TOCA.Dropdown.OrderSet[i].text:SetText(self.value)
-    --print(self.value)
+    TOCA.Notification(self.value, true)
     TOCA.BuildTotemOrder()
   end
   TOCA.Dropdown.OrderSet[i].initialize = function(self, level)
@@ -323,5 +320,4 @@ for i=1, getn(TOCA.Dropdown.OrderSetMenu) do
     end
   end
   UIDropDownMenu_SetWidth(TOCA.Dropdown.OrderSet[i], 50)
-  --print("TOCA.Dropdown.OrderSet[" .. totemNum)
 end

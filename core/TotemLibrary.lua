@@ -49,6 +49,17 @@ TOCA.totems.AIR = {
   {"Wrath of Air Totem",     "spell_nature_slowingtotem",         "Summons a totem at the feet of the caster that increases party members' spell damage and healing that are within 20 yards.\nLasts 2 mins."},
 }
 
+TOCA.spell = {
+  TOTEMIC_CALL = 36936,
+}
+
+TOCA.orderGame = { --how the ingame sorts totems
+  FIRE = 1,
+  EARTH= 2,
+  WATER= 3,
+  AIR  = 4,
+}
+
 function split(s, delimiter)
   result = {}
   for match in (s..delimiter):gmatch("(.-)"..delimiter) do
@@ -83,6 +94,12 @@ function multiKeyFromValue(_array, value, index)
     if v[index]==value then return k end
   end
   return nil
+end
+
+function TimeSecondsToMinutes(time)
+  local minutes = floor(mod(time,3600)/60)
+  local seconds = floor(mod(time,60))
+  return format("%2d:%02d",minutes,seconds)
 end
 
 TOCA.player = {
