@@ -257,8 +257,6 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.Slot.Timer[3]:SetFont(TOCA.Global.font, 12, "OUTLINE")
     TOCA.Slot.Timer[3]:SetPoint("CENTER", 0, -8)
     TOCA.Slot.Timer[3]:SetText("")
-    --TOCA.SetKeyBindOnLoad("TOTEM_WATER", TOCASlotFour)
-    TOCA.SetKeyBindReset("TOTEM_WATER", TOCASlotFour)
   end
   TOCA.Totem[totemCat]:SetScript("OnEnter", function()
     TOCA.CloseAllMenus()

@@ -188,7 +188,7 @@ function TOCA.Round(num, numDecimalPlaces)
 end
 
 function TOCA.UpdateTotemSet()
-  local totemIconKey = multiKeyFromValue(TOCA.totems.AIR,  TOCASlotOne, 1)
+  local totemIconKey = multiKeyFromValue(TOCA.totems.AIR, TOCASlotOne, 1)
   local totemIcon = {
     bgFile  = "interface/icons/" .. TOCA.totems.AIR[totemIconKey][2],
     edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
@@ -198,7 +198,7 @@ function TOCA.UpdateTotemSet()
   TOCA.Slot["AIR"]:SetBackdrop(totemIcon)
   TOCA.FrameSetsSlot["AIR"]:SetBackdrop(totemIcon)
 
-  local totemIconKey = multiKeyFromValue(TOCA.totems.EARTH,  TOCASlotTwo, 1)
+  local totemIconKey = multiKeyFromValue(TOCA.totems.EARTH, TOCASlotTwo, 1)
   local totemIcon = {
     bgFile  = "interface/icons/" .. TOCA.totems.EARTH[totemIconKey][2],
     edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
@@ -208,7 +208,7 @@ function TOCA.UpdateTotemSet()
   TOCA.Slot["EARTH"]:SetBackdrop(totemIcon)
   TOCA.FrameSetsSlot["EARTH"]:SetBackdrop(totemIcon)
 
-  local totemIconKey = multiKeyFromValue(TOCA.totems.FIRE,  TOCASlotThree, 1)
+  local totemIconKey = multiKeyFromValue(TOCA.totems.FIRE, TOCASlotThree, 1)
   local totemIcon = {
     bgFile  = "interface/icons/" .. TOCA.totems.FIRE[totemIconKey][2],
     edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
@@ -218,7 +218,7 @@ function TOCA.UpdateTotemSet()
   TOCA.Slot["FIRE"]:SetBackdrop(totemIcon)
   TOCA.FrameSetsSlot["FIRE"]:SetBackdrop(totemIcon)
 
-  local totemIconKey = multiKeyFromValue(TOCA.totems.WATER,  TOCASlotFour, 1)
+  local totemIconKey = multiKeyFromValue(TOCA.totems.WATER, TOCASlotFour, 1)
   local totemIcon = {
     bgFile  = "interface/icons/" .. TOCA.totems.WATER[totemIconKey][2],
     edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
@@ -366,6 +366,7 @@ function TOCA.SetDDMenu(DDFrame, value)
       end
       if (k == "TOCA_EARTH") then
         TOCASlotTwo = v
+        TOCA.Totem["EARTH"]:SetAttribute("spell", v)
         TOCA.SetKeyBindReset("TOTEM_EARTH", v)
       end
       if (k == "TOCA_FIRE") then
