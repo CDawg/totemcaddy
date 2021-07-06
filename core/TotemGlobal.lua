@@ -16,7 +16,7 @@ the copyright holders.
 TOCA.Global = {
  title  = "|cff006aa6Totem Caddy|r",
  author = "Porthios of Myzrael",
- version= 2.35,
+ version= 2.36,
  command= "toca",
  width  = 150,
  height = 85,
