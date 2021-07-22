@@ -395,38 +395,6 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   end
 end
 
-TOCA.SlotExplode={}
---Spell_Nature_BloodLust
-TOCA.FrameExplode = CreateFrame("Frame", "TOCA.FrameExplode", UIParent, "BackdropTemplate")
-TOCA.FrameExplode:SetWidth(TOCA.Global.width)
-TOCA.FrameExplode:SetHeight(TOCA.Global.height)
-TOCA.FrameExplode:SetPoint("CENTER", 0, 200)
-TOCA.FrameExplode:SetMovable(true)
-TOCA.FrameExplode:EnableMouse(true)
-TOCA.FrameExplode:RegisterForDrag("LeftButton")
-TOCA.FrameExplode:SetScript("OnDragStart", function()
-  TOCA.FrameExplode:StartMoving()
-end)
-TOCA.FrameExplode:SetScript("OnDragStop", function()
-  TOCA.FrameExplode:StopMovingOrSizing()
-  local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.FrameExplode:GetPoint()
-  TOCADB[TOCA.player.combine]["CONFIG"]["EXPLODEPOS"] = point .. "," .. xOfs .. "," .. yOfs
-end)
-TOCA.FrameExplode:Hide()
-for totemCat,v in pairsByKeys(TOCA.totems) do
-  for i,totemSpell in pairs(TOCA.totems[totemCat]) do
-    TOCA.SlotExplode[totemCat]={}
-    --TOCA.SlotExplode[totemCat]
-    --TOCA.TotemExplode[totemCat] = CreateFrame("Button", nil, TOCA.SlotExplode[totemCat], "SecureActionButtonTemplate");
-    --TOCA.TotemExplode[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
-    --TOCA.TotemExplode[totemCat]:SetPoint("CENTER", 0, 0)
-    --TOCA.TotemExplode[totemCat]:SetAttribute("type", "spell")
-    --TOCA.TotemExplode[totemCat]:SetAttribute("spell", totemSpell)
-    --TOCA.Notification(totemSpell[1], true)
-  end
-end
-TOCA.FrameExplode:Hide()
-
 TOCA.Button.Options= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTemplate")
 TOCA.Button.Options:SetSize(16, 16)
 TOCA.Button.Options:SetPoint("TOPRIGHT", -14, 1)

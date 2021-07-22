@@ -94,10 +94,10 @@ TOCA.helpMessage = {
   "You can select which totem for each category, give it a name, then select the bottom arrow on the main frame dropdown to access it.",
 }
 TOCA.CreditMessage = {
-  "Special Thanks to some beta testers in my guild:",
+  "Special Thanks to some beta testers from:",
   "|cff23782c<Destructive Nature>|r of Myzrael\n",
   "Especially to my shaman buddy Shockpopz of Myzrael For all the valuable feedback!\n\n\n\n",
-  "Written by Porthias of Myzrael (a.k.a. Porthios)",
+  "Written by Porthias of Myzrael (a.k.a. Port)",
 }
 TOCA.HelpMessageArray = ""
 for k,v in pairs(TOCA.helpMessage) do
