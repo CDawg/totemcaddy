@@ -632,8 +632,10 @@ function TOCA.SendPacket(packet, filtered, rec)
   else
     filteredPacket = packet
   end
-  C_ChatInfo.SendAddonMessage(TOCA.Global.prefix, filteredPacket, msg_to)
-  TOCA.Notification("sending packet " .. filteredPacket, true)
+  if (IsInGuild()) then
+    C_ChatInfo.SendAddonMessage(TOCA.Global.prefix, filteredPacket, msg_to)
+    TOCA.Notification("sending packet " .. filteredPacket, true)
+  end
 end
 
 function TOCA.ParsePacket(netpacket, code)
@@ -685,14 +687,15 @@ end
 SLASH_TOCA1 = TCCMD
 function SlashCmdList.TOCA(cmd)
   if ((cmd == nil) or (cmd == "")) then
-    TOCA.Notification(TOCA.Global.title .. " v" .. TOCA.Global.version)
-    TOCA.Notification("Commands:")
-    TOCA.Notification("|cffffff00options:|r Open Totem Caddy Options.")
-    TOCA.Notification("|cffffff00show:|r Display Totem Caddy (regardless of class).")
-    TOCA.Notification("|cffffff00hide:|r Close Totem Caddy.")
-    TOCA.Notification("|cffffff00profile:|r Display the current saved profile.")
-    TOCA.Notification("|cffffff00help:|r Display the help introduction.")
-  elseif (cmd == "show") then
+    TOCA.Notification("v" .. TOCA.Global.version)
+    print("Commands:")
+    print("|cffffff00options:|r Open Totem Caddy Options.")
+    --print("|cffffff00show:|r |TInterface\\FriendsFrame\\battlenet-status-offline:8|t Display Totem Caddy (regardless of class).")
+    print("|cffffff00show:|r   Display Totem Caddy (regardless of class).")
+    print("|cffffff00hide:|r    Close Totem Caddy.")
+    print("|cffffff00profile:|r Display the current saved profile.")
+    print("|cffffff00help:|r    Display the help introduction.")
+  elseif ((cmd == "show") or (cmd == "open")) then
     TOCA.FrameMain:Show()
     TOCADB[TOCA.player.combine]["DISABLED"] = "NO"
   elseif (cmd == "hide") then
