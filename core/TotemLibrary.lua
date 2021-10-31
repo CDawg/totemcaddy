@@ -88,6 +88,14 @@ function firstToUpper(str)
   return (str:gsub("^%l", string.upper))
 end
 
+--single key
+function singleKeyFromValue(_array, value)
+  for k,v in pairs(_array) do
+    if v==value then return k end
+  end
+  return nil
+end
+-- matrix key
 function multiKeyFromValue(_array, value, index)
   if ((index == nil) or (index == 0)) then
     index = 1

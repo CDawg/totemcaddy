@@ -29,7 +29,7 @@ TOCA.FrameMain:SetScript("OnDragStop", function()
   TOCADB[TOCA.player.combine]["CONFIG"]["MAINPOS"] = point .. "," .. xOfs .. "," .. yOfs
 end)
 
-TOCA.FrameMain.Background = CreateFrame("Frame", TOCA.FrameMain.Background, TOCA.FrameMain, "BackdropTemplate", -7)
+TOCA.FrameMain.Background = CreateFrame("Frame", TOCA.FrameMain.Background, TOCA.FrameMain, "BackdropTemplate", -6)
 TOCA.FrameMain.Background:SetWidth(TOCA.Global.width)
 TOCA.FrameMain.Background:SetHeight(TOCA.Global.height)
 TOCA.FrameMain.Background:SetPoint("CENTER", -1, 0)
@@ -65,14 +65,8 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
   (event == "UNIT_SPELLCAST_STOP") or
   (event == "UNIT_POWER_FREQUENT")) then
     TOCA.TotemBarUpdate()
-    --[==[
-    local spell, text, texture, startTimeMS, endTimeMS, isTradeSkill, castID, spellId = UnitCastingInfo("player")
-    if (spell) then
-      local finish = endTimeMS/1000 - GetTime()
-    end
-    ]==]--
   end
-  --this needs to be handled on a different event
+  --technically, this needs to be handled on a different event
   if (event == "UNIT_SPELLCAST_SENT") then
     TOCA.TotemBarUpdate()
     local isPlayer = UnitIsPlayer("player")
@@ -111,7 +105,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
   end
 
   for totemCat,v in pairsByKeys(TOCA.totems) do
-    if (event== "PLAYER_REGEN_DISABLED") then
+    if (event == "PLAYER_REGEN_DISABLED") then
       TOCA.SlotSelect[totemCat]:Hide()
       TOCA.Button.DropdownMain:Hide()
     end
@@ -122,6 +116,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
   end
 
   if (event == "CHAT_MSG_ADDON") then
+    TOCA.GetReincTimer()
     if (prefix == TOCA.Global.prefix) then
         if (TOCA.version_alerted == 0) then
         local getPacket = TOCA.ParsePacket(netpacket, TOCA.Prefix.version)
@@ -203,6 +198,10 @@ TOCA.SlotPosX = {
   126.5,
 }
 local totemNum = 0
+scrollA = 1
+scrollE = 1
+scrollF = 1
+scrollW = 1
 for totemCat,v in pairsByKeys(TOCA.totems) do
   totemNum = totemNum+1
   TOCA.Slot_x = TOCA.Slot_x +36
@@ -229,6 +228,40 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.Totem[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
   TOCA.Totem[totemCat]:SetPoint("CENTER", 0, 0)
   TOCA.Totem[totemCat]:SetAttribute("type", "spell")
+  --[==[
+  TOCA.Totem[totemCat]:SetScript("OnMouseWheel", function(self, delta)
+    --TOCA.CloseAllMenus()
+    if (totemCat == "AIR") then
+      tTotal = getn(TOCA.totems.AIR)
+      tCurrent = multiKeyFromValue(TOCA.totems.AIR, TOCASlotOne, 1)
+      if (sTotem == nil) then
+        sTotem = tCurrent
+      end
+      print("tTotal " .. tTotal)
+      print("delta " .. delta)
+      --print(sTotem)
+      if ((sTotem > tTotal) or (sTotem < 1)) then
+        return
+      end
+      if (delta == 1) then
+        sTotem = sTotem + 1
+      end
+      if (delta == -1) then
+        sTotem = sTotem - 1
+      end
+      print(sTotem)
+      --print(TOCASlotOne)
+      --for totemCat,v in pairsByKeys(TOCA.totems.AIR) do
+        --print(v[1])
+      --end
+      TOCASlotOne = totemSpell[1]
+      TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotOne)
+      TOCA.SetKeyBindReset("TOTEM_AIR", totemSpell[1])
+      --TOCA.Notification("Setting AIR " .. totemSpell[1], true)
+      TOCA.Notification("Setting AIR " .. totemSpell[1], false)
+    end
+  end)
+  ]==]--
   local thisTotemSpell = ""
   if (totemCat == "AIR") then
     TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotOne)
@@ -438,6 +471,25 @@ TOCA.Button.CloseMain:SetScript("OnClick", function()
   TOCADB[TOCA.player.combine]["DISABLED"] = "YES"
   TOCA.Notification("closed. Type '"..TCCMD.." show' to reopen.")
 end)
+
+TOCA.FrameMain.ReincFrame = CreateFrame("Frame", TOCA.FrameMain.Background, TOCA.FrameMain, "BackdropTemplate", -7)
+TOCA.FrameMain.ReincFrame:SetWidth(30)
+TOCA.FrameMain.ReincFrame:SetHeight(30)
+TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
+TOCA.FrameMain.ReincFrame:SetBackdrop({
+  bgFile  = "Interface/icons/spell_nature_reincarnation",
+  edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
+  edgeSize= 12,
+  insets  = {left=2, right=2, top=2, bottom=2},
+})
+TOCA.FrameMain.ReincFrame:SetBackdropColor(0.7, 0.7, 0.7, 0.8)
+TOCA.FrameMain.ReincFrame:SetBackdropBorderColor(1, 1, 1, 0.6)
+TOCA.FrameMain.ReincFrame:SetFrameLevel(TOCA.Framelevel.Background)
+TOCA.FrameMain.ReincFrame.text = TOCA.FrameMain.ReincFrame:CreateFontString(nil, "ARTWORK")
+TOCA.FrameMain.ReincFrame.text:SetFont(TOCA.Global.font, 10)
+TOCA.FrameMain.ReincFrame.text:SetPoint("CENTER", TOCA.FrameMain.ReincFrame, "CENTER", 0, -6)
+TOCA.FrameMain.ReincFrame.text:SetText("")
+TOCA.FrameMain.ReincFrame.text:SetShadowOffset(1, 1)
 
 TOCA.Button.DropdownMain= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTemplate")
 TOCA.Button.DropdownMain:SetSize(143, 16)

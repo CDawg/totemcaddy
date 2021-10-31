@@ -391,3 +391,21 @@ TOCA.Checkbox.TimersInMinutes:SetScript("OnClick", function(self)
     TOCA.globalTimerInMinutes = false
   end
 end)
+
+TOCA.Checkbox.Reinc={}
+TOCA.Checkbox.Reinc = CreateFrame("CheckButton", nil, TOCA.FrameOptions, "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.Reinc:SetPoint("CENTER", 60, -130)
+TOCA.Checkbox.Reinc:SetChecked(1)
+TOCA.Checkbox.Reinc.text = TOCA.Checkbox.Reinc:CreateFontString(nil, "ARTWORK")
+TOCA.Checkbox.Reinc.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
+TOCA.Checkbox.Reinc.text:SetPoint("TOPLEFT", 25, -6)
+TOCA.Checkbox.Reinc.text:SetText("Display Reincarnation Timer (Cooldown)")
+TOCA.Checkbox.Reinc:SetScript("OnClick", function(self)
+  if (self:GetChecked()) then
+    TOCADB[TOCA.player.combine]["CONFIG"]["REINC"] = "ON"
+    TOCA.GetReincTimer()
+  else
+    TOCADB[TOCA.player.combine]["CONFIG"]["REINC"] = "OFF"
+    TOCA.FrameMain.ReincFrame:Hide()
+  end
+end)

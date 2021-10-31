@@ -83,8 +83,7 @@ TOCA.Button.TabBack[1]:SetSize(TOCA.tabwidth-20, 30) --first tab
 TOCA.helpMessage = {
   "Welcome to " .. TOCA.Global.title .. "|r v" .. TOCA.Global.version,
   "|cffffdf96Please note:|r Totem Caddy is still evolving. Improvements will be made as time continues. Enjoy!",
-  "|cffffdf96New Feature:|r Totem timers added for the totem category slots. Options to disable or view in seconds/minutes.",
-  "|cffffdf96New Feature:|r Totem slot keybindings for your totem category slots. If you assign key bindings to to the totem slots for the very first time, you may\nhave to do a '/reload'.",
+  "|cffffdf96New Feature:|r Reincarnation Cooldown Timer added.",
   "|cffffdf96First time using Totem Caddy?|r",
   "Let's get started by dragging the Totem Caddy anywhere on your screen saving the position.",
   "You can select totems in a category order (air, earth, fire, or water) by selecting the top arrows above the current totem icons.",
@@ -92,10 +91,10 @@ TOCA.helpMessage = {
   "For addition options or create totem sets:",
   "Select the cogwheel button or type /toca 'options', then select Totem Sets",
   "You can select which totem for each category, give it a name, then select the bottom arrow on the main frame dropdown to access it.",
+  "Totem slot keybindings for your totem category slots. If you assign key bindings to to the totem slots for the very first time, you may\nhave to do a '/reload'.",
 }
 TOCA.CreditMessage = {
-  "Special Thanks to some beta testers from:",
-  "|cff23782c<Destructive Nature>|r of Myzrael\n",
+  "Special thanks to some beta testers from the Myzrael realm.",
   "Especially to my shaman buddy Shockpopz of Myzrael For all the valuable feedback!\n\n\n\n",
   "Written by Porthias of Myzrael (a.k.a. Port)",
 }

@@ -14,15 +14,15 @@ the copyright holders.
 ]==]--
 
 TOCA.Global = {
- title  = "|cff006aa6Totem Caddy|r",
- author = "Porthios of Myzrael",
- version= 2.37,
- command= "toca",
- width  = 150,
- height = 85,
- font   = "Fonts/FRIZQT__.TTF",
- dir    = "Interface/Addons/TotemCaddy/",
- prefix = "TotemCaddy",
+  title  = "|cff006aa6Totem Caddy|r",
+  author = "Porthias of Myzrael",
+  version= 2.38,
+  command= "toca",
+  width  = 150,
+  height = 85,
+  font   = "Fonts/FRIZQT__.TTF",
+  dir    = "Interface/Addons/TotemCaddy/",
+  prefix = "TotemCaddy",
 }
 
 TOCA.DEBUG = false
@@ -93,7 +93,7 @@ TOCA.Dropdown.Menu = {"Default"}
 TOCA.Tooltip = {}
 TOCA.MenuIsOpenMain = 0
 TOCA.MenuIsOpenSets = 0
-
+TOCA.ReincTimer = 0
 TOCA.globalTimerInMinutes = true --default
 
 TOCA.Framelevel = {
@@ -311,6 +311,10 @@ function TOCA.Init()
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TIMERSMINUTES"] == "OFF") then
       TOCA.globalTimerInMinutes = false
       TOCA.Checkbox.TimersInMinutes:SetChecked(nil)
+    end
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["REINC"] == "OFF") then
+      TOCA.FrameMain.ReincFrame:Hide()
+      TOCA.Checkbox.Reinc:SetChecked(nil)
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMORDER"]) then
       TOCA.SetTotemOrderDropdown()
@@ -562,6 +566,32 @@ function TOCA.TotemBarTimerStart()
   end
 end
 
+function TOCA.GetReincTimer() --always checking
+  local lC, eC, cI = UnitClass("player")
+  if (eC == "SHAMAN") then
+    local numTabs = GetNumTalentTabs()
+    local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo("Reincarnation")
+    if (name) then
+      local start, duration, enabled = GetSpellCooldown(name)
+      if (duration) then
+        if (enabled == 0) then
+          --DEFAULT_CHAT_FRAME:AddMessage(name.." is currently active, use it and wait " .. duration .. " seconds for the next one.")
+        elseif (start > 0 and duration > 0) then
+          local reincTimeLeftCalc = start + duration - GetTime()
+          local reincTimeLeftRT = reincTimeLeftCalc / 60
+          TOCA.ReincTimer = math.ceil(reincTimeLeftCalc / 60)
+          TOCA.Notification(name.." is cooling down, wait " .. TOCA.ReincTimer, true)
+          TOCA.FrameMain.ReincFrame.text:SetText(TOCA.ReincTimer.."m")
+          TOCA.FrameMain.ReincFrame:Show()
+        else
+          TOCA.FrameMain.ReincFrame:Hide()
+          TOCA.Notification(name.." is ready.", true)
+        end
+      end
+    end
+  end
+end
+
 function TOCA.TotemTimerReset(i)
   if (i == "all") then
     for i=1, 4 do
@@ -619,6 +649,8 @@ function TOCA.TotemBarUpdate()
       TOCA.Button.TotemicCall.flash:Show()
     end
   end
+
+  TOCA.GetReincTimer()
 end
 
 function TOCA.SendPacket(packet, filtered, rec)
