@@ -285,7 +285,8 @@ function TOCA.FrameStyleSet(style)
       TOCA.Slot[totemCat]:Hide()
       TOCA.Button.DropdownMain:Hide()
       TOCA.FrameMainGridVertical:Show()
-      --TOCA.FrameMainGridVertical:SetRotation(90)
+      --TOCA.FrameMain:SetRotation(math.rad(90))
+      --TOCA.FrameMain:SetOrientation("HORIZONTAL")
     end
   end
 end
@@ -741,12 +742,27 @@ function TOCA.GetTotemOrder()
   end
   return buildOrder
 end
+
+local totemNum = 0
+local totemButtonPos_Y={}
 function TOCA.SetTotemOrder()
   local buildOrder = TOCA.GetTotemOrder()
   local totemOrder = split(buildOrder, ",")
   for k,v in ipairs(totemOrder) do
     TOCA.Slot[v]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[k], -35) --main frame
     TOCA.FrameSetsSlot[v]:SetPoint("TOPLEFT", -60+TOCA.SlotSetsPosX[k], -70) --options frame
+
+    for totemCat,notUsed in pairsByKeys(TOCA.totems) do
+      totemNum = totemNum +1
+      totemButtonPos_Y[totemCat] = 0
+      for i,totemSpell in pairs(TOCA.totems[totemCat]) do
+        totemButtonPos_Y[totemCat] = totemButtonPos_Y[totemCat]+TOCA.Slot_h
+        local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGridTotemButton[totemCat][i]:GetPoint()
+        if (TOCA.SlotGridTotemButton[v][i]) then
+          TOCA.SlotGridTotemButton[v][i]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[k], yOfs)
+        end
+      end
+    end
   end
 end
 
