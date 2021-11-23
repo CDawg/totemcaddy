@@ -291,6 +291,7 @@ TOCA.FrameSetsProfileTitle = TOCA.FrameOptionsPage[TOCA.OptionTabs[2]]:CreateFon
 TOCA.FrameSetsProfileTitle:SetFont(TOCA.Global.font, 12)
 TOCA.FrameSetsProfileTitle:SetPoint("TOPLEFT", 30, -123)
 TOCA.FrameSetsProfileTitle:SetText("Set Name")
+TOCA.FrameSetsProfileTitle:SetTextColor(1, 1, 0.5, 1)
 
 TOCA.FrameSetsProfile = CreateFrame("EditBox", nil, TOCA.FrameSets, "BackdropTemplate")
 TOCA.FrameSetsProfile:SetWidth(150)
@@ -322,6 +323,8 @@ TOCA.DropdownTitle = TOCA.FrameOptionsPage[TOCA.OptionTabs[2]]:CreateFontString(
 TOCA.DropdownTitle:SetFont(TOCA.Global.font, 12)
 TOCA.DropdownTitle:SetPoint("TOPLEFT", 30, -20)
 TOCA.DropdownTitle:SetText("Set Selection")
+TOCA.DropdownTitle:SetTextColor(1, 1, 0.5, 1)
+
 TOCA.Dropdown.Sets = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[2]], "UIDropDownMenuTemplate")
 TOCA.Dropdown.Sets:SetPoint("TOPLEFT", 10, -35)
 TOCA.Dropdown.Sets.displayMode = "MENU"
@@ -336,61 +339,3 @@ TOCA.Dropdown.Sets.onClick = function(self, checked)
   TOCA.FrameSetsProfile:SetText(self.value)
 end
 UIDropDownMenu_SetWidth(TOCA.Dropdown.Sets, 135)
-
-TOCA.Checkbox.Timers={}
-TOCA.Checkbox.Timers = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[2]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.Timers:SetPoint("TOPLEFT", 30, -260)
-TOCA.Checkbox.Timers:SetChecked(1)
-TOCA.Checkbox.Timers.text = TOCA.Checkbox.Timers:CreateFontString(nil, "ARTWORK")
-TOCA.Checkbox.Timers.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
-TOCA.Checkbox.Timers.text:SetPoint("TOPLEFT", 25, -6)
-TOCA.Checkbox.Timers.text:SetText("Display Totem Timers")
-TOCA.Checkbox.Timers:SetScript("OnClick", function(self)
-  if (self:GetChecked()) then
-    TOCADB[TOCA.player.combine]["CONFIG"]["TIMERS"] = "ON"
-    for i=1, 4 do
-      TOCA.Slot.Timer[i]:Show()
-    end
-  else
-    TOCADB[TOCA.player.combine]["CONFIG"]["TIMERS"] = "OFF"
-    for i=1, 4 do
-      TOCA.Slot.Timer[i]:Hide()
-    end
-  end
-end)
-
-TOCA.Checkbox.TimersInMinutes={}
-TOCA.Checkbox.TimersInMinutes = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[2]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.TimersInMinutes:SetPoint("TOPLEFT", 30, -280)
-TOCA.Checkbox.TimersInMinutes:SetChecked(1)
-TOCA.Checkbox.TimersInMinutes.text = TOCA.Checkbox.TimersInMinutes:CreateFontString(nil, "ARTWORK")
-TOCA.Checkbox.TimersInMinutes.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
-TOCA.Checkbox.TimersInMinutes.text:SetPoint("TOPLEFT", 25, -6)
-TOCA.Checkbox.TimersInMinutes.text:SetText("Display Totem Timers In Minutes")
-TOCA.Checkbox.TimersInMinutes:SetScript("OnClick", function(self)
-  if (self:GetChecked()) then
-    TOCADB[TOCA.player.combine]["CONFIG"]["TIMERSMINUTES"] = "ON"
-    TOCA.globalTimerInMinutes = true
-  else
-    TOCADB[TOCA.player.combine]["CONFIG"]["TIMERSMINUTES"] = "OFF"
-    TOCA.globalTimerInMinutes = false
-  end
-end)
-
-TOCA.Checkbox.Reinc={}
-TOCA.Checkbox.Reinc = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[2]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.Reinc:SetPoint("TOPLEFT", 30, -300)
-TOCA.Checkbox.Reinc:SetChecked(1)
-TOCA.Checkbox.Reinc.text = TOCA.Checkbox.Reinc:CreateFontString(nil, "ARTWORK")
-TOCA.Checkbox.Reinc.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
-TOCA.Checkbox.Reinc.text:SetPoint("TOPLEFT", 25, -6)
-TOCA.Checkbox.Reinc.text:SetText("Display Reincarnation Timer (Cooldown)")
-TOCA.Checkbox.Reinc:SetScript("OnClick", function(self)
-  if (self:GetChecked()) then
-    TOCADB[TOCA.player.combine]["CONFIG"]["REINC"] = "ON"
-    TOCA.GetReincTimer()
-  else
-    TOCADB[TOCA.player.combine]["CONFIG"]["REINC"] = "OFF"
-    TOCA.FrameMain.ReincFrame:Hide()
-  end
-end)

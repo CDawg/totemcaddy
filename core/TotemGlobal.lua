@@ -233,11 +233,11 @@ end
 
 TOCA.SlotSelectTotemDisabled={}
 TOCA.FrameSetsSlotDisabled={}
-TOCA.SlotGridTotemButton={}
+TOCA.SlotGridVerticalTotemButton={}
 for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.SlotSelectTotemDisabled[totemCat]={}
   TOCA.FrameSetsSlotDisabled[totemCat]={}
-  TOCA.SlotGridTotemButton[totemCat]={}
+  TOCA.SlotGridVerticalTotemButton[totemCat]={}
 end
 
 function TOCA.EnableKnownTotems()
@@ -245,12 +245,12 @@ function TOCA.EnableKnownTotems()
     for i,totemSpell in pairs(TOCA.totems[totemCat]) do
       TOCA.SlotSelectTotemDisabled[totemCat][i]:Show()
       TOCA.FrameSetsSlotDisabled[totemCat][i]:Show()
-      TOCA.SlotGridTotemButton[totemCat][i]:Hide()
+      TOCA.SlotGridVerticalTotemButton[totemCat][i]:Hide()
       local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(totemSpell[1])
       if (name) then
         TOCA.SlotSelectTotemDisabled[totemCat][i]:Hide()
         TOCA.FrameSetsSlotDisabled[totemCat][i]:Hide()
-        TOCA.SlotGridTotemButton[totemCat][i]:Show()
+        TOCA.SlotGridVerticalTotemButton[totemCat][i]:Show()
       end
     end
   end
@@ -392,6 +392,9 @@ function TOCA.Init()
       TOCAFrameExplodePos = split(TOCADB[TOCA.player.combine]["CONFIG"]["EXPLODEPOS"], ",")
       TOCA.FrameExplode:ClearAllPoints()
       TOCA.FrameExplode:SetPoint(TOCAFrameExplodePos[1], tonumber(TOCAFrameExplodePos[2]), tonumber(TOCAFrameExplodePos[3]))
+    end
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLON"] == "OFF") then
+      TOCA.Checkbox.Tooltip:SetChecked(nil)
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLPOS"]) then
       local TOCAFrameToolPos = {}
@@ -564,9 +567,17 @@ function TOCA.TooltipDisplay(spell, tools, msgtooltip)
       TOCA.Tooltip.tools:SetText("")
     end
     TOCA.Tooltip.text:SetText(adjustTooltipHeight(spellDesc, 34))
-    TOCA.Tooltip:Show()
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLON"] == "OFF") then
+      TOCA.Tooltip:Hide()
+    else
+      TOCA.Tooltip:Show()
+    end
   else
-    TOCA.Tooltip:Show()
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLON"] == "OFF") then
+      TOCA.Tooltip:Hide()
+    else
+      TOCA.Tooltip:Show()
+    end
     TOCA.Tooltip.title:SetText(spell)
     TOCA.Tooltip.cost:SetText("")
     TOCA.Tooltip.tools:SetText("")
@@ -644,20 +655,20 @@ function TOCA.GetReincTimer() --always checking
   end
 end
 
-TOCA.SlotGridTimer={}
+TOCA.SlotGridVerticalTimer={}
 function TOCA.TotemTimerReset(i)
   if (i == "all") then
     for i=1, 4 do
       TOCA.TotemFunc[i]:Cancel()
       TOCA.TotemTimer[i] = 0
       TOCA.Slot.Timer[i]:SetText("")
-      TOCA.SlotGridTimer[i]:SetText("")
+      TOCA.SlotGridVerticalTimer[i]:SetText("")
     end
   else
     TOCA.TotemFunc[i]:Cancel()
     TOCA.TotemTimer[i] = 0
     TOCA.Slot.Timer[i]:SetText("")
-    TOCA.SlotGridTimer[i]:SetText("")
+    TOCA.SlotGridVerticalTimer[i]:SetText("")
   end
   TOCA.Notification("TOCA.TotemTimerReset("..i..")", true)
 end
@@ -757,9 +768,9 @@ function TOCA.SetTotemOrder()
       totemButtonPos_Y[totemCat] = 0
       for i,totemSpell in pairs(TOCA.totems[totemCat]) do
         totemButtonPos_Y[totemCat] = totemButtonPos_Y[totemCat]+TOCA.Slot_h
-        local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGridTotemButton[totemCat][i]:GetPoint()
-        if (TOCA.SlotGridTotemButton[v][i]) then
-          TOCA.SlotGridTotemButton[v][i]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[k], yOfs)
+        local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGridVerticalTotemButton[totemCat][i]:GetPoint()
+        if (TOCA.SlotGridVerticalTotemButton[v][i]) then
+          TOCA.SlotGridVerticalTotemButton[v][i]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[k], yOfs)
         end
       end
     end
