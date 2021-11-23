@@ -233,9 +233,11 @@ end
 
 TOCA.SlotSelectTotemDisabled={}
 TOCA.FrameSetsSlotDisabled={}
+TOCA.SlotGridTotemButton={}
 for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.SlotSelectTotemDisabled[totemCat]={}
   TOCA.FrameSetsSlotDisabled[totemCat]={}
+  TOCA.SlotGridTotemButton[totemCat]={}
 end
 
 function TOCA.EnableKnownTotems()
@@ -243,13 +245,16 @@ function TOCA.EnableKnownTotems()
     for i,totemSpell in pairs(TOCA.totems[totemCat]) do
       TOCA.SlotSelectTotemDisabled[totemCat][i]:Show()
       TOCA.FrameSetsSlotDisabled[totemCat][i]:Show()
+      TOCA.SlotGridTotemButton[totemCat][i]:Hide()
       local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(totemSpell[1])
       if (name) then
         TOCA.SlotSelectTotemDisabled[totemCat][i]:Hide()
         TOCA.FrameSetsSlotDisabled[totemCat][i]:Hide()
+        TOCA.SlotGridTotemButton[totemCat][i]:Show()
       end
     end
   end
+  TOCA.Notification("TOCA.EnableKnownTotems()", true)
 end
 
 function TOCA.FrameStyleSet(style)
@@ -382,6 +387,8 @@ function TOCA.Init()
   --InterfaceOptions_AddCategory(TOCA.FrameOptions)
   TOCA.FrameOptionsMain.name = TOCA.Global.title
   InterfaceOptions_AddCategory(TOCA.FrameOptionsMain)
+
+  TOCA.EnableKnownTotems()
 end
 
 function TOCA.SetDDMenu(DDFrame, value)

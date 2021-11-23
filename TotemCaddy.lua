@@ -322,7 +322,7 @@ end
 
 --build all button totem frames hidden
 local totemNum = 0
-TOCA.SlotGridTotemButton={}
+--TOCA.SlotGridTotemButton={}
 TOCA.SlotGridTotemButtonAction={}
 local totemButtonPos_Y={}
 for totemCat,v in pairsByKeys(TOCA.totems) do
@@ -330,7 +330,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   totemButtonPos_Y[totemCat] = 0
   for i,totemSpell in pairs(TOCA.totems[totemCat]) do
     totemButtonPos_Y[totemCat] = totemButtonPos_Y[totemCat]+TOCA.Slot_h
-    TOCA.SlotGridTotemButton[totemCat]={}
+    --TOCA.SlotGridTotemButton[totemCat]={}
     TOCA.SlotGridTotemButton[totemCat][i]= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTemplate")
     TOCA.SlotGridTotemButton[totemCat][i]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
     TOCA.SlotGridTotemButton[totemCat][i]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[totemNum], -110-totemButtonPos_Y[totemCat]+TOCA.Slot_h)
