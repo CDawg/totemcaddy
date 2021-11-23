@@ -102,6 +102,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
       TOCA.SetKeyBindOnLoad()
       TOCA.KeyBindsSetOnLoad = 2
     end
+    TOCA.EnableKnownTotems()
   end
 
   for totemCat,v in pairsByKeys(TOCA.totems) do

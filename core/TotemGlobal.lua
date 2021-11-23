@@ -388,7 +388,6 @@ function TOCA.Init()
   TOCA.FrameOptionsMain.name = TOCA.Global.title
   InterfaceOptions_AddCategory(TOCA.FrameOptionsMain)
 
-  TOCA.EnableKnownTotems()
 end
 
 function TOCA.SetDDMenu(DDFrame, value)
@@ -682,6 +681,7 @@ function TOCA.TotemBarUpdate()
     end
   end
 
+  --TOCA.EnableKnownTotems()
   TOCA.GetReincTimer()
 end
 
