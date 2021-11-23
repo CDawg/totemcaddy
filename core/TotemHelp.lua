@@ -25,7 +25,7 @@ TOCA.FrameHelp:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.FrameHelp:SetFrameStrata("DIALOG")
 TOCA.FrameHelp.text={}
 
-TOCA.tabwidth = 110
+TOCA.TabWidth.Help = 110
 TOCA.Button.Tab={}
 TOCA.Button.TabBack={}
 TOCA.HelpTabs = {
@@ -41,7 +41,7 @@ for i=1, getn(TOCA.HelpTabs) do
   TOCA.FrameHelpPage[TOCA.HelpTabs[i]]:SetPoint("CENTER", 0, 0)
 
   TOCA.Button.TabBack[i]= CreateFrame("Button", nil, TOCA.FrameHelp, "BackdropTemplate")
-  TOCA.Button.TabBack[i]:SetSize(TOCA.tabwidth-20, 29)
+  TOCA.Button.TabBack[i]:SetSize(TOCA.TabWidth.Help-20, 29)
   TOCA.Button.TabBack[i]:SetPoint("TOPLEFT", -80+i*92, 25)
   TOCA.Button.TabBack[i]:SetBackdrop({
     bgFile  = "Interface/ToolTips/CHATBUBBLE-BACKGROUND",
@@ -50,7 +50,7 @@ for i=1, getn(TOCA.HelpTabs) do
     insets  = {left=2, right=2, top=2, bottom=2},
   })
   TOCA.Button.Tab[i]= CreateFrame("Button", nil, TOCA.Button.TabBack[i], "BackdropTemplate")
-  TOCA.Button.Tab[i]:SetSize(TOCA.tabwidth, 32)
+  TOCA.Button.Tab[i]:SetSize(TOCA.TabWidth.Help, 32)
   TOCA.Button.Tab[i]:SetPoint("CENTER", 0, 0)
   TOCA.Button.Tab[i]:SetBackdrop({
     bgFile  = "Interface/OPTIONSFRAME/UI-OptionsFrame-ActiveTab",
@@ -68,17 +68,17 @@ for i=1, getn(TOCA.HelpTabs) do
   TOCA.Button.Tab[i]:SetScript("OnClick", function()
     for i=1, getn(TOCA.HelpTabs) do
       --TOCA.FrameHelpPage[TOCA.HelpTabs[i]]:Hide()
-      TOCA.Button.TabBack[i]:SetSize(TOCA.tabwidth-20, 29)
+      TOCA.Button.TabBack[i]:SetSize(TOCA.TabWidth.Help-20, 29)
       TOCA.TextFrame.text:SetText(TOCA.HelpMessageArray)
     end
     --TOCA.FrameHelpPage[TOCA.HelpTabs[i]]:Show()
-    TOCA.Button.TabBack[i]:SetSize(TOCA.tabwidth-20, 30)
+    TOCA.Button.TabBack[i]:SetSize(TOCA.TabWidth.Help-20, 30)
     if (TOCA.HelpTabs[i] == "Credit") then
       TOCA.TextFrame.text:SetText(TOCA.CreditMessageArray)
     end
   end)
 end
-TOCA.Button.TabBack[1]:SetSize(TOCA.tabwidth-20, 30) --first tab
+TOCA.Button.TabBack[1]:SetSize(TOCA.TabWidth.Help-20, 30) --first tab
 
 TOCA.helpMessage = {
   "Welcome to " .. TOCA.Global.title .. "|r v" .. TOCA.Global.version,

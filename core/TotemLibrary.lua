@@ -16,6 +16,7 @@ the copyright holders.
 TOCA={}
 TOCA.totems = {}
 TOCA.totems.FIRE = {
+  --{"Fire Elemental Totem",  "spell_fire_sealoffire",         "Summons a totem at the feet of the caster that inflicts fire damage to enemies within 10 yards."},
   {"Fire Nova Totem",       "spell_fire_sealoffire",         "Summons a totem at the feet of the caster that inflicts fire damage to enemies within 10 yards."},
   {"Flametongue Totem",     "spell_nature_guardianward",     "Summons a totem at the feet of the caster that enchants all party members' main-hand weapons with fire if they are within 20 yards.\nLasts 2 mins."},
   {"Frost Resistance Totem","spell_frostresistancetotem_01", "Summons a totem at the feet of the caster that increases party members' frost resistance within 20 yards."},

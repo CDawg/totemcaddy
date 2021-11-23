@@ -25,7 +25,7 @@ TOCA.Global = {
   prefix = "TotemCaddy",
 }
 
-TOCA.DEBUG = false
+TOCA.DEBUG = true
 
 TOCA.Prefix = {
   version = "0xEFVe",
@@ -95,6 +95,8 @@ TOCA.MenuIsOpenMain = 0
 TOCA.MenuIsOpenSets = 0
 TOCA.ReincTimer = 0
 TOCA.globalTimerInMinutes = true --default
+TOCA.Tab={}
+TOCA.TabWidth={}
 
 TOCA.Framelevel = {
   Background=0,
@@ -250,6 +252,19 @@ function TOCA.EnableKnownTotems()
   end
 end
 
+function TOCA.FrameStyleSet(style)
+  TOCA.Notification(style, true)
+  if (style == TOCA.Dropdown.FrameStyles[1]) then --class
+    TOCA.FrameMain:SetHeight(TOCA.Global.height)
+    TOCA.FrameMain.Background:SetHeight(TOCA.Global.height)
+    TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 40)
+  elseif (style == TOCA.Dropdown.FrameStyles[2]) then --vert
+    TOCA.FrameMain:SetHeight(TOCA.Global.height+300)
+    TOCA.FrameMain.Background:SetHeight(TOCA.Global.height+300)
+    TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 140)
+  end
+end
+
 function TOCA.Init()
   local lC, eC, cI = UnitClass("player")
   TOCA.FrameMain:Hide()
@@ -261,6 +276,7 @@ function TOCA.Init()
   if (TOCADB == nil) then
     TOCADB = {}
   end
+
   if (TOCADB[TOCA.player.combine] == nil) then
     TOCADB[TOCA.player.combine] = {}
     if (TOCADB[TOCA.player.combine]["CONFIG"] == nil) then
@@ -324,6 +340,10 @@ function TOCA.Init()
       TOCA.Slider.Opacity:SetValue(TOCADB[TOCA.player.combine]["CONFIG"]["OPACITY"])
       TOCA.Slider.Opacity.Val:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["OPACITY"])
     end
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"]) then
+      --TOCA.FrameMain:SetFrameStrata(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMELEVEL"])
+      TOCA.Dropdown.FrameStyle.text:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"])
+    end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMELEVEL"]) then
       TOCA.FrameMain:SetFrameStrata(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMELEVEL"])
       TOCA.Dropdown.FrameStrat.text:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMELEVEL"])
@@ -357,6 +377,11 @@ function TOCA.Init()
     TOCA.UpdateDDMenu(TOCA.Dropdown.Main)
     TOCA.UpdateDDMenu(TOCA.Dropdown.Sets)
   end
+
+  --TOCA.FrameOptions.name = TOCA.Global.title
+  --InterfaceOptions_AddCategory(TOCA.FrameOptions)
+  TOCA.FrameOptionsMain.name = TOCA.Global.title
+  InterfaceOptions_AddCategory(TOCA.FrameOptionsMain)
 end
 
 function TOCA.SetDDMenu(DDFrame, value)
@@ -585,7 +610,7 @@ function TOCA.GetReincTimer() --always checking
           TOCA.FrameMain.ReincFrame:Show()
         else
           TOCA.FrameMain.ReincFrame:Hide()
-          TOCA.Notification(name.." is ready.", true)
+          --TOCA.Notification(name.." is ready.", true)
         end
       end
     end
@@ -690,8 +715,8 @@ function TOCA.SetTotemOrder()
   local buildOrder = TOCA.GetTotemOrder()
   local totemOrder = split(buildOrder, ",")
   for k,v in ipairs(totemOrder) do
-    TOCA.Slot[v]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[k], -35)
-    TOCA.FrameSetsSlot[v]:SetPoint("CENTER", -100+TOCA.SlotSetsPosX[k], 20)
+    TOCA.Slot[v]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[k], -35) --main frame
+    TOCA.FrameSetsSlot[v]:SetPoint("TOPLEFT", -60+TOCA.SlotSetsPosX[k], -70) --options frame
   end
 end
 
