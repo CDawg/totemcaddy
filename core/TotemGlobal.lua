@@ -259,14 +259,34 @@ end
 
 function TOCA.FrameStyleSet(style)
   TOCA.Notification(style, true)
-  if (style == TOCA.Dropdown.FrameStyles[1]) then --class
+  if (style == TOCA.Dropdown.FrameStyles[1]) then --classis
     TOCA.FrameMain:SetHeight(TOCA.Global.height)
     TOCA.FrameMain.Background:SetHeight(TOCA.Global.height)
     TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 40)
+    for totemCat,v in pairsByKeys(TOCA.totems) do
+      TOCA.Slot[totemCat]:Show()
+      TOCA.Button.DropdownMain:Show()
+      TOCA.FrameMainGridVertical:Hide()
+    end
   elseif (style == TOCA.Dropdown.FrameStyles[2]) then --vert
-    TOCA.FrameMain:SetHeight(TOCA.Global.height+300)
-    TOCA.FrameMain.Background:SetHeight(TOCA.Global.height+300)
-    TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 140)
+    TOCA.FrameMain:SetHeight(TOCA.Global.height+240)
+    TOCA.FrameMain.Background:SetHeight(TOCA.Global.height+240)
+    TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 160)
+    for totemCat,v in pairsByKeys(TOCA.totems) do
+      TOCA.Slot[totemCat]:Hide()
+      TOCA.Button.DropdownMain:Hide()
+      TOCA.FrameMainGridVertical:Show()
+    end
+  elseif (style == TOCA.Dropdown.FrameStyles[3]) then --horz
+    TOCA.FrameMain:SetHeight(TOCA.Global.height+240)
+    TOCA.FrameMain.Background:SetHeight(TOCA.Global.height+240)
+    TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 160)
+    for totemCat,v in pairsByKeys(TOCA.totems) do
+      TOCA.Slot[totemCat]:Hide()
+      TOCA.Button.DropdownMain:Hide()
+      TOCA.FrameMainGridVertical:Show()
+      --TOCA.FrameMainGridVertical:SetRotation(90)
+    end
   end
 end
 
@@ -346,7 +366,7 @@ function TOCA.Init()
       TOCA.Slider.Opacity.Val:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["OPACITY"])
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"]) then
-      --TOCA.FrameMain:SetFrameStrata(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMELEVEL"])
+      TOCA.FrameStyleSet(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"])
       TOCA.Dropdown.FrameStyle.text:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"])
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMELEVEL"]) then
@@ -623,17 +643,20 @@ function TOCA.GetReincTimer() --always checking
   end
 end
 
+TOCA.SlotGridTimer={}
 function TOCA.TotemTimerReset(i)
   if (i == "all") then
     for i=1, 4 do
       TOCA.TotemFunc[i]:Cancel()
       TOCA.TotemTimer[i] = 0
       TOCA.Slot.Timer[i]:SetText("")
+      TOCA.SlotGridTimer[i]:SetText("")
     end
   else
     TOCA.TotemFunc[i]:Cancel()
     TOCA.TotemTimer[i] = 0
     TOCA.Slot.Timer[i]:SetText("")
+    TOCA.SlotGridTimer[i]:SetText("")
   end
   TOCA.Notification("TOCA.TotemTimerReset("..i..")", true)
 end
