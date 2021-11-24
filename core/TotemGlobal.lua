@@ -351,8 +351,6 @@ function TOCA.Init()
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMORDER"]) then
       TOCA.SetTotemOrderDropdown()
       TOCA.SetTotemOrder()
-    else
-      TOCA.BuildTotemOrder()
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["OPACITY"]) then
       TOCA.Slider.Opacity:SetValue(TOCADB[TOCA.player.combine]["CONFIG"]["OPACITY"])

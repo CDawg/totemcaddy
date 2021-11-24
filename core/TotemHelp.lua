@@ -97,8 +97,8 @@ TOCA.helpMessage = {
 }
 TOCA.CreditMessage = {
   "Special thanks to some beta testers from the Myzrael realm.",
-  "Especially to my shaman buddy Shockpopz of Myzrael For all the valuable feedback!\n\n\n\n",
-  "Written by Porthias of Myzrael (a.k.a. Port)",
+  "Especially to my shaman buddy |cff006aa6Shockpopz|r of Myzrael For all the valuable feedback!\n\n\n\n\n\n\n\n",
+  "Written by |cff006aa6Porthias|r of Myzrael (a.k.a. Port)",
 }
 TOCA.HelpMessageArray = ""
 for k,v in pairs(TOCA.helpMessage) do
