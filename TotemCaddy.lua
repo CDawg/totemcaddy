@@ -205,6 +205,7 @@ for i=1, 4 do
   TOCA.SlotGridVerticalTimer[i]:SetFont(TOCA.Global.font, 12, "OUTLINE")
   TOCA.SlotGridVerticalTimer[i]:SetPoint("TOPLEFT", TOCA.SlotGridVerticalTimerX-TOCA.Slot_w+5, -28)
   TOCA.SlotGridVerticalTimer[i]:SetText("")
+  TOCA.SlotGridVerticalTimer[i]:Hide()
 end
 
 --classic style
@@ -352,6 +353,7 @@ TOCA.SlotGridVerticalTotemButtonAction={}
 TOCA.FrameMainGridVertical = CreateFrame("Frame", nil, TOCA.FrameMain)
 TOCA.FrameMainGridVertical:SetSize(1,1)
 TOCA.FrameMainGridVertical:SetPoint("TOPLEFT", 0, 0)
+TOCA.FrameMainGridVertical:Hide()
 
 local totemButtonPos_Y={}
 for totemCat,v in pairsByKeys(TOCA.totems) do

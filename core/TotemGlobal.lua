@@ -16,7 +16,7 @@ the copyright holders.
 TOCA.Global = {
   title  = "|cff006aa6Totem Caddy|r",
   author = "Porthias of Myzrael",
-  version= 2.38,
+  version= 2.40,
   command= "toca",
   width  = 150,
   height = 85,
@@ -25,7 +25,7 @@ TOCA.Global = {
   prefix = "TotemCaddy",
 }
 
-TOCA.DEBUG = false
+TOCA.DEBUG = true
 
 TOCA.Prefix = {
   version = "0xEFVe",
@@ -258,8 +258,7 @@ function TOCA.EnableKnownTotems()
 end
 
 function TOCA.FrameStyleSet(style)
-  TOCA.Notification(style, true)
-  if (style == TOCA.Dropdown.FrameStyles[1]) then --classis
+  if (style == TOCA.Dropdown.FrameStyles[1]) then --classic
     TOCA.FrameMain:SetHeight(TOCA.Global.height)
     TOCA.FrameMain.Background:SetHeight(TOCA.Global.height)
     TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 40)
@@ -277,18 +276,8 @@ function TOCA.FrameStyleSet(style)
       TOCA.Button.DropdownMain:Hide()
       TOCA.FrameMainGridVertical:Show()
     end
-  elseif (style == TOCA.Dropdown.FrameStyles[3]) then --horz
-    TOCA.FrameMain:SetHeight(TOCA.Global.height+240)
-    TOCA.FrameMain.Background:SetHeight(TOCA.Global.height+240)
-    TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 160)
-    for totemCat,v in pairsByKeys(TOCA.totems) do
-      TOCA.Slot[totemCat]:Hide()
-      TOCA.Button.DropdownMain:Hide()
-      TOCA.FrameMainGridVertical:Show()
-      --TOCA.FrameMain:SetRotation(math.rad(90))
-      --TOCA.FrameMain:SetOrientation("HORIZONTAL")
-    end
   end
+  TOCA.Notification("Frame Style: " .. style, true)
 end
 
 function TOCA.Init()
@@ -362,6 +351,8 @@ function TOCA.Init()
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMORDER"]) then
       TOCA.SetTotemOrderDropdown()
       TOCA.SetTotemOrder()
+    else
+      TOCA.BuildTotemOrder()
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["OPACITY"]) then
       TOCA.Slider.Opacity:SetValue(TOCADB[TOCA.player.combine]["CONFIG"]["OPACITY"])
@@ -418,10 +409,9 @@ function TOCA.Init()
     TOCA.UpdateDDMenu(TOCA.Dropdown.Sets)
   end
 
-  --TOCA.FrameOptions.name = TOCA.Global.title
-  --InterfaceOptions_AddCategory(TOCA.FrameOptions)
   TOCA.FrameOptionsMain.name = TOCA.Global.title
   InterfaceOptions_AddCategory(TOCA.FrameOptionsMain)
+  TOCA.Notification("TOCA.Init()", true)
 end
 
 function TOCA.SetDDMenu(DDFrame, value)
@@ -634,6 +624,28 @@ function TOCA.TimerFrame(i)
     TOCA.Slot.Timer[i]:SetText("")
     TOCA.SlotGridVerticalTimer[i]:SetText("")
   end
+
+  if (TOCADB[TOCA.player.combine]["CONFIG"]["TIMERS"] == "OFF") then
+    for i=1, 4 do --hide all
+      TOCA.Slot.Timer[i]:Hide()
+      TOCA.SlotGridVerticalTimer[i]:Hide()
+    end
+    return
+  end
+
+  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.Dropdown.FrameStyles[1]) then --classic
+    for i=1, 4 do
+      TOCA.Slot.Timer[i]:Show()
+      TOCA.SlotGridVerticalTimer[i]:Hide()
+    end
+  end
+
+  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.Dropdown.FrameStyles[2]) then --vert
+    for i=1, 4 do
+      TOCA.Slot.Timer[i]:Hide()
+      TOCA.SlotGridVerticalTimer[i]:Show()
+    end
+  end
 end
 
 --build timers
@@ -780,26 +792,46 @@ end
 
 local totemNum = 0
 local totemButtonPos_Y={}
+local totemButtonPos_X={}
 function TOCA.SetTotemOrder()
   local buildOrder = TOCA.GetTotemOrder()
   local totemOrder = split(buildOrder, ",")
   for k,v in ipairs(totemOrder) do
     TOCA.Slot[v]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[k], -35) --main frame
     TOCA.FrameSetsSlot[v]:SetPoint("TOPLEFT", -60+TOCA.SlotSetsPosX[k], -70) --options frame
-    --TOCA.SlotGridVerticalTimer[k]:SetPoint("TOPLEFT", TOCA.SlotGridVerticalTimerX-TOCA.Slot_w+5, -28)
 
     for totemCat,notUsed in pairsByKeys(TOCA.totems) do
       totemNum = totemNum +1
       totemButtonPos_Y[totemCat] = 0
+      totemButtonPos_X[totemCat] = 0
       for i,totemSpell in pairs(TOCA.totems[totemCat]) do
         totemButtonPos_Y[totemCat] = totemButtonPos_Y[totemCat]+TOCA.Slot_h
+        totemButtonPos_X[totemCat] = totemButtonPos_X[totemCat]+TOCA.Slot_w
         local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGridVerticalTotemButton[totemCat][i]:GetPoint()
         if (TOCA.SlotGridVerticalTotemButton[v][i]) then
           TOCA.SlotGridVerticalTotemButton[v][i]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[k], yOfs)
+          if (TOCA.totems.AIR[1][1] == totemSpell[1]) then
+            local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGridVerticalTotemButton.AIR[1]:GetPoint()
+            TOCA.SlotGridVerticalTimer[4]:SetPoint("TOPLEFT", xOfs, -26)
+          end
+          if (TOCA.totems.EARTH[1][1] == totemSpell[1]) then
+            local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGridVerticalTotemButton.EARTH[1]:GetPoint()
+            TOCA.SlotGridVerticalTimer[2]:SetPoint("TOPLEFT", xOfs, -26)
+          end
+          if (TOCA.totems.FIRE[1][1] == totemSpell[1]) then
+            local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGridVerticalTotemButton.FIRE[1]:GetPoint()
+            TOCA.SlotGridVerticalTimer[1]:SetPoint("TOPLEFT", xOfs, -26)
+          end
+          if (TOCA.totems.WATER[1][1] == totemSpell[1]) then
+            local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGridVerticalTotemButton.WATER[1]:GetPoint()
+            TOCA.SlotGridVerticalTimer[3]:SetPoint("TOPLEFT", xOfs, -26)
+          end
         end
       end
     end
   end
+  TOCA.Notification("TOCA.SetTotemOrder()", true)
+  TOCA.Notification(buildOrder, true)
 end
 
 function TOCA.SetTotemOrderDropdown() --handled on Init() ONLY
