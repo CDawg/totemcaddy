@@ -97,6 +97,13 @@ TOCA.Dropdown.FrameStyle.text = TOCA.Dropdown.FrameStyle:CreateFontString(nil, "
 TOCA.Dropdown.FrameStyle.text:SetFont(TOCA.Global.font, 11)
 TOCA.Dropdown.FrameStyle.text:SetPoint("TOPLEFT", TOCA.Dropdown.FrameStyle, "TOPLEFT", 25, -8)
 TOCA.Dropdown.FrameStyle.text:SetText(TOCA.Dropdown.FrameStyles[1])
+TOCA.Dropdown.FrameStyle:SetScript("OnEnter", function()
+  TOCA.TooltipMenu("Frame Style", "|cffffffffClassic|r\n4 primary totems that are commonly used.|nTotems are selectable and configurable by category in the|noptions menu.|n|n|cffffffffGrid Vertical|r|nAll Totems are displayed vertically in category order.|nThe order is configurable in the options menu.", 170)
+  --n|n|cffffffffGrid Vertical|r|nAll Totems are displayed vertically.|n|n
+end)
+TOCA.Dropdown.FrameStyle:SetScript("OnLeave", function()
+  TOCA.Tooltip:Hide()
+end)
 TOCA.Dropdown.FrameStyle.onClick = function(self, checked)
   TOCA.Dropdown.FrameStyle.text:SetText(self.value)
   TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] = self.value
@@ -133,6 +140,12 @@ TOCA.Dropdown.FrameStrat.text = TOCA.Dropdown.FrameStrat:CreateFontString(nil, "
 TOCA.Dropdown.FrameStrat.text:SetFont(TOCA.Global.font, 11)
 TOCA.Dropdown.FrameStrat.text:SetPoint("TOPLEFT", TOCA.Dropdown.FrameStrat, "TOPLEFT", 25, -8)
 TOCA.Dropdown.FrameStrat.text:SetText(TOCA.Dropdown.FrameStrats[2])
+TOCA.Dropdown.FrameStrat:SetScript("OnEnter", function(self)
+  TOCA.TooltipMenu("Frame Layer", "Sets the overlap over other menu and action bar items|non your screen.|nHigher frames will take precedence over items on screen.", 120)
+end)
+TOCA.Dropdown.FrameStrat:SetScript("OnLeave", function(self)
+  TOCA.Tooltip:Hide()
+end)
 TOCA.Dropdown.FrameStrat.onClick = function(self, checked)
   TOCA.Dropdown.FrameStrat.text:SetText(self.value)
   TOCA.Notification(self.value, true)
@@ -158,7 +171,7 @@ UIDropDownMenu_SetWidth(TOCA.Dropdown.FrameStrat, 125)
 TOCA.Dropdown.FrameStrat.title = TOCA.FrameOptionsPage[TOCA.OptionTabs[1]]:CreateFontString(nil, "ARTWORK")
 TOCA.Dropdown.FrameStrat.title:SetFont(TOCA.Global.font, 12)
 TOCA.Dropdown.FrameStrat.title:SetPoint("TOPLEFT", 30, -80)
-TOCA.Dropdown.FrameStrat.title:SetText("Frame Layer (Level)")
+TOCA.Dropdown.FrameStrat.title:SetText("Frame Layer")
 TOCA.Dropdown.FrameStrat.title:SetTextColor(1, 1, 0.5, 1)
 
 TOCA.FrameOptions.TitleSlider = TOCA.FrameOptionsPage[TOCA.OptionTabs[1]]:CreateFontString(nil, "ARTWORK")
@@ -473,9 +486,9 @@ TOCA.SlotOrderBack={}
 TOCA.Dropdown.OrderSet={}
 
 for i=1, getn(TOCA.Dropdown.OrderSetMenu) do
-  TOCA.SlotSets_x = TOCA.SlotSets_x + 68
+  TOCA.SlotSets_x = TOCA.SlotSets_x + 66
   TOCA.Dropdown.OrderSet[i] = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[2]], "UIDropDownMenuTemplate")
-  TOCA.Dropdown.OrderSet[i]:SetPoint("TOPLEFT", TOCA.SlotSets_x, -210)
+  TOCA.Dropdown.OrderSet[i]:SetPoint("TOPLEFT", TOCA.SlotSets_x+6, -210)
   TOCA.Dropdown.OrderSet[i].displayMode = "MENU"
   TOCA.Dropdown.OrderSet[i].text = TOCA.Dropdown.OrderSet[i]:CreateFontString(nil, "ARTWORK")
   TOCA.Dropdown.OrderSet[i].text:SetFont(TOCA.Global.font, 10)
@@ -558,6 +571,7 @@ TOCA.FrameOptionsMain.Options:SetScript("OnLeave", function(self)
 end)
 TOCA.FrameOptionsMain.Options:SetScript("OnClick", function()
   TOCA.CloseAllMenus()
+  TOCA.FrameMain:Show()
   TOCA.FrameOptions:Show()
 end)
 TOCA.FrameOptionsMain.Title = TOCA.FrameOptionsMain.Options:CreateFontString(nil, "ARTWORK")

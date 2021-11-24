@@ -411,7 +411,6 @@ function TOCA.Init()
   --InterfaceOptions_AddCategory(TOCA.FrameOptions)
   TOCA.FrameOptionsMain.name = TOCA.Global.title
   InterfaceOptions_AddCategory(TOCA.FrameOptionsMain)
-
 end
 
 function TOCA.SetDDMenu(DDFrame, value)
@@ -486,7 +485,7 @@ end
 
 local TooltipMaxHeight = 82
 TOCA.Tooltip = CreateFrame("frame", "TOCA.Tooltip", UIParent, "BackdropTemplate")
-TOCA.Tooltip:SetWidth(260)
+TOCA.Tooltip:SetWidth(250)
 TOCA.Tooltip:SetHeight(TooltipMaxHeight)
 TOCA.Tooltip:SetFrameStrata("TOOLTIP")
 TOCA.Tooltip:SetBackdrop(TOCA.Backdrop.General)
@@ -547,6 +546,7 @@ end
 
 function TOCA.TooltipDisplay(spell, tools, msgtooltip)
   local spellName, spellSubName, spellID = GetSpellBookItemName(spell)
+  TOCA.Tooltip:SetWidth(250)
   if (spellID) then
     local spellDesc = GetSpellDescription(spellID)
     local spellPower= GetSpellPowerCost(spellID)
@@ -583,6 +583,16 @@ function TOCA.TooltipDisplay(spell, tools, msgtooltip)
     TOCA.Tooltip.tools:SetText("")
     TOCA.Tooltip.text:SetText(adjustTooltipHeight(msgtooltip, 34))
   end
+end
+
+function TOCA.TooltipMenu(title, msgtooltip, height)
+  TOCA.Tooltip:Show()
+  TOCA.Tooltip.title:SetText(title)
+  TOCA.Tooltip.cost:SetText("")
+  TOCA.Tooltip.tools:SetText("")
+  TOCA.Tooltip.text:SetText(msgtooltip)
+  TOCA.Tooltip:SetWidth(360)
+  TOCA.Tooltip:SetHeight(height)
 end
 
 --TOCA.HasTotemOut = 0
