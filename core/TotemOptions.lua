@@ -128,7 +128,7 @@ UIDropDownMenu_SetWidth(TOCA.Dropdown.FrameStyle, 125)
 TOCA.Dropdown.FrameStyle.title = TOCA.FrameOptionsPage[TOCA.OptionTabs[1]]:CreateFontString(nil, "ARTWORK")
 TOCA.Dropdown.FrameStyle.title:SetFont(TOCA.Global.font, 12)
 TOCA.Dropdown.FrameStyle.title:SetPoint("TOPLEFT", 30, -20)
-TOCA.Dropdown.FrameStyle.title:SetText("Frame Style")
+TOCA.Dropdown.FrameStyle.title:SetText("Frame Totem Layout")
 TOCA.Dropdown.FrameStyle.title:SetTextColor(1, 1, 0.5, 1)
 
 TOCA.Dropdown.FrameStrat={}
@@ -316,12 +316,28 @@ TOCA.OptionsDivider:SetTexture("Interface/DialogFrame/DialogFrame-Left")
 TOCA.FrameOptions.TitleMenu = TOCA.FrameOptionsPage[TOCA.OptionTabs[1]]:CreateFontString(nil, "ARTWORK")
 TOCA.FrameOptions.TitleMenu:SetFont(TOCA.Global.font, 12)
 TOCA.FrameOptions.TitleMenu:SetPoint("TOPLEFT", 400, -20)
-TOCA.FrameOptions.TitleMenu:SetText("Menu")
+TOCA.FrameOptions.TitleMenu:SetText("Frame Menu")
 TOCA.FrameOptions.TitleMenu:SetTextColor(1, 1, 0.5, 1)
+
+TOCA.Checkbox.MainLock={}
+TOCA.Checkbox.MainLock = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[1]], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.MainLock:SetPoint("TOPLEFT", 400, -40)
+TOCA.Checkbox.MainLock:SetChecked(1)
+TOCA.Checkbox.MainLock.text = TOCA.Checkbox.MainLock:CreateFontString(nil, "ARTWORK")
+TOCA.Checkbox.MainLock.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
+TOCA.Checkbox.MainLock.text:SetPoint("TOPLEFT", 25, -6)
+TOCA.Checkbox.MainLock.text:SetText("Lock Frame While In Combat")
+TOCA.Checkbox.MainLock:SetScript("OnClick", function(self)
+  if (self:GetChecked()) then
+    TOCADB[TOCA.player.combine]["CONFIG"]["COMBATLOCK"] = "ON"
+  else
+    TOCADB[TOCA.player.combine]["CONFIG"]["COMBATLOCK"] = "OFF"
+  end
+end)
 
 TOCA.Checkbox.MainMenu={}
 TOCA.Checkbox.MainMenu = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.MainMenu:SetPoint("TOPLEFT", 400, -40)
+TOCA.Checkbox.MainMenu:SetPoint("TOPLEFT", 400, -60)
 TOCA.Checkbox.MainMenu:SetChecked(1)
 TOCA.Checkbox.MainMenu.text = TOCA.Checkbox.MainMenu:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.MainMenu.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
@@ -346,7 +362,7 @@ end)
 
 TOCA.Checkbox.EndCaps={}
 TOCA.Checkbox.EndCaps = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.EndCaps:SetPoint("TOPLEFT", 400, -60)
+TOCA.Checkbox.EndCaps:SetPoint("TOPLEFT", 400, -80)
 TOCA.Checkbox.EndCaps:SetChecked(1)
 TOCA.Checkbox.EndCaps.text = TOCA.Checkbox.EndCaps:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.EndCaps.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
@@ -366,7 +382,7 @@ end)
 TOCA.Dropdown.FrameGryphons={}
 TOCA.Dropdown.FrameGryphonsSel={"Gryphons", "Lions"}
 TOCA.Dropdown.FrameGryphons = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[1]], "UIDropDownMenuTemplate")
-TOCA.Dropdown.FrameGryphons:SetPoint("TOPLEFT", 410, -80)
+TOCA.Dropdown.FrameGryphons:SetPoint("TOPLEFT", 410, -100)
 TOCA.Dropdown.FrameGryphons.displayMode = "MENU"
 TOCA.Dropdown.FrameGryphons.text = TOCA.Dropdown.FrameGryphons:CreateFontString(nil, "ARTWORK")
 TOCA.Dropdown.FrameGryphons.text:SetFont(TOCA.Global.font, 11)
@@ -398,21 +414,23 @@ TOCA.Dropdown.FrameGryphons.initialize = function(self, level)
   end
 end
 UIDropDownMenu_SetWidth(TOCA.Dropdown.FrameGryphons, 125)
+--[==[
 TOCA.Dropdown.FrameGryphons.title = TOCA.FrameOptionsPage[TOCA.OptionTabs[1]]:CreateFontString(nil, "ARTWORK")
 TOCA.Dropdown.FrameGryphons.title:SetFont(TOCA.Global.font, 12)
 TOCA.Dropdown.FrameGryphons.title:SetPoint("TOPLEFT", 30, -20)
 TOCA.Dropdown.FrameGryphons.title:SetText("Frame Style")
 TOCA.Dropdown.FrameGryphons.title:SetTextColor(1, 1, 0.5, 1)
+]==]--
 
 TOCA.FrameOptions.TitleTimer = TOCA.FrameOptionsPage[TOCA.OptionTabs[1]]:CreateFontString(nil, "ARTWORK")
 TOCA.FrameOptions.TitleTimer:SetFont(TOCA.Global.font, 12)
-TOCA.FrameOptions.TitleTimer:SetPoint("TOPLEFT", 400, -120)
+TOCA.FrameOptions.TitleTimer:SetPoint("TOPLEFT", 400, -140)
 TOCA.FrameOptions.TitleTimer:SetText("Timers")
 TOCA.FrameOptions.TitleTimer:SetTextColor(1, 1, 0.5, 1)
 
 TOCA.Checkbox.Timers={}
 TOCA.Checkbox.Timers = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.Timers:SetPoint("TOPLEFT", 400, -140)
+TOCA.Checkbox.Timers:SetPoint("TOPLEFT", 400, -160)
 TOCA.Checkbox.Timers:SetChecked(1)
 TOCA.Checkbox.Timers.text = TOCA.Checkbox.Timers:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.Timers.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
@@ -434,7 +452,7 @@ end)
 
 TOCA.Checkbox.TimersInMinutes={}
 TOCA.Checkbox.TimersInMinutes = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.TimersInMinutes:SetPoint("TOPLEFT", 400, -160)
+TOCA.Checkbox.TimersInMinutes:SetPoint("TOPLEFT", 400, -180)
 TOCA.Checkbox.TimersInMinutes:SetChecked(1)
 TOCA.Checkbox.TimersInMinutes.text = TOCA.Checkbox.TimersInMinutes:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.TimersInMinutes.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
@@ -452,7 +470,7 @@ end)
 
 TOCA.Checkbox.Reinc={}
 TOCA.Checkbox.Reinc = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.Reinc:SetPoint("TOPLEFT", 400, -180)
+TOCA.Checkbox.Reinc:SetPoint("TOPLEFT", 400, -200)
 TOCA.Checkbox.Reinc:SetChecked(1)
 TOCA.Checkbox.Reinc.text = TOCA.Checkbox.Reinc:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.Reinc.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
@@ -470,13 +488,13 @@ end)
 
 TOCA.FrameOptions.TitleTooltip = TOCA.FrameOptionsPage[TOCA.OptionTabs[1]]:CreateFontString(nil, "ARTWORK")
 TOCA.FrameOptions.TitleTooltip:SetFont(TOCA.Global.font, 12)
-TOCA.FrameOptions.TitleTooltip:SetPoint("TOPLEFT", 400, -220)
+TOCA.FrameOptions.TitleTooltip:SetPoint("TOPLEFT", 400, -240)
 TOCA.FrameOptions.TitleTooltip:SetText("Tooltip")
 TOCA.FrameOptions.TitleTooltip:SetTextColor(1, 1, 0.5, 1)
 
 TOCA.Checkbox.Tooltip={}
 TOCA.Checkbox.Tooltip = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.Tooltip:SetPoint("TOPLEFT", 400, -240)
+TOCA.Checkbox.Tooltip:SetPoint("TOPLEFT", 400, -260)
 TOCA.Checkbox.Tooltip:SetChecked(1)
 TOCA.Checkbox.Tooltip.text = TOCA.Checkbox.Tooltip:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.Tooltip.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
@@ -492,7 +510,7 @@ end)
 
 TOCA.Button.TooltipPosition= CreateFrame("Button", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[1]], "BackdropTemplate")
 TOCA.Button.TooltipPosition:SetSize(100, 25)
-TOCA.Button.TooltipPosition:SetPoint("TOPLEFT", 400, -275)
+TOCA.Button.TooltipPosition:SetPoint("TOPLEFT", 425, -285)
 TOCA.Button.TooltipPosition:SetBackdrop(TOCA.Backdrop.Button)
 TOCA.Button.TooltipPosition:SetBackdropColor(0.6, 0, 0, 1)
 TOCA.Button.TooltipPosition:SetBackdropBorderColor(1, 1, 1, 0.6)
@@ -555,7 +573,6 @@ for i=1, getn(TOCA.Dropdown.OrderSetMenu) do
   end
   UIDropDownMenu_SetWidth(TOCA.Dropdown.OrderSet[i], 50)
 end
-
 
 TOCA.FrameOptions.Divider = TOCA.FrameOptions:CreateTexture(nil, "ARTWORK")
 TOCA.FrameOptions.Divider:SetSize(TOCA.FrameOptions_w-6, 4)

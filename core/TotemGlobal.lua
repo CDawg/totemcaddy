@@ -25,7 +25,7 @@ TOCA.Global = {
   prefix = "TotemCaddy",
 }
 
-TOCA.DEBUG = true
+TOCA.DEBUG = false
 
 TOCA.Prefix = {
   version = "0xEFVe",
@@ -347,6 +347,7 @@ function TOCA.Init()
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TIMERS"] == "OFF") then
       for i=1, 4 do
         TOCA.Slot.Timer[i]:Hide()
+        TOCA.SlotGridVerticalTimer[i]:Hide()
       end
       TOCA.Checkbox.Timers:SetChecked(nil)
     end
@@ -369,6 +370,8 @@ function TOCA.Init()
     if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"]) then
       TOCA.FrameStyleSet(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"])
       TOCA.Dropdown.FrameStyle.text:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"])
+    else
+      TOCA.FrameStyleSet(TOCA.Dropdown.FrameStyles[1])
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMELEVEL"]) then
       TOCA.FrameMain:SetFrameStrata(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMELEVEL"])
@@ -395,6 +398,9 @@ function TOCA.Init()
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLON"] == "OFF") then
       TOCA.Checkbox.Tooltip:SetChecked(nil)
+    end
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["COMBATLOCK"] == "OFF") then
+      TOCA.Checkbox.MainLock:SetChecked(nil)
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["ENDCAPSTYLE"] == "Lions") then
       TOCA.Dropdown.FrameGryphons.text:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["ENDCAPSTYLE"])
@@ -619,11 +625,14 @@ function TOCA.TimerFrame(i)
     TOCA.TotemTimer[i] = TOCA.TotemTimer[i] -1
     if (TOCA.globalTimerInMinutes) then
       TOCA.Slot.Timer[i]:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
+      TOCA.SlotGridVerticalTimer[i]:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
     else
       TOCA.Slot.Timer[i]:SetText(TOCA.TotemTimer[i])
+      TOCA.SlotGridVerticalTimer[i]:SetText(TOCA.TotemTimer[i])
     end
   else
     TOCA.Slot.Timer[i]:SetText("")
+    TOCA.SlotGridVerticalTimer[i]:SetText("")
   end
 end
 
@@ -777,6 +786,7 @@ function TOCA.SetTotemOrder()
   for k,v in ipairs(totemOrder) do
     TOCA.Slot[v]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[k], -35) --main frame
     TOCA.FrameSetsSlot[v]:SetPoint("TOPLEFT", -60+TOCA.SlotSetsPosX[k], -70) --options frame
+    --TOCA.SlotGridVerticalTimer[k]:SetPoint("TOPLEFT", TOCA.SlotGridVerticalTimerX-TOCA.Slot_w+5, -28)
 
     for totemCat,notUsed in pairsByKeys(TOCA.totems) do
       totemNum = totemNum +1

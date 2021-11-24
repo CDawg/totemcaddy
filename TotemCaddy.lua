@@ -109,10 +109,22 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
     if (event == "PLAYER_REGEN_DISABLED") then
       TOCA.SlotSelect[totemCat]:Hide()
       TOCA.Button.DropdownMain:Hide()
+      if (TOCADB[TOCA.player.combine]["CONFIG"]["COMBATLOCK"] == "OFF") then
+        TOCA.FrameMain:SetMovable(true)
+        TOCA.FrameMain:EnableMouse(true)
+      else
+        TOCA.FrameMain:SetMovable(false)
+        TOCA.FrameMain:EnableMouse(false)
+      end
     end
     if (event == "PLAYER_REGEN_ENABLED") then
       TOCA.SlotSelect[totemCat]:Show()
       TOCA.Button.DropdownMain:Show()
+      if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"]) then
+        TOCA.FrameStyleSet(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"])
+      end
+      TOCA.FrameMain:SetMovable(true)
+      TOCA.FrameMain:EnableMouse(true)
     end
   end
 
@@ -192,7 +204,7 @@ for i=1, 4 do
   TOCA.SlotGridVerticalTimer[i]= TOCA.FrameMain:CreateFontString(nil, "ARTWORK")
   TOCA.SlotGridVerticalTimer[i]:SetFont(TOCA.Global.font, 12, "OUTLINE")
   TOCA.SlotGridVerticalTimer[i]:SetPoint("TOPLEFT", TOCA.SlotGridVerticalTimerX-TOCA.Slot_w+5, -28)
-  TOCA.SlotGridVerticalTimer[i]:SetText("1234")
+  TOCA.SlotGridVerticalTimer[i]:SetText("")
 end
 
 --classic style
