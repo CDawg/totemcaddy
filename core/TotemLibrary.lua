@@ -61,6 +61,14 @@ TOCA.orderGame = { --how the ingame sorts totems
   AIR  = 4,
 }
 
+function arrayToString(array)
+  formstring=""
+  for k,v in pairs(array) do
+    formstring = formstring .. v .. "\n\n"
+  end
+  return formstring
+end
+
 function split(s, delimiter)
   result = {}
   if (s) then

@@ -25,6 +25,7 @@ TOCA.FrameHelp:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.FrameHelp:SetFrameStrata("DIALOG")
 TOCA.FrameHelp.text={}
 
+TOCA.help={}
 TOCA.TabWidth.Help = 110
 TOCA.Button.Tab={}
 TOCA.Button.TabBack={}
@@ -70,18 +71,21 @@ for i=1, getn(TOCA.HelpTabs) do
     for i=1, getn(TOCA.HelpTabs) do
       --TOCA.FrameHelpPage[TOCA.HelpTabs[i]]:Hide()
       TOCA.Button.TabBack[i]:SetSize(TOCA.TabWidth.Help-20, 29)
-      TOCA.TextFrame.text:SetText(TOCA.HelpMessageArray)
+      TOCA.TextFrame.text:SetText(arrayToString(TOCA.help.intro))
     end
     --TOCA.FrameHelpPage[TOCA.HelpTabs[i]]:Show()
     TOCA.Button.TabBack[i]:SetSize(TOCA.TabWidth.Help-20, 30)
     if (TOCA.HelpTabs[i] == "Credit") then
-      TOCA.TextFrame.text:SetText(TOCA.CreditMessageArray)
+      TOCA.TextFrame.text:SetText(arrayToString(TOCA.help.credit))
+    end
+    if (TOCA.HelpTabs[i] == "Contact") then
+      TOCA.TextFrame.text:SetText(arrayToString(TOCA.help.contact))
     end
   end)
 end
 TOCA.Button.TabBack[1]:SetSize(TOCA.TabWidth.Help-20, 30) --first tab
 
-TOCA.helpMessage = {
+TOCA.help.intro = {
   "Welcome to " .. TOCA.Global.title .. "|r v" .. TOCA.Global.version,
   "|cffffdf96Please note:|r Totem Caddy is still evolving. Improvements will be made as time continues. Enjoy!",
   "|cffffdf96New Feature:|r New Frame Style: Grid Vertical. Now you can view all totems on screen in vertical order based on totem category.",
@@ -95,19 +99,17 @@ TOCA.helpMessage = {
   "You can select which totem for each category, give it a name, then select the bottom arrow on the main frame dropdown to access it.",
   "Totem slot keybindings for your totem category slots. If you assign key bindings to to the totem slots for the very first time, you may\nhave to do a '/reload'.",
 }
-TOCA.CreditMessage = {
+TOCA.help.credit = {
   "Special thanks to some beta testers from the Myzrael realm.",
   "Especially to my shaman buddy |cff006aa6Shockpopz|r of Myzrael For all the valuable feedback!\n\n\n\n\n\n\n\n",
   "Written by |cff006aa6Porthias|r of Myzrael (a.k.a. Port)",
 }
-TOCA.HelpMessageArray = ""
-for k,v in pairs(TOCA.helpMessage) do
-  TOCA.HelpMessageArray = TOCA.HelpMessageArray .. v .. "\n\n"
-end
-TOCA.CreditMessageArray = ""
-for k,v in pairs(TOCA.CreditMessage) do
-  TOCA.CreditMessageArray = TOCA.CreditMessageArray .. v .. "\n\n"
-end
+TOCA.help.contact = {
+  "",
+  "|cffffdf96Curseoforge:|r https://www.curseforge.com/wow/addons/totem-caddy/",
+  "|cffffdf96Discord:|r https://discord.com/users/Porthios#8963",
+  "|cffffdf96Github:|r https://github.com/CDawg/totemcaddy",
+}
 
 TOCA.TextFrame_w = FrameHelp_w-20
 TOCA.TextFrame_h = FrameHelp_h-10
@@ -142,7 +144,7 @@ TOCA.TextFrame.text:SetPoint("TOPLEFT", 4, -4)
 TOCA.TextFrame.text:SetMultiLine(true)
 TOCA.TextFrame.text:ClearFocus(self)
 TOCA.TextFrame.text:SetAutoFocus(false)
-TOCA.TextFrame.text:SetText(TOCA.HelpMessageArray)
+TOCA.TextFrame.text:SetText(arrayToString(TOCA.help.intro))
 
 TOCA.Button.CloseFrameHelp= CreateFrame("Button", nil, TOCA.FrameHelp, "BackdropTemplate")
 TOCA.Button.CloseFrameHelp:SetSize(100, 25)
