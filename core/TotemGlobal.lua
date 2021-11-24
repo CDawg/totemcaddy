@@ -396,6 +396,11 @@ function TOCA.Init()
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLON"] == "OFF") then
       TOCA.Checkbox.Tooltip:SetChecked(nil)
     end
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["ENDCAPSTYLE"] == "Lions") then
+      TOCA.Dropdown.FrameGryphons.text:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["ENDCAPSTYLE"])
+      TOCA.Button.TotemicCall.ECL:SetTexture("Interface/MainMenuBar/UI-MainMenuBar-EndCap-Human")
+      TOCA.Button.TotemicCall.ECR:SetTexture("Interface/MainMenuBar/UI-MainMenuBar-EndCap-Human")
+    end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLPOS"]) then
       local TOCAFrameToolPos = {}
       TOCAFrameToolPos = split(TOCADB[TOCA.player.combine]["CONFIG"]["TOOLPOS"], ",")
