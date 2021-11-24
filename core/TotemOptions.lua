@@ -13,7 +13,7 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
-TOCA.FrameOptions_w = 750
+TOCA.FrameOptions_w = 700
 TOCA.FrameOptions_h = 400
 TOCA.FrameOptions={}
 TOCA.FrameOptions = CreateFrame("Frame", "TOCA.FrameOptions", UIParent, "BackdropTemplate")
@@ -80,9 +80,6 @@ for i=1, getn(TOCA.OptionTabs) do
     end
     TOCA.FrameOptionsPage[TOCA.OptionTabs[i]]:Show()
     TOCA.Button.TabOptionsBack[i]:SetSize(TOCA.TabWidth.Options-20, 30)
-    --if (TOCA.OptionTabs[i] == "Credit") then
-      --TOCA.TextFrame.text:SetText(TOCA.CreditMessageArray)
-    --end
   end)
 end
 TOCA.Button.TabOptionsBack[1]:SetSize(TOCA.TabWidth.Options-20, 30) --first tab

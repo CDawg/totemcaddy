@@ -64,7 +64,7 @@ TOCA.orderGame = { --how the ingame sorts totems
 function arrayToString(array)
   formstring=""
   for k,v in pairs(array) do
-    formstring = formstring .. v .. "\n\n"
+    formstring = formstring .. v .. "\n"
   end
   return formstring
 end

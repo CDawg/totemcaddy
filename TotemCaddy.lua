@@ -109,6 +109,8 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
     if (event == "PLAYER_REGEN_DISABLED") then
       TOCA.SlotSelect[totemCat]:Hide()
       TOCA.Button.DropdownMain:Hide()
+      TOCA.Button.Options:Hide()
+      --TOCA.Button.CloseMain:Hide()
       if (TOCADB[TOCA.player.combine]["CONFIG"]["COMBATLOCK"] == "OFF") then
         TOCA.FrameMain:SetMovable(true)
         TOCA.FrameMain:EnableMouse(true)
@@ -116,6 +118,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
         TOCA.FrameMain:SetMovable(false)
         TOCA.FrameMain:EnableMouse(false)
       end
+      TOCA.Notification("Combat Initiated", true)
     end
     if (event == "PLAYER_REGEN_ENABLED") then
       TOCA.SlotSelect[totemCat]:Show()
@@ -125,6 +128,14 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
       end
       TOCA.FrameMain:SetMovable(true)
       TOCA.FrameMain:EnableMouse(true)
+      if (TOCADB[TOCA.player.combine]["CONFIG"]["MAINMENU"] == "OFF") then
+        --TOCA.Button.CloseMain:Hide()
+        --TOCA.Button.Options:Hide()
+      else
+        TOCA.Button.Options:Show()
+        --TOCA.Button.CloseMain:Show()
+      end
+      TOCA.Notification("Combat Ended", true)
     end
   end
 

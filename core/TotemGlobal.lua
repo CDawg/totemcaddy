@@ -25,7 +25,7 @@ TOCA.Global = {
   prefix = "TotemCaddy",
 }
 
-TOCA.DEBUG = true
+TOCA.DEBUG = false
 
 TOCA.Prefix = {
   version = "0xEFVe",
@@ -858,12 +858,13 @@ function SlashCmdList.TOCA(cmd)
   if ((cmd == nil) or (cmd == "")) then
     TOCA.Notification("v" .. TOCA.Global.version)
     print("Commands:")
-    print("|cffffff00options:|r Open Totem Caddy Options.")
-    --print("|cffffff00show:|r |TInterface\\FriendsFrame\\battlenet-status-offline:8|t Display Totem Caddy (regardless of class).")
-    print("|cffffff00show:|r   Display Totem Caddy (regardless of class).")
-    print("|cffffff00hide:|r    Close Totem Caddy.")
-    print("|cffffff00profile:|r Display the current saved profile.")
-    print("|cffffff00help:|r    Display the help introduction.")
+    print("|cffffff00options:|r    Open Totem Caddy Options.")
+    print("|cffffff00show:|r        Display Totem Caddy (regardless of class).")
+    print("|cffffff00hide:|r         Close Totem Caddy.")
+    print("|cffffff00profile:|r      Display the current saved profile.")
+    print("|cffffff00help:|r         Display the help introduction.")
+    print("|cffffff00debug on:|r Enable Debug Mode (Very Spammy)")
+    print("|cffffff00debug off:|r Disable Debug Mode (/reload)")
   elseif ((cmd == "show") or (cmd == "open")) then
     TOCA.FrameMain:Show()
     TOCADB[TOCA.player.combine]["DISABLED"] = "NO"
@@ -877,5 +878,11 @@ function SlashCmdList.TOCA(cmd)
     TOCA.FrameOptions:Show()
   elseif (cmd == "help") then
     TOCA.FrameHelp:Show()
+  elseif (cmd == "debug on") then
+    TOCA.DEBUG = true
+    TOCA.Notification("DEBUG ON")
+  elseif (cmd == "debug off") then
+    TOCA.DEBUG = false
+    TOCA.Notification("DEBUG OFF")
   end
 end
