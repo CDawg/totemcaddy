@@ -272,6 +272,7 @@ end
 function TOCA.FrameStyleSet(style)
   if (style == TOCA.Dropdown.FrameStyles[1]) then --classic
     TOCA.FrameStyleDefault()
+    TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
     for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:Show()
       TOCA.Button.DropdownMain:Show()
@@ -280,6 +281,7 @@ function TOCA.FrameStyleSet(style)
     end
   elseif (style == TOCA.Dropdown.FrameStyles[2]) then --vert
     TOCA.FrameStyleDefault()
+    TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
     TOCA.FrameMain:SetHeight(TOCA.Global.height+240)
     TOCA.FrameMain.Background:SetHeight(TOCA.Global.height+240)
     TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 160)
@@ -291,11 +293,12 @@ function TOCA.FrameStyleSet(style)
     end
   elseif (style == TOCA.Dropdown.FrameStyles[3]) then --horz
     TOCA.FrameStyleDefault()
-    TOCA.FrameMain:SetHeight(TOCA.Global.height+80)
-    TOCA.FrameMain.Background:SetHeight(TOCA.Global.height+80)
+    TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width+171, -22)
+    TOCA.FrameMain:SetHeight(TOCA.Global.height+84)
+    TOCA.FrameMain.Background:SetHeight(TOCA.Global.height+84)
     TOCA.FrameMain:SetWidth(TOCA.Global.height+240)
     TOCA.FrameMain.Background:SetWidth(TOCA.Global.height+240)
-    TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 80)
+    TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 84)
     for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:Hide()
       TOCA.Button.DropdownMain:Hide()

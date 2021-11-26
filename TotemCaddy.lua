@@ -240,12 +240,6 @@ TOCA.SlotPosX = {
   90.5,
   126.5,
 }
-TOCA.SlotPosY = {
-  126.5,
-  90.5,
-  54.5,
-  18.5,
-}
 local totemNum = 0
 scrollA = 1
 scrollE = 1
@@ -432,7 +426,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     --totemButtonPos_X[totemCat] = totemButtonPos_X[totemCat]+TOCA.Slot_w
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]= CreateFrame("Button", nil, TOCA.FrameMainGridHorizontal, "BackdropTemplate")
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
-    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:SetPoint("TOPLEFT", totemButtonPos_X[totemCat]+TOCA.Slot_w, TOCA.SlotPosY[totemNum])
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:SetPoint("TOPLEFT", totemButtonPos_X[totemCat]+TOCA.Slot_w-30, -TOCA.SlotPosX[totemNum]-4)
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:SetFrameLevel(TOCA.Framelevel.Buttons)
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:SetBackdrop({
       bgFile  = "interface/icons/" .. totemSpell[2],
@@ -659,6 +653,12 @@ TOCA.FrameMain.ReincFrame.text:SetFont(TOCA.Global.font, 10)
 TOCA.FrameMain.ReincFrame.text:SetPoint("CENTER", TOCA.FrameMain.ReincFrame, "CENTER", 0, -6)
 TOCA.FrameMain.ReincFrame.text:SetText("")
 TOCA.FrameMain.ReincFrame.text:SetShadowOffset(1, 1)
+TOCA.FrameMain.ReincFrame:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay("Reincarnation Timer", "", "Cooldown timer on the next use of reincarnation. This display option can be adjusted in the options menu.")
+end)
+TOCA.FrameMain.ReincFrame:SetScript("OnLeave", function(self)
+  TOCA.Tooltip:Hide()
+end)
 
 TOCA.Button.DropdownMain= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTemplate")
 TOCA.Button.DropdownMain:SetSize(143, 16)
