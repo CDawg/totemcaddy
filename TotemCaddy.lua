@@ -209,14 +209,22 @@ TOCA.Button.TotemicCallAtt:SetScript("OnLeave", function(self)
 end)
 
 --grid timers
-TOCA.SlotGridVerticalTimerX = 0
+TOCA.SlotGrid.VerticalTimerX = 0
+TOCA.SlotGrid.HorizontalTimerX = 0
 for i=1, 4 do
-  TOCA.SlotGridVerticalTimerX = TOCA.SlotGridVerticalTimerX+TOCA.Slot_w
-  TOCA.SlotGridVerticalTimer[i]= TOCA.FrameMain:CreateFontString(nil, "ARTWORK")
-  TOCA.SlotGridVerticalTimer[i]:SetFont(TOCA.Global.font, 12, "OUTLINE")
-  TOCA.SlotGridVerticalTimer[i]:SetPoint("TOPLEFT", TOCA.SlotGridVerticalTimerX-TOCA.Slot_w+5, -28)
-  TOCA.SlotGridVerticalTimer[i]:SetText("")
-  TOCA.SlotGridVerticalTimer[i]:Hide()
+  TOCA.SlotGrid.VerticalTimerX = TOCA.SlotGrid.VerticalTimerX+TOCA.Slot_w
+  TOCA.SlotGrid.VerticalTimer[i]= TOCA.FrameMain:CreateFontString(nil, "ARTWORK")
+  TOCA.SlotGrid.VerticalTimer[i]:SetFont(TOCA.Global.font, 12, "OUTLINE")
+  TOCA.SlotGrid.VerticalTimer[i]:SetPoint("TOPLEFT", TOCA.SlotGrid.VerticalTimerX-TOCA.Slot_w+5, -28)
+  TOCA.SlotGrid.VerticalTimer[i]:SetText("")
+  TOCA.SlotGrid.VerticalTimer[i]:Hide()
+
+  TOCA.SlotGrid.HorizontalTimerX = TOCA.SlotGrid.HorizontalTimerX+TOCA.Slot_w
+  TOCA.SlotGrid.HorizontalTimer[i]= TOCA.FrameMain:CreateFontString(nil, "ARTWORK")
+  TOCA.SlotGrid.HorizontalTimer[i]:SetFont(TOCA.Global.font, 12, "OUTLINE")
+  TOCA.SlotGrid.HorizontalTimer[i]:SetPoint("TOPLEFT", TOCA.SlotGrid.HorizontalTimerX-TOCA.Slot_w+5, -28)
+  TOCA.SlotGrid.HorizontalTimer[i]:SetText("")
+  TOCA.SlotGrid.HorizontalTimer[i]:Hide()
 end
 
 --classic style
@@ -231,6 +239,12 @@ TOCA.SlotPosX = {
   54.5,
   90.5,
   126.5,
+}
+TOCA.SlotPosY = {
+  126.5,
+  90.5,
+  54.5,
+  18.5,
 }
 local totemNum = 0
 scrollA = 1
@@ -304,7 +318,8 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.Slot.Timer[4]:SetFont(TOCA.Global.font, 12, "OUTLINE")
     TOCA.Slot.Timer[4]:SetPoint("CENTER", 0, -8)
     TOCA.Slot.Timer[4]:SetText("")
-    TOCA.SlotGridVerticalTimer[4]:SetText("")
+    TOCA.SlotGrid.VerticalTimer[4]:SetText("")
+    TOCA.SlotGrid.HorizontalTimer[4]:SetText("")
   end
   if (totemCat == "EARTH") then
     TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotTwo)
@@ -312,7 +327,8 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.Slot.Timer[2]:SetFont(TOCA.Global.font, 12, "OUTLINE")
     TOCA.Slot.Timer[2]:SetPoint("CENTER", 0, -8)
     TOCA.Slot.Timer[2]:SetText("")
-    TOCA.SlotGridVerticalTimer[2]:SetText("")
+    TOCA.SlotGrid.VerticalTimer[2]:SetText("")
+    TOCA.SlotGrid.HorizontalTimer[2]:SetText("")
   end
   if (totemCat == "FIRE") then
     TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotThree)
@@ -320,7 +336,8 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.Slot.Timer[1]:SetFont(TOCA.Global.font, 12, "OUTLINE")
     TOCA.Slot.Timer[1]:SetPoint("CENTER", 0, -8)
     TOCA.Slot.Timer[1]:SetText("")
-    TOCA.SlotGridVerticalTimer[1]:SetText("")
+    TOCA.SlotGrid.VerticalTimer[1]:SetText("")
+    TOCA.SlotGrid.HorizontalTimer[1]:SetText("")
   end
   if (totemCat == "WATER") then
     TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotFour)
@@ -328,7 +345,8 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.Slot.Timer[3]:SetFont(TOCA.Global.font, 12, "OUTLINE")
     TOCA.Slot.Timer[3]:SetPoint("CENTER", 0, -8)
     TOCA.Slot.Timer[3]:SetText("")
-    TOCA.SlotGridVerticalTimer[3]:SetText("")
+    TOCA.SlotGrid.VerticalTimer[3]:SetText("")
+    TOCA.SlotGrid.HorizontalTimer[3]:SetText("")
   end
   TOCA.Totem[totemCat]:SetScript("OnEnter", function()
     TOCA.CloseAllMenus()
@@ -360,49 +378,88 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 end
 
 local totemNum = 0
-TOCA.SlotGridVerticalTotemButtonAction={}
+TOCA.SlotGrid.VerticalTotemButtonAction={}
 TOCA.FrameMainGridVertical = CreateFrame("Frame", nil, TOCA.FrameMain)
 TOCA.FrameMainGridVertical:SetSize(1,1)
 TOCA.FrameMainGridVertical:SetPoint("TOPLEFT", 0, 0)
 TOCA.FrameMainGridVertical:Hide()
+TOCA.SlotGrid.HorizontalTotemButtonAction={}
+TOCA.FrameMainGridHorizontal = CreateFrame("Frame", nil, TOCA.FrameMain)
+TOCA.FrameMainGridHorizontal:SetSize(1,1)
+TOCA.FrameMainGridHorizontal:SetPoint("TOPLEFT", 0, 0)
+TOCA.FrameMainGridHorizontal:Hide()
 
+local totemButtonPos_X={}
 local totemButtonPos_Y={}
 for totemCat,v in pairsByKeys(TOCA.totems) do
   totemNum = totemNum +1
+  totemButtonPos_X[totemCat] = 0
   totemButtonPos_Y[totemCat] = 0
   for i,totemSpell in pairs(TOCA.totems[totemCat]) do
+    --totemButtonPos_X[totemCat] = totemButtonPos_X[totemCat]+TOCA.Slot_w
+    totemButtonPos_X[totemCat] = totemButtonPos_X[totemCat]+TOCA.Slot_w
     totemButtonPos_Y[totemCat] = totemButtonPos_Y[totemCat]+TOCA.Slot_h
-    --TOCA.SlotGridVerticalTotemButton[totemCat]={}
-    TOCA.SlotGridVerticalTotemButton[totemCat][i]= CreateFrame("Button", nil, TOCA.FrameMainGridVertical, "BackdropTemplate")
-    TOCA.SlotGridVerticalTotemButton[totemCat][i]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
-    TOCA.SlotGridVerticalTotemButton[totemCat][i]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[totemNum], -40-totemButtonPos_Y[totemCat]+TOCA.Slot_h)
-    TOCA.SlotGridVerticalTotemButton[totemCat][i]:SetFrameLevel(TOCA.Framelevel.Buttons)
-    --TOCA.SlotGridVerticalTotemButton[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
-    TOCA.SlotGridVerticalTotemButton[totemCat][i]:SetBackdrop({
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i]= CreateFrame("Button", nil, TOCA.FrameMainGridVertical, "BackdropTemplate")
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[totemNum], -40-totemButtonPos_Y[totemCat]+TOCA.Slot_h)
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetFrameLevel(TOCA.Framelevel.Buttons)
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetBackdrop({
       bgFile  = "interface/icons/" .. totemSpell[2],
       edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
       edgeSize= 12,
       insets  = {left=2, right=2, top=2, bottom=2},
     })
-    TOCA.SlotGridVerticalTotemButton[totemCat][i].action = CreateFrame("Button", nil, TOCA.SlotGridVerticalTotemButton[totemCat][i], "SecureActionButtonTemplate");
-    TOCA.SlotGridVerticalTotemButton[totemCat][i].action:SetSize(TOCA.Slot_w, TOCA.Slot_h)
-    TOCA.SlotGridVerticalTotemButton[totemCat][i].action:SetPoint("CENTER", 0, 0)
-    TOCA.SlotGridVerticalTotemButton[totemCat][i].action:SetAttribute("type", "spell")
-    TOCA.SlotGridVerticalTotemButton[totemCat][i].action:SetAttribute("spell", totemSpell[1])
-    TOCA.SlotGridVerticalTotemButton[totemCat][i].action.highlight= TOCA.SlotGridVerticalTotemButton[totemCat][i]:CreateTexture(nil, "ARTWORK", TOCA.SlotGridVerticalTotemButton[totemCat][i].action, 0)
-    TOCA.SlotGridVerticalTotemButton[totemCat][i].action.highlight:SetSize(TOCA.Slot_w, TOCA.Slot_h)
-    TOCA.SlotGridVerticalTotemButton[totemCat][i].action.highlight:SetPoint("CENTER", 0, 0)
-    TOCA.SlotGridVerticalTotemButton[totemCat][i].action.highlight:SetTexture("Interface/Buttons/ButtonHilight-Square")
-    TOCA.SlotGridVerticalTotemButton[totemCat][i].action.highlight:SetBlendMode("ADD")
-    TOCA.SlotGridVerticalTotemButton[totemCat][i].action.highlight:Hide()
-    TOCA.SlotGridVerticalTotemButton[totemCat][i].action:SetScript("OnEnter", function(self)
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action = CreateFrame("Button", nil, TOCA.SlotGrid.VerticalTotemButton[totemCat][i], "SecureActionButtonTemplate");
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action:SetSize(TOCA.Slot_w, TOCA.Slot_h)
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action:SetPoint("CENTER", 0, 0)
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action:SetAttribute("type", "spell")
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action:SetAttribute("spell", totemSpell[1])
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action.highlight= TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:CreateTexture(nil, "ARTWORK", TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action, 0)
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action.highlight:SetSize(TOCA.Slot_w, TOCA.Slot_h)
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action.highlight:SetPoint("CENTER", 0, 0)
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action.highlight:SetTexture("Interface/Buttons/ButtonHilight-Square")
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action.highlight:SetBlendMode("ADD")
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action.highlight:Hide()
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action:SetScript("OnEnter", function(self)
       self.highlight:Show()
       TOCA.TooltipDisplay(totemSpell[1], totemCat, totemSpell[3])
     end)
-    TOCA.SlotGridVerticalTotemButton[totemCat][i].action:SetScript("OnLeave", function(self)
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action:SetScript("OnLeave", function(self)
       self.highlight:Hide()
       TOCA.Tooltip:Hide()
     end)
+
+    --totemButtonPos_X[totemCat] = totemButtonPos_X[totemCat]+TOCA.Slot_w
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]= CreateFrame("Button", nil, TOCA.FrameMainGridHorizontal, "BackdropTemplate")
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:SetPoint("TOPLEFT", totemButtonPos_X[totemCat]+TOCA.Slot_w, TOCA.SlotPosY[totemNum])
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:SetFrameLevel(TOCA.Framelevel.Buttons)
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:SetBackdrop({
+      bgFile  = "interface/icons/" .. totemSpell[2],
+      edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
+      edgeSize= 12,
+      insets  = {left=2, right=2, top=2, bottom=2},
+    })
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action = CreateFrame("Button", nil, TOCA.SlotGrid.HorizontalTotemButton[totemCat][i], "SecureActionButtonTemplate");
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action:SetSize(TOCA.Slot_w, TOCA.Slot_h)
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action:SetPoint("CENTER", 0, 0)
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action:SetAttribute("type", "spell")
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action:SetAttribute("spell", totemSpell[1])
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action.highlight= TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:CreateTexture(nil, "ARTWORK", TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action, 0)
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action.highlight:SetSize(TOCA.Slot_w, TOCA.Slot_h)
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action.highlight:SetPoint("CENTER", 0, 0)
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action.highlight:SetTexture("Interface/Buttons/ButtonHilight-Square")
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action.highlight:SetBlendMode("ADD")
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action.highlight:Hide()
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action:SetScript("OnEnter", function(self)
+      self.highlight:Show()
+      TOCA.TooltipDisplay(totemSpell[1], totemCat, totemSpell[3])
+    end)
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action:SetScript("OnLeave", function(self)
+      self.highlight:Hide()
+      TOCA.Tooltip:Hide()
+    end)
+
   end
 end
 

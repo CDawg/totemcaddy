@@ -86,7 +86,7 @@ TOCA.Button.TabOptionsBack[1]:SetSize(TOCA.TabWidth.Options-20, 30) --first tab
 TOCA.FrameOptionsPage[TOCA.OptionTabs[1]]:Show() --show first tab
 
 TOCA.Dropdown.FrameStyle={}
-TOCA.Dropdown.FrameStyles={"Classic", "Grid Vertical"}
+TOCA.Dropdown.FrameStyles={"Classic", "Grid Vertical", "Grid Horizontal"}
 TOCA.Dropdown.FrameStyle = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[1]], "UIDropDownMenuTemplate")
 TOCA.Dropdown.FrameStyle:SetPoint("TOPLEFT", 10, -35)
 TOCA.Dropdown.FrameStyle.displayMode = "MENU"
@@ -95,8 +95,7 @@ TOCA.Dropdown.FrameStyle.text:SetFont(TOCA.Global.font, 11)
 TOCA.Dropdown.FrameStyle.text:SetPoint("TOPLEFT", TOCA.Dropdown.FrameStyle, "TOPLEFT", 25, -8)
 TOCA.Dropdown.FrameStyle.text:SetText(TOCA.Dropdown.FrameStyles[1])
 TOCA.Dropdown.FrameStyle:SetScript("OnEnter", function()
-  TOCA.TooltipMenu("Frame Style", "|cffffffffClassic|r\n4 primary totems that are commonly used.|nTotems are selectable and configurable by category in the|noptions menu.|n|n|cffffffffGrid Vertical|r|nAll Totems are displayed vertically in category order.|nThe order is configurable in the options menu.", 170)
-  --n|n|cffffffffGrid Vertical|r|nAll Totems are displayed vertically.|n|n
+  TOCA.TooltipMenu("Frame Style", "|cffffffffClassic|r\nFour main primary totems that are commonly used|nselectable or profile built.|n|n|cffffffffGrid Vertical|r|nAll known Totems are displayed vertically organized|nby category row.|n|n|cffffffffGrid Horizontally|r|nAll known Totems are displayed Horizontally organized|nby category row.|n|nThe totem cateopgry orders are configurable|nin the options menu.", 230)
 end)
 TOCA.Dropdown.FrameStyle:SetScript("OnLeave", function()
   TOCA.Tooltip:Hide()
@@ -183,6 +182,14 @@ TOCA.FrameOptions.TitleSlider:SetFont(TOCA.Global.font, 12)
 TOCA.FrameOptions.TitleSlider:SetPoint("TOPLEFT", 30, -150)
 TOCA.FrameOptions.TitleSlider:SetText("Frame Scale")
 TOCA.FrameOptions.TitleSlider:SetTextColor(1, 1, 0.5, 1)
+--[==[
+TOCA.FrameOptions.TitleSlider:SetScript("OnEnter", function()
+  TOCA.TooltipMenu("Frame Scale", "Sets the size of Totem Caddy frame.|nYou can click the reset button to set the default original size.", 120)
+end)
+TOCA.FrameOptions.TitleSlider:SetScript("OnLeave", function()
+  TOCA.Tooltip:Hide()
+end)
+]==]--
 
 TOCA.Slider.Scale={}
 TOCA.Slider.Scale = CreateFrame("Slider", "TOCA.Slider.Scale", TOCA.FrameOptionsPage[TOCA.OptionTabs[1]], "OptionsSliderTemplate")

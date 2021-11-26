@@ -233,11 +233,14 @@ end
 
 TOCA.SlotSelectTotemDisabled={}
 TOCA.FrameSetsSlotDisabled={}
-TOCA.SlotGridVerticalTotemButton={}
+TOCA.SlotGrid={}
+TOCA.SlotGrid.VerticalTotemButton={}
+TOCA.SlotGrid.HorizontalTotemButton={}
 for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.SlotSelectTotemDisabled[totemCat]={}
   TOCA.FrameSetsSlotDisabled[totemCat]={}
-  TOCA.SlotGridVerticalTotemButton[totemCat]={}
+  TOCA.SlotGrid.VerticalTotemButton[totemCat]={}
+  TOCA.SlotGrid.HorizontalTotemButton[totemCat]={}
 end
 
 function TOCA.EnableKnownTotems()
@@ -245,29 +248,38 @@ function TOCA.EnableKnownTotems()
     for i,totemSpell in pairs(TOCA.totems[totemCat]) do
       TOCA.SlotSelectTotemDisabled[totemCat][i]:Show()
       TOCA.FrameSetsSlotDisabled[totemCat][i]:Show()
-      TOCA.SlotGridVerticalTotemButton[totemCat][i]:Hide()
+      TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:Hide()
+      TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:Hide()
       local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(totemSpell[1])
       if (name) then
         TOCA.SlotSelectTotemDisabled[totemCat][i]:Hide()
         TOCA.FrameSetsSlotDisabled[totemCat][i]:Hide()
-        TOCA.SlotGridVerticalTotemButton[totemCat][i]:Show()
+        TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:Show()
+        TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:Show()
       end
     end
   end
   TOCA.Notification("TOCA.EnableKnownTotems()", true)
 end
 
+function TOCA.FrameStyleDefault()
+  TOCA.FrameMain:SetHeight(TOCA.Global.height)
+  TOCA.FrameMain:SetWidth(TOCA.Global.width)
+  TOCA.FrameMain.Background:SetWidth(TOCA.Global.width)
+  TOCA.FrameMain.Background:SetHeight(TOCA.Global.height)
+  TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 40)
+end
 function TOCA.FrameStyleSet(style)
   if (style == TOCA.Dropdown.FrameStyles[1]) then --classic
-    TOCA.FrameMain:SetHeight(TOCA.Global.height)
-    TOCA.FrameMain.Background:SetHeight(TOCA.Global.height)
-    TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 40)
+    TOCA.FrameStyleDefault()
     for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:Show()
       TOCA.Button.DropdownMain:Show()
       TOCA.FrameMainGridVertical:Hide()
+      TOCA.FrameMainGridHorizontal:Hide()
     end
   elseif (style == TOCA.Dropdown.FrameStyles[2]) then --vert
+    TOCA.FrameStyleDefault()
     TOCA.FrameMain:SetHeight(TOCA.Global.height+240)
     TOCA.FrameMain.Background:SetHeight(TOCA.Global.height+240)
     TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 160)
@@ -275,6 +287,20 @@ function TOCA.FrameStyleSet(style)
       TOCA.Slot[totemCat]:Hide()
       TOCA.Button.DropdownMain:Hide()
       TOCA.FrameMainGridVertical:Show()
+      TOCA.FrameMainGridHorizontal:Hide()
+    end
+  elseif (style == TOCA.Dropdown.FrameStyles[3]) then --horz
+    TOCA.FrameStyleDefault()
+    TOCA.FrameMain:SetHeight(TOCA.Global.height+80)
+    TOCA.FrameMain.Background:SetHeight(TOCA.Global.height+80)
+    TOCA.FrameMain:SetWidth(TOCA.Global.height+240)
+    TOCA.FrameMain.Background:SetWidth(TOCA.Global.height+240)
+    TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 80)
+    for totemCat,v in pairsByKeys(TOCA.totems) do
+      TOCA.Slot[totemCat]:Hide()
+      TOCA.Button.DropdownMain:Hide()
+      TOCA.FrameMainGridVertical:Hide()
+      TOCA.FrameMainGridHorizontal:Show()
     end
   end
   TOCA.Notification("Frame Style: " .. style, true)
@@ -336,7 +362,8 @@ function TOCA.Init()
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TIMERS"] == "OFF") then
       for i=1, 4 do
         TOCA.Slot.Timer[i]:Hide()
-        TOCA.SlotGridVerticalTimer[i]:Hide()
+        TOCA.SlotGrid.VerticalTimer[i]:Hide()
+        TOCA.SlotGrid.HorizontalTimer[i]:Hide()
       end
       TOCA.Checkbox.Timers:SetChecked(nil)
     end
@@ -613,20 +640,24 @@ function TOCA.TimerFrame(i)
     TOCA.TotemTimer[i] = TOCA.TotemTimer[i] -1
     if (TOCA.globalTimerInMinutes) then
       TOCA.Slot.Timer[i]:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
-      TOCA.SlotGridVerticalTimer[i]:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
+      TOCA.SlotGrid.VerticalTimer[i]:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
+      TOCA.SlotGrid.HorizontalTimer[i]:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
     else
       TOCA.Slot.Timer[i]:SetText(TOCA.TotemTimer[i])
-      TOCA.SlotGridVerticalTimer[i]:SetText(TOCA.TotemTimer[i])
+      TOCA.SlotGrid.VerticalTimer[i]:SetText(TOCA.TotemTimer[i])
+      TOCA.SlotGrid.HorizontalTimer[i]:SetText(TOCA.TotemTimer[i])
     end
   else
     TOCA.Slot.Timer[i]:SetText("")
-    TOCA.SlotGridVerticalTimer[i]:SetText("")
+    TOCA.SlotGrid.VerticalTimer[i]:SetText("")
+    TOCA.SlotGrid.HorizontalTimer[i]:SetText("")
   end
 
   if (TOCADB[TOCA.player.combine]["CONFIG"]["TIMERS"] == "OFF") then
     for i=1, 4 do --hide all
       TOCA.Slot.Timer[i]:Hide()
-      TOCA.SlotGridVerticalTimer[i]:Hide()
+      TOCA.SlotGrid.VerticalTimer[i]:Hide()
+      TOCA.SlotGrid.HorizontalTimer[i]:Hide()
     end
     return
   end
@@ -634,14 +665,24 @@ function TOCA.TimerFrame(i)
   if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.Dropdown.FrameStyles[1]) then --classic
     for i=1, 4 do
       TOCA.Slot.Timer[i]:Show()
-      TOCA.SlotGridVerticalTimer[i]:Hide()
+      TOCA.SlotGrid.VerticalTimer[i]:Hide()
+      TOCA.SlotGrid.HorizontalTimer[i]:Hide()
     end
   end
 
   if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.Dropdown.FrameStyles[2]) then --vert
     for i=1, 4 do
       TOCA.Slot.Timer[i]:Hide()
-      TOCA.SlotGridVerticalTimer[i]:Show()
+      TOCA.SlotGrid.VerticalTimer[i]:Show()
+      TOCA.SlotGrid.HorizontalTimer[i]:Hide()
+    end
+  end
+
+  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.Dropdown.FrameStyles[3]) then --horz
+    for i=1, 4 do
+      TOCA.Slot.Timer[i]:Hide()
+      TOCA.SlotGrid.VerticalTimer[i]:Hide()
+      TOCA.SlotGrid.HorizontalTimer[i]:Show()
     end
   end
 end
@@ -689,20 +730,23 @@ function TOCA.GetReincTimer() --always checking
   end
 end
 
-TOCA.SlotGridVerticalTimer={}
+TOCA.SlotGrid.VerticalTimer={}
+TOCA.SlotGrid.HorizontalTimer={}
 function TOCA.TotemTimerReset(i)
   if (i == "all") then
     for i=1, 4 do
       TOCA.TotemFunc[i]:Cancel()
       TOCA.TotemTimer[i] = 0
       TOCA.Slot.Timer[i]:SetText("")
-      TOCA.SlotGridVerticalTimer[i]:SetText("")
+      TOCA.SlotGrid.VerticalTimer[i]:SetText("")
+      TOCA.SlotGrid.HorizontalTimer[i]:SetText("")
     end
   else
     TOCA.TotemFunc[i]:Cancel()
     TOCA.TotemTimer[i] = 0
     TOCA.Slot.Timer[i]:SetText("")
-    TOCA.SlotGridVerticalTimer[i]:SetText("")
+    TOCA.SlotGrid.VerticalTimer[i]:SetText("")
+    TOCA.SlotGrid.HorizontalTimer[i]:SetText("")
   end
   TOCA.Notification("TOCA.TotemTimerReset("..i..")", true)
 end
@@ -789,8 +833,8 @@ function TOCA.GetTotemOrder()
 end
 
 local totemNum = 0
-local totemButtonPos_Y={}
 local totemButtonPos_X={}
+local totemButtonPos_Y={}
 function TOCA.SetTotemOrder()
   local buildOrder = TOCA.GetTotemOrder()
   local totemOrder = split(buildOrder, ",")
@@ -805,24 +849,24 @@ function TOCA.SetTotemOrder()
       for i,totemSpell in pairs(TOCA.totems[totemCat]) do
         totemButtonPos_Y[totemCat] = totemButtonPos_Y[totemCat]+TOCA.Slot_h
         totemButtonPos_X[totemCat] = totemButtonPos_X[totemCat]+TOCA.Slot_w
-        local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGridVerticalTotemButton[totemCat][i]:GetPoint()
-        if (TOCA.SlotGridVerticalTotemButton[v][i]) then
-          TOCA.SlotGridVerticalTotemButton[v][i]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[k], yOfs)
+        local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:GetPoint()
+        if (TOCA.SlotGrid.VerticalTotemButton[v][i]) then
+          TOCA.SlotGrid.VerticalTotemButton[v][i]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[k], yOfs)
           if (TOCA.totems.AIR[1][1] == totemSpell[1]) then
-            local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGridVerticalTotemButton.AIR[1]:GetPoint()
-            TOCA.SlotGridVerticalTimer[4]:SetPoint("TOPLEFT", xOfs, -26)
+            local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGrid.VerticalTotemButton.AIR[1]:GetPoint()
+            TOCA.SlotGrid.VerticalTimer[4]:SetPoint("TOPLEFT", xOfs, -26)
           end
           if (TOCA.totems.EARTH[1][1] == totemSpell[1]) then
-            local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGridVerticalTotemButton.EARTH[1]:GetPoint()
-            TOCA.SlotGridVerticalTimer[2]:SetPoint("TOPLEFT", xOfs, -26)
+            local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGrid.VerticalTotemButton.EARTH[1]:GetPoint()
+            TOCA.SlotGrid.VerticalTimer[2]:SetPoint("TOPLEFT", xOfs, -26)
           end
           if (TOCA.totems.FIRE[1][1] == totemSpell[1]) then
-            local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGridVerticalTotemButton.FIRE[1]:GetPoint()
-            TOCA.SlotGridVerticalTimer[1]:SetPoint("TOPLEFT", xOfs, -26)
+            local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGrid.VerticalTotemButton.FIRE[1]:GetPoint()
+            TOCA.SlotGrid.VerticalTimer[1]:SetPoint("TOPLEFT", xOfs, -26)
           end
           if (TOCA.totems.WATER[1][1] == totemSpell[1]) then
-            local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGridVerticalTotemButton.WATER[1]:GetPoint()
-            TOCA.SlotGridVerticalTimer[3]:SetPoint("TOPLEFT", xOfs, -26)
+            local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGrid.VerticalTotemButton.WATER[1]:GetPoint()
+            TOCA.SlotGrid.VerticalTimer[3]:SetPoint("TOPLEFT", xOfs, -26)
           end
         end
       end
