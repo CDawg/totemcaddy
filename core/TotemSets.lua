@@ -247,7 +247,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     })
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetScript("OnEnter", function(self)
-      TOCA.TooltipDisplay(totemSpell[1], totemCat, totemSpell[3])
+      TOCA.TooltipDisplay(totemSpell[1], totemCat)
       self:SetBackdropBorderColor(1, 1, 0.8, 1)
     end)
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetScript("OnLeave", function(self)

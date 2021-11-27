@@ -16,40 +16,39 @@ the copyright holders.
 TOCA={}
 TOCA.totems = {}
 TOCA.totems.FIRE = {
-  --{"Fire Elemental Totem",  "spell_fire_sealoffire",         "Summons a totem at the feet of the caster that inflicts fire damage to enemies within 10 yards."},
-  {"Fire Nova Totem",       "spell_fire_sealoffire",         "Summons a totem at the feet of the caster that inflicts fire damage to enemies within 10 yards."},
-  {"Flametongue Totem",     "spell_nature_guardianward",     "Summons a totem at the feet of the caster that enchants all party members' main-hand weapons with fire if they are within 20 yards.\nLasts 2 mins."},
-  {"Frost Resistance Totem","spell_frostresistancetotem_01", "Summons a totem at the feet of the caster that increases party members' frost resistance within 20 yards."},
-  {"Magma Totem",           "spell_fire_selfdestruct",       "Summons a totem at the feet of the caster for 20 seconds that causes fire damage to creatures within 8 yards every 2 seconds."},
-  {"Searing Totem",         "spell_fire_searingtotem",       "Summons a totem at the feet of the caster for 1 minute that repeatedly attacks a random enemy within 20 yards with fire damage."},
-  {"Totem of Wrath",        "spell_fire_totemofwrath",       "Summons a totem at the feet of the caster increasing the chance to hit and critically strike with spells by 3% for all party members within 20 yards.\nLasts 2 mins."},
-  --{"Fire Elemental Totem",  "spell_fire_sealoffire",         "Summons a totem at the feet of the caster that inflicts fire damage to enemies within 10 yards."},
+  {"Fire Nova Totem",       "spell_fire_sealoffire"},
+  {"Flametongue Totem",     "spell_nature_guardianward"},
+  {"Frost Resistance Totem","spell_frostresistancetotem_01"},
+  {"Magma Totem",           "spell_fire_selfdestruct"},
+  {"Searing Totem",         "spell_fire_searingtotem"},
+  {"Totem of Wrath",        "spell_fire_totemofwrath"},
+  --{"Fire Elemental Totem",  "spell_fire_elemental_totem"},
 }
 TOCA.totems.EARTH = {
-  {"Earthbind Totem",        "spell_nature_strengthofearthtotem02","Summons a totem at the feet of the caster that slows the movement speed of enemies within 12 yards."},
-  {"Stoneclaw Totem",        "spell_nature_stoneclawtotem",        "Summons a totem at the feet of the caster that taunts creatures within 8 yards to attack it. Enemies attacking the stoneclaw have a 50% chance to be stunned for 3 seconds."},
-  {"Stoneskin Totem",        "spell_nature_stoneskintotem",        "Summons a totem at the feet of the caster that protects party members within 20 yards, reducing damage taken.\nLasts 2 mins."},
-  {"Strength of Earth Totem","spell_nature_earthbindtotem",        "Summons a totem at the feet of the caster that increases the strength of party members within 20 yards.\nLasts 2 mins."},
-  {"Tremor Totem",           "spell_nature_tremortotem",           "Summons a totem at the feet of the caster that shakes the ground around it, removing Fear, Charm and Sleep effects from party members within 30 yards.\nLast 2 mins."},
-  --{"Earth Elemental Totem",  "spell_fire_sealoffire",              "Summons a totem at the feet of the caster that inflicts fire damage to enemies within 10 yards."},
+  {"Earthbind Totem",        "spell_nature_strengthofearthtotem02"},
+  {"Stoneclaw Totem",        "spell_nature_stoneclawtotem"},
+  {"Stoneskin Totem",        "spell_nature_stoneskintotem"},
+  {"Strength of Earth Totem","spell_nature_earthbindtotem"},
+  {"Tremor Totem",           "spell_nature_tremortotem"},
+  --{"Earth Elemental Totem",  "spell_nature_earthelemental_totem"},
 }
 TOCA.totems.WATER = {
-  {"Disease Cleansing Totem","spell_nature_diseasecleansingtotem","Summons a totem at the feet of the caster that attempts to remove 1 disease effect from party members within 20 yards for every 5 seconds.\nLast 2 mins."},
-  {"Fire Resistance Totem",  "spell_fireresistancetotem_01",      "Summons a totem at the feet of the caster that increases party members' fire resistance within 20 yards."},
-  {"Healing Stream Totem",   "inv_spear_04",                      "Summons a totem at the feet of the caster that heals the group members within 20 yards every 2 seconds."},
-  {"Mana Spring Totem",      "spell_nature_manaregentotem",       "Summons a totem at the feet of the caster that restores mana every 2 seconds to all group members within 20 yards.\nLast 2 mins."},
-  {"Mana Tide Totem",        "spell_frost_summonwaterelemental",  "Summons a totem at the feet of the caster that restores 6% of the total mana every 3 seconds to group members within 20 yards.\n5 min cooldown.\nLast 12 seconds."},
-  {"Poison Cleansing Totem", "spell_nature_poisoncleansingtotem", "Summons a totem at the feet of the caster that attempts to remove 1 poison effect from party members within 20 yards every 5 seconds.\nLasts 2 mins."},
+  {"Disease Cleansing Totem","spell_nature_diseasecleansingtotem"},
+  {"Fire Resistance Totem",  "spell_fireresistancetotem_01"},
+  {"Healing Stream Totem",   "inv_spear_04"},
+  {"Mana Spring Totem",      "spell_nature_manaregentotem"},
+  {"Mana Tide Totem",        "spell_frost_summonwaterelemental"},
+  {"Poison Cleansing Totem", "spell_nature_poisoncleansingtotem"},
 }
 TOCA.totems.AIR = {
-  {"Grace of Air Totem",     "spell_nature_invisibilitytotem",    "Summons a totem at the feet of the caster that increases agility to all party members."},
-  {"Grounding Totem",        "spell_nature_groundingtotem"       ,"Summons a totem at the feet of the caster that will redirect harmful spell cast on a nearby party member to itself destrying the totem. Will not redirect AoE speels.\nLasts 45 seconds."},
-  {"Nature Resistance Totem","spell_nature_natureresistancetotem","Summons a totem at the feet of the caster that increases party members' nature resistance within 20 yards."},
-  {"Sentry Totem",           "spell_nature_removecurse",          "Summons a totem at the feet of the caster that allows vision of nearby area and warns of enemies that attack it. Right-Click on buff to switch back and forth between totem sight and shaman sight."},
-  {"Tranquil Air Totem",     "spell_nature_brilliance",           "Summons a totem at the feet of the caster that reduces threat caused by all party members within 20 yards for 20%.\nLasts 2 mins."},
-  {"Windfury Totem",         "spell_nature_windfury",             "Summons a totem at the feet of the caster that enchants all pary members' main-hand weapons with wind within 20 yards of totem. Each hit has a 20% chance of granting an extra attack.\nLasts 2 mins."},
-  {"Windwall Totem",         "spell_nature_earthbind",            "Summons a totem at the feet of the caster that protects party members within 20 yards and reduces ranged damage taken.\nLasts 2 mins."},
-  {"Wrath of Air Totem",     "spell_nature_slowingtotem",         "Summons a totem at the feet of the caster that increases party members' spell damage and healing that are within 20 yards.\nLasts 2 mins."},
+  {"Grace of Air Totem",     "spell_nature_invisibilitytotem"},
+  {"Grounding Totem",        "spell_nature_groundingtotem"},
+  {"Nature Resistance Totem","spell_nature_natureresistancetotem"},
+  {"Sentry Totem",           "spell_nature_removecurse"},
+  {"Tranquil Air Totem",     "spell_nature_brilliance"},
+  {"Windfury Totem",         "spell_nature_windfury"},
+  {"Windwall Totem",         "spell_nature_earthbind"},
+  {"Wrath of Air Totem",     "spell_nature_slowingtotem"},
 }
 
 TOCA.spell = {
