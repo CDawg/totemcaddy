@@ -873,6 +873,30 @@ function TOCA.SetTotemOrder()
           end
         end
       end
+      for i,totemSpell in pairs(TOCA.totems[totemCat]) do
+        totemButtonPos_Y[totemCat] = totemButtonPos_Y[totemCat]+TOCA.Slot_h
+        totemButtonPos_X[totemCat] = totemButtonPos_X[totemCat]+TOCA.Slot_w
+        local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:GetPoint()
+        if (TOCA.SlotGrid.HorizontalTotemButton[v][i]) then
+          TOCA.SlotGrid.HorizontalTotemButton[v][i]:SetPoint("TOPLEFT", xOfs, -TOCA.SlotPosX[k]-4)
+          if (TOCA.totems.AIR[1][1] == totemSpell[1]) then
+            local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGrid.HorizontalTotemButton.AIR[1]:GetPoint()
+            TOCA.SlotGrid.HorizontalTimer[4]:SetPoint("TOPLEFT", 5, yOfs-12)
+          end
+          if (TOCA.totems.EARTH[1][1] == totemSpell[1]) then
+            local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGrid.HorizontalTotemButton.EARTH[1]:GetPoint()
+            TOCA.SlotGrid.HorizontalTimer[2]:SetPoint("TOPLEFT", 5, yOfs-12)
+          end
+          if (TOCA.totems.FIRE[1][1] == totemSpell[1]) then
+            local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGrid.HorizontalTotemButton.FIRE[1]:GetPoint()
+            TOCA.SlotGrid.HorizontalTimer[1]:SetPoint("TOPLEFT", 5, yOfs-12)
+          end
+          if (TOCA.totems.WATER[1][1] == totemSpell[1]) then
+            local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGrid.HorizontalTotemButton.WATER[1]:GetPoint()
+            TOCA.SlotGrid.HorizontalTimer[3]:SetPoint("TOPLEFT", 5, yOfs-12)
+          end
+        end
+      end
     end
   end
   TOCA.Notification("TOCA.SetTotemOrder()", true)

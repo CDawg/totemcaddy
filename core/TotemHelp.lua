@@ -86,8 +86,8 @@ TOCA.Button.TabBack[1]:SetSize(TOCA.TabWidth.Help-20, 30) --first tab
 TOCA.help.updates = {
   "Welcome to " .. TOCA.Global.title .. "|r v" .. TOCA.Global.version .. "\n",
   "|cffffdf96Please note:|r Totem Caddy is still evolving. Improvements will be made as time continues. Enjoy!\n",
-  "|cffffdf96New Feature:|r New Frame Style: Grid Vertical. Now you can view all totems on screen in vertical order based on totem category.",
-  "Grid Horizontal and Freestyle coming soon!\n",
+  "|cffffdf96New Display Feature:|r New Frame Style: Grid Vertical & Grid Horizontal. Now you can view all totems on screen in vertical/horizontal order based on totem category.",
+  "|n",
   "|cffffdf96First time using Totem Caddy?|r",
   "Let's get started by dragging the Totem Caddy anywhere on your screen saving the position.",
   "You can select totems in a category order (air, earth, fire, or water) by selecting the top arrows above the current totem icons.",
@@ -95,7 +95,7 @@ TOCA.help.updates = {
   "For addition options or create totem sets:",
   "Select the cogwheel button or type /toca 'options', then select Totem Sets",
   "You can select which totem for each category, give it a name, then select the bottom arrow on the main frame dropdown to access it.",
-  "Totem slot keybindings for your totem category slots. If you assign key bindings to to the totem slots for the very first time, you may\nhave to do a '/reload'.",
+  "Totem slot keybindings for your totem category slots: If you assign key bindings to to the totem slots for the very first time, you may have to do a '/reload'.",
   "\n",
 }
 TOCA.help.contact = {

@@ -23,6 +23,7 @@ TOCA.totems.FIRE = {
   {"Magma Totem",           "spell_fire_selfdestruct",       "Summons a totem at the feet of the caster for 20 seconds that causes fire damage to creatures within 8 yards every 2 seconds."},
   {"Searing Totem",         "spell_fire_searingtotem",       "Summons a totem at the feet of the caster for 1 minute that repeatedly attacks a random enemy within 20 yards with fire damage."},
   {"Totem of Wrath",        "spell_fire_totemofwrath",       "Summons a totem at the feet of the caster increasing the chance to hit and critically strike with spells by 3% for all party members within 20 yards.\nLasts 2 mins."},
+  --{"Fire Elemental Totem",  "spell_fire_sealoffire",         "Summons a totem at the feet of the caster that inflicts fire damage to enemies within 10 yards."},
 }
 TOCA.totems.EARTH = {
   {"Earthbind Totem",        "spell_nature_strengthofearthtotem02","Summons a totem at the feet of the caster that slows the movement speed of enemies within 12 yards."},
@@ -30,6 +31,7 @@ TOCA.totems.EARTH = {
   {"Stoneskin Totem",        "spell_nature_stoneskintotem",        "Summons a totem at the feet of the caster that protects party members within 20 yards, reducing damage taken.\nLasts 2 mins."},
   {"Strength of Earth Totem","spell_nature_earthbindtotem",        "Summons a totem at the feet of the caster that increases the strength of party members within 20 yards.\nLasts 2 mins."},
   {"Tremor Totem",           "spell_nature_tremortotem",           "Summons a totem at the feet of the caster that shakes the ground around it, removing Fear, Charm and Sleep effects from party members within 30 yards.\nLast 2 mins."},
+  --{"Earth Elemental Totem",  "spell_fire_sealoffire",              "Summons a totem at the feet of the caster that inflicts fire damage to enemies within 10 yards."},
 }
 TOCA.totems.WATER = {
   {"Disease Cleansing Totem","spell_nature_diseasecleansingtotem","Summons a totem at the feet of the caster that attempts to remove 1 disease effect from party members within 20 yards for every 5 seconds.\nLast 2 mins."},
