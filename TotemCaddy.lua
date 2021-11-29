@@ -105,39 +105,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
     TOCA.EnableKnownTotems()
   end
 
-  for totemCat,v in pairsByKeys(TOCA.totems) do
-    if (event == "PLAYER_REGEN_DISABLED") then
-      TOCA.SlotSelect[totemCat]:Hide()
-      TOCA.Button.DropdownMain:Hide()
-      TOCA.Button.Options:Hide()
-      --TOCA.Button.CloseMain:Hide()
-      if (TOCADB[TOCA.player.combine]["CONFIG"]["COMBATLOCK"] == "OFF") then
-        TOCA.FrameMain:SetMovable(true)
-        TOCA.FrameMain:EnableMouse(true)
-      else
-        TOCA.FrameMain:SetMovable(false)
-        TOCA.FrameMain:EnableMouse(false)
-      end
-      TOCA.Notification("Combat Initiated", true)
-    end
-    if (event == "PLAYER_REGEN_ENABLED") then
-      TOCA.SlotSelect[totemCat]:Show()
-      TOCA.Button.DropdownMain:Show()
-      if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"]) then
-        TOCA.FrameStyleSet(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"])
-      end
-      TOCA.FrameMain:SetMovable(true)
-      TOCA.FrameMain:EnableMouse(true)
-      if (TOCADB[TOCA.player.combine]["CONFIG"]["MAINMENU"] == "OFF") then
-        --TOCA.Button.CloseMain:Hide()
-        --TOCA.Button.Options:Hide()
-      else
-        TOCA.Button.Options:Show()
-        --TOCA.Button.CloseMain:Show()
-      end
-      TOCA.Notification("Combat Ended", true)
-    end
-  end
+  TOCA.inCombat(event)
 
   if (event == "CHAT_MSG_ADDON") then
     TOCA.GetReincTimer()
@@ -525,25 +493,25 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.SlotSelectTotem[totemCat][i]:SetScript("OnClick", function(self)
       if (totemCat == "AIR") then
         TOCASlotOne = totemSpell[1]
-        TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotOne)
+        --TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotOne)
         TOCA.SetKeyBindReset("TOTEM_AIR", totemSpell[1])
         TOCA.Notification("Setting AIR " .. totemSpell[1], true)
       end
       if (totemCat == "EARTH") then
         TOCASlotTwo = totemSpell[1]
-        TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotTwo)
+        --TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotTwo)
         TOCA.SetKeyBindReset("TOTEM_EARTH", totemSpell[1])
         TOCA.Notification("Setting EARTH " .. totemSpell[1], true)
       end
       if (totemCat == "FIRE") then
         TOCASlotThree = totemSpell[1]
-        TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotThree)
+        --TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotThree)
         TOCA.SetKeyBindReset("TOTEM_FIRE", totemSpell[1])
         TOCA.Notification("Setting FIRE " .. totemSpell[1], true)
       end
       if (totemCat == "WATER") then
         TOCASlotFour = totemSpell[1]
-        TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotFour)
+        --TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotFour)
         TOCA.SetKeyBindReset("TOTEM_WATER", totemSpell[1])
         TOCA.Notification("Setting WATER " .. totemSpell[1], true)
       end

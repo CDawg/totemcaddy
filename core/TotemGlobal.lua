@@ -556,21 +556,23 @@ local function adjustTooltipHeight(s, x, indent)
   x = x or 79
   indent = indent or ""
   local t = {""}
-  local function cleanse(s) return s:gsub("@x%d%d%d",""):gsub("@r","") end
-  for prefix, word, suffix, newline in s:gmatch("([ \t]*)(%S*)([ \t]*)(\n?)") do
-    if (#t >= 2) then
-      TOCA.Tooltip:SetHeight(TooltipMaxHeight + (10 * #t))
+  if (s) then
+    local function cleanse(s) return s:gsub("@x%d%d%d",""):gsub("@r","") end
+    for prefix, word, suffix, newline in s:gmatch("([ \t]*)(%S*)([ \t]*)(\n?)") do
+      if (#t >= 2) then
+        TOCA.Tooltip:SetHeight(TooltipMaxHeight + (10 * #t))
+      end
+      if #(cleanse(t[#t])) + #prefix + #cleanse(word) > x and #t > 0 then
+        table.insert(t, word..suffix)
+      else
+        t[#t] = t[#t]..prefix..word..suffix
+      end
+      if #newline > 0 then
+        table.insert(t, "")
+      end
     end
-    if #(cleanse(t[#t])) + #prefix + #cleanse(word) > x and #t > 0 then
-      table.insert(t, word..suffix)
-    else
-      t[#t] = t[#t]..prefix..word..suffix
-    end
-    if #newline > 0 then
-      table.insert(t, "")
-    end
+    return indent..table.concat(t, "\n"..indent)
   end
-  return indent..table.concat(t, "\n"..indent)
 end
 
 function TOCA.TooltipDisplay(spell, tools, msgtooltip)
@@ -596,21 +598,21 @@ function TOCA.TooltipDisplay(spell, tools, msgtooltip)
       TOCA.Tooltip.tools:SetText("")
     end
     TOCA.Tooltip.text:SetText(adjustTooltipHeight(spellDesc, 34))
-    if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLON"] == "OFF") then
-      TOCA.Tooltip:Hide()
-    else
-      TOCA.Tooltip:Show()
-    end
   else
-    if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLON"] == "OFF") then
-      TOCA.Tooltip:Hide()
-    else
-      TOCA.Tooltip:Show()
-    end
     TOCA.Tooltip.title:SetText(spell)
     TOCA.Tooltip.cost:SetText("")
     TOCA.Tooltip.tools:SetText("")
-    TOCA.Tooltip.text:SetText(adjustTooltipHeight(msgtooltip, 34))
+    if (msgtooltip) then
+      TOCA.Tooltip.text:SetText(adjustTooltipHeight(msgtooltip, 34))
+    else
+      TOCA.Tooltip.text:SetText("Spell not learned.")
+    end
+  end
+
+  if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLON"] == "OFF") then
+    TOCA.Tooltip:Hide()
+  else
+    TOCA.Tooltip:Show()
   end
 end
 
@@ -799,6 +801,41 @@ function TOCA.TotemBarUpdate()
 
   --TOCA.EnableKnownTotems()
   TOCA.GetReincTimer()
+end
+
+function TOCA.inCombat(event)
+  for totemCat,v in pairsByKeys(TOCA.totems) do
+    if (event == "PLAYER_REGEN_DISABLED") then
+      --TOCA.SlotSelect[totemCat]:Hide()
+      --TOCA.Button.DropdownMain:Hide()
+      --TOCA.Button.Options:Hide()
+      if (TOCADB[TOCA.player.combine]["CONFIG"]["COMBATLOCK"] == "OFF") then
+        TOCA.FrameMain:SetMovable(true)
+        TOCA.FrameMain:EnableMouse(true)
+      else
+        TOCA.FrameMain:SetMovable(false)
+        TOCA.FrameMain:EnableMouse(false)
+      end
+      TOCA.Notification("Combat Initiated", true)
+    end
+    if (event == "PLAYER_REGEN_ENABLED") then
+      --TOCA.SlotSelect[totemCat]:Show()
+      --TOCA.Button.DropdownMain:Show()
+      if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"]) then
+        TOCA.FrameStyleSet(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"])
+      end
+      TOCA.FrameMain:SetMovable(true)
+      TOCA.FrameMain:EnableMouse(true)
+      if (TOCADB[TOCA.player.combine]["CONFIG"]["MAINMENU"] == "OFF") then
+        TOCA.Button.CloseMain:Hide()
+        TOCA.Button.Options:Hide()
+      else
+        TOCA.Button.Options:Show()
+        TOCA.Button.CloseMain:Show()
+      end
+      TOCA.Notification("Combat Ended", true)
+    end
+  end
 end
 
 function TOCA.SendPacket(packet, filtered, rec)
