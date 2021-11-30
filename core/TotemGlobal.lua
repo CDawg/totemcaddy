@@ -427,6 +427,9 @@ function TOCA.Init()
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLON"] == "OFF") then
       TOCA.Checkbox.Tooltip:SetChecked(nil)
     end
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLMOUSE"] == "OFF") then
+      TOCA.Checkbox.TooltipMouse:SetChecked(nil)
+    end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["COMBATLOCK"] == "OFF") then
       TOCA.Checkbox.MainLock:SetChecked(nil)
     end
@@ -535,6 +538,8 @@ function TOCA.CloseAllMenus()
     TOCA.FrameSetsSlotSelectMenu[k]:Hide()
   end
   TOCA.Tooltip:Hide()
+  GameTooltip:ClearLines()
+  GameTooltip:Hide()
 end
 
 local TooltipMaxHeight = 82
@@ -601,7 +606,7 @@ local function adjustTooltipHeight(s, x, indent)
 end
 
 function TOCA.TooltipDisplay(spell, tools, msgtooltip)
-  local spellName, spellSubName, spellID = GetSpellBookItemName(spell)
+  local spellName, spellRank, spellID = GetSpellBookItemName(spell)
   TOCA.Tooltip:SetWidth(250)
   if (spellID) then
     local spellDesc = GetSpellDescription(spellID)
@@ -638,6 +643,46 @@ function TOCA.TooltipDisplay(spell, tools, msgtooltip)
     TOCA.Tooltip:Hide()
   else
     TOCA.Tooltip:Show()
+  end
+end
+
+function TOCA.GetOwnerSpell(bookSpell)
+  local i = 1
+  local spellLatest = 0
+  while true do
+    local spell = GetSpellBookItemName(i, BOOKTYPE_SPELL)
+    if (not spell) then
+      break
+    end
+    if (bookSpell == spell) then
+      spellLatest = i
+    end
+    i = i + 1
+  end
+  return spellLatest --latest known spell in the owner's book
+end
+
+function TOCA.GameTooltip(owner, spell, anchor)
+  if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLON"] == "OFF") then
+    return
+  end
+  local spellName, spellRank, spellID = GetSpellBookItemName(spell)
+  if (spellID) then --assure that there is a valid spell
+    local knownSpell = TOCA.GetOwnerSpell(spellName)
+    if (knownSpell) then
+      if (anchor) then
+        GameTooltip:SetOwner(owner, anchor)
+      else
+        if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLMOUSE"] == "OFF") then
+          GameTooltip:SetOwner(owner, "ANCHOR_PRESERVE")
+        else
+          GameTooltip:SetOwner(owner, "ANCHOR_TOPLEFT")
+        end
+      end
+      GameTooltip:ClearLines()
+      GameTooltip:SetSpellBookItem(knownSpell, BOOKTYPE_SPELL)
+      GameTooltip:Show()
+    end
   end
 end
 

@@ -247,11 +247,10 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     })
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetScript("OnEnter", function(self)
-      TOCA.TooltipDisplay(totemSpell[1], totemCat)
+      TOCA.GameTooltip(self, totemSpell[1])
       self:SetBackdropBorderColor(1, 1, 0.8, 1)
     end)
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetScript("OnLeave", function(self)
-      TOCA.Tooltip:Hide()
       self:SetBackdropBorderColor(1, 1, 1, 0.6)
     end)
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetScript("OnClick", function()
@@ -285,6 +284,24 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 
   TOCA.FrameSetsSlot[totemCat]:SetBackdropColor(0, 0, 0, 0.8)
   TOCA.FrameSetsSlot[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
+  TOCA.FrameSetsSlot[totemCat]:SetScript("OnEnter", function(self)
+    if (totemCat == "AIR") then
+      TOCA.GameTooltip(self, TOCASlotOne)
+    end
+    if (totemCat == "EARTH") then
+      TOCA.GameTooltip(self, TOCASlotTwo)
+    end
+    if (totemCat == "FIRE") then
+      TOCA.GameTooltip(self, TOCASlotThree)
+    end
+    if (totemCat == "WATER") then
+      TOCA.GameTooltip(self, TOCASlotFour)
+    end
+    self:SetBackdropBorderColor(1, 1, 0.8, 1)
+  end)
+  TOCA.FrameSetsSlot[totemCat]:SetScript("OnLeave", function(self)
+    self:SetBackdropBorderColor(1, 1, 1, 0.6)
+  end)
 end
 
 TOCA.FrameSetsProfileTitle = TOCA.FrameOptionsPage[TOCA.OptionTabs[2]]:CreateFontString(nil, "ARTWORK")

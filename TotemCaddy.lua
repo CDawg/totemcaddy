@@ -168,12 +168,13 @@ TOCA.Button.TotemicCallAtt:SetScript("OnEnter", function(self)
   --TOCA.CloseAllMenus() --bug with the totemic call button overlapping
   TOCA.Button.TotemicCall:SetBackdropBorderColor(1, 1, 1, 1)
   TOCA.Button.TotemicCall.highlight:Show()
-  TOCA.TooltipDisplay("Totemic Call", "", "Returns your totems to the earth, giving you 25% of the mana required to cast each totem destroyed by Totemic Call.")
+  TOCA.GameTooltip(self, "Totemic Call")
 end)
 TOCA.Button.TotemicCallAtt:SetScript("OnLeave", function(self)
   TOCA.Button.TotemicCall:SetBackdropBorderColor(1, 1, 1, 0.6)
   TOCA.Button.TotemicCall.highlight:Hide()
-  TOCA.Tooltip:Hide()
+  --TOCA.Tooltip:Hide()
+  TOCA.CloseAllMenus()
 end)
 
 --grid timers
@@ -326,21 +327,25 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.SlotGrid.HorizontalTimer[3]:SetText("")
     end
   end
-  TOCA.Totem[totemCat]:SetScript("OnEnter", function()
+  TOCA.Totem[totemCat]:SetScript("OnEnter", function(self)
     TOCA.CloseAllMenus()
     TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 1)
     TOCA.Slot.highlight[totemCat]:Show()
     if (totemCat == "AIR") then
-      TOCA.TooltipDisplay(TOCASlotOne, totemCat)
+      --TOCA.TooltipDisplay(TOCASlotOne, totemCat)
+      TOCA.GameTooltip(self, TOCASlotOne)
     end
     if (totemCat == "EARTH") then
-      TOCA.TooltipDisplay(TOCASlotTwo, totemCat)
+      --TOCA.TooltipDisplay(TOCASlotTwo, totemCat)
+      TOCA.GameTooltip(self, TOCASlotTwo)
     end
     if (totemCat == "FIRE") then
-      TOCA.TooltipDisplay(TOCASlotThree, totemCat)
+      --TOCA.TooltipDisplay(TOCASlotThree, totemCat)
+      TOCA.GameTooltip(self, TOCASlotThree)
     end
     if (totemCat == "WATER") then
-      TOCA.TooltipDisplay(TOCASlotFour, totemCat)
+      --TOCA.TooltipDisplay(TOCASlotFour, totemCat)
+      TOCA.GameTooltip(self, TOCASlotFour)
     end
   end)
   TOCA.Totem[totemCat]:SetScript("OnLeave", function()
@@ -400,11 +405,12 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action.highlight:Hide()
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action:SetScript("OnEnter", function(self)
       self.highlight:Show()
-      TOCA.TooltipDisplay(totemSpell[1], totemCat)
+      --TOCA.TooltipDisplay(totemSpell[1], totemCat)
+      TOCA.GameTooltip(self, totemSpell[1])
     end)
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action:SetScript("OnLeave", function(self)
       self.highlight:Hide()
-      TOCA.Tooltip:Hide()
+      --TOCA.Tooltip:Hide()
     end)
 
     --totemButtonPos_X[totemCat] = totemButtonPos_X[totemCat]+TOCA.Slot_w
@@ -431,11 +437,12 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action.highlight:Hide()
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action:SetScript("OnEnter", function(self)
       self.highlight:Show()
-      TOCA.TooltipDisplay(totemSpell[1], totemCat)
+      --TOCA.TooltipDisplay(totemSpell[1], totemCat)
+      TOCA.GameTooltip(self, totemSpell[1])
     end)
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action:SetScript("OnLeave", function(self)
       self.highlight:Hide()
-      TOCA.Tooltip:Hide()
+      --TOCA.Tooltip:Hide()
     end)
 
   end
@@ -499,11 +506,11 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     })
     TOCA.SlotSelectTotem[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
     TOCA.SlotSelectTotem[totemCat][i]:SetScript("OnEnter", function(self)
-      TOCA.TooltipDisplay(totemSpell[1], totemCat)
+      TOCA.GameTooltip(self, totemSpell[1])
       self:SetBackdropBorderColor(1, 1, 0.8, 1)
     end)
     TOCA.SlotSelectTotem[totemCat][i]:SetScript("OnLeave", function(self)
-      TOCA.Tooltip:Hide()
+      GameTooltip:Hide()
       self:SetBackdropBorderColor(1, 1, 1, 0.6)
     end)
     TOCA.SlotSelectTotem[totemCat][i]:SetScript("OnClick", function(self)

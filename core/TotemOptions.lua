@@ -182,14 +182,7 @@ TOCA.FrameOptions.TitleSlider:SetFont(TOCA.Global.font, 12)
 TOCA.FrameOptions.TitleSlider:SetPoint("TOPLEFT", 30, -150)
 TOCA.FrameOptions.TitleSlider:SetText("Frame Scale")
 TOCA.FrameOptions.TitleSlider:SetTextColor(1, 1, 0.5, 1)
---[==[
-TOCA.FrameOptions.TitleSlider:SetScript("OnEnter", function()
-  TOCA.TooltipMenu("Frame Scale", "Sets the size of Totem Caddy frame.|nYou can click the reset button to set the default original size.", 120)
-end)
-TOCA.FrameOptions.TitleSlider:SetScript("OnLeave", function()
-  TOCA.Tooltip:Hide()
-end)
-]==]--
+
 
 TOCA.Slider.Scale={}
 TOCA.Slider.Scale = CreateFrame("Slider", "TOCA.Slider.Scale", TOCA.FrameOptionsPage[TOCA.OptionTabs[1]], "OptionsSliderTemplate")
@@ -510,7 +503,7 @@ TOCA.Checkbox.Tooltip:SetChecked(1)
 TOCA.Checkbox.Tooltip.text = TOCA.Checkbox.Tooltip:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.Tooltip.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
 TOCA.Checkbox.Tooltip.text:SetPoint("TOPLEFT", 25, -6)
-TOCA.Checkbox.Tooltip.text:SetText("Display Tooltip")
+TOCA.Checkbox.Tooltip.text:SetText("Display Totem Tooltip")
 TOCA.Checkbox.Tooltip:SetScript("OnClick", function(self)
   if (self:GetChecked()) then
     TOCADB[TOCA.player.combine]["CONFIG"]["TOOLON"] = "ON"
@@ -519,6 +512,23 @@ TOCA.Checkbox.Tooltip:SetScript("OnClick", function(self)
   end
 end)
 
+TOCA.Checkbox.TooltipMouse={}
+TOCA.Checkbox.TooltipMouse = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[1]], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.TooltipMouse:SetPoint("TOPLEFT", 400, -280)
+TOCA.Checkbox.TooltipMouse:SetChecked(1)
+TOCA.Checkbox.TooltipMouse.text = TOCA.Checkbox.TooltipMouse:CreateFontString(nil, "ARTWORK")
+TOCA.Checkbox.TooltipMouse.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
+TOCA.Checkbox.TooltipMouse.text:SetPoint("TOPLEFT", 25, -6)
+TOCA.Checkbox.TooltipMouse.text:SetText("Anchor Tooltip to Cursor")
+TOCA.Checkbox.TooltipMouse:SetScript("OnClick", function(self)
+  if (self:GetChecked()) then
+    TOCADB[TOCA.player.combine]["CONFIG"]["TOOLMOUSE"] = "ON"
+  else
+    TOCADB[TOCA.player.combine]["CONFIG"]["TOOLMOUSE"] = "OFF"
+  end
+end)
+
+--[==[
 TOCA.Button.TooltipPosition= CreateFrame("Button", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[1]], "BackdropTemplate")
 TOCA.Button.TooltipPosition:SetSize(100, 25)
 TOCA.Button.TooltipPosition:SetPoint("TOPLEFT", 425, -285)
@@ -539,6 +549,7 @@ TOCA.Button.TooltipPositionText = TOCA.Button.TooltipPosition:CreateFontString(n
 TOCA.Button.TooltipPositionText:SetFont(TOCA.Global.font, 11)
 TOCA.Button.TooltipPositionText:SetPoint("CENTER", 0, 0)
 TOCA.Button.TooltipPositionText:SetText("Tooltip Position")
+]==]--
 
 movingTotem= "nil"
 overTotem = "nil"
