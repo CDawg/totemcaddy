@@ -105,7 +105,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
     TOCA.EnableKnownTotems()
   end
 
-  TOCA.inCombat(event)
+  TOCA.Combat(event)
 
   if (event == "CHAT_MSG_ADDON") then
     TOCA.GetReincTimer()
@@ -275,40 +275,56 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 
   local thisTotemSpell = ""
   if (totemCat == "AIR") then
-    TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotOne)
-    TOCA.Slot.Timer[4]= TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
-    TOCA.Slot.Timer[4]:SetFont(TOCA.Global.font, 12, "OUTLINE")
-    TOCA.Slot.Timer[4]:SetPoint("CENTER", 0, -8)
-    TOCA.Slot.Timer[4]:SetText("")
-    TOCA.SlotGrid.VerticalTimer[4]:SetText("")
-    TOCA.SlotGrid.HorizontalTimer[4]:SetText("")
+    if (TOCA.isInCombat) then
+      TOCA.Notification("In Combat, do nothing!", true)
+    else
+      TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotOne)
+      TOCA.Slot.Timer[4]= TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
+      TOCA.Slot.Timer[4]:SetFont(TOCA.Global.font, 12, "OUTLINE")
+      TOCA.Slot.Timer[4]:SetPoint("CENTER", 0, -8)
+      TOCA.Slot.Timer[4]:SetText("")
+      TOCA.SlotGrid.VerticalTimer[4]:SetText("")
+      TOCA.SlotGrid.HorizontalTimer[4]:SetText("")
+    end
   end
   if (totemCat == "EARTH") then
-    TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotTwo)
-    TOCA.Slot.Timer[2]= TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
-    TOCA.Slot.Timer[2]:SetFont(TOCA.Global.font, 12, "OUTLINE")
-    TOCA.Slot.Timer[2]:SetPoint("CENTER", 0, -8)
-    TOCA.Slot.Timer[2]:SetText("")
-    TOCA.SlotGrid.VerticalTimer[2]:SetText("")
-    TOCA.SlotGrid.HorizontalTimer[2]:SetText("")
+    if (TOCA.isInCombat) then
+      TOCA.Notification("In Combat, do nothing!", true)
+    else
+      TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotTwo)
+      TOCA.Slot.Timer[2]= TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
+      TOCA.Slot.Timer[2]:SetFont(TOCA.Global.font, 12, "OUTLINE")
+      TOCA.Slot.Timer[2]:SetPoint("CENTER", 0, -8)
+      TOCA.Slot.Timer[2]:SetText("")
+      TOCA.SlotGrid.VerticalTimer[2]:SetText("")
+      TOCA.SlotGrid.HorizontalTimer[2]:SetText("")
+    end
   end
   if (totemCat == "FIRE") then
-    TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotThree)
-    TOCA.Slot.Timer[1]= TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
-    TOCA.Slot.Timer[1]:SetFont(TOCA.Global.font, 12, "OUTLINE")
-    TOCA.Slot.Timer[1]:SetPoint("CENTER", 0, -8)
-    TOCA.Slot.Timer[1]:SetText("")
-    TOCA.SlotGrid.VerticalTimer[1]:SetText("")
-    TOCA.SlotGrid.HorizontalTimer[1]:SetText("")
+    if (TOCA.isInCombat) then
+      TOCA.Notification("In Combat, do nothing!", true)
+    else
+      TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotThree)
+      TOCA.Slot.Timer[1]= TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
+      TOCA.Slot.Timer[1]:SetFont(TOCA.Global.font, 12, "OUTLINE")
+      TOCA.Slot.Timer[1]:SetPoint("CENTER", 0, -8)
+      TOCA.Slot.Timer[1]:SetText("")
+      TOCA.SlotGrid.VerticalTimer[1]:SetText("")
+      TOCA.SlotGrid.HorizontalTimer[1]:SetText("")
+    end
   end
   if (totemCat == "WATER") then
-    TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotFour)
-    TOCA.Slot.Timer[3]= TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
-    TOCA.Slot.Timer[3]:SetFont(TOCA.Global.font, 12, "OUTLINE")
-    TOCA.Slot.Timer[3]:SetPoint("CENTER", 0, -8)
-    TOCA.Slot.Timer[3]:SetText("")
-    TOCA.SlotGrid.VerticalTimer[3]:SetText("")
-    TOCA.SlotGrid.HorizontalTimer[3]:SetText("")
+    if (TOCA.isInCombat) then
+      TOCA.Notification("In Combat, do nothing!", true)
+    else
+      TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotFour)
+      TOCA.Slot.Timer[3]= TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
+      TOCA.Slot.Timer[3]:SetFont(TOCA.Global.font, 12, "OUTLINE")
+      TOCA.Slot.Timer[3]:SetPoint("CENTER", 0, -8)
+      TOCA.Slot.Timer[3]:SetText("")
+      TOCA.SlotGrid.VerticalTimer[3]:SetText("")
+      TOCA.SlotGrid.HorizontalTimer[3]:SetText("")
+    end
   end
   TOCA.Totem[totemCat]:SetScript("OnEnter", function()
     TOCA.CloseAllMenus()
@@ -493,27 +509,43 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.SlotSelectTotem[totemCat][i]:SetScript("OnClick", function(self)
       if (totemCat == "AIR") then
         TOCASlotOne = totemSpell[1]
-        --TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotOne)
-        TOCA.SetKeyBindReset("TOTEM_AIR", totemSpell[1])
-        TOCA.Notification("Setting AIR " .. totemSpell[1], true)
+        if (TOCA.isInCombat) then
+          TOCA.Notification("In Combat, do nothing!", true)
+        else
+          TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotOne)
+          TOCA.SetKeyBindReset("TOTEM_AIR", totemSpell[1])
+          TOCA.Notification("Setting AIR " .. totemSpell[1], true)
+        end
       end
       if (totemCat == "EARTH") then
         TOCASlotTwo = totemSpell[1]
-        --TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotTwo)
-        TOCA.SetKeyBindReset("TOTEM_EARTH", totemSpell[1])
-        TOCA.Notification("Setting EARTH " .. totemSpell[1], true)
+        if (TOCA.isInCombat) then
+          TOCA.Notification("In Combat, do nothing!", true)
+        else
+          TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotTwo)
+          TOCA.SetKeyBindReset("TOTEM_EARTH", totemSpell[1])
+          TOCA.Notification("Setting EARTH " .. totemSpell[1], true)
+        end
       end
       if (totemCat == "FIRE") then
         TOCASlotThree = totemSpell[1]
-        --TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotThree)
-        TOCA.SetKeyBindReset("TOTEM_FIRE", totemSpell[1])
-        TOCA.Notification("Setting FIRE " .. totemSpell[1], true)
+        if (TOCA.isInCombat) then
+          TOCA.Notification("In Combat, do nothing!", true)
+        else
+          TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotThree)
+          TOCA.SetKeyBindReset("TOTEM_FIRE", totemSpell[1])
+          TOCA.Notification("Setting FIRE " .. totemSpell[1], true)
+        end
       end
       if (totemCat == "WATER") then
         TOCASlotFour = totemSpell[1]
-        --TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotFour)
-        TOCA.SetKeyBindReset("TOTEM_WATER", totemSpell[1])
-        TOCA.Notification("Setting WATER " .. totemSpell[1], true)
+        if (TOCA.isInCombat) then
+          TOCA.Notification("In Combat, do nothing!", true)
+        else
+          TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotFour)
+          TOCA.SetKeyBindReset("TOTEM_WATER", totemSpell[1])
+          TOCA.Notification("Setting WATER " .. totemSpell[1], true)
+        end
       end
       TOCA.Slot[totemCat]:SetBackdrop({
         bgFile  = "interface/icons/" .. totemSpell[2],

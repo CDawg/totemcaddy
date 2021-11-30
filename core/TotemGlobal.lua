@@ -25,7 +25,7 @@ TOCA.Global = {
   prefix = "TotemCaddy",
 }
 
-TOCA.DEBUG = false
+TOCA.DEBUG = true
 
 TOCA.Prefix = {
   version = "0xEFVe",
@@ -97,6 +97,7 @@ TOCA.ReincTimer = 0
 TOCA.globalTimerInMinutes = true --default
 TOCA.Tab={}
 TOCA.TabWidth={}
+TOCA.isInCombat = false
 
 TOCA.Framelevel = {
   Background=0,
@@ -111,10 +112,10 @@ TOCA.Slot_h=35
 TOCA.Slot_x=-TOCA.Slot_w/2
 
 --defaults
-TOCASlotOne  = "Grace of Air Totem"
-TOCASlotTwo  = "Stoneclaw Totem"
-TOCASlotThree= "Magma Totem"
-TOCASlotFour = "Mana Spring Totem"
+TOCASlotOne  = TOCA.totems.AIR[1][1]
+TOCASlotTwo  = TOCA.totems.EARTH[1][1]
+TOCASlotThree= TOCA.totems.FIRE[1][1]
+TOCASlotFour = TOCA.totems.WATER[1][1]
 
 function TOCA.Notification(msg, debug)
   if ((debug) and (TOCA.DEBUG)) then
@@ -168,20 +169,24 @@ function TOCA.SetKeyBindReset(KeyBK, spell)
 end
 
 function TOCA.SetKeyBindOnLoad()
-  TOCA.SetKeyBindReset("TOTEM_RECALL", "Totemic Call")
-  if (TOCASlotOne) then
-    TOCA.SetKeyBindReset("TOTEM_AIR", TOCASlotOne)
+  if (TOCA.isInCombat) then
+    TOCA.Notification("TOCA.SetKeyBindOnLoad() In combat, do nothing!", true)
+  else
+    TOCA.SetKeyBindReset("TOTEM_RECALL", "Totemic Call")
+    if (TOCASlotOne) then
+      TOCA.SetKeyBindReset("TOTEM_AIR", TOCASlotOne)
+    end
+    if (TOCASlotTwo) then
+      TOCA.SetKeyBindReset("TOTEM_EARTH", TOCASlotTwo)
+    end
+    if (TOCASlotThree) then
+      TOCA.SetKeyBindReset("TOTEM_FIRE", TOCASlotThree)
+    end
+    if (TOCASlotFour) then
+      TOCA.SetKeyBindReset("TOTEM_WATER", TOCASlotFour)
+    end
+    TOCA.Notification("TOCA.SetKeyBindOnLoad()", true)
   end
-  if (TOCASlotTwo) then
-    TOCA.SetKeyBindReset("TOTEM_EARTH", TOCASlotTwo)
-  end
-  if (TOCASlotThree) then
-    TOCA.SetKeyBindReset("TOTEM_FIRE", TOCASlotThree)
-  end
-  if (TOCASlotFour) then
-    TOCA.SetKeyBindReset("TOTEM_WATER", TOCASlotFour)
-  end
-  TOCA.Notification("TOCA.SetKeyBindOnLoad()", true)
 end
 
 function TOCA.Round(num, numDecimalPlaces)
@@ -244,22 +249,26 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 end
 
 function TOCA.EnableKnownTotems()
-  for totemCat,v in pairsByKeys(TOCA.totems) do
-    for i,totemSpell in pairs(TOCA.totems[totemCat]) do
-      TOCA.SlotSelectTotemDisabled[totemCat][i]:Show()
-      TOCA.FrameSetsSlotDisabled[totemCat][i]:Show()
-      TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:Hide()
-      TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:Hide()
-      local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(totemSpell[1])
-      if (name) then
-        TOCA.SlotSelectTotemDisabled[totemCat][i]:Hide()
-        TOCA.FrameSetsSlotDisabled[totemCat][i]:Hide()
-        TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:Show()
-        TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:Show()
+  if (TOCA.isInCombat) then
+    TOCA.Notification("In Combat, do nothing!", true)
+  else
+    for totemCat,v in pairsByKeys(TOCA.totems) do
+      for i,totemSpell in pairs(TOCA.totems[totemCat]) do
+        TOCA.SlotSelectTotemDisabled[totemCat][i]:Show()
+        TOCA.FrameSetsSlotDisabled[totemCat][i]:Show()
+        TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:Hide()
+        TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:Hide()
+        local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(totemSpell[1])
+        if (name) then
+          TOCA.SlotSelectTotemDisabled[totemCat][i]:Hide()
+          TOCA.FrameSetsSlotDisabled[totemCat][i]:Hide()
+          TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:Show()
+          TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:Show()
+        end
       end
     end
+    TOCA.Notification("TOCA.EnableKnownTotems()", true)
   end
-  TOCA.Notification("TOCA.EnableKnownTotems()", true)
 end
 
 function TOCA.FrameStyleDefault()
@@ -448,23 +457,39 @@ function TOCA.SetDDMenu(DDFrame, value)
       --TOCA.Notification("debug profile " .. k, true)
       if (k == "TOCA_AIR") then
         TOCASlotOne = v
-        TOCA.Totem["AIR"]:SetAttribute("spell", v)
-        TOCA.SetKeyBindReset("TOTEM_AIR", v)
+        if (TOCA.isInCombat) then
+          TOCA.Notification("In Combat, do nothing!", true)
+        else
+          TOCA.Totem["AIR"]:SetAttribute("spell", v)
+          TOCA.SetKeyBindReset("TOTEM_AIR", v)
+        end
       end
       if (k == "TOCA_EARTH") then
         TOCASlotTwo = v
-        TOCA.Totem["EARTH"]:SetAttribute("spell", v)
-        TOCA.SetKeyBindReset("TOTEM_EARTH", v)
+        if (TOCA.isInCombat) then
+          TOCA.Notification("In Combat, do nothing!", true)
+        else
+          TOCA.Totem["EARTH"]:SetAttribute("spell", v)
+          TOCA.SetKeyBindReset("TOTEM_EARTH", v)
+        end
       end
       if (k == "TOCA_FIRE") then
         TOCASlotThree = v
-        TOCA.Totem["FIRE"]:SetAttribute("spell", v)
-        TOCA.SetKeyBindReset("TOTEM_FIRE", v)
+        if (TOCA.isInCombat) then
+          TOCA.Notification("In Combat, do nothing!", true)
+        else
+          TOCA.Totem["FIRE"]:SetAttribute("spell", v)
+          TOCA.SetKeyBindReset("TOTEM_FIRE", v)
+        end
       end
       if (k == "TOCA_WATER") then
         TOCASlotFour = v
-        TOCA.Totem["WATER"]:SetAttribute("spell", v)
-        TOCA.SetKeyBindReset("TOTEM_WATER", v)
+        if (TOCA.isInCombat) then
+          TOCA.Notification("In Combat, do nothing!", true)
+        else
+          TOCA.Totem["WATER"]:SetAttribute("spell", v)
+          TOCA.SetKeyBindReset("TOTEM_WATER", v)
+        end
       end
     end
   end
@@ -803,9 +828,10 @@ function TOCA.TotemBarUpdate()
   TOCA.GetReincTimer()
 end
 
-function TOCA.inCombat(event)
+function TOCA.Combat(event)
   for totemCat,v in pairsByKeys(TOCA.totems) do
     if (event == "PLAYER_REGEN_DISABLED") then
+      TOCA.isInCombat = true
       --TOCA.SlotSelect[totemCat]:Hide()
       --TOCA.Button.DropdownMain:Hide()
       --TOCA.Button.Options:Hide()
@@ -819,6 +845,7 @@ function TOCA.inCombat(event)
       TOCA.Notification("Combat Initiated", true)
     end
     if (event == "PLAYER_REGEN_ENABLED") then
+      TOCA.isInCombat = false
       --TOCA.SlotSelect[totemCat]:Show()
       --TOCA.Button.DropdownMain:Show()
       if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"]) then
