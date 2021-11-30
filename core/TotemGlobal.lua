@@ -25,7 +25,7 @@ TOCA.Global = {
   prefix = "TotemCaddy",
 }
 
-TOCA.DEBUG = true
+TOCA.DEBUG = false
 
 TOCA.Prefix = {
   version = "0xEFVe",
@@ -832,9 +832,9 @@ function TOCA.Combat(event)
   for totemCat,v in pairsByKeys(TOCA.totems) do
     if (event == "PLAYER_REGEN_DISABLED") then
       TOCA.isInCombat = true
-      --TOCA.SlotSelect[totemCat]:Hide()
-      --TOCA.Button.DropdownMain:Hide()
-      --TOCA.Button.Options:Hide()
+      TOCA.SlotSelect[totemCat]:Hide()
+      TOCA.Button.DropdownMain:Hide()
+      TOCA.Button.Options:Hide()
       if (TOCADB[TOCA.player.combine]["CONFIG"]["COMBATLOCK"] == "OFF") then
         TOCA.FrameMain:SetMovable(true)
         TOCA.FrameMain:EnableMouse(true)
@@ -846,8 +846,8 @@ function TOCA.Combat(event)
     end
     if (event == "PLAYER_REGEN_ENABLED") then
       TOCA.isInCombat = false
-      --TOCA.SlotSelect[totemCat]:Show()
-      --TOCA.Button.DropdownMain:Show()
+      TOCA.SlotSelect[totemCat]:Show()
+      TOCA.Button.DropdownMain:Show()
       if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"]) then
         TOCA.FrameStyleSet(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"])
       end
