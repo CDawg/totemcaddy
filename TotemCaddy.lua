@@ -332,19 +332,15 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 1)
     TOCA.Slot.highlight[totemCat]:Show()
     if (totemCat == "AIR") then
-      --TOCA.TooltipDisplay(TOCASlotOne, totemCat)
       TOCA.GameTooltip(self, TOCASlotOne)
     end
     if (totemCat == "EARTH") then
-      --TOCA.TooltipDisplay(TOCASlotTwo, totemCat)
       TOCA.GameTooltip(self, TOCASlotTwo)
     end
     if (totemCat == "FIRE") then
-      --TOCA.TooltipDisplay(TOCASlotThree, totemCat)
       TOCA.GameTooltip(self, TOCASlotThree)
     end
     if (totemCat == "WATER") then
-      --TOCA.TooltipDisplay(TOCASlotFour, totemCat)
       TOCA.GameTooltip(self, TOCASlotFour)
     end
   end)
@@ -405,12 +401,10 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action.highlight:Hide()
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action:SetScript("OnEnter", function(self)
       self.highlight:Show()
-      --TOCA.TooltipDisplay(totemSpell[1], totemCat)
       TOCA.GameTooltip(self, totemSpell[1])
     end)
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action:SetScript("OnLeave", function(self)
       self.highlight:Hide()
-      --TOCA.Tooltip:Hide()
     end)
 
     --totemButtonPos_X[totemCat] = totemButtonPos_X[totemCat]+TOCA.Slot_w
@@ -437,14 +431,11 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action.highlight:Hide()
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action:SetScript("OnEnter", function(self)
       self.highlight:Show()
-      --TOCA.TooltipDisplay(totemSpell[1], totemCat)
       TOCA.GameTooltip(self, totemSpell[1])
     end)
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action:SetScript("OnLeave", function(self)
       self.highlight:Hide()
-      --TOCA.Tooltip:Hide()
     end)
-
   end
 end
 
