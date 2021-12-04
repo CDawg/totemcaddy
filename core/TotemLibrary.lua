@@ -84,6 +84,17 @@ function split(s, delimiter)
   return result
 end
 
+function isempty(s)
+  return s == nil or s == ''
+end
+
+function table.merge(t1, t2)
+ for k,v in ipairs(t2) do
+    table.insert(t1, v)
+ end
+  return t1
+end
+
 function pairsByKeys (t, f)
   local a = {}
   for n in pairs(t) do table.insert(a, n) end
@@ -118,6 +129,43 @@ function multiKeyFromValue(_array, value, index)
     if v[index]==value then return k end
   end
   return nil
+end
+
+function reindexArray(input, reval)
+  local n=#input
+  for i=1,n do
+    if reval[input[i]] then
+      input[i]=nil
+    end
+  end
+  local j=0
+  for i=1,n do
+    if input[i]~=nil then
+      j=j+1
+      input[j]=input[i]
+    end
+  end
+  for i=j+1,n do
+    input[i]=nil
+  end
+end
+
+function reindexArraySafe(array)
+  local n=0
+  local newArray={}
+  for i,v in pairs(array) do
+    n=n+1
+    newArray[n] = v
+  end
+  return newArray
+end
+
+function removeValueFromArray(array, value)
+  if (value) then
+    remove_key = singleKeyFromValue(array, value)
+    array[remove_key] = nil
+    reindexArray(array, array)
+  end
 end
 
 function TimeSecondsToMinutes(time)
