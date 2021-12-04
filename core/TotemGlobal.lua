@@ -819,6 +819,9 @@ function TOCA.GetReincTimer() --always checking
       end
     end
   end
+  if (TOCA.GameVersion == 1) then
+    TOCA.FrameMain.ReincFrame:Hide()
+  end
 end
 
 TOCA.SlotGrid.VerticalTimer={}
