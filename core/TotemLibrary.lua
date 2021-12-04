@@ -55,6 +55,10 @@ TOCA.spell = {
   TOTEMIC_CALL = 36936,
 }
 
+TOCA.item = {
+  ANKH = 17030,
+}
+
 TOCA.orderGame = { --how the ingame sorts totems
   FIRE = 1,
   EARTH= 2,

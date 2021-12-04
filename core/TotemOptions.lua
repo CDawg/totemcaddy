@@ -346,7 +346,7 @@ TOCA.Checkbox.MainMenu:SetChecked(1)
 TOCA.Checkbox.MainMenu.text = TOCA.Checkbox.MainMenu:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.MainMenu.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
 TOCA.Checkbox.MainMenu.text:SetPoint("TOPLEFT", 25, -6)
-TOCA.Checkbox.MainMenu.text:SetText("Display Main Menu Buttons")
+TOCA.Checkbox.MainMenu.text:SetText("Display Main Menu/Options Buttons")
 TOCA.Checkbox.MainMenu:SetScript("OnClick", function(self)
   if (self:GetChecked()) then
     TOCA.FrameMain.Background:SetBackdrop(TOCA.Backdrop.Main)

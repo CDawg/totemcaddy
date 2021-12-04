@@ -159,7 +159,7 @@ TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 20)
 TOCA.Button.TotemicCall.ECR:SetTexture("Interface/MainMenuBar/UI-MainMenuBar-EndCap-Dwarf")
 TOCA.Button.TotemicCall.ECR:SetTexCoord(1, 0, 0, 1)
 
-TOCA.Button.TotemicCallAtt= CreateFrame("Button", nil, TOCA.Button.TotemicCall, "SecureActionButtonTemplate");
+TOCA.Button.TotemicCallAtt= CreateFrame("Button", nil, TOCA.Button.TotemicCall, "SecureActionButtonTemplate")
 TOCA.Button.TotemicCallAtt:SetSize(TOCA.Button.TotemicCall_w, TOCA.Button.TotemicCall_h)
 TOCA.Button.TotemicCallAtt:SetPoint("CENTER", 0, 0)
 TOCA.Button.TotemicCallAtt:SetAttribute("type", "spell")
@@ -235,7 +235,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.Slot.highlight[totemCat]:SetTexture("Interface/Buttons/ButtonHilight-Square")
   TOCA.Slot.highlight[totemCat]:SetBlendMode("ADD")
   TOCA.Slot.highlight[totemCat]:Hide()
-  TOCA.Totem[totemCat] = CreateFrame("Button", nil, TOCA.Slot[totemCat], "SecureActionButtonTemplate");
+  TOCA.Totem[totemCat] = CreateFrame("Button", nil, TOCA.Slot[totemCat], "SecureActionButtonTemplate")
   TOCA.Totem[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
   TOCA.Totem[totemCat]:SetPoint("CENTER", 0, 0)
   TOCA.Totem[totemCat]:SetAttribute("type", "spell")
@@ -277,7 +277,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   local thisTotemSpell = ""
   if (totemCat == "AIR") then
     if (TOCA.isInCombat) then
-      TOCA.Notification("In Combat, do nothing!", true)
+      TOCA.Notification("[1] In Combat, do nothing!", true)
     else
       TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotOne)
       TOCA.Slot.Timer[4]= TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
@@ -290,7 +290,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   end
   if (totemCat == "EARTH") then
     if (TOCA.isInCombat) then
-      TOCA.Notification("In Combat, do nothing!", true)
+      TOCA.Notification("[1] In Combat, do nothing!", true)
     else
       TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotTwo)
       TOCA.Slot.Timer[2]= TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
@@ -303,7 +303,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   end
   if (totemCat == "FIRE") then
     if (TOCA.isInCombat) then
-      TOCA.Notification("In Combat, do nothing!", true)
+      TOCA.Notification("[1] In Combat, do nothing!", true)
     else
       TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotThree)
       TOCA.Slot.Timer[1]= TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
@@ -316,7 +316,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   end
   if (totemCat == "WATER") then
     if (TOCA.isInCombat) then
-      TOCA.Notification("In Combat, do nothing!", true)
+      TOCA.Notification("[1] In Combat, do nothing!", true)
     else
       TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotFour)
       TOCA.Slot.Timer[3]= TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
@@ -388,7 +388,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
       edgeSize= 12,
       insets  = {left=2, right=2, top=2, bottom=2},
     })
-    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action = CreateFrame("Button", nil, TOCA.SlotGrid.VerticalTotemButton[totemCat][i], "SecureActionButtonTemplate");
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action = CreateFrame("Button", nil, TOCA.SlotGrid.VerticalTotemButton[totemCat][i], "SecureActionButtonTemplate")
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action:SetSize(TOCA.Slot_w, TOCA.Slot_h)
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action:SetPoint("CENTER", 0, 0)
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action:SetAttribute("type", "spell")
@@ -418,7 +418,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
       edgeSize= 12,
       insets  = {left=2, right=2, top=2, bottom=2},
     })
-    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action = CreateFrame("Button", nil, TOCA.SlotGrid.HorizontalTotemButton[totemCat][i], "SecureActionButtonTemplate");
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action = CreateFrame("Button", nil, TOCA.SlotGrid.HorizontalTotemButton[totemCat][i], "SecureActionButtonTemplate")
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action:SetSize(TOCA.Slot_w, TOCA.Slot_h)
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action:SetPoint("CENTER", 0, 0)
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action:SetAttribute("type", "spell")
@@ -441,7 +441,9 @@ end
 
 TOCA.SlotSelect={}
 TOCA.SlotSelectTotem={}
+TOCA.SlotSelectTotemAction={}
 TOCA.SlotSelectMenu={}
+--TOCA.TotemSlotAction={}
 TOCA.SlotSelect_x = 0
 for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.SlotSelect[totemCat]= CreateFrame("Button", nil, TOCA.Slot[totemCat], "BackdropTemplate")
@@ -452,6 +454,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.SlotSelect[totemCat]:SetFrameLevel(TOCA.Framelevel.Buttons)
   TOCA.SlotSelect[totemCat]:SetScript("OnEnter", function(self)
     self:SetBackdropBorderColor(1, 1, 0.8, 1)
+    --print(TOCA.InventoryCountItem(TOCA.item.ANKH))
   end)
   TOCA.SlotSelect[totemCat]:SetScript("OnLeave", function(self)
     self:SetBackdropBorderColor(1, 1, 1, 0.6)
@@ -495,6 +498,18 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
       edgeSize= 12,
       insets  = {left=2, right=2, top=2, bottom=2},
     })
+
+    TOCA.SlotSelectTotemAction[totemCat]={}
+    --[==[
+    TOCA.SlotSelectTotemAction[totemCat][i] = CreateFrame("Button", nil, TOCA.SlotSelectTotem[totemCat][i], "SecureActionButtonTemplate")
+    --TOCA.SlotSelectTotemAction[totemCat][i] = CreateFrame("Button", nil, TOCA.SlotSelectTotem[totemCat][i], "InsecureActionButtonTemplate")
+    --TOCA.SlotSelectTotemAction[totemCat][i] = CreateFrame("Button", nil, TOCA.SlotSelectTotem[totemCat][i], "BackdropTemplate")
+    TOCA.SlotSelectTotemAction[totemCat][i]:SetSize(TOCA.Slot_w-2, TOCA.Slot_h-2)
+    TOCA.SlotSelectTotemAction[totemCat][i]:SetPoint("CENTER", 0, 0)
+    TOCA.SlotSelectTotemAction[totemCat][i]:SetAttribute("type", "macro")
+    TOCA.SlotSelectTotemAction[totemCat][i]:SetAttribute("macrotext", "/cast " .. totemSpell[1] .. "\n/script TOCA.CloseAllMenus()")
+    ]==]--
+
     TOCA.SlotSelectTotem[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
     TOCA.SlotSelectTotem[totemCat][i]:SetScript("OnEnter", function(self)
       TOCA.GameTooltip(self, totemSpell[1])
@@ -508,7 +523,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
       if (totemCat == "AIR") then
         TOCASlotOne = totemSpell[1]
         if (TOCA.isInCombat) then
-          TOCA.Notification("In Combat, do nothing!", true)
+          TOCA.Notification("[2] In Combat, do nothing!", true)
         else
           TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotOne)
           TOCA.SetKeyBindReset("TOTEM_AIR", totemSpell[1])
@@ -518,7 +533,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
       if (totemCat == "EARTH") then
         TOCASlotTwo = totemSpell[1]
         if (TOCA.isInCombat) then
-          TOCA.Notification("In Combat, do nothing!", true)
+          TOCA.Notification("[2] In Combat, do nothing!", true)
         else
           TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotTwo)
           TOCA.SetKeyBindReset("TOTEM_EARTH", totemSpell[1])
@@ -528,7 +543,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
       if (totemCat == "FIRE") then
         TOCASlotThree = totemSpell[1]
         if (TOCA.isInCombat) then
-          TOCA.Notification("In Combat, do nothing!", true)
+          TOCA.Notification("[2] In Combat, do nothing!", true)
         else
           TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotThree)
           TOCA.SetKeyBindReset("TOTEM_FIRE", totemSpell[1])
@@ -538,7 +553,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
       if (totemCat == "WATER") then
         TOCASlotFour = totemSpell[1]
         if (TOCA.isInCombat) then
-          TOCA.Notification("In Combat, do nothing!", true)
+          TOCA.Notification("[2] In Combat, do nothing!", true)
         else
           TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotFour)
           TOCA.SetKeyBindReset("TOTEM_WATER", totemSpell[1])

@@ -170,7 +170,7 @@ end
 
 function TOCA.SetKeyBindOnLoad()
   if (TOCA.isInCombat) then
-    TOCA.Notification("TOCA.SetKeyBindOnLoad() In combat, do nothing!", true)
+    TOCA.Notification("In combat, do nothing! TOCA.SetKeyBindOnLoad()", true)
   else
     TOCA.SetKeyBindReset("TOTEM_RECALL", "Totemic Call")
     if (TOCASlotOne) then
@@ -250,7 +250,7 @@ end
 
 function TOCA.EnableKnownTotems()
   if (TOCA.isInCombat) then
-    TOCA.Notification("In Combat, do nothing!", true)
+    TOCA.Notification("In Combat, do nothing! TOCA.EnableKnownTotems()", true)
   else
     for totemCat,v in pairsByKeys(TOCA.totems) do
       for i,totemSpell in pairs(TOCA.totems[totemCat]) do
@@ -461,7 +461,7 @@ function TOCA.SetDDMenu(DDFrame, value)
       if (k == "TOCA_AIR") then
         TOCASlotOne = v
         if (TOCA.isInCombat) then
-          TOCA.Notification("In Combat, do nothing!", true)
+          TOCA.Notification("In Combat, do nothing! TOCA.SetDDMenu", true)
         else
           TOCA.Totem["AIR"]:SetAttribute("spell", v)
           TOCA.SetKeyBindReset("TOTEM_AIR", v)
@@ -470,7 +470,7 @@ function TOCA.SetDDMenu(DDFrame, value)
       if (k == "TOCA_EARTH") then
         TOCASlotTwo = v
         if (TOCA.isInCombat) then
-          TOCA.Notification("In Combat, do nothing!", true)
+          TOCA.Notification("In Combat, do nothing! TOCA.SetDDMenu", true)
         else
           TOCA.Totem["EARTH"]:SetAttribute("spell", v)
           TOCA.SetKeyBindReset("TOTEM_EARTH", v)
@@ -479,7 +479,7 @@ function TOCA.SetDDMenu(DDFrame, value)
       if (k == "TOCA_FIRE") then
         TOCASlotThree = v
         if (TOCA.isInCombat) then
-          TOCA.Notification("In Combat, do nothing!", true)
+          TOCA.Notification("In Combat, do nothing! TOCA.SetDDMenu", true)
         else
           TOCA.Totem["FIRE"]:SetAttribute("spell", v)
           TOCA.SetKeyBindReset("TOTEM_FIRE", v)
@@ -488,7 +488,7 @@ function TOCA.SetDDMenu(DDFrame, value)
       if (k == "TOCA_WATER") then
         TOCASlotFour = v
         if (TOCA.isInCombat) then
-          TOCA.Notification("In Combat, do nothing!", true)
+          TOCA.Notification("In Combat, do nothing! TOCA.SetDDMenu", true)
         else
           TOCA.Totem["WATER"]:SetAttribute("spell", v)
           TOCA.SetKeyBindReset("TOTEM_WATER", v)
@@ -877,7 +877,7 @@ function TOCA.Combat(event)
   for totemCat,v in pairsByKeys(TOCA.totems) do
     if (event == "PLAYER_REGEN_DISABLED") then
       TOCA.isInCombat = true
-      TOCA.SlotSelect[totemCat]:Hide()
+      --TOCA.SlotSelect[totemCat]:Hide()
       TOCA.Button.DropdownMain:Hide()
       TOCA.Button.Options:Hide()
       if (TOCADB[TOCA.player.combine]["CONFIG"]["COMBATLOCK"] == "OFF") then
@@ -891,7 +891,7 @@ function TOCA.Combat(event)
     end
     if (event == "PLAYER_REGEN_ENABLED") then
       TOCA.isInCombat = false
-      TOCA.SlotSelect[totemCat]:Show()
+      --TOCA.SlotSelect[totemCat]:Show()
       TOCA.Button.DropdownMain:Show()
       if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"]) then
         TOCA.FrameStyleSet(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"])
@@ -908,6 +908,18 @@ function TOCA.Combat(event)
       TOCA.Notification("Combat Ended", true)
     end
   end
+end
+
+function TOCA.InventoryCountItem(itemID)
+  local i = 0
+  for bag = 0, NUM_BAG_SLOTS do
+    for slot=1,GetContainerNumSlots(bag) do
+      if (itemID == GetContainerItemID(bag,slot)) then
+        i=i+(select(2, GetContainerItemInfo(bag, slot)))
+      end
+    end
+  end
+  return i
 end
 
 function TOCA.SendPacket(packet, filtered, rec)
