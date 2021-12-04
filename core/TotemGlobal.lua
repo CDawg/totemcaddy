@@ -98,7 +98,6 @@ TOCA.globalTimerInMinutes = true --default
 TOCA.Tab={}
 TOCA.TabWidth={}
 TOCA.isInCombat = false
-
 TOCA.Framelevel = {
   Background=0,
   Foreground=1,
@@ -106,10 +105,17 @@ TOCA.Framelevel = {
   Buttons   =3,
   Cover     =4,
 }
-
 TOCA.Slot_w=35
 TOCA.Slot_h=35
 TOCA.Slot_x=-TOCA.Slot_w/2
+
+local version, build, date, tocversion = GetBuildInfo()
+TOCA.GameVersion = tonumber(string.sub(version, 1, 1))
+
+if (TOCA.GameVersion == 1) then
+  table.remove(TOCA.totems.FIRE, 6)
+  table.remove(TOCA.totems.AIR, 2)
+end
 
 --defaults
 TOCASlotOne  = TOCA.totems.AIR[1][1]
@@ -320,6 +326,7 @@ end
 
 function TOCA.Init()
   local lC, eC, cI = UnitClass("player")
+
   TOCA.FrameMain:Hide()
   if (eC == "SHAMAN") then
     TOCA.FrameMain:Show()
@@ -451,6 +458,15 @@ function TOCA.Init()
 
   TOCA.FrameOptionsMain.name = TOCA.Global.title
   InterfaceOptions_AddCategory(TOCA.FrameOptionsMain)
+
+  if (TOCA.GameVersion == 1) then
+    TOCA.Button.TotemicCall:Hide()
+    TOCA.Button.TotemicCall.ECL:Hide()
+    TOCA.Button.TotemicCall.ECR:Hide()
+    TOCA.Checkbox.EndCaps:Hide()
+    TOCA.Dropdown.FrameGryphons:Hide()
+  end
+
   TOCA.Notification("TOCA.Init()", true)
 end
 
