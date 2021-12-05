@@ -84,7 +84,7 @@ end
 TOCA.Button.TabBack[1]:SetSize(TOCA.TabWidth.Help-20, 30) --first tab
 
 TOCA.help.updates = {
-  "Welcome to " .. TOCA.Global.title .. "|r v" .. TOCA.Global.version .. "\n",
+  "Welcome to " .. TOCA.Global.title .. "|r v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. "\n",
   "|cffffdf96Please note:|r Totem Caddy is still evolving. Improvements will be made as time continues. Enjoy!\n",
   "|cffffdf96New Display Feature:|r New Frame Style: Grid Vertical & Grid Horizontal. Now you can view all totems on screen in vertical/horizontal order based on totem category.",
   "|n",

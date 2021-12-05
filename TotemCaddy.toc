@@ -1,15 +1,2 @@
-## Interface: 20502
-## Title: |cff006aa6Totem Caddy|r v2.41
-## Notes: Totem Caddy
-## Version: 2.41
-## Author: Porthias of Myzrael (aka Porthios)
-## SavedVariables:TOCADB
-## OptionalDeps: Blizzard_RaidUI, Blizzard_CompactRaidFrames
-
-core/TotemLibrary.lua
-core/TotemGlobal.lua
-TotemCaddy.lua
-core/TotemHelp.lua
-core/TotemOptions.lua
-core/TotemSets.lua
-## core/TotemViewExp.lua
+# This file is intentionally empty to overwrite the deprecated TOC file left on installations.
+# Check expansion specific TOC files for the correct data.

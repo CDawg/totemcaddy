@@ -13,6 +13,8 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
+TOCA.DEBUG = false
+
 TOCA.Global = {
   title  = "|cff006aa6Totem Caddy|r",
   author = "Porthias of Myzrael",
@@ -23,12 +25,20 @@ TOCA.Global = {
   font   = "Fonts/FRIZQT__.TTF",
   dir    = "Interface/Addons/TotemCaddy/",
   prefix = "TotemCaddy",
+  suffix = "BCC",
 }
+--local _LName, _LTitle = GetAddOnInfo(TOCA.Global.prefix)
+--TOCA.Global.version = tonumber(string.sub(_LTitle, 26, 29))
 
-TOCA.DEBUG = false
+local __Gversion, __Gbuild, __Gdate, __Gtocversion = GetBuildInfo()
+TOCA.Game={}
+TOCA.Game.version = tonumber(string.sub(__Gversion, 1, 1))
+if (TOCA.Game.version == 1) then
+  TOCA.Global.suffix = "Classic"
+end
 
-TOCA.Prefix = {
-  version = "0xEFVe",
+TOCA.Net = {
+  prefix = "0xEFVe",
 }
 
 TCCMD = "/"..TOCA.Global.command
@@ -109,10 +119,7 @@ TOCA.Slot_w=35
 TOCA.Slot_h=35
 TOCA.Slot_x=-TOCA.Slot_w/2
 
-local version, build, date, tocversion = GetBuildInfo()
-TOCA.GameVersion = tonumber(string.sub(version, 1, 1))
-
-if (TOCA.GameVersion == 1) then
+if (TOCA.Game.version == 1) then
   table.remove(TOCA.totems.FIRE, 6)
   table.remove(TOCA.totems.AIR, 2)
 end
@@ -459,7 +466,7 @@ function TOCA.Init()
   TOCA.FrameOptionsMain.name = TOCA.Global.title
   InterfaceOptions_AddCategory(TOCA.FrameOptionsMain)
 
-  if (TOCA.GameVersion == 1) then
+  if (TOCA.Game.version == 1) then
     TOCA.Button.TotemicCall:Hide()
     TOCA.Button.TotemicCall.ECL:Hide()
     TOCA.Button.TotemicCall.ECR:Hide()
@@ -819,7 +826,7 @@ function TOCA.GetReincTimer() --always checking
       end
     end
   end
-  if (TOCA.GameVersion == 1) then
+  if (TOCA.Game.version == 1) then
     TOCA.FrameMain.ReincFrame:Hide()
   end
 end

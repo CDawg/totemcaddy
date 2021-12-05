@@ -24,12 +24,6 @@ TOCA.FrameOptions:SetBackdrop(TOCA.Backdrop.General)
 TOCA.FrameOptions:SetFrameStrata("DIALOG")
 TOCA.FrameOptions:SetBackdropColor(0, 0, 0, 0.8)
 TOCA.FrameOptions:SetBackdropBorderColor(1, 1, 1, 0.6)
---[==[
-TOCA.FrameOptions.title = TOCA.FrameOptions:CreateFontString(nil, "ARTWORK")
-TOCA.FrameOptions.title:SetFont(TOCA.Global.font, 14, "OUTLINE")
-TOCA.FrameOptions.title:SetPoint("TOPLEFT", 10, -10)
-TOCA.FrameOptions.title:SetText(TOCA.Global.title .. " Options " .. " v" .. TOCA.Global.version)
-]==]--
 TOCA.FrameOptions:Hide()
 
 TOCA.TabWidth.Options = 140
@@ -605,7 +599,7 @@ TOCA.FrameOptions.Divider:SetTexture("Interface/DialogFrame/DialogFrame-TOP")
 TOCA.FrameOptions.Title = TOCA.FrameOptions:CreateFontString(nil, "ARTWORK")
 TOCA.FrameOptions.Title:SetFont(TOCA.Global.font, 12)
 TOCA.FrameOptions.Title:SetPoint("TOPLEFT", 10, -TOCA.FrameOptions_h+25)
-TOCA.FrameOptions.Title:SetText(TOCA.Global.title .. " Options v" .. TOCA.Global.version)
+TOCA.FrameOptions.Title:SetText(TOCA.Global.title .. " Options v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix)
 
 
 TOCA.Button.OptionsClose= CreateFrame("Button", nil, TOCA.FrameOptions, "BackdropTemplate")

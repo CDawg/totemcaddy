@@ -57,7 +57,7 @@ TOCA.Main:RegisterEvent("PLAYER_REGEN_DISABLED")
 TOCA.Main:RegisterEvent("PLAYER_DEAD")
 TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted, _spellID)
   if ((event == "ADDON_LOADED") and (prefix == TOCA.Global.prefix)) then
-    TOCA.Notification("v" .. TOCA.Global.version .. " Initializing by " .. TOCA.Global.author .. ". Type /" .. TOCA.Global.command .. " for commands.")
+    TOCA.Notification("v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " Initializing by " .. TOCA.Global.author .. ". Type /" .. TOCA.Global.command .. " for commands.")
     TOCA.Init()
   end
 
@@ -97,7 +97,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
   end
 
   if (event == "PLAYER_LOGIN") then
-    TOCA.SendPacket(TOCA.Prefix.version .. TOCA.Global.version, true)
+    TOCA.SendPacket(TOCA.Net.prefix .. TOCA.Global.version, true)
     if (TOCA.KeyBindsSetOnLoad == 1) then
       TOCA.SetKeyBindOnLoad()
       TOCA.KeyBindsSetOnLoad = 2
@@ -111,7 +111,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
     TOCA.GetReincTimer()
     if (prefix == TOCA.Global.prefix) then
         if (TOCA.version_alerted == 0) then
-        local getPacket = TOCA.ParsePacket(netpacket, TOCA.Prefix.version)
+        local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.prefix)
         if (getPacket) then
           local latest_version = tonumber(getPacket)
           local my_version = tonumber(TOCA.Global.version)
