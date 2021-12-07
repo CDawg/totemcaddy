@@ -28,6 +28,14 @@ TOCA.FrameMain:SetScript("OnDragStop", function()
   local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.FrameMain:GetPoint()
   TOCADB[TOCA.player.combine]["CONFIG"]["MAINPOS"] = point .. "," .. xOfs .. "," .. yOfs
 end)
+--[==[
+TOCA.FrameMain:SetScript("OnEnter", function()
+  TOCA.DisplayMenuItems(true)
+end)
+TOCA.FrameMain:SetScript("OnLeave", function()
+  TOCA.DisplayMenuItems(false)
+end)
+]==]--
 
 TOCA.FrameMain.Background = CreateFrame("Frame", TOCA.FrameMain.Background, TOCA.FrameMain, "BackdropTemplate", -6)
 TOCA.FrameMain.Background:SetWidth(TOCA.Global.width)
@@ -55,6 +63,7 @@ TOCA.Main:RegisterEvent("UNIT_SPELLCAST_SENT")
 TOCA.Main:RegisterEvent("PLAYER_REGEN_ENABLED")
 TOCA.Main:RegisterEvent("PLAYER_REGEN_DISABLED")
 TOCA.Main:RegisterEvent("PLAYER_DEAD")
+TOCA.Main:RegisterEvent("BAG_UPDATE")
 TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted, _spellID)
   if ((event == "ADDON_LOADED") and (prefix == TOCA.Global.prefix)) then
     TOCA.Notification("v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " Initializing by " .. TOCA.Global.author .. ". Type /" .. TOCA.Global.command .. " for commands.")
@@ -105,6 +114,10 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
     TOCA.EnableKnownTotems()
   end
 
+  if (event == "BAG_UPDATE") then
+    TOCA.DisplayAnkhFrame()
+  end
+
   TOCA.Combat(event)
 
   if (event == "CHAT_MSG_ADDON") then
@@ -131,7 +144,7 @@ TOCA.Button.TotemicCall= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTem
 TOCA.Button.TotemicCall:SetSize(TOCA.Button.TotemicCall_w, TOCA.Button.TotemicCall_h)
 TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 40)
 TOCA.Button.TotemicCall:SetBackdrop({
-  bgFile  = "Interface/ICONS/spell_unused",
+  bgFile  = "Interface/icons/spell_unused",
   edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
   edgeSize= 12,
   insets  = {left=2, right=2, top=2, bottom=2},
@@ -149,13 +162,14 @@ TOCA.Button.TotemicCall.highlight:SetTexture("Interface/Buttons/ButtonHilight-Sq
 TOCA.Button.TotemicCall.highlight:SetBlendMode("ADD")
 TOCA.Button.TotemicCall.highlight:Hide()
 TOCA.Button.TotemicCall:SetBackdropBorderColor(1, 1, 1, 0.5)
-TOCA.Button.TotemicCall.ECL = TOCA.Button.TotemicCall:CreateTexture(nil, "ARTWORK")
+
+TOCA.Button.TotemicCall.ECL = TOCA.FrameMain:CreateTexture(nil, "ARTWORK")
 TOCA.Button.TotemicCall.ECL:SetSize(40, 40)
-TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 20)
+TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 62)
 TOCA.Button.TotemicCall.ECL:SetTexture("Interface/MainMenuBar/UI-MainMenuBar-EndCap-Dwarf")
-TOCA.Button.TotemicCall.ECR = TOCA.Button.TotemicCall:CreateTexture(nil, "ARTWORK")
+TOCA.Button.TotemicCall.ECR = TOCA.FrameMain:CreateTexture(nil, "ARTWORK")
 TOCA.Button.TotemicCall.ECR:SetSize(TOCA.Button.TotemicCall_w, TOCA.Button.TotemicCall_h)
-TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 20)
+TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 62)
 TOCA.Button.TotemicCall.ECR:SetTexture("Interface/MainMenuBar/UI-MainMenuBar-EndCap-Dwarf")
 TOCA.Button.TotemicCall.ECR:SetTexCoord(1, 0, 0, 1)
 
@@ -454,7 +468,6 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.SlotSelect[totemCat]:SetFrameLevel(TOCA.Framelevel.Buttons)
   TOCA.SlotSelect[totemCat]:SetScript("OnEnter", function(self)
     self:SetBackdropBorderColor(1, 1, 0.8, 1)
-    --print(TOCA.InventoryCountItem(TOCA.item.ANKH))
   end)
   TOCA.SlotSelect[totemCat]:SetScript("OnLeave", function(self)
     self:SetBackdropBorderColor(1, 1, 1, 0.6)
@@ -606,6 +619,7 @@ TOCA.Button.Options.icon:SetPoint("CENTER", 0, 0)
 TOCA.Button.Options.icon:SetTexture("Interface/Buttons/UI-OptionsButton")
 TOCA.Button.Options:SetScript("OnEnter", function(self)
   self:SetBackdropBorderColor(1, 1, 1, 1)
+  --self:Show()
 end)
 TOCA.Button.Options:SetScript("OnLeave", function(self)
   self:SetBackdropBorderColor(1, 1, 1, 0.6)
@@ -613,21 +627,11 @@ end)
 TOCA.Button.Options:SetScript("OnClick", function(self)
   TOCA.CloseAllMenus()
   TOCA.FrameOptions:Show()
-  --[==[
-  TOCA.FrameOptions.Divider:Show()
-  TOCA.FrameOptions.Title:Show()
-  TOCA.Button.OptionsClose:Show()
-  ]==]--
-  --[==[
-  InterfaceOptionsFrame_Show()
-  InterfaceAddOnsList_Update()
-  InterfaceOptionsFrame_OpenToCategory("Totem Caddy")
-  ]==]--
 end)
 
 TOCA.Button.CloseMain= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTemplate")
 TOCA.Button.CloseMain:SetSize(16, 16)
-TOCA.Button.CloseMain:SetPoint("TOPRIGHT", 0, 1)
+TOCA.Button.CloseMain:SetPoint("TOPRIGHT", -1, 1)
 TOCA.Button.CloseMain:SetBackdrop(TOCA.Backdrop.Button)
 TOCA.Button.CloseMain:SetBackdropColor(0.6, 0, 0, 1)
 TOCA.Button.CloseMain:SetBackdropBorderColor(1, 1, 1, 0.6)
@@ -667,11 +671,38 @@ TOCA.FrameMain.ReincFrame.text:SetPoint("CENTER", TOCA.FrameMain.ReincFrame, "CE
 TOCA.FrameMain.ReincFrame.text:SetText("")
 TOCA.FrameMain.ReincFrame.text:SetShadowOffset(1, 1)
 TOCA.FrameMain.ReincFrame:SetScript("OnEnter", function(self)
-  TOCA.TooltipDisplay("Reincarnation Timer", "", "Cooldown timer on the next use of reincarnation. This display option can be adjusted in the options menu.")
+  TOCA.TooltipDisplay("Reincarnation Timer", "Cooldown timer on the next use of reincarnation.|nThis display option can be adjusted in the options menu.")
 end)
 TOCA.FrameMain.ReincFrame:SetScript("OnLeave", function(self)
   TOCA.Tooltip:Hide()
 end)
+TOCA.FrameMain.ReincFrame:Hide()
+
+TOCA.FrameMain.AnkhFrame = CreateFrame("Frame", TOCA.FrameMain.Background, TOCA.FrameMain, "BackdropTemplate", -7)
+TOCA.FrameMain.AnkhFrame:SetWidth(30)
+TOCA.FrameMain.AnkhFrame:SetHeight(30)
+TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -44)
+TOCA.FrameMain.AnkhFrame:SetBackdrop({
+  bgFile  = "Interface/icons/inv_jewelry_talisman_06",
+  edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
+  edgeSize= 12,
+  insets  = {left=2, right=2, top=2, bottom=2},
+})
+TOCA.FrameMain.AnkhFrame:SetBackdropColor(0.7, 0.7, 0.7, 0.8)
+TOCA.FrameMain.AnkhFrame:SetBackdropBorderColor(1, 1, 1, 0.6)
+TOCA.FrameMain.AnkhFrame:SetFrameLevel(TOCA.Framelevel.Background)
+TOCA.FrameMain.AnkhFrame.text = TOCA.FrameMain.AnkhFrame:CreateFontString(nil, "ARTWORK")
+TOCA.FrameMain.AnkhFrame.text:SetFont(TOCA.Global.font, 12)
+TOCA.FrameMain.AnkhFrame.text:SetPoint("CENTER", TOCA.FrameMain.ReincFrame, "CENTER", 0, -32)
+TOCA.FrameMain.AnkhFrame.text:SetText(TOCA.InventoryCountItem(TOCA.item.ANKH))
+TOCA.FrameMain.AnkhFrame.text:SetShadowOffset(1, 1)
+TOCA.FrameMain.AnkhFrame:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay("Ankh Reminder [".. TOCA.InventoryCountItem(TOCA.item.ANKH) .."]", "Ankh Inventory Count Reminder.|n This will display when you have less than 3 Ankhs")
+end)
+TOCA.FrameMain.AnkhFrame:SetScript("OnLeave", function(self)
+  TOCA.Tooltip:Hide()
+end)
+TOCA.FrameMain.AnkhFrame:Hide()
 
 TOCA.Button.DropdownMain= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTemplate")
 TOCA.Button.DropdownMain:SetSize(143, 16)

@@ -18,7 +18,7 @@ TOCA.DEBUG = false
 TOCA.Global = {
   title  = "|cff006aa6Totem Caddy|r",
   author = "Porthias of Myzrael",
-  version= 2.41,
+  version= 2.42,
   command= "toca",
   width  = 150,
   height = 85,
@@ -118,6 +118,7 @@ TOCA.Framelevel = {
 TOCA.Slot_w=35
 TOCA.Slot_h=35
 TOCA.Slot_x=-TOCA.Slot_w/2
+TOCA.AnkhReminder = 3
 
 if (TOCA.Game.version == 1) then
   table.remove(TOCA.totems.FIRE, 6)
@@ -295,6 +296,9 @@ function TOCA.FrameStyleSet(style)
   if (style == TOCA.Dropdown.FrameStyles[1]) then --classic
     TOCA.FrameStyleDefault()
     TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
+    TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -44)
+    TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 62)
+    TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 62)
     for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:Show()
       TOCA.Button.DropdownMain:Show()
@@ -304,9 +308,12 @@ function TOCA.FrameStyleSet(style)
   elseif (style == TOCA.Dropdown.FrameStyles[2]) then --vert
     TOCA.FrameStyleDefault()
     TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
+    TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -44)
     TOCA.FrameMain:SetHeight(TOCA.Global.height+240)
     TOCA.FrameMain.Background:SetHeight(TOCA.Global.height+240)
     TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 160)
+    TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 182)
+    TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 182)
     for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:Hide()
       TOCA.Button.DropdownMain:Hide()
@@ -316,11 +323,14 @@ function TOCA.FrameStyleSet(style)
   elseif (style == TOCA.Dropdown.FrameStyles[3]) then --horz
     TOCA.FrameStyleDefault()
     TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width+171, -22)
+    TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", TOCA.Global.width+171, -52)
     TOCA.FrameMain:SetHeight(TOCA.Global.height+84)
     TOCA.FrameMain.Background:SetHeight(TOCA.Global.height+84)
     TOCA.FrameMain:SetWidth(TOCA.Global.height+240)
     TOCA.FrameMain.Background:SetWidth(TOCA.Global.height+240)
     TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 84)
+    TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 104)
+    TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 104)
     for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:Hide()
       TOCA.Button.DropdownMain:Hide()
@@ -329,6 +339,22 @@ function TOCA.FrameStyleSet(style)
     end
   end
   TOCA.Notification("Frame Style: " .. style, true)
+end
+
+function TOCA.DisplayAnkhFrame()
+  TOCA.FrameMain.AnkhFrame:Hide()
+  if (TOCADB[TOCA.player.combine]["CONFIG"]["ANKH"] == "OFF") then
+    return
+  end
+  local pL = UnitLevel("player")
+  if (pL >= 30) then
+    TOCA.FrameMain.AnkhFrame.text:SetText(TOCA.InventoryCountItem(TOCA.item.ANKH))
+    if (TOCA.InventoryCountItem(TOCA.item.ANKH) <= TOCA.AnkhReminder) then
+      TOCA.FrameMain.AnkhFrame:Show()
+    else
+      TOCA.FrameMain.AnkhFrame:Hide()
+    end
+  end
 end
 
 function TOCA.Init()
@@ -401,13 +427,21 @@ function TOCA.Init()
       TOCA.FrameMain.ReincFrame:Hide()
       TOCA.Checkbox.Reinc:SetChecked(nil)
     end
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["ANKH"] == "OFF") then
+      TOCA.FrameMain.AnkhFrame:Hide()
+      TOCA.Checkbox.Ankh:SetChecked(nil)
+    end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMORDER"]) then
       TOCA.SetTotemOrderDropdown()
       TOCA.SetTotemOrder()
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["OPACITY"]) then
-      TOCA.Slider.Opacity:SetValue(TOCADB[TOCA.player.combine]["CONFIG"]["OPACITY"])
-      TOCA.Slider.Opacity.Val:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["OPACITY"])
+      TOCA.Slider.OpacityBG:SetValue(TOCADB[TOCA.player.combine]["CONFIG"]["OPACITY"])
+      TOCA.Slider.OpacityBG.Val:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["OPACITY"])
+    end
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["OPACITYFG"]) then
+      TOCA.Slider.OpacityFG:SetValue(TOCADB[TOCA.player.combine]["CONFIG"]["OPACITYFG"])
+      TOCA.Slider.OpacityFG.Val:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["OPACITYFG"])
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"]) then
       TOCA.FrameStyleSet(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"])
@@ -628,6 +662,7 @@ local function adjustTooltipHeight(s, x, indent)
   end
 end
 
+--[==[
 function TOCA.TooltipDisplay(spell, tools, msgtooltip)
   local spellName, spellRank, spellID = GetSpellBookItemName(spell)
   TOCA.Tooltip:SetWidth(250)
@@ -668,6 +703,7 @@ function TOCA.TooltipDisplay(spell, tools, msgtooltip)
     TOCA.Tooltip:Show()
   end
 end
+]==]--
 
 function TOCA.GetOwnerSpell(bookSpell)
   local i = 1
@@ -709,14 +745,18 @@ function TOCA.GameTooltip(owner, spell, anchor)
   end
 end
 
-function TOCA.TooltipMenu(title, msgtooltip, height)
+function TOCA.TooltipDisplay(title, msgtooltip, height)
   TOCA.Tooltip:Show()
   TOCA.Tooltip.title:SetText(title)
   TOCA.Tooltip.cost:SetText("")
   TOCA.Tooltip.tools:SetText("")
   TOCA.Tooltip.text:SetText(msgtooltip)
   TOCA.Tooltip:SetWidth(360)
-  TOCA.Tooltip:SetHeight(height)
+  if (height) then
+    TOCA.Tooltip:SetHeight(height)
+  else
+    TOCA.Tooltip:SetHeight(100)
+  end
 end
 
 --TOCA.HasTotemOut = 0
@@ -897,13 +937,14 @@ function TOCA.TotemBarUpdate()
 
   --TOCA.EnableKnownTotems()
   TOCA.GetReincTimer()
+  TOCA.DisplayAnkhFrame()
 end
 
 function TOCA.Combat(event)
   for totemCat,v in pairsByKeys(TOCA.totems) do
     if (event == "PLAYER_REGEN_DISABLED") then
       TOCA.isInCombat = true
-      --TOCA.SlotSelect[totemCat]:Hide()
+      TOCA.SlotSelect[totemCat]:Hide()
       TOCA.Button.DropdownMain:Hide()
       TOCA.Button.Options:Hide()
       if (TOCADB[TOCA.player.combine]["CONFIG"]["COMBATLOCK"] == "OFF") then
@@ -917,7 +958,7 @@ function TOCA.Combat(event)
     end
     if (event == "PLAYER_REGEN_ENABLED") then
       TOCA.isInCombat = false
-      --TOCA.SlotSelect[totemCat]:Show()
+      TOCA.SlotSelect[totemCat]:Show()
       TOCA.Button.DropdownMain:Show()
       if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"]) then
         TOCA.FrameStyleSet(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"])
