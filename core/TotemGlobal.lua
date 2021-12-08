@@ -13,12 +13,12 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
-TOCA.DEBUG = false
+TOCA.DEBUG = true
 
 TOCA.Global = {
   title  = "|cff006aa6Totem Caddy|r",
   author = "Porthias of Myzrael",
-  version= 2.42,
+  version= 2.41,
   command= "toca",
   width  = 150,
   height = 85,
@@ -119,6 +119,7 @@ TOCA.Slot_w=35
 TOCA.Slot_h=35
 TOCA.Slot_x=-TOCA.Slot_w/2
 TOCA.AnkhReminder = 3
+TOCA.TotemsEnabled = true
 
 if (TOCA.Game.version == 1) then
   table.remove(TOCA.totems.FIRE, 6)
@@ -262,26 +263,51 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.SlotGrid.HorizontalTotemButton[totemCat]={}
 end
 
-function TOCA.EnableKnownTotems()
-  if (TOCA.isInCombat) then
-    TOCA.Notification("In Combat, do nothing! TOCA.EnableKnownTotems()", true)
-  else
+function TOCA.EnableTotems(enable)
+  if (enable) then
+    TOCA.TotemsEnabled = true
     for totemCat,v in pairsByKeys(TOCA.totems) do
+      TOCA.Slot.Disable[totemCat]:Hide()
       for i,totemSpell in pairs(TOCA.totems[totemCat]) do
-        TOCA.SlotSelectTotemDisabled[totemCat][i]:Show()
-        TOCA.FrameSetsSlotDisabled[totemCat][i]:Show()
-        TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:Hide()
-        TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:Hide()
-        local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(totemSpell[1])
-        if (name) then
-          TOCA.SlotSelectTotemDisabled[totemCat][i]:Hide()
-          TOCA.FrameSetsSlotDisabled[totemCat][i]:Hide()
-          TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:Show()
-          TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:Show()
-        end
+        TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:Hide()
+        TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:Hide()
       end
     end
-    TOCA.Notification("TOCA.EnableKnownTotems()", true)
+    TOCA.Notification("TOCA.EnableTotems()", true)
+  else
+    TOCA.TotemsEnabled = false
+    for totemCat,v in pairsByKeys(TOCA.totems) do
+      TOCA.Slot.Disable[totemCat]:Show()
+      for i,totemSpell in pairs(TOCA.totems[totemCat]) do
+        TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:Show()
+        TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:Show()
+      end
+    end
+  end
+end
+
+function TOCA.EnableKnownTotems()
+  if (TOCA.TotemsEnabled) then
+    if (TOCA.isInCombat) then
+      TOCA.Notification("In Combat, do nothing! TOCA.EnableKnownTotems()", true)
+    else
+      for totemCat,v in pairsByKeys(TOCA.totems) do
+        for i,totemSpell in pairs(TOCA.totems[totemCat]) do
+          TOCA.SlotSelectTotemDisabled[totemCat][i]:Show()
+          TOCA.FrameSetsSlotDisabled[totemCat][i]:Show()
+          TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:Hide()
+          TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:Hide()
+          local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(totemSpell[1])
+          if (name) then
+            TOCA.SlotSelectTotemDisabled[totemCat][i]:Hide()
+            TOCA.FrameSetsSlotDisabled[totemCat][i]:Hide()
+            TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:Show()
+            TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:Show()
+          end
+        end
+      end
+      TOCA.Notification("TOCA.EnableKnownTotems()", true)
+    end
   end
 end
 
@@ -916,16 +942,15 @@ function TOCA.TotemTimerResetBySpell(spellID)
 end
 
 function TOCA.TotemBarUpdate()
-  --local playerPos = GetUnitSpeed("player")
   local percMana = (UnitPower("player")/UnitPowerMax("player"))*100
   local percMana = floor(percMana+0.5)
+  local onTaxi = UnitOnTaxi("player")
   --TOCA.Notification("mana: " .. percMana, true)
   TOCA.Button.TotemicCall.flash:Hide()
-  for totemCat,v in pairsByKeys(TOCA.totems) do
-    TOCA.Slot.deactive[totemCat]:Hide()
-    if (percMana <= 1) then
-      TOCA.Slot.deactive[totemCat]:Show()
-    end
+  if ((UnitOnTaxi("player")) or (percMana <= 1)) then
+    TOCA.EnableTotems(false)
+  else
+    TOCA.EnableTotems(true)
   end
 
   for i=1, 4 do
@@ -1115,7 +1140,7 @@ end
 SLASH_TOCA1 = TCCMD
 function SlashCmdList.TOCA(cmd)
   if ((cmd == nil) or (cmd == "")) then
-    TOCA.Notification("v" .. TOCA.Global.version)
+    TOCA.Notification("v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix)
     print("Commands:")
     print("|cffffff00options:|r    Open Totem Caddy Options.")
     print("|cffffff00show:|r        Display Totem Caddy (regardless of class).")

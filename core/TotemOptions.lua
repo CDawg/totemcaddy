@@ -27,6 +27,7 @@ TOCA.FrameOptions:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.FrameOptions:Hide()
 
 TOCA.FrameOptions.Title={}
+TOCA.FrameOptions.Section={}
 
 TOCA.TabWidth.Options = 140
 TOCA.Button.TabOptions={}
@@ -91,7 +92,7 @@ TOCA.Dropdown.FrameStyle.text:SetFont(TOCA.Global.font, 11)
 TOCA.Dropdown.FrameStyle.text:SetPoint("TOPLEFT", TOCA.Dropdown.FrameStyle, "TOPLEFT", 25, -8)
 TOCA.Dropdown.FrameStyle.text:SetText(TOCA.Dropdown.FrameStyles[1])
 TOCA.Dropdown.FrameStyle:SetScript("OnEnter", function()
-  TOCA.TooltipDisplay("Frame Style", "|cffffffffClassic|r\nFour primary totems that are commonly used|nselectable or profile built.|n|n|cffffffffGrid Vertical|r|nAll known Totems are displayed vertically organized|nby category row.|n|n|cffffffffGrid Horizontally|r|nAll known Totems are displayed Horizontally organized|nby category row.|n|nThe totem category orders are configurable|nin the options menu.", 235)
+  TOCA.TooltipDisplay("Frame Totem Layout", "|cffffffffClassic|r\nFour primary totems that are commonly used|nselectable or profile built.|n|n|cffffffffGrid Vertical|r|nAll known Totems are displayed vertically organized|nby category row.|n|n|cffffffffGrid Horizontally|r|nAll known Totems are displayed Horizontally organized|nby category row.|n|nThe totem category orders are configurable|nin the options menu.", 235)
 end)
 TOCA.Dropdown.FrameStyle:SetScript("OnLeave", function()
   TOCA.Tooltip:Hide()

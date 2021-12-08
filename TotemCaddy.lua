@@ -53,6 +53,9 @@ local success = C_ChatInfo.RegisterAddonMessagePrefix(TOCA.Global.prefix)
 TOCA.Main:RegisterEvent("ADDON_LOADED")
 TOCA.Main:RegisterEvent("PLAYER_LOGIN")
 TOCA.Main:RegisterEvent("PLAYER_TOTEM_UPDATE")
+TOCA.Main:RegisterEvent("PLAYER_FLAGS_CHANGED") --resting
+TOCA.Main:RegisterEvent("PLAYER_CONTROL_GAINED")
+TOCA.Main:RegisterEvent("PLAYER_CONTROL_LOST")
 TOCA.Main:RegisterEvent("CHAT_MSG_ADDON")
 TOCA.Main:RegisterEvent("UNIT_SPELLCAST_START")
 TOCA.Main:RegisterEvent("UNIT_SPELLCAST_STOP")
@@ -60,10 +63,13 @@ TOCA.Main:RegisterEvent("UNIT_AURA")
 TOCA.Main:RegisterEvent("UNIT_MAXPOWER")
 TOCA.Main:RegisterEvent("UNIT_POWER_FREQUENT")
 TOCA.Main:RegisterEvent("UNIT_SPELLCAST_SENT")
+TOCA.Main:RegisterEvent("UNIT_INVENTORY_CHANGED")
 TOCA.Main:RegisterEvent("PLAYER_REGEN_ENABLED")
 TOCA.Main:RegisterEvent("PLAYER_REGEN_DISABLED")
 TOCA.Main:RegisterEvent("PLAYER_DEAD")
 TOCA.Main:RegisterEvent("BAG_UPDATE")
+TOCA.Main:RegisterEvent("UNIT_ENTERED_VEHICLE")
+TOCA.Main:RegisterEvent("UNIT_EXITED_VEHICLE")
 TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted, _spellID)
   if ((event == "ADDON_LOADED") and (prefix == TOCA.Global.prefix)) then
     TOCA.Notification("v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " Initializing by " .. TOCA.Global.author .. ". Type /" .. TOCA.Global.command .. " for commands.")
@@ -115,7 +121,19 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
   end
 
   if (event == "BAG_UPDATE") then
-    TOCA.DisplayAnkhFrame()
+    TOCA.TotemBarUpdate() --fire off when enable/disable
+  end
+
+  if (event == "PLAYER_CONTROL_GAINED") then
+    TOCA.EnableTotems(true)
+    TOCA.Button.TotemicCall.disable:Hide()
+    TOCA.Notification("PLAYER_CONTROL_GAINED", true)
+  end
+
+  if (event == "PLAYER_CONTROL_LOST") then
+    TOCA.EnableTotems(false)
+    TOCA.Button.TotemicCall.disable:Show()
+    TOCA.Notification("PLAYER_CONTROL_LOST", true)
   end
 
   TOCA.Combat(event)
@@ -151,7 +169,7 @@ TOCA.Button.TotemicCall:SetBackdrop({
 })
 TOCA.Button.TotemicCall:SetFrameLevel(TOCA.Framelevel.Foreground)
 TOCA.Button.TotemicCall.flash = TOCA.Button.TotemicCall:CreateTexture(nil, "ARTWORK")
-TOCA.Button.TotemicCall.flash:SetSize(80, 80)
+TOCA.Button.TotemicCall.flash:SetSize(TOCA.Button.TotemicCall_w*2, TOCA.Button.TotemicCall_h*2)
 TOCA.Button.TotemicCall.flash:SetPoint("CENTER", 0, 0)
 TOCA.Button.TotemicCall.flash:SetTexture("Interface/Buttons/CheckButtonGlow")
 TOCA.Button.TotemicCall.flash:Hide()
@@ -161,6 +179,12 @@ TOCA.Button.TotemicCall.highlight:SetPoint("CENTER", 0, 0)
 TOCA.Button.TotemicCall.highlight:SetTexture("Interface/Buttons/ButtonHilight-Square")
 TOCA.Button.TotemicCall.highlight:SetBlendMode("ADD")
 TOCA.Button.TotemicCall.highlight:Hide()
+TOCA.Button.TotemicCall.disable = CreateFrame("Frame", nil, TOCA.Button.TotemicCall, "BackdropTemplate")
+TOCA.Button.TotemicCall.disable:SetSize(TOCA.Button.TotemicCall_w, TOCA.Button.TotemicCall_h)
+TOCA.Button.TotemicCall.disable:SetPoint("CENTER", 0, 0)
+TOCA.Button.TotemicCall.disable:SetBackdrop(TOCA.Backdrop.General)
+TOCA.Button.TotemicCall.disable:SetBackdropBorderColor(1, 1, 1, 0)
+TOCA.Button.TotemicCall.disable:Hide()
 TOCA.Button.TotemicCall:SetBackdropBorderColor(1, 1, 1, 0.5)
 
 TOCA.Button.TotemicCall.ECL = TOCA.FrameMain:CreateTexture(nil, "ARTWORK")
@@ -212,7 +236,7 @@ end
 
 --classic style
 TOCA.Slot={}
-TOCA.Slot.deactive={}
+TOCA.Slot.Disable={}
 TOCA.Slot.highlight={}
 TOCA.Totem={}
 TOCA.TotemFlash={}
@@ -237,18 +261,19 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.Slot[totemCat]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[totemNum], -TOCA.Slot_h)
   TOCA.Slot[totemCat]:SetBackdrop(TOCA.Backdrop.General)
   TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
-  TOCA.Slot.deactive[totemCat]= CreateFrame("Frame", nil, TOCA.Slot[totemCat], "BackdropTemplate")
-  TOCA.Slot.deactive[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
-  TOCA.Slot.deactive[totemCat]:SetPoint("CENTER", 0, 0)
-  TOCA.Slot.deactive[totemCat]:SetBackdrop(TOCA.Backdrop.General)
-  TOCA.Slot.deactive[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)
-  TOCA.Slot.deactive[totemCat]:Hide()
   TOCA.Slot.highlight[totemCat]= TOCA.Slot[totemCat]:CreateTexture(nil, "ARTWORK", TOCA.Slot[totemCat], 0)
   TOCA.Slot.highlight[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
   TOCA.Slot.highlight[totemCat]:SetPoint("CENTER", 0, 0)
   TOCA.Slot.highlight[totemCat]:SetTexture("Interface/Buttons/ButtonHilight-Square")
   TOCA.Slot.highlight[totemCat]:SetBlendMode("ADD")
   TOCA.Slot.highlight[totemCat]:Hide()
+  TOCA.Slot.Disable[totemCat]= CreateFrame("Frame", nil, TOCA.Slot[totemCat], "BackdropTemplate")
+  TOCA.Slot.Disable[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
+  TOCA.Slot.Disable[totemCat]:SetPoint("CENTER", 0, 0)
+  TOCA.Slot.Disable[totemCat]:SetBackdrop(TOCA.Backdrop.General)
+  TOCA.Slot.Disable[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)
+  --TOCA.Slot.Disable[totemCat]:SetFrameStrata("TOOLTIP")
+  TOCA.Slot.Disable[totemCat]:Hide()
   TOCA.Totem[totemCat] = CreateFrame("Button", nil, TOCA.Slot[totemCat], "SecureActionButtonTemplate")
   TOCA.Totem[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
   TOCA.Totem[totemCat]:SetPoint("CENTER", 0, 0)
@@ -402,6 +427,13 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
       edgeSize= 12,
       insets  = {left=2, right=2, top=2, bottom=2},
     })
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable = CreateFrame("Frame", nil, TOCA.SlotGrid.VerticalTotemButton[totemCat][i], "BackdropTemplate")
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:SetSize(TOCA.Slot_w, TOCA.Slot_h)
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:SetPoint("CENTER", 0, 0)
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:SetBackdrop(TOCA.Backdrop.General)
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:SetBackdropBorderColor(1, 1, 1, 0)
+    --TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:SetFrameStrata("TOOLTIP")
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:Hide()
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action = CreateFrame("Button", nil, TOCA.SlotGrid.VerticalTotemButton[totemCat][i], "SecureActionButtonTemplate")
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action:SetSize(TOCA.Slot_w, TOCA.Slot_h)
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action:SetPoint("CENTER", 0, 0)
@@ -432,6 +464,13 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
       edgeSize= 12,
       insets  = {left=2, right=2, top=2, bottom=2},
     })
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable = CreateFrame("Frame", nil, TOCA.SlotGrid.HorizontalTotemButton[totemCat][i], "BackdropTemplate")
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:SetSize(TOCA.Slot_w, TOCA.Slot_h)
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:SetPoint("CENTER", 0, 0)
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:SetBackdrop(TOCA.Backdrop.General)
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:SetBackdropBorderColor(1, 1, 1, 0)
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:SetFrameStrata("TOOLTIP")
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:Hide()
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action = CreateFrame("Button", nil, TOCA.SlotGrid.HorizontalTotemButton[totemCat][i], "SecureActionButtonTemplate")
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action:SetSize(TOCA.Slot_w, TOCA.Slot_h)
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action:SetPoint("CENTER", 0, 0)

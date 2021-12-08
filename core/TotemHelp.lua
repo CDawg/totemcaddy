@@ -13,11 +13,11 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
-local FrameHelp_w = 400
-local FrameHelp_h = 264
+TOCA.FrameHelp_w = 400
+TOCA.FrameHelp_h = 264
 TOCA.FrameHelp = CreateFrame("Frame", TOCA.FrameHelp, UIParent, "BackdropTemplate")
-TOCA.FrameHelp:SetWidth(FrameHelp_w)
-TOCA.FrameHelp:SetHeight(FrameHelp_h)
+TOCA.FrameHelp:SetWidth(TOCA.FrameHelp_w)
+TOCA.FrameHelp:SetHeight(TOCA.FrameHelp_h)
 TOCA.FrameHelp:SetPoint("CENTER", 0, 100)
 TOCA.FrameHelp:SetBackdrop(TOCA.Backdrop.General)
 TOCA.FrameHelp:SetBackdropColor(0, 0, 0, 1)
@@ -84,14 +84,16 @@ end
 TOCA.Button.TabBack[1]:SetSize(TOCA.TabWidth.Help-20, 30) --first tab
 
 TOCA.help.updates = {
-  "Welcome to " .. TOCA.Global.title .. "|r v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. "\n",
-  "|cffffdf96Please note:|r Totem Caddy is still evolving. Improvements will be made as time continues. Enjoy!\n",
-  "|cffffdf96New Display Feature:|r New Frame Style: Grid Vertical & Grid Horizontal. Now you can view all totems on screen in vertical/horizontal order based on totem category.",
+  "Welcome to " .. TOCA.Global.title .. "|r v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. "|n",
+  "|cffffdf96Please note:|r Totem Caddy is still evolving. Improvements will be made as time continues. There is an |cff7eabd5issue tracker|r now available on |cffff9f69Curseforge|r. Enjoy!|n",
+  "|cffffdf96New Feature:|r Added forground transparency option.",
+  "|cffffdf96New Feature:|r Added an Ankh inventory reminder that will display your Ankh reagent count when you are lower than 3.",
   "|n",
   "|cffffdf96First time using Totem Caddy?|r",
   "Let's get started by dragging the Totem Caddy anywhere on your screen saving the position.",
   "You can select totems in a category order (air, earth, fire, or water) by selecting the top arrows above the current totem icons.",
   "The set of totems are by default, and the order is currently alphabetical. The totem order can changed under the Totem Sets in the options window.",
+  "You can also display all totems on screen in vertical/horizontal order based on totem category under the Frame Style options.",
   "For addition options or create totem sets:",
   "Select the cogwheel button or type /toca 'options', then select Totem Sets",
   "You can select which totem for each category, give it a name, then select the bottom arrow on the main frame dropdown to access it.",
@@ -106,12 +108,12 @@ TOCA.help.contact = {
 }
 TOCA.help.credit = {
   "Special thanks to some beta testers from the Myzrael realm.",
-  "Especially to my shaman buddy |cff006aa6Shockpopz|r of Myzrael For all the valuable feedback and laughs!\n\n\n\n\n\n\n\n\n\n",
+  "Especially to my shaman buddy |cff006aa6Shockpopz|r of Myzrael For all the valuable feedback and laughs!|n|n|n|n|n|n|n|n|n|n|n",
   "Written by |cff006aa6Porthias|r of Myzrael (a.k.a. Port)",
 }
 
-TOCA.TextFrame_w = FrameHelp_w-20
-TOCA.TextFrame_h = FrameHelp_h-10
+TOCA.TextFrame_w = TOCA.FrameHelp_w-20
+TOCA.TextFrame_h = TOCA.FrameHelp_h-10
 --TOCA.TextFrame = CreateFrame("Frame", nil, TOCA.FrameHelpPage[TOCA.HelpTabs[1]])
 TOCA.TextFrame = CreateFrame("Frame", nil, TOCA.FrameHelp)
 TOCA.TextFrame:SetWidth(TOCA.TextFrame_w)
