@@ -49,11 +49,13 @@ for i=1, getn(TOCA.OptionTabs) do
   TOCA.Button.TabOptionsBack[i]:SetSize(TOCA.TabWidth.Options-20, 29)
   TOCA.Button.TabOptionsBack[i]:SetPoint("TOPLEFT", -110+i*120, 25)
   TOCA.Button.TabOptionsBack[i]:SetBackdrop({
-    bgFile  = "Interface/ToolTips/CHATBUBBLE-BACKGROUND",
+    bgFile  = "Interface/ToolTips/UI-Tooltip-Background",
     edgeFile= "",
     edgeSize= 12,
-    insets  = {left=2, right=2, top=2, bottom=2},
+    insets  = {left=4, right=4, top=4, bottom=2},
   })
+  TOCA.Button.TabOptionsBack[i]:SetBackdropColor(0, 0, 0, 0.8)
+
   TOCA.Button.TabOptions[i]= CreateFrame("Button", nil, TOCA.Button.TabOptionsBack[i], "BackdropTemplate")
   TOCA.Button.TabOptions[i]:SetSize(TOCA.TabWidth.Options, 32)
   TOCA.Button.TabOptions[i]:SetPoint("CENTER", 0, 0)
@@ -64,8 +66,6 @@ for i=1, getn(TOCA.OptionTabs) do
     edgeSize= 12,
     insets  = {left=2, right=2, top=2, bottom=2},
   })
-  --TOCA.Button.TabOptions[i]:SetBackdropColor(0.7, 0, 0, 1)
-  --TOCA.Button.TabOptions[i]:SetBackdropBorderColor(1, 1, 1, 0.6)
   TOCA.Button.TabOptions[i].text = TOCA.Button.TabOptions[i]:CreateFontString(nil, "ARTWORK")
   TOCA.Button.TabOptions[i].text:SetFont(TOCA.Global.font, 12, "OUTLINE")
   TOCA.Button.TabOptions[i].text:SetPoint("CENTER", 0, 0)
@@ -91,11 +91,11 @@ TOCA.Dropdown.FrameStyle.text = TOCA.Dropdown.FrameStyle:CreateFontString(nil, "
 TOCA.Dropdown.FrameStyle.text:SetFont(TOCA.Global.font, 11)
 TOCA.Dropdown.FrameStyle.text:SetPoint("TOPLEFT", TOCA.Dropdown.FrameStyle, "TOPLEFT", 25, -8)
 TOCA.Dropdown.FrameStyle.text:SetText(TOCA.Dropdown.FrameStyles[1])
-TOCA.Dropdown.FrameStyle:SetScript("OnEnter", function()
-  TOCA.TooltipDisplay("Frame Totem Layout", "|cffffffffClassic|r\nFour primary totems that are commonly used|nselectable or profile built.|n|n|cffffffffGrid Vertical|r|nAll known Totems are displayed vertically organized|nby category row.|n|n|cffffffffGrid Horizontally|r|nAll known Totems are displayed Horizontally organized|nby category row.|n|nThe totem category orders are configurable|nin the options menu.", 220)
+TOCA.Dropdown.FrameStyle:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, "Frame Totem Layout", "|n|cffffffffClassic|r|nFour primary totems that are commonly used selectable or profile built.|n|n|cffffffffGrid Vertical|r|nAll known Totems are displayed vertically organized by category row.|n|n|cffffffffGrid Horizontally|r|nAll known Totems are displayed Horizontally organized by category row.|n|n|cffffffffThe totem category orders are configurable in the options menu.")
 end)
 TOCA.Dropdown.FrameStyle:SetScript("OnLeave", function()
-  TOCA.Tooltip:Hide()
+  TOCA.CloseAllMenus()
 end)
 TOCA.Dropdown.FrameStyle.onClick = function(self, checked)
   TOCA.Dropdown.FrameStyle.text:SetText(self.value)
@@ -141,10 +141,10 @@ TOCA.Dropdown.FrameStrat.text:SetFont(TOCA.Global.font, 11)
 TOCA.Dropdown.FrameStrat.text:SetPoint("TOPLEFT", TOCA.Dropdown.FrameStrat, "TOPLEFT", 25, -8)
 TOCA.Dropdown.FrameStrat.text:SetText(TOCA.Dropdown.FrameStrats[2])
 TOCA.Dropdown.FrameStrat:SetScript("OnEnter", function(self)
-  TOCA.TooltipDisplay("Frame Layer", "Sets the overlap over other menu and action bar items|non your screen.|nHigher frames will take precedence over items on screen.", 100)
+  TOCA.TooltipDisplay(self, "Frame Layer", "Sets the overlap over other menu and action bar items on your screen.|nHigher frames will take precedence over items on screen.")
 end)
 TOCA.Dropdown.FrameStrat:SetScript("OnLeave", function(self)
-  TOCA.Tooltip:Hide()
+  TOCA.CloseAllMenus()
 end)
 TOCA.Dropdown.FrameStrat.onClick = function(self, checked)
   TOCA.Dropdown.FrameStrat.text:SetText(self.value)
@@ -211,11 +211,11 @@ TOCA.Button.ResetScale:SetBackdropColor(0.6, 0, 0, 1)
 TOCA.Button.ResetScale:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.Button.ResetScale:SetScript("OnEnter", function(self)
   self:SetBackdropBorderColor(1, 1, 0.8, 1)
-  TOCA.TooltipDisplay("Reset Scale", "Reset the frame scale to the default size.")
+  TOCA.TooltipDisplay(self, "Reset Frame Scale", "Reset the frame scale to the default size.")
 end)
 TOCA.Button.ResetScale:SetScript("OnLeave", function(self)
   self:SetBackdropBorderColor(1, 1, 1, 0.6)
-  TOCA.Tooltip:Hide()
+  TOCA.CloseAllMenus()
 end)
 TOCA.Button.ResetScale:SetScript("OnClick", function()
   TOCA.CloseAllMenus()
@@ -235,15 +235,18 @@ TOCA.Button.ResetPosition:SetBackdropColor(0.6, 0, 0, 1)
 TOCA.Button.ResetPosition:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.Button.ResetPosition:SetScript("OnEnter", function(self)
   self:SetBackdropBorderColor(1, 1, 0.8, 1)
+  TOCA.TooltipDisplay(self, "Reset Frame Position", "Resets the frame position to center of screen.")
 end)
 TOCA.Button.ResetPosition:SetScript("OnLeave", function(self)
   self:SetBackdropBorderColor(1, 1, 1, 0.6)
+  TOCA.CloseAllMenus()
 end)
 TOCA.Button.ResetPosition:SetScript("OnClick", function()
   TOCA.CloseAllMenus()
   TOCA.FrameMain:ClearAllPoints()
   TOCA.FrameMain:SetPoint("CENTER", 0, -140)
 end)
+
 TOCA.Button.ResetPositionText = TOCA.Button.ResetPosition:CreateFontString(nil, "ARTWORK")
 TOCA.Button.ResetPositionText:SetFont(TOCA.Global.font, 11)
 TOCA.Button.ResetPositionText:SetPoint("CENTER", 0, 0)
@@ -289,11 +292,11 @@ TOCA.Button.ResetOpacityBG:SetBackdropColor(0.6, 0, 0, 1)
 TOCA.Button.ResetOpacityBG:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.Button.ResetOpacityBG:SetScript("OnEnter", function(self)
   self:SetBackdropBorderColor(1, 1, 0.8, 1)
-  TOCA.TooltipDisplay("Reset Background Opacity", "Reset the background opacity to the default value.")
+  TOCA.TooltipDisplay(self, "Reset Background Opacity", "Reset the background opacity to the default value.")
 end)
 TOCA.Button.ResetOpacityBG:SetScript("OnLeave", function(self)
   self:SetBackdropBorderColor(1, 1, 1, 0.6)
-  TOCA.Tooltip:Hide()
+  TOCA.CloseAllMenus()
 end)
 TOCA.Button.ResetOpacityBG:SetScript("OnClick", function()
   TOCA.CloseAllMenus()
@@ -351,11 +354,11 @@ TOCA.Button.ResetOpacityFG:SetBackdropColor(0.6, 0, 0, 1)
 TOCA.Button.ResetOpacityFG:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.Button.ResetOpacityFG:SetScript("OnEnter", function(self)
   self:SetBackdropBorderColor(1, 1, 0.8, 1)
-  TOCA.TooltipDisplay("Reset Foreground Opacity", "Reset the foreground opacity to the default value.")
+  TOCA.TooltipDisplay(self, "Reset Foreground Opacity", "Reset the foreground opacity to the default value.")
 end)
 TOCA.Button.ResetOpacityFG:SetScript("OnLeave", function(self)
   self:SetBackdropBorderColor(1, 1, 1, 0.6)
-  TOCA.Tooltip:Hide()
+  TOCA.CloseAllMenus()
 end)
 TOCA.Button.ResetOpacityFG:SetScript("OnClick", function()
   TOCA.CloseAllMenus()
@@ -381,6 +384,12 @@ TOCA.Checkbox.MainLock.text = TOCA.Checkbox.MainLock:CreateFontString(nil, "ARTW
 TOCA.Checkbox.MainLock.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
 TOCA.Checkbox.MainLock.text:SetPoint("TOPLEFT", 25, -6)
 TOCA.Checkbox.MainLock.text:SetText("Lock Frame While In Combat")
+TOCA.Checkbox.MainLock:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), "Lock the frame position while in combat.|nThis will prevent the accidental moving of the frame|nwhile accessing/clicking totems.")
+end)
+TOCA.Checkbox.MainLock:SetScript("OnLeave", function(self)
+  TOCA.CloseAllMenus()
+end)
 TOCA.Checkbox.MainLock:SetScript("OnClick", function(self)
   if (self:GetChecked()) then
     TOCADB[TOCA.player.combine]["CONFIG"]["COMBATLOCK"] = "ON"
@@ -413,6 +422,12 @@ TOCA.Checkbox.MainMenu:SetScript("OnClick", function(self)
     TOCA.Notification("Menu header disabled. Type '"..TCCMD.." options' to reopen.")
   end
 end)
+TOCA.Checkbox.MainMenu:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), "Toggle the Options and Close menu buttons from the frame.|nType |cffffffff/".. TOCA.Global.command .. " show|r if the frame is closed.")
+end)
+TOCA.Checkbox.MainMenu:SetScript("OnLeave", function(self)
+  TOCA.CloseAllMenus()
+end)
 
 TOCA.Checkbox.EndCaps={}
 TOCA.Checkbox.EndCaps = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[1]], "ChatConfigCheckButtonTemplate")
@@ -432,6 +447,12 @@ TOCA.Checkbox.EndCaps:SetScript("OnClick", function(self)
     TOCA.Button.TotemicCall.ECR:Hide()
     TOCADB[TOCA.player.combine]["CONFIG"]["ENDCAPS"] = "OFF"
   end
+end)
+TOCA.Checkbox.EndCaps:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), "Toggle the cosmetic end caps on the main frame.")
+end)
+TOCA.Checkbox.EndCaps:SetScript("OnLeave", function(self)
+  TOCA.CloseAllMenus()
 end)
 TOCA.Dropdown.FrameGryphons={}
 TOCA.Dropdown.FrameGryphonsSel={"Gryphons", "Lions"}
@@ -503,6 +524,12 @@ TOCA.Checkbox.Timers:SetScript("OnClick", function(self)
     end
   end
 end)
+TOCA.Checkbox.Timers:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), "Toggle the current totem living timer in world to|ndisplay on the current totem dropped.")
+end)
+TOCA.Checkbox.Timers:SetScript("OnLeave", function(self)
+  TOCA.CloseAllMenus()
+end)
 
 TOCA.Checkbox.TimersInMinutes={}
 TOCA.Checkbox.TimersInMinutes = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[1]], "ChatConfigCheckButtonTemplate")
@@ -520,6 +547,12 @@ TOCA.Checkbox.TimersInMinutes:SetScript("OnClick", function(self)
     TOCADB[TOCA.player.combine]["CONFIG"]["TIMERSMINUTES"] = "OFF"
     TOCA.globalTimerInMinutes = false
   end
+end)
+TOCA.Checkbox.TimersInMinutes:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), "Toggle the totem timer display in total seconds or minutes and seconds.|nBoth are default.")
+end)
+TOCA.Checkbox.TimersInMinutes:SetScript("OnLeave", function(self)
+  TOCA.CloseAllMenus()
 end)
 
 TOCA.Checkbox.Reinc={}
@@ -539,6 +572,12 @@ TOCA.Checkbox.Reinc:SetScript("OnClick", function(self)
     TOCA.FrameMain.ReincFrame:Hide()
   end
 end)
+TOCA.Checkbox.Reinc:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), "Display the Reincarnation timer at the right top of the frame when|nyou have activated Reincarnation.|nThe cooldown timer is live and also displayed.")
+end)
+TOCA.Checkbox.Reinc:SetScript("OnLeave", function(self)
+  TOCA.CloseAllMenus()
+end)
 
 TOCA.Checkbox.Ankh={}
 TOCA.Checkbox.Ankh = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[1]], "ChatConfigCheckButtonTemplate")
@@ -556,6 +595,12 @@ TOCA.Checkbox.Ankh:SetScript("OnClick", function(self)
     TOCADB[TOCA.player.combine]["CONFIG"]["ANKH"] = "OFF"
     TOCA.FrameMain.AnkhFrame:Hide()
   end
+end)
+TOCA.Checkbox.Ankh:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), "Display a reminder when the Ankh reagent is low in|ncurrent your inventory.|nThis will display when you have less than " .. TOCA.AnkhReminder .. " Ankhs.")
+end)
+TOCA.Checkbox.Ankh:SetScript("OnLeave", function(self)
+  TOCA.CloseAllMenus()
 end)
 
 TOCA.FrameOptions.Title.Tooltip = TOCA.FrameOptionsPage[TOCA.OptionTabs[1]]:CreateFontString(nil, "ARTWORK")
@@ -579,7 +624,12 @@ TOCA.Checkbox.Tooltip:SetScript("OnClick", function(self)
     TOCADB[TOCA.player.combine]["CONFIG"]["TOOLON"] = "OFF"
   end
 end)
-
+TOCA.Checkbox.Tooltip:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), "Toggle the mouseover of totem/spell details.")
+end)
+TOCA.Checkbox.Tooltip:SetScript("OnLeave", function()
+  TOCA.CloseAllMenus()
+end)
 TOCA.Checkbox.TooltipMouse={}
 TOCA.Checkbox.TooltipMouse = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[1]], "ChatConfigCheckButtonTemplate")
 TOCA.Checkbox.TooltipMouse:SetPoint("TOPLEFT", 400, -300)
@@ -595,29 +645,12 @@ TOCA.Checkbox.TooltipMouse:SetScript("OnClick", function(self)
     TOCADB[TOCA.player.combine]["CONFIG"]["TOOLMOUSE"] = "OFF"
   end
 end)
-
---[==[
-TOCA.Button.TooltipPosition= CreateFrame("Button", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[1]], "BackdropTemplate")
-TOCA.Button.TooltipPosition:SetSize(100, 25)
-TOCA.Button.TooltipPosition:SetPoint("TOPLEFT", 425, -285)
-TOCA.Button.TooltipPosition:SetBackdrop(TOCA.Backdrop.Button)
-TOCA.Button.TooltipPosition:SetBackdropColor(0.6, 0, 0, 1)
-TOCA.Button.TooltipPosition:SetBackdropBorderColor(1, 1, 1, 0.6)
-TOCA.Button.TooltipPosition:SetScript("OnEnter", function(self)
-  self:SetBackdropBorderColor(1, 1, 0.8, 1)
+TOCA.Checkbox.TooltipMouse:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), "Toggle the tooltip to follow over the mouse cursor.")
 end)
-TOCA.Button.TooltipPosition:SetScript("OnLeave", function(self)
-  self:SetBackdropBorderColor(1, 1, 1, 0.6)
-end)
-TOCA.Button.TooltipPosition:SetScript("OnClick", function()
+TOCA.Checkbox.TooltipMouse:SetScript("OnLeave", function()
   TOCA.CloseAllMenus()
-  TOCA.TooltipDisplay("Adjust Tooltip Position", "", "Drag and drop this tooltip window anywhere on screen.")
 end)
-TOCA.Button.TooltipPositionText = TOCA.Button.TooltipPosition:CreateFontString(nil, "ARTWORK")
-TOCA.Button.TooltipPositionText:SetFont(TOCA.Global.font, 11)
-TOCA.Button.TooltipPositionText:SetPoint("CENTER", 0, 0)
-TOCA.Button.TooltipPositionText:SetText("Tooltip Position")
-]==]--
 
 movingTotem= "nil"
 overTotem = "nil"
@@ -673,7 +706,7 @@ TOCA.FrameOptions.Divider:SetTexture("Interface/DialogFrame/DialogFrame-TOP")
 TOCA.FrameOptions.Title.Footer = TOCA.FrameOptions:CreateFontString(nil, "ARTWORK")
 TOCA.FrameOptions.Title.Footer:SetFont(TOCA.Global.font, 12)
 TOCA.FrameOptions.Title.Footer:SetPoint("TOPLEFT", 10, -TOCA.FrameOptions_h+25)
-TOCA.FrameOptions.Title.Footer:SetText(TOCA.Global.title .. " Options v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix)
+TOCA.FrameOptions.Title.Footer:SetText(TOCA.Global.title .. " v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix)
 
 
 TOCA.Button.OptionsClose= CreateFrame("Button", nil, TOCA.FrameOptions, "BackdropTemplate")
@@ -717,7 +750,3 @@ TOCA.FrameOptionsMain.Options:SetScript("OnClick", function()
   TOCA.FrameMain:Show()
   TOCA.FrameOptions:Show()
 end)
-TOCA.FrameOptionsMain.Title = TOCA.FrameOptionsMain.Options:CreateFontString(nil, "ARTWORK")
-TOCA.FrameOptionsMain.Title:SetFont(TOCA.Global.font, 11)
-TOCA.FrameOptionsMain.Title:SetPoint("CENTER", 0, 0)
-TOCA.FrameOptionsMain.Title:SetText("Totem Caddy Options")

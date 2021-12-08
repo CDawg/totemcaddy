@@ -41,9 +41,16 @@ TOCA.Button.FrameSetsSave:SetBackdropColor(0, 0.7, 0, 1)
 TOCA.Button.FrameSetsSave:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.Button.FrameSetsSave:SetScript("OnEnter", function(self)
   self:SetBackdropBorderColor(1, 1, 0.8, 1)
+  local profileSaveText = TOCA.FrameSetsProfile:GetText()
+  if ((profileSaveText == " ") or (profileSaveText == "") or (profileSaveText == nil)) then
+    TOCA.TooltipDisplay(self, "Save Totem Set", "Save the totem presets for a quick selection.")
+  else
+    TOCA.TooltipDisplay(self, "Save Totem Set", "Set: |cffffffff" .. profileSaveText .. "|r|n|nSave the totem presets for a quick selection. (pre combat)")
+  end
 end)
 TOCA.Button.FrameSetsSave:SetScript("OnLeave", function(self)
   self:SetBackdropBorderColor(1, 1, 1, 0.6)
+  TOCA.CloseAllMenus()
 end)
 TOCA.Button.FrameSetsSave:SetScript("OnClick", function()
   TOCA.FrameSetsProfile.border:SetBackdropBorderColor(1, 1, 1, 0.8)
@@ -80,9 +87,11 @@ TOCA.Button.FrameSetsDeleteOpenPrompt:SetBackdropColor(0.6, 0, 0, 1)
 TOCA.Button.FrameSetsDeleteOpenPrompt:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.Button.FrameSetsDeleteOpenPrompt:SetScript("OnEnter", function(self)
   self:SetBackdropBorderColor(1, 1, 0.8, 1)
+  TOCA.TooltipDisplay(self, "Delete Totem Set", "Set: |cffffffff" .. TOCA.Dropdown.Sets.text:GetText() .. "|r|n|nDelete the totem preset. The core default totem set can not be deleted.")
 end)
 TOCA.Button.FrameSetsDeleteOpenPrompt:SetScript("OnLeave", function(self)
   self:SetBackdropBorderColor(1, 1, 1, 0.6)
+  TOCA.CloseAllMenus()
 end)
 TOCA.Button.FrameSetsDeleteOpenPrompt:SetScript("OnClick", function()
   local profileSaveText = TOCA.Dropdown.Sets.text:GetText()
@@ -248,7 +257,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     })
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetScript("OnEnter", function(self)
-      TOCA.GameTooltip(self, totemSpell[1])
+      TOCA.TooltipDisplay(self, totemSpell[1])
       self:SetBackdropBorderColor(1, 1, 0.8, 1)
     end)
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetScript("OnLeave", function(self)
@@ -287,16 +296,16 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.FrameSetsSlot[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
   TOCA.FrameSetsSlot[totemCat]:SetScript("OnEnter", function(self)
     if (totemCat == "AIR") then
-      TOCA.GameTooltip(self, TOCASlotOne)
+      TOCA.TooltipDisplay(self, TOCASlotOne)
     end
     if (totemCat == "EARTH") then
-      TOCA.GameTooltip(self, TOCASlotTwo)
+      TOCA.TooltipDisplay(self, TOCASlotTwo)
     end
     if (totemCat == "FIRE") then
-      TOCA.GameTooltip(self, TOCASlotThree)
+      TOCA.TooltipDisplay(self, TOCASlotThree)
     end
     if (totemCat == "WATER") then
-      TOCA.GameTooltip(self, TOCASlotFour)
+      TOCA.TooltipDisplay(self, TOCASlotFour)
     end
     self:SetBackdropBorderColor(1, 1, 0.8, 1)
   end)

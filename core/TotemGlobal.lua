@@ -13,7 +13,7 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
-TOCA.DEBUG = true
+TOCA.DEBUG = false
 
 TOCA.Global = {
   title  = "|cff006aa6Totem Caddy|r",
@@ -44,31 +44,17 @@ TOCA.Net = {
 TCCMD = "/"..TOCA.Global.command
 
 TOCA.Backdrop={}
-TOCA.Backdrop.General = { --also used for gray out
+TOCA.Backdrop.General = {
   bgFile  = "Interface/ToolTips/CHATBUBBLE-BACKGROUND",
   edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
   edgeSize= 12,
   insets  = {left=2, right=2, top=2, bottom=2},
 }
 
-TOCA.Backdrop.Main = { --also used for gray out
+TOCA.Backdrop.Main = {
   bgFile  = "Interface/ToolTips/CHATBUBBLE-BACKGROUND",
   edgeFile= "Interface/TUTORIALFRAME/TUTORIALFRAMEBORDER",
   edgeSize= 20,
-  insets  = {left=2, right=2, top=2, bottom=2},
-}
-
-TOCA.Backdrop.empty= { --also used for gray out
-  bgFile  = "",
-  edgeFile= "",
-  edgeSize= 12,
-  insets  = {left=2, right=2, top=2, bottom=2},
-}
-
-TOCA.Backdrop.highlight = {
-  bgFile  = "Interface/Buttons/ButtonHilight-Square",
-  edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
-  edgeSize= 12,
   insets  = {left=2, right=2, top=2, bottom=2},
 }
 
@@ -86,7 +72,7 @@ TOCA.Backdrop.RGB = {
   insets  = {left=2, right=2, top=2, bottom=2},
 }
 
-TOCA.Backdrop.BorderOnly= { --also used for gray out
+TOCA.Backdrop.BorderOnly= {
   bgFile  = "",
   edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
   edgeSize= 12,
@@ -100,7 +86,6 @@ TOCA.Slider={}
 TOCA.Prompt={}
 TOCA.Dropdown = {}
 TOCA.Dropdown.Menu = {"Default"}
-TOCA.Tooltip = {}
 TOCA.MenuIsOpenMain = 0
 TOCA.MenuIsOpenSets = 0
 TOCA.ReincTimer = 0
@@ -620,116 +605,9 @@ function TOCA.CloseAllMenus()
     TOCA.SlotSelectMenu[k]:Hide()
     TOCA.FrameSetsSlotSelectMenu[k]:Hide()
   end
-  TOCA.Tooltip:Hide()
   GameTooltip:ClearLines()
   GameTooltip:Hide()
 end
-
-local TooltipMaxHeight = 82
-TOCA.Tooltip = CreateFrame("frame", "TOCA.Tooltip", UIParent, "BackdropTemplate")
-TOCA.Tooltip:SetWidth(250)
-TOCA.Tooltip:SetHeight(TooltipMaxHeight)
-TOCA.Tooltip:SetFrameStrata("TOOLTIP")
-TOCA.Tooltip:SetBackdrop(TOCA.Backdrop.General)
-TOCA.Tooltip:SetBackdropColor(0, 0, 1, 1)
-TOCA.Tooltip:SetBackdropBorderColor(1, 1, 1, 1)
-TOCA.Tooltip:SetPoint("BOTTOMRIGHT", -160, 150)
-TOCA.Tooltip:SetMovable(true)
-TOCA.Tooltip:EnableMouse(true)
-TOCA.Tooltip:RegisterForDrag("LeftButton")
-TOCA.Tooltip:SetScript("OnDragStart", function()
-  TOCA.Tooltip:StartMoving()
-end)
-TOCA.Tooltip:SetScript("OnDragStop", function()
-  TOCA.Tooltip:StopMovingOrSizing()
-  local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.Tooltip:GetPoint()
-  TOCADB[TOCA.player.combine]["CONFIG"]["TOOLPOS"] = point .. "," .. xOfs .. "," .. yOfs
-end)
-TOCA.Tooltip.title = TOCA.Tooltip:CreateFontString(nil, "ARTWORK")
-TOCA.Tooltip.title:SetFont(TOCA.Global.font, 14)
-TOCA.Tooltip.title:SetPoint("TOPLEFT", 10, -10)
-TOCA.Tooltip.title:SetText("")
-TOCA.Tooltip.cost = TOCA.Tooltip:CreateFontString(nil, "ARTWORK")
-TOCA.Tooltip.cost:SetFont(TOCA.Global.font, 12)
-TOCA.Tooltip.cost:SetPoint("TOPLEFT", 10, -30)
-TOCA.Tooltip.cost:SetText("")
-TOCA.Tooltip.tools = TOCA.Tooltip:CreateFontString(nil, "ARTWORK")
-TOCA.Tooltip.tools:SetFont(TOCA.Global.font, 12)
-TOCA.Tooltip.tools:SetPoint("TOPLEFT", 12, -45)
-TOCA.Tooltip.tools:SetText("")
-TOCA.Tooltip.text = TOCA.Tooltip:CreateFontString(nil, "ARTWORK")
-TOCA.Tooltip.text:SetFont(TOCA.Global.font, 12)
-TOCA.Tooltip.text:SetNonSpaceWrap(1)
-TOCA.Tooltip.text:SetPoint("TOPLEFT", 12, -40)
-TOCA.Tooltip.text:SetText("")
-TOCA.Tooltip.text:SetTextColor(1, 1, 0.2, 1)
-TOCA.Tooltip:Hide()
-
-local function adjustTooltipHeight(s, x, indent)
-  x = x or 79
-  indent = indent or ""
-  local t = {""}
-  if (s) then
-    local function cleanse(s) return s:gsub("@x%d%d%d",""):gsub("@r","") end
-    for prefix, word, suffix, newline in s:gmatch("([ \t]*)(%S*)([ \t]*)(\n?)") do
-      if (#t >= 2) then
-        TOCA.Tooltip:SetHeight(TooltipMaxHeight + (10 * #t))
-      end
-      if #(cleanse(t[#t])) + #prefix + #cleanse(word) > x and #t > 0 then
-        table.insert(t, word..suffix)
-      else
-        t[#t] = t[#t]..prefix..word..suffix
-      end
-      if #newline > 0 then
-        table.insert(t, "")
-      end
-    end
-    return indent..table.concat(t, "\n"..indent)
-  end
-end
-
---[==[
-function TOCA.TooltipDisplay(spell, tools, msgtooltip)
-  local spellName, spellRank, spellID = GetSpellBookItemName(spell)
-  TOCA.Tooltip:SetWidth(250)
-  if (spellID) then
-    local spellDesc = GetSpellDescription(spellID)
-    local spellPower= GetSpellPowerCost(spellID)
-    local spellCost = 0
-    for k,powerInfo in pairs(spellPower) do
-      spellCost = powerInfo.cost
-    end
-    TOCA.Tooltip:SetHeight(TooltipMaxHeight)
-    TOCA.Tooltip.title:SetText(spell)
-    TOCA.Tooltip.cost:SetText("")
-    if (spellCost) then
-      TOCA.Tooltip.cost:SetText(spellCost .. " Mana")
-    end
-    local toolsMsg = tools.lower(tools)
-    toolsMsg = firstToUpper(toolsMsg)
-    TOCA.Tooltip.tools:SetText("Tools: " .. toolsMsg .. " Totem")
-    if (tools == "") then
-      TOCA.Tooltip.tools:SetText("")
-    end
-    TOCA.Tooltip.text:SetText(adjustTooltipHeight(spellDesc, 34))
-  else
-    TOCA.Tooltip.title:SetText(spell)
-    TOCA.Tooltip.cost:SetText("")
-    TOCA.Tooltip.tools:SetText("")
-    if (msgtooltip) then
-      TOCA.Tooltip.text:SetText(adjustTooltipHeight(msgtooltip, 34))
-    else
-      TOCA.Tooltip.text:SetText("Spell not learned.")
-    end
-  end
-
-  if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLON"] == "OFF") then
-    TOCA.Tooltip:Hide()
-  else
-    TOCA.Tooltip:Show()
-  end
-end
-]==]--
 
 function TOCA.GetOwnerSpell(bookSpell)
   local i = 1
@@ -747,11 +625,11 @@ function TOCA.GetOwnerSpell(bookSpell)
   return spellLatest --latest known spell in the owner's book
 end
 
-function TOCA.GameTooltip(owner, spell, anchor)
+function TOCA.TooltipDisplay(owner, title, msg, anchor)
   if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLON"] == "OFF") then
     return
   end
-  local spellName, spellRank, spellID = GetSpellBookItemName(spell)
+  local spellName, spellRank, spellID = GetSpellBookItemName(title)
   if (spellID) then --assure that there is a valid spell
     local knownSpell = TOCA.GetOwnerSpell(spellName)
     if (knownSpell) then
@@ -768,20 +646,24 @@ function TOCA.GameTooltip(owner, spell, anchor)
       GameTooltip:SetSpellBookItem(knownSpell, BOOKTYPE_SPELL)
       GameTooltip:Show()
     end
-  end
-end
-
-function TOCA.TooltipDisplay(title, msgtooltip, height)
-  TOCA.Tooltip:Show()
-  TOCA.Tooltip.title:SetText(title)
-  TOCA.Tooltip.cost:SetText("")
-  TOCA.Tooltip.tools:SetText("")
-  TOCA.Tooltip.text:SetText(msgtooltip)
-  TOCA.Tooltip:SetWidth(360)
-  if (height) then
-    TOCA.Tooltip:SetHeight(height)
-  else
-    TOCA.Tooltip:SetHeight(80)
+  else --manual
+    if (anchor) then
+      GameTooltip:SetOwner(owner, anchor)
+    else
+      if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLMOUSE"] == "OFF") then
+        GameTooltip:SetOwner(owner, "ANCHOR_PRESERVE")
+      else
+        GameTooltip:SetOwner(owner, "ANCHOR_TOPLEFT")
+      end
+    end
+    GameTooltip:ClearLines()
+    if (title) then
+      GameTooltip:AddLine(title, 1, 1, 1, 1)
+      if (msg) then
+        GameTooltip:AddDoubleLine(msg, "", 1, 0.8, 0, 0,0,1)
+      end
+    end
+    GameTooltip:Show()
   end
 end
 

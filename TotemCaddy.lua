@@ -206,12 +206,11 @@ TOCA.Button.TotemicCallAtt:SetScript("OnEnter", function(self)
   --TOCA.CloseAllMenus() --bug with the totemic call button overlapping
   TOCA.Button.TotemicCall:SetBackdropBorderColor(1, 1, 1, 1)
   TOCA.Button.TotemicCall.highlight:Show()
-  TOCA.GameTooltip(self, "Totemic Call")
+  TOCA.TooltipDisplay(self, "Totemic Call")
 end)
 TOCA.Button.TotemicCallAtt:SetScript("OnLeave", function(self)
   TOCA.Button.TotemicCall:SetBackdropBorderColor(1, 1, 1, 0.6)
   TOCA.Button.TotemicCall.highlight:Hide()
-  --TOCA.Tooltip:Hide()
   TOCA.CloseAllMenus()
 end)
 
@@ -371,16 +370,16 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 1)
     TOCA.Slot.highlight[totemCat]:Show()
     if (totemCat == "AIR") then
-      TOCA.GameTooltip(self, TOCASlotOne)
+      TOCA.TooltipDisplay(self, TOCASlotOne)
     end
     if (totemCat == "EARTH") then
-      TOCA.GameTooltip(self, TOCASlotTwo)
+      TOCA.TooltipDisplay(self, TOCASlotTwo)
     end
     if (totemCat == "FIRE") then
-      TOCA.GameTooltip(self, TOCASlotThree)
+      TOCA.TooltipDisplay(self, TOCASlotThree)
     end
     if (totemCat == "WATER") then
-      TOCA.GameTooltip(self, TOCASlotFour)
+      TOCA.TooltipDisplay(self, TOCASlotFour)
     end
   end)
   TOCA.Totem[totemCat]:SetScript("OnLeave", function()
@@ -447,10 +446,11 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action.highlight:Hide()
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action:SetScript("OnEnter", function(self)
       self.highlight:Show()
-      TOCA.GameTooltip(self, totemSpell[1])
+      TOCA.TooltipDisplay(self, totemSpell[1])
     end)
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].action:SetScript("OnLeave", function(self)
       self.highlight:Hide()
+      TOCA.CloseAllMenus()
     end)
 
     --totemButtonPos_X[totemCat] = totemButtonPos_X[totemCat]+TOCA.Slot_w
@@ -484,10 +484,11 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action.highlight:Hide()
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action:SetScript("OnEnter", function(self)
       self.highlight:Show()
-      TOCA.GameTooltip(self, totemSpell[1])
+      TOCA.TooltipDisplay(self, totemSpell[1])
     end)
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].action:SetScript("OnLeave", function(self)
       self.highlight:Hide()
+      TOCA.CloseAllMenus()
     end)
   end
 end
@@ -550,21 +551,11 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
       edgeSize= 12,
       insets  = {left=2, right=2, top=2, bottom=2},
     })
-
     TOCA.SlotSelectTotemAction[totemCat]={}
-    --[==[
-    TOCA.SlotSelectTotemAction[totemCat][i] = CreateFrame("Button", nil, TOCA.SlotSelectTotem[totemCat][i], "SecureActionButtonTemplate")
-    --TOCA.SlotSelectTotemAction[totemCat][i] = CreateFrame("Button", nil, TOCA.SlotSelectTotem[totemCat][i], "InsecureActionButtonTemplate")
-    --TOCA.SlotSelectTotemAction[totemCat][i] = CreateFrame("Button", nil, TOCA.SlotSelectTotem[totemCat][i], "BackdropTemplate")
-    TOCA.SlotSelectTotemAction[totemCat][i]:SetSize(TOCA.Slot_w-2, TOCA.Slot_h-2)
-    TOCA.SlotSelectTotemAction[totemCat][i]:SetPoint("CENTER", 0, 0)
-    TOCA.SlotSelectTotemAction[totemCat][i]:SetAttribute("type", "macro")
-    TOCA.SlotSelectTotemAction[totemCat][i]:SetAttribute("macrotext", "/cast " .. totemSpell[1] .. "\n/script TOCA.CloseAllMenus()")
-    ]==]--
 
     TOCA.SlotSelectTotem[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
     TOCA.SlotSelectTotem[totemCat][i]:SetScript("OnEnter", function(self)
-      TOCA.GameTooltip(self, totemSpell[1])
+      TOCA.TooltipDisplay(self, totemSpell[1])
       self:SetBackdropBorderColor(1, 1, 0.8, 1)
     end)
     TOCA.SlotSelectTotem[totemCat][i]:SetScript("OnLeave", function(self)
@@ -658,10 +649,11 @@ TOCA.Button.Options.icon:SetPoint("CENTER", 0, 0)
 TOCA.Button.Options.icon:SetTexture("Interface/Buttons/UI-OptionsButton")
 TOCA.Button.Options:SetScript("OnEnter", function(self)
   self:SetBackdropBorderColor(1, 1, 1, 1)
-  --self:Show()
+  TOCA.TooltipDisplay(self, "Options Menu", TOCA.Global.title .. " v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix)
 end)
 TOCA.Button.Options:SetScript("OnLeave", function(self)
   self:SetBackdropBorderColor(1, 1, 1, 0.6)
+  TOCA.CloseAllMenus()
 end)
 TOCA.Button.Options:SetScript("OnClick", function(self)
   TOCA.CloseAllMenus()
@@ -710,10 +702,10 @@ TOCA.FrameMain.ReincFrame.text:SetPoint("CENTER", TOCA.FrameMain.ReincFrame, "CE
 TOCA.FrameMain.ReincFrame.text:SetText("")
 TOCA.FrameMain.ReincFrame.text:SetShadowOffset(1, 1)
 TOCA.FrameMain.ReincFrame:SetScript("OnEnter", function(self)
-  TOCA.TooltipDisplay("Reincarnation Timer", "Cooldown timer on the next use of reincarnation.|nThis display option can be adjusted in the options menu.")
+  TOCA.TooltipDisplay(self, "Reincarnation")
 end)
 TOCA.FrameMain.ReincFrame:SetScript("OnLeave", function(self)
-  TOCA.Tooltip:Hide()
+  TOCA.CloseAllMenus()
 end)
 TOCA.FrameMain.ReincFrame:Hide()
 
@@ -736,10 +728,10 @@ TOCA.FrameMain.AnkhFrame.text:SetPoint("CENTER", TOCA.FrameMain.ReincFrame, "CEN
 TOCA.FrameMain.AnkhFrame.text:SetText(TOCA.InventoryCountItem(TOCA.item.ANKH))
 TOCA.FrameMain.AnkhFrame.text:SetShadowOffset(1, 1)
 TOCA.FrameMain.AnkhFrame:SetScript("OnEnter", function(self)
-  TOCA.TooltipDisplay("Ankh Reminder [".. TOCA.InventoryCountItem(TOCA.item.ANKH) .."]", "Ankh Inventory Count Reminder.|n This will display when you have less than 3 Ankhs")
+  TOCA.TooltipDisplay(self, "Ankh Reminder", "Ankhs: |cffffffff".. TOCA.InventoryCountItem(TOCA.item.ANKH) .."|r|n|nAnkh Inventory Count Reminder.|nThis will display when you have less than " .. TOCA.AnkhReminder .. " Ankhs")
 end)
 TOCA.FrameMain.AnkhFrame:SetScript("OnLeave", function(self)
-  TOCA.Tooltip:Hide()
+  TOCA.CloseAllMenus()
 end)
 TOCA.FrameMain.AnkhFrame:Hide()
 
