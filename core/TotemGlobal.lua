@@ -660,7 +660,7 @@ TOCA.Tooltip.tools:SetText("")
 TOCA.Tooltip.text = TOCA.Tooltip:CreateFontString(nil, "ARTWORK")
 TOCA.Tooltip.text:SetFont(TOCA.Global.font, 12)
 TOCA.Tooltip.text:SetNonSpaceWrap(1)
-TOCA.Tooltip.text:SetPoint("TOPLEFT", 12, -60)
+TOCA.Tooltip.text:SetPoint("TOPLEFT", 12, -40)
 TOCA.Tooltip.text:SetText("")
 TOCA.Tooltip.text:SetTextColor(1, 1, 0.2, 1)
 TOCA.Tooltip:Hide()
@@ -781,7 +781,7 @@ function TOCA.TooltipDisplay(title, msgtooltip, height)
   if (height) then
     TOCA.Tooltip:SetHeight(height)
   else
-    TOCA.Tooltip:SetHeight(100)
+    TOCA.Tooltip:SetHeight(80)
   end
 end
 
@@ -882,7 +882,7 @@ function TOCA.GetReincTimer() --always checking
           local reincTimeLeftCalc = start + duration - GetTime()
           local reincTimeLeftRT = reincTimeLeftCalc / 60
           TOCA.ReincTimer = math.ceil(reincTimeLeftCalc / 60)
-          TOCA.Notification(name.." is cooling down, wait " .. TOCA.ReincTimer, true)
+          --TOCA.Notification(name.." is cooling down, wait " .. TOCA.ReincTimer, true)
           TOCA.FrameMain.ReincFrame.text:SetText(TOCA.ReincTimer.."m")
           TOCA.FrameMain.ReincFrame:Show()
         else
