@@ -249,12 +249,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetPoint("TOPLEFT", 2.5, -totemSpellCount[totemCat]+30)
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetFrameLevel(300)
-    TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetBackdrop({
-      bgFile  = "interface/icons/" .. totemSpell[2],
-      edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
-      edgeSize= 12,
-      insets  = {left=2, right=2, top=2, bottom=2},
-    })
+    TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetBackdrop(TOCA.SetIcon(totemSpell[2]))
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetScript("OnEnter", function(self)
       TOCA.TooltipDisplay(self, totemSpell[1])
@@ -277,12 +272,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
       if (totemCat == "WATER") then
         TOCASlotFour = totemSpell[1]
       end
-      TOCA.FrameSetsSlot[totemCat]:SetBackdrop({
-        bgFile  = "interface/icons/" .. totemSpell[2],
-        edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
-        edgeSize= 12,
-        insets  = {left=2, right=2, top=2, bottom=2},
-      })
+      TOCA.FrameSetsSlot[totemCat]:SetBackdrop(TOCA.SetIcon(totemSpell[2]))
       TOCA.CloseAllMenus()
     end)
     TOCA.FrameSetsSlotDisabled[totemCat][i]= CreateFrame("Button", nil, TOCA.FrameSetsSlotSelectTotem[totemCat][i], "BackdropTemplate")

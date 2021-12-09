@@ -161,12 +161,7 @@ TOCA.Button.TotemicCall_h=40
 TOCA.Button.TotemicCall= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTemplate")
 TOCA.Button.TotemicCall:SetSize(TOCA.Button.TotemicCall_w, TOCA.Button.TotemicCall_h)
 TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 40)
-TOCA.Button.TotemicCall:SetBackdrop({
-  bgFile  = "Interface/icons/spell_unused",
-  edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
-  edgeSize= 12,
-  insets  = {left=2, right=2, top=2, bottom=2},
-})
+TOCA.Button.TotemicCall:SetBackdrop(TOCA.SetIcon("spell_unused"))
 TOCA.Button.TotemicCall:SetFrameLevel(TOCA.Framelevel.Foreground)
 TOCA.Button.TotemicCall.flash = TOCA.Button.TotemicCall:CreateTexture(nil, "ARTWORK")
 TOCA.Button.TotemicCall.flash:SetSize(TOCA.Button.TotemicCall_w*2, TOCA.Button.TotemicCall_h*2)
@@ -420,12 +415,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[totemNum], -40-totemButtonPos_Y[totemCat]+TOCA.Slot_h)
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetFrameLevel(TOCA.Framelevel.Buttons)
-    TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetBackdrop({
-      bgFile  = "interface/icons/" .. totemSpell[2],
-      edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
-      edgeSize= 12,
-      insets  = {left=2, right=2, top=2, bottom=2},
-    })
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetBackdrop(TOCA.SetIcon(totemSpell[2]))
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable = CreateFrame("Frame", nil, TOCA.SlotGrid.VerticalTotemButton[totemCat][i], "BackdropTemplate")
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:SetSize(TOCA.Slot_w, TOCA.Slot_h)
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:SetPoint("CENTER", 0, 0)
@@ -458,12 +448,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:SetPoint("TOPLEFT", totemButtonPos_X[totemCat]+TOCA.Slot_w-30, -TOCA.SlotPosX[totemNum]-4)
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:SetFrameLevel(TOCA.Framelevel.Buttons)
-    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:SetBackdrop({
-      bgFile  = "interface/icons/" .. totemSpell[2],
-      edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
-      edgeSize= 12,
-      insets  = {left=2, right=2, top=2, bottom=2},
-    })
+    TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:SetBackdrop(TOCA.SetIcon(totemSpell[2]))
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable = CreateFrame("Frame", nil, TOCA.SlotGrid.HorizontalTotemButton[totemCat][i], "BackdropTemplate")
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:SetSize(TOCA.Slot_w, TOCA.Slot_h)
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:SetPoint("CENTER", 0, 0)
@@ -545,13 +530,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.SlotSelectTotem[totemCat][i]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
     TOCA.SlotSelectTotem[totemCat][i]:SetPoint("TOPLEFT", 2.5, -totemSpellCount[totemCat]+30)
     TOCA.SlotSelectTotem[totemCat][i]:SetFrameLevel(TOCA.Framelevel.Buttons)
-    TOCA.SlotSelectTotem[totemCat][i]:SetBackdrop({
-      bgFile  = "interface/icons/" .. totemSpell[2],
-      edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
-      edgeSize= 12,
-      insets  = {left=2, right=2, top=2, bottom=2},
-    })
-    TOCA.SlotSelectTotemAction[totemCat]={}
+    TOCA.SlotSelectTotem[totemCat][i]:SetBackdrop(TOCA.SetIcon(totemSpell[2]))
 
     TOCA.SlotSelectTotem[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
     TOCA.SlotSelectTotem[totemCat][i]:SetScript("OnEnter", function(self)
@@ -603,12 +582,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
           TOCA.Notification("Setting WATER " .. totemSpell[1], true)
         end
       end
-      TOCA.Slot[totemCat]:SetBackdrop({
-        bgFile  = "interface/icons/" .. totemSpell[2],
-        edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
-        edgeSize= 12,
-        insets  = {left=2, right=2, top=2, bottom=2},
-      })
+      TOCA.Slot[totemCat]:SetBackdrop(TOCA.SetIcon(totemSpell[2]))
       TOCA.CloseAllMenus()
     end)
     TOCA.SlotSelectTotemDisabled[totemCat][i]= CreateFrame("Frame", nil, TOCA.SlotSelectTotem[totemCat][i], "BackdropTemplate", -6)
@@ -687,12 +661,7 @@ TOCA.FrameMain.ReincFrame = CreateFrame("Frame", TOCA.FrameMain.Background, TOCA
 TOCA.FrameMain.ReincFrame:SetWidth(30)
 TOCA.FrameMain.ReincFrame:SetHeight(30)
 TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
-TOCA.FrameMain.ReincFrame:SetBackdrop({
-  bgFile  = "Interface/icons/spell_nature_reincarnation",
-  edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
-  edgeSize= 12,
-  insets  = {left=2, right=2, top=2, bottom=2},
-})
+TOCA.FrameMain.ReincFrame:SetBackdrop(TOCA.SetIcon("spell_nature_reincarnation"))
 TOCA.FrameMain.ReincFrame:SetBackdropColor(0.7, 0.7, 0.7, 0.8)
 TOCA.FrameMain.ReincFrame:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.FrameMain.ReincFrame:SetFrameLevel(TOCA.Framelevel.Background)
@@ -713,12 +682,7 @@ TOCA.FrameMain.AnkhFrame = CreateFrame("Frame", TOCA.FrameMain.Background, TOCA.
 TOCA.FrameMain.AnkhFrame:SetWidth(30)
 TOCA.FrameMain.AnkhFrame:SetHeight(30)
 TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -44)
-TOCA.FrameMain.AnkhFrame:SetBackdrop({
-  bgFile  = "Interface/icons/inv_jewelry_talisman_06",
-  edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
-  edgeSize= 12,
-  insets  = {left=2, right=2, top=2, bottom=2},
-})
+TOCA.FrameMain.AnkhFrame:SetBackdrop(TOCA.SetIcon("inv_jewelry_talisman_06"))
 TOCA.FrameMain.AnkhFrame:SetBackdropColor(0.7, 0.7, 0.7, 0.8)
 TOCA.FrameMain.AnkhFrame:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.FrameMain.AnkhFrame:SetFrameLevel(TOCA.Framelevel.Background)

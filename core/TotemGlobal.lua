@@ -156,6 +156,16 @@ TOCA.KeyBindButton:SetPoint("TOPLEFT", -100, 0)
 
 TOCA.BuildKeyBindsInit()
 
+function TOCA.SetIcon(icon)
+  local array = {
+    bgFile="interface/icons/" .. icon,
+    edgeFile="Interface/ToolTips/UI-Tooltip-Border",
+    edgeSize=12,
+    insets={left=2, right=2, top=2, bottom=2},
+  }
+  return array
+end
+
 function TOCA.SetKeyBindReset(KeyBK, spell)
   local key1, key2 = GetBindingKey(KeyBK)
   if (key1) then
@@ -196,42 +206,22 @@ end
 
 function TOCA.UpdateTotemSet()
   local totemIconKey = multiKeyFromValue(TOCA.totems.AIR, TOCASlotOne, 1)
-  local totemIcon = {
-    bgFile  = "interface/icons/" .. TOCA.totems.AIR[totemIconKey][2],
-    edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
-    edgeSize= 12,
-    insets  = {left=2, right=2, top=2, bottom=2},
-  }
+  local totemIcon = TOCA.SetIcon(TOCA.totems.AIR[totemIconKey][2])
   TOCA.Slot["AIR"]:SetBackdrop(totemIcon)
   TOCA.FrameSetsSlot["AIR"]:SetBackdrop(totemIcon)
 
   local totemIconKey = multiKeyFromValue(TOCA.totems.EARTH, TOCASlotTwo, 1)
-  local totemIcon = {
-    bgFile  = "interface/icons/" .. TOCA.totems.EARTH[totemIconKey][2],
-    edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
-    edgeSize= 12,
-    insets  = {left=2, right=2, top=2, bottom=2},
-  }
+  local totemIcon = TOCA.SetIcon(TOCA.totems.EARTH[totemIconKey][2])
   TOCA.Slot["EARTH"]:SetBackdrop(totemIcon)
   TOCA.FrameSetsSlot["EARTH"]:SetBackdrop(totemIcon)
 
   local totemIconKey = multiKeyFromValue(TOCA.totems.FIRE, TOCASlotThree, 1)
-  local totemIcon = {
-    bgFile  = "interface/icons/" .. TOCA.totems.FIRE[totemIconKey][2],
-    edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
-    edgeSize= 12,
-    insets  = {left=2, right=2, top=2, bottom=2},
-  }
+  local totemIcon = TOCA.SetIcon(TOCA.totems.FIRE[totemIconKey][2])
   TOCA.Slot["FIRE"]:SetBackdrop(totemIcon)
   TOCA.FrameSetsSlot["FIRE"]:SetBackdrop(totemIcon)
 
   local totemIconKey = multiKeyFromValue(TOCA.totems.WATER, TOCASlotFour, 1)
-  local totemIcon = {
-    bgFile  = "interface/icons/" .. TOCA.totems.WATER[totemIconKey][2],
-    edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
-    edgeSize= 12,
-    insets  = {left=2, right=2, top=2, bottom=2},
-  }
+  local totemIcon = TOCA.SetIcon(TOCA.totems.WATER[totemIconKey][2])
   TOCA.Slot["WATER"]:SetBackdrop(totemIcon)
   TOCA.FrameSetsSlot["WATER"]:SetBackdrop(totemIcon)
 end
