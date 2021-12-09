@@ -16,7 +16,7 @@ the copyright holders.
 TOCA.DEBUG = false
 
 TOCA.Global = {
-  title  = "|cff006aa6Totem Caddy|r",
+  title  = "|cff0070DDTotem Caddy|r",
   author = "Porthias of Myzrael",
   version= 2.41,
   command= "toca",
@@ -844,6 +844,7 @@ function TOCA.Combat(event)
       TOCA.SlotSelect[totemCat]:Hide()
       TOCA.Button.DropdownMain:Hide()
       TOCA.Button.Options:Hide()
+      TOCA.Button.CloseMain:Hide()
       if (TOCADB[TOCA.player.combine]["CONFIG"]["COMBATLOCK"] == "OFF") then
         TOCA.FrameMain:SetMovable(true)
         TOCA.FrameMain:EnableMouse(true)
