@@ -61,7 +61,6 @@ for i=1, getn(TOCA.OptionTabs) do
   TOCA.Button.TabOptions[i]:SetPoint("CENTER", 0, 0)
   TOCA.Button.TabOptions[i]:SetBackdrop({
     bgFile  = "Interface/OPTIONSFRAME/UI-OptionsFrame-ActiveTab",
-    --edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
     edgeFile= "",
     edgeSize= 12,
     insets  = {left=2, right=2, top=2, bottom=2},
@@ -92,7 +91,7 @@ TOCA.Dropdown.FrameStyle.text:SetFont(TOCA.Global.font, 11)
 TOCA.Dropdown.FrameStyle.text:SetPoint("TOPLEFT", TOCA.Dropdown.FrameStyle, "TOPLEFT", 25, -8)
 TOCA.Dropdown.FrameStyle.text:SetText(TOCA.Dropdown.FrameStyles[1])
 TOCA.Dropdown.FrameStyle:SetScript("OnEnter", function(self)
-  TOCA.TooltipDisplay(self, "Frame Totem Layout", "|n|cffffffffClassic|r|nFour primary totems that are commonly used selectable or profile built.|n|n|cffffffffGrid Vertical|r|nAll known Totems are displayed vertically organized by category row.|n|n|cffffffffGrid Horizontally|r|nAll known Totems are displayed Horizontally organized by category row.|n|n|cffffffffThe totem category orders are configurable in the options menu.")
+  TOCA.TooltipDisplay(self, "Frame Totem Layout", "|n|cffffffffClassic|r|nFour primary totems that are commonly|nused selectable or profile built.|n|n|cffffffffGrid Vertical|r|nAll known Totems are displayed vertically|norganized by category row.|n|n|cffffffffGrid Horizontally|r|nAll known Totems are displayed Horizontally|norganized by category row.|n|n|cffffffffThe totem category orders are configurable|nin the options menu.")
 end)
 TOCA.Dropdown.FrameStyle:SetScript("OnLeave", function()
   TOCA.CloseAllMenus()
@@ -549,7 +548,7 @@ TOCA.Checkbox.TimersInMinutes:SetScript("OnClick", function(self)
   end
 end)
 TOCA.Checkbox.TimersInMinutes:SetScript("OnEnter", function(self)
-  TOCA.TooltipDisplay(self, self.text:GetText(), "Toggle the totem timer display in total seconds or minutes and seconds.|nBoth are default.")
+  TOCA.TooltipDisplay(self, self.text:GetText(), "Toggle the totem timer display in total seconds|nor minutes and seconds.|nBoth are default.")
 end)
 TOCA.Checkbox.TimersInMinutes:SetScript("OnLeave", function(self)
   TOCA.CloseAllMenus()
@@ -573,7 +572,7 @@ TOCA.Checkbox.Reinc:SetScript("OnClick", function(self)
   end
 end)
 TOCA.Checkbox.Reinc:SetScript("OnEnter", function(self)
-  TOCA.TooltipDisplay(self, self.text:GetText(), "Display the Reincarnation timer at the right top of the frame when|nyou have activated Reincarnation.|nThe cooldown timer is live and also displayed.")
+  TOCA.TooltipDisplay(self, self.text:GetText(), "Display the Reincarnation timer at the right top|nof the frame when you have activated Reincarnation.|nThe cooldown timer is live and also displayed.")
 end)
 TOCA.Checkbox.Reinc:SetScript("OnLeave", function(self)
   TOCA.CloseAllMenus()
