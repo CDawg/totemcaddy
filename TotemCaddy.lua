@@ -28,14 +28,6 @@ TOCA.FrameMain:SetScript("OnDragStop", function()
   local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.FrameMain:GetPoint()
   TOCADB[TOCA.player.combine]["CONFIG"]["MAINPOS"] = point .. "," .. xOfs .. "," .. yOfs
 end)
---[==[
-TOCA.FrameMain:SetScript("OnEnter", function()
-  TOCA.DisplayMenuItems(true)
-end)
-TOCA.FrameMain:SetScript("OnLeave", function()
-  TOCA.DisplayMenuItems(false)
-end)
-]==]--
 
 TOCA.FrameMain.Background = CreateFrame("Frame", TOCA.FrameMain.Background, TOCA.FrameMain, "BackdropTemplate", -6)
 TOCA.FrameMain.Background:SetWidth(TOCA.Global.width)
@@ -140,19 +132,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
 
   if (event == "CHAT_MSG_ADDON") then
     TOCA.GetReincTimer()
-    if (prefix == TOCA.Global.prefix) then
-        if (TOCA.version_alerted == 0) then
-        local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.prefix)
-        if (getPacket) then
-          local latest_version = tonumber(getPacket)
-          local my_version = tonumber(TOCA.Global.version)
-          if (latest_version > my_version) then --2 minor
-            TOCA.Notification("|cffeca63dYou have an outdated version! Latest version: " .. latest_version)
-            TOCA.version_alerted = tonumber(latest_version)
-          end
-        end
-      end
-    end
+    TOCA.VersionControl(prefix, netpacket)
   end
 end)
 

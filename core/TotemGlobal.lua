@@ -72,6 +72,13 @@ TOCA.Backdrop.RGB = {
   insets  = {left=2, right=2, top=2, bottom=2},
 }
 
+TOCA.Backdrop.Borderless = {
+  bgFile  = "Interface/ToolTips/CHATBUBBLE-BACKGROUND",
+  edgeFile= "",
+  edgeSize= 20,
+  insets  = {left=2, right=2, top=2, bottom=2},
+}
+
 TOCA.Backdrop.BorderOnly= {
   bgFile  = "",
   edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
@@ -80,6 +87,22 @@ TOCA.Backdrop.BorderOnly= {
 }
 
 TOCA.version_alerted = 0
+function TOCA.VersionControl(netprefix, netpacket)
+  if (netprefix == TOCA.Global.prefix) then
+      if (TOCA.version_alerted == 0) then
+      local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.prefix)
+      if (getPacket) then
+        local latest_version = tonumber(getPacket)
+        local my_version = tonumber(TOCA.Global.version)
+        if (latest_version > my_version) then --2 minor
+          TOCA.Notification("|cfffc2121You have an outdated version! Latest version:|cffffedad " .. latest_version)
+          TOCA.version_alerted = tonumber(latest_version)
+        end
+      end
+    end
+  end
+end
+
 TOCA.Button={}
 TOCA.Checkbox={}
 TOCA.Slider={}
@@ -406,6 +429,9 @@ function TOCA.Init()
       TOCA.Button.Options:Hide()
       TOCA.Checkbox.MainMenu:SetChecked(nil)
       TOCA.FrameMain.Background:SetPoint("CENTER", 0, 0)
+    end
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
+      TOCA.Checkbox.FrameBorder:SetChecked(nil)
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["ENDCAPS"] == "OFF") then
       TOCA.Button.TotemicCall.ECL:Hide()
