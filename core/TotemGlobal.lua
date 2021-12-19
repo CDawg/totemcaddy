@@ -607,6 +607,7 @@ function TOCA.Init()
     TOCA.Button.TotemicCall.ECL:Hide()
     TOCA.Button.TotemicCall.ECR:Hide()
     TOCA.Checkbox.EndCaps:Hide()
+    TOCA.Checkbox.Totemic:Hide()
     TOCA.Dropdown.FrameGryphons:Hide()
   end
 
@@ -758,6 +759,8 @@ function TOCA.TooltipDisplay(owner, title, msg, anchor)
       GameTooltip:AddLine(title, 1, 1, 1, 1)
       if (msg) then
         GameTooltip:AddDoubleLine(msg, "", 1, 0.8, 0, 0,0,1)
+      else
+        GameTooltip:AddDoubleLine("Unknown Spell", "", 1, 0, 0, 0,0,1)
       end
     end
     GameTooltip:Show()

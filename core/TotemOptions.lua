@@ -791,7 +791,6 @@ TOCA.FrameOptions.Title.Footer:SetFont(TOCA.Global.font, 12)
 TOCA.FrameOptions.Title.Footer:SetPoint("TOPLEFT", 10, -TOCA.FrameOptions_h+25)
 TOCA.FrameOptions.Title.Footer:SetText(TOCA.Global.title .. " v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " |cff4d4d4d " .. TOCA.Global.date)
 
-
 TOCA.Button.OptionsClose= CreateFrame("Button", nil, TOCA.FrameOptions, "BackdropTemplate")
 TOCA.Button.OptionsClose:SetSize(100, 25)
 --TOCA.Button.OptionsClose:SetPoint("CENTER", 0, -180)
