@@ -18,7 +18,7 @@ TOCA.DEBUG = false
 TOCA.Global = {
   title  = "|cff0070DDTotem Caddy|r",
   author = "Porthias of Myzrael",
-  version= 2.41,
+  version= 2.44,
   command= "toca",
   width  = 150,
   height = 85,
@@ -26,6 +26,7 @@ TOCA.Global = {
   dir    = "Interface/Addons/TotemCaddy/",
   prefix = "TotemCaddy",
   suffix = "BCC",
+  date   = "2021-12-18",
 }
 --local _LName, _LTitle = GetAddOnInfo(TOCA.Global.prefix)
 --TOCA.Global.version = tonumber(string.sub(_LTitle, 26, 29))
@@ -181,11 +182,21 @@ TOCA.BuildKeyBindsInit()
 
 function TOCA.SetIcon(icon)
   local array = {
-    bgFile="interface/icons/" .. icon,
+    bgFile="Interface/AddOns/".. TOCA.Global.prefix .."/images/" .. icon,
     edgeFile="Interface/ToolTips/UI-Tooltip-Border",
     edgeSize=12,
     insets={left=2, right=2, top=2, bottom=2},
   }
+  --[==[
+  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
+    array = {
+      bgFile="Interface/AddOns/".. TOCA.Global.prefix .."/images/" .. icon,
+      edgeFile="Interface/ToolTips/UI-Tooltip-Border",
+      edgeSize=2,
+      insets={left=2, right=2, top=2, bottom=2},
+    }
+  end
+  ]==]--
   return array
 end
 
@@ -321,8 +332,8 @@ function TOCA.FrameStyleSet(style)
     TOCA.FrameStyleDefault()
     TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
     TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -44)
-    TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 62)
-    TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 62)
+    TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 61)
+    TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 61)
     for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:Show()
       TOCA.Button.DropdownMain:Show()
@@ -336,8 +347,8 @@ function TOCA.FrameStyleSet(style)
     TOCA.FrameMain:SetHeight(TOCA.Global.height+240)
     TOCA.FrameMain.Background:SetHeight(TOCA.Global.height+240)
     TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 160)
-    TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 182)
-    TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 182)
+    TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 181)
+    TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 181)
     for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:Hide()
       TOCA.Button.DropdownMain:Hide()
@@ -353,8 +364,8 @@ function TOCA.FrameStyleSet(style)
     TOCA.FrameMain:SetWidth(TOCA.Global.height+240)
     TOCA.FrameMain.Background:SetWidth(TOCA.Global.height+240)
     TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 84)
-    TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 104)
-    TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 104)
+    TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 103)
+    TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 103)
     for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:Hide()
       TOCA.Button.DropdownMain:Hide()
@@ -379,6 +390,59 @@ function TOCA.DisplayAnkhFrame()
       TOCA.FrameMain.AnkhFrame:Hide()
     end
   end
+end
+
+function TOCA.BorderFrame(enable)
+  if (enable) then
+    TOCA.FrameMain.Background:SetBackdropBorderColor(1, 1, 1, 0.6)
+    TOCA.Button.TotemicCall:SetBackdropBorderColor(1, 1, 1, 0.6)
+    TOCA.Button.Options:SetBackdropBorderColor(1, 1, 1, 0.8)
+    TOCA.Button.CloseMain:SetBackdropBorderColor(1, 1, 1, 0.8)
+    TOCA.Button.DropdownMain:SetBackdropBorderColor(1, 1, 1, 0.6)
+    TOCA.FrameMain.ReincFrame:SetBackdropBorderColor(1, 1, 1, 0.6)
+    TOCA.FrameMain.AnkhFrame:SetBackdropBorderColor(1, 1, 1, 0.6)
+    for totemCat,v in pairsByKeys(TOCA.totems) do
+      TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
+      TOCA.SlotSelect[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
+      TOCA.SlotSelectMenu[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
+      for i,totemSpell in pairs(TOCA.totems[totemCat]) do
+        if (TOCA.SlotSelectTotem[totemCat][i]) then
+          TOCA.SlotSelectTotem[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
+        end
+        if (TOCA.SlotGrid.VerticalTotemButton[totemCat][i]) then
+          TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
+        end
+        if (TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]) then
+          TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
+        end
+      end
+    end
+  else
+    TOCA.FrameMain.Background:SetBackdropBorderColor(1, 1, 1, 0)
+    TOCA.Button.TotemicCall:SetBackdropBorderColor(1, 1, 1, 0)
+    TOCA.Button.Options:SetBackdropBorderColor(1, 1, 1, 0)
+    TOCA.Button.CloseMain:SetBackdropBorderColor(1, 1, 1, 0)
+    TOCA.Button.DropdownMain:SetBackdropBorderColor(1, 1, 1, 0)
+    TOCA.FrameMain.ReincFrame:SetBackdropBorderColor(1, 1, 1, 0)
+    TOCA.FrameMain.AnkhFrame:SetBackdropBorderColor(1, 1, 1, 0)
+    for totemCat,v in pairsByKeys(TOCA.totems) do
+      TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)
+      TOCA.SlotSelect[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)
+      TOCA.SlotSelectMenu[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)
+      for i,totemSpell in pairs(TOCA.totems[totemCat]) do
+        if (TOCA.SlotSelectTotem[totemCat][i]) then
+          TOCA.SlotSelectTotem[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0)
+        end
+        if (TOCA.SlotGrid.VerticalTotemButton[totemCat][i]) then
+          TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0)
+        end
+        if (TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]) then
+          TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0)
+        end
+      end
+    end
+  end
+  TOCA.Notification("TOCA.BorderFrame()", true)
 end
 
 function TOCA.Init()
@@ -424,7 +488,7 @@ function TOCA.Init()
       TOCA.Slider.Scale.Val:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["SCALE"])
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["MAINMENU"] == "OFF") then
-      TOCA.FrameMain.Background:SetBackdrop(TOCA.Backdrop.General)
+      --TOCA.FrameMain.Background:SetBackdrop(TOCA.Backdrop.General)
       TOCA.Button.CloseMain:Hide()
       TOCA.Button.Options:Hide()
       TOCA.Checkbox.MainMenu:SetChecked(nil)
@@ -432,11 +496,20 @@ function TOCA.Init()
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
       TOCA.Checkbox.FrameBorder:SetChecked(nil)
+      TOCA.BorderFrame(false)
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["ENDCAPS"] == "OFF") then
       TOCA.Button.TotemicCall.ECL:Hide()
       TOCA.Button.TotemicCall.ECR:Hide()
       TOCA.Checkbox.EndCaps:SetChecked(nil)
+    end
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMICCALL"] == "OFF") then
+      TOCA.Button.TotemicCall.ECL:Hide()
+      TOCA.Button.TotemicCall.ECR:Hide()
+      TOCA.Checkbox.EndCaps:SetAlpha(0.5)
+      TOCA.Dropdown.FrameGryphons:SetAlpha(0.5)
+      TOCA.Checkbox.Totemic:SetChecked(nil)
+      --TOCA.Checkbox.EndCaps:SetChecked(nil)
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TIMERS"] == "OFF") then
       for i=1, 4 do
@@ -445,6 +518,8 @@ function TOCA.Init()
         TOCA.SlotGrid.HorizontalTimer[i]:Hide()
       end
       TOCA.Checkbox.Timers:SetChecked(nil)
+      TOCA.Checkbox.TimersInMinutes:SetAlpha(0.5)
+      --TOCA.Checkbox.TimersInMinutes:SetChecked(nil)
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TIMERSMINUTES"] == "OFF") then
       TOCA.globalTimerInMinutes = false
@@ -533,6 +608,12 @@ function TOCA.Init()
     TOCA.Button.TotemicCall.ECR:Hide()
     TOCA.Checkbox.EndCaps:Hide()
     TOCA.Dropdown.FrameGryphons:Hide()
+  end
+
+  if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMICCALL"] == "OFF") then
+    TOCA.Button.TotemicCall:Hide()
+    TOCA.Button.TotemicCall.ECL:Hide()
+    TOCA.Button.TotemicCall.ECR:Hide()
   end
 
   TOCA.Notification("TOCA.Init()", true)

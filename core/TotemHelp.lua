@@ -84,10 +84,9 @@ end
 TOCA.Button.TabBack[1]:SetSize(TOCA.TabWidth.Help-20, 30) --first tab
 
 TOCA.help.updates = {
-  "Welcome to " .. TOCA.Global.title .. "|r v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. "|n",
+  "Welcome to " .. TOCA.Global.title .. "|r v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " |cff4d4d4d " .. TOCA.Global.date .. "|r|n",
   "|cffffdf96Please note:|r Totem Caddy is still evolving. Improvements will be made as time continues. There is an |cff7eabd5issue tracker|r now available on |cffff9f69Curseforge|r. Enjoy!|n",
-  "|cffffdf96New Feature:|r Added forground transparency option.",
-  "|cffffdf96New Feature:|r Added an Ankh inventory reminder that will display your Ankh reagent count when you are lower than 3.",
+  "|cffffdf96New Feature:|r Added an option to display the Totemic Call button (BCC version only)",
   "|n",
   "|cffffdf96First time using Totem Caddy?|r",
   "Let's get started by dragging the Totem Caddy anywhere on your screen saving the position.",
