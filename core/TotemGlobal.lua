@@ -26,7 +26,7 @@ TOCA.Global = {
   dir    = "Interface/Addons/TotemCaddy/",
   prefix = "TotemCaddy",
   suffix = "BCC",
-  date   = "2021-12-18",
+  date   = "2021-01-09",
 }
 --local _LName, _LTitle = GetAddOnInfo(TOCA.Global.prefix)
 --TOCA.Global.version = tonumber(string.sub(_LTitle, 26, 29))
@@ -447,6 +447,9 @@ end
 
 function TOCA.Init()
   local lC, eC, cI = UnitClass("player")
+  if (GetLocale() ~= "enUS") then
+    TOCA.Notification("|cfffc2121Incorrect locale: " .. GetLocale() .. ". The current locale is set for enUS.")
+  end
 
   TOCA.FrameMain:Hide()
   if (eC == "SHAMAN") then
@@ -773,8 +776,8 @@ TOCA.TotemName={}
 TOCA.TotemStartTime={}
 TOCA.TotemDuration={}
 TOCA.TotemFunc={}
-TOCA.TotemTimer={}
 
+TOCA.TotemTimer={}
 for i=1, 4 do
   TOCA.TotemTimer[i] = 0
   TOCA.TotemDuration[i] = 0
@@ -840,12 +843,26 @@ for i=1, 4 do
   TOCA.TotemFunc[i]:Cancel()
 end
 
+function TOCA.TotemRecharge(totemName, totemCat)
+  local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(totemName)
+  if (name) then
+    --print(name)
+    local start, duration, enabled = GetSpellCooldown(name)
+    if (duration) then
+      local rechargeCooldown = start + duration - GetTime()
+      rechargeCooldown = math.ceil(rechargeCooldown)
+      --print(rechargeCooldown)
+    end
+  end
+end
+
 function TOCA.TotemBarTimerStart()
   for i=1, 4 do
     TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
     if (TOCA.TotemTimer[i] <= 0) then
       TOCA.TotemFunc[i] = C_Timer.NewTicker(1, function() TOCA.TimerFrame(i) end, TOCA.TotemDuration[i])
       TOCA.TotemTimer[i] = TOCA.TotemDuration[i]
+      TOCA.TotemRecharge(TOCA.TotemName[i], i)
     end
   end
 end

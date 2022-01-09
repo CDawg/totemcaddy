@@ -221,6 +221,7 @@ end
 TOCA.Slot={}
 TOCA.Slot.Disable={}
 TOCA.Slot.highlight={}
+TOCA.Slot.Recharge={}
 TOCA.Totem={}
 TOCA.TotemFlash={}
 TOCA.Slot.Timer={}
@@ -255,7 +256,13 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.Slot.Disable[totemCat]:SetPoint("CENTER", 0, 0)
   TOCA.Slot.Disable[totemCat]:SetBackdrop(TOCA.Backdrop.General)
   TOCA.Slot.Disable[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)
-  --TOCA.Slot.Disable[totemCat]:SetFrameStrata("TOOLTIP")
+  TOCA.Slot.Disable[totemCat]:Hide()
+  TOCA.Slot.Recharge[totemCat]= CreateFrame("Frame", nil, TOCA.Slot[totemCat], "BackdropTemplate")
+  TOCA.Slot.Recharge[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
+  TOCA.Slot.Recharge[totemCat]:SetPoint("CENTER", 0, 0)
+  TOCA.Slot.Recharge[totemCat]:SetBackdrop(TOCA.Backdrop.General)
+  TOCA.Slot.Recharge[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)
+  TOCA.Slot.Recharge[totemCat]:Hide()
   TOCA.Slot.Disable[totemCat]:Hide()
   TOCA.Totem[totemCat] = CreateFrame("Button", nil, TOCA.Slot[totemCat], "SecureActionButtonTemplate")
   TOCA.Totem[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
@@ -405,7 +412,6 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   totemButtonPos_X[totemCat] = 0
   totemButtonPos_Y[totemCat] = 0
   for i,totemSpell in pairs(TOCA.totems[totemCat]) do
-    --totemButtonPos_X[totemCat] = totemButtonPos_X[totemCat]+TOCA.Slot_w
     totemButtonPos_X[totemCat] = totemButtonPos_X[totemCat]+TOCA.Slot_w
     totemButtonPos_Y[totemCat] = totemButtonPos_Y[totemCat]+TOCA.Slot_h
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i]= CreateFrame("Button", nil, TOCA.FrameMainGridVertical, "BackdropTemplate")
