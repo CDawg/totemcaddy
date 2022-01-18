@@ -7,6 +7,16 @@
 ## OptionalDeps: Blizzard_RaidUI, Blizzard_CompactRaidFrames
 
 core/TotemLibrary.lua
+core/locales/localization.en.lua
+core/locales/localization.br.lua
+core/locales/localization.cn.lua
+core/locales/localization.de.lua
+core/locales/localization.es.lua
+core/locales/localization.fr.lua
+core/locales/localization.it.lua
+core/locales/localization.kr.lua
+core/locales/localization.ru.lua
+core/locales/localization.tw.lua
 core/TotemGlobal.lua
 TotemCaddy.lua
 core/TotemHelp.lua

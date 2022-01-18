@@ -31,7 +31,7 @@ TOCA.Global = {
 --local _LName, _LTitle = GetAddOnInfo(TOCA.Global.prefix)
 --TOCA.Global.version = tonumber(string.sub(_LTitle, 26, 29))
 
-local __Gversion, __Gbuild, __Gdate, __Gtocversion = GetBuildInfo()
+local __Gversion, __Gbuild, __Gdate, __Gtoc = GetBuildInfo()
 TOCA.Game={}
 TOCA.Game.version = tonumber(string.sub(__Gversion, 1, 1))
 if (TOCA.Game.version == 1) then
@@ -130,9 +130,9 @@ TOCA.Slot_x=-TOCA.Slot_w/2
 TOCA.AnkhReminder = 3
 TOCA.TotemsEnabled = true
 
-if (TOCA.Game.version == 1) then
-  table.remove(TOCA.totems.FIRE, 6)
-  table.remove(TOCA.totems.AIR, 2)
+if (TOCA.Game.version == 1) then --classic
+  table.remove(TOCA.totems.FIRE, 6) --totem of wrath
+  table.remove(TOCA.totems.AIR, 2) --grounding totem
 end
 
 --defaults
@@ -187,16 +187,6 @@ function TOCA.SetIcon(icon)
     edgeSize=12,
     insets={left=2, right=2, top=2, bottom=2},
   }
-  --[==[
-  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
-    array = {
-      bgFile="Interface/AddOns/".. TOCA.Global.prefix .."/images/" .. icon,
-      edgeFile="Interface/ToolTips/UI-Tooltip-Border",
-      edgeSize=2,
-      insets={left=2, right=2, top=2, bottom=2},
-    }
-  end
-  ]==]--
   return array
 end
 
@@ -478,11 +468,11 @@ function TOCA.Init()
     if (TOCADB[TOCA.player.combine]["HELP"] == nil) then
       TOCADB[TOCA.player.combine]["HELP"] = "YES"
     end
-    TOCA.Notification("Building Profile: " .. TOCA.player.combine)
+    TOCA.Notification(TOCA.locale.profile_build .. ": " .. TOCA.player.combine)
     TOCADB[TOCA.player.combine]["PROFILES"][TOCA.Dropdown.Menu[1]] = {TOCA_AIR=TOCASlotOne, TOCA_EARTH=TOCASlotTwo, TOCA_FIRE=TOCASlotThree, TOCA_WATER=TOCASlotFour}
     TOCA.UpdateTotemSet()
   else
-    TOCA.Notification("Loading Profile: " .. TOCA.player.combine)
+    TOCA.Notification(TOCA.locale.profile_load .. ": " .. TOCA.player.combine)
     if (TOCADB[TOCA.player.combine]["DISABLED"] == "YES") then
       TOCA.FrameMain:Hide()
     end
@@ -763,7 +753,7 @@ function TOCA.TooltipDisplay(owner, title, msg, anchor)
       if (msg) then
         GameTooltip:AddDoubleLine(msg, "", 1, 0.8, 0, 0,0,1)
       else
-        GameTooltip:AddDoubleLine("Unknown Spell", "", 1, 0, 0, 0,0,1)
+        GameTooltip:AddDoubleLine(TOCA.locale.spell_unknown, "", 1, 0, 0, 0,0,1)
       end
     end
     GameTooltip:Show()
@@ -871,7 +861,7 @@ function TOCA.GetReincTimer() --always checking
   local lC, eC, cI = UnitClass("player")
   if (eC == "SHAMAN") then
     local numTabs = GetNumTalentTabs()
-    local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo("Reincarnation")
+    local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(TOCA.locale.spell_reincarnation)
     if (name) then
       local start, duration, enabled = GetSpellCooldown(name)
       if (duration) then
@@ -1140,33 +1130,33 @@ end
 SLASH_TOCA1 = TCCMD
 function SlashCmdList.TOCA(cmd)
   if ((cmd == nil) or (cmd == "")) then
-    TOCA.Notification("v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix)
-    print("Commands:")
-    print("|cffffff00options:|r    Open Totem Caddy Options.")
-    print("|cffffff00show:|r        Display Totem Caddy (regardless of class).")
-    print("|cffffff00hide:|r         Close Totem Caddy.")
-    print("|cffffff00profile:|r      Display the current saved profile.")
-    print("|cffffff00help:|r         Display the help introduction.")
-    print("|cffffff00debug on:|r Enable Debug Mode (Very Spammy)")
-    print("|cffffff00debug off:|r Disable Debug Mode (/reload)")
-  elseif ((cmd == "show") or (cmd == "open")) then
-    TOCA.FrameMain:Show()
-    TOCADB[TOCA.player.combine]["DISABLED"] = "NO"
-  elseif (cmd == "hide") then
-    TOCA.FrameMain:Hide()
-  elseif (cmd == "sets") then
-    TOCA.FrameSets:Show()
-  elseif (cmd == "profile") then
-    TOCA.Notification("|r Profile: " .. TOCA.player.combine)
-  elseif ((cmd == "options") or (cmd == "config")) then
-    TOCA.FrameOptions:Show()
-  elseif (cmd == "help") then
-    TOCA.FrameHelp:Show()
-  elseif (cmd == "debug on") then
-    TOCA.DEBUG = true
-    TOCA.Notification("DEBUG ON")
-  elseif (cmd == "debug off") then
-    TOCA.DEBUG = false
-    TOCA.Notification("DEBUG OFF")
-  end
+    TOCA.Notification("v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " ("..GetLocale()..")")
+		for int,list in pairs(TOCA.locale.commands) do
+			print("|cffffff00".. list[1] .. "|r : " .. list[2] .. "|n")
+		end
+	end
+	TOCA.CommandList(cmd)
+
+	if ((cmd == "show") or (cmd == "open")) then
+	 TOCA.FrameMain:Show()
+	 TOCADB[TOCA.player.combine]["DISABLED"] = "NO"
+	elseif (cmd == "hide") then
+	 TOCA.FrameMain:Hide()
+	elseif (cmd == "sets") then
+	 TOCA.FrameSets:Show()
+	elseif (cmd == "profile") then
+	 TOCA.Notification("|r Profile: " .. TOCA.player.combine)
+	elseif ((cmd == "options") or (cmd == "config")) then
+	 TOCA.FrameOptions:Show()
+	elseif (cmd == "help") then
+	 TOCA.FrameHelp:Show()
+	elseif (cmd == "debug on") then
+	 TOCA.DEBUG = true
+	 TOCA.Notification("DEBUG ON")
+	elseif (cmd == "debug off") then
+	 TOCA.DEBUG = false
+	 TOCA.Notification("DEBUG OFF")
+ elseif (cmd == "build") then
+	 print(string.format("version = %s, build = %s, date = '%s', tocversion = %s.", __Gversion, __Gbuild, __Gdate, __Gtoc))
+	end
 end

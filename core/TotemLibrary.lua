@@ -14,42 +14,9 @@ the copyright holders.
 ]==]--
 
 TOCA={}
-TOCA.totems = {}
-TOCA.totems.FIRE = {
-  {"Fire Nova Totem",       "spell_fire_sealoffire"},
-  {"Flametongue Totem",     "spell_nature_guardianward"},
-  {"Frost Resistance Totem","spell_frostresistancetotem_01"},
-  {"Magma Totem",           "spell_fire_selfdestruct"},
-  {"Searing Totem",         "spell_fire_searingtotem"},
-  {"Totem of Wrath",        "spell_fire_totemofwrath"},
-  --{"Fire Elemental Totem",  "spell_fire_elemental_totem"},
-}
-TOCA.totems.EARTH = {
-  {"Earthbind Totem",        "spell_nature_strengthofearthtotem02"},
-  {"Stoneclaw Totem",        "spell_nature_stoneclawtotem"},
-  {"Stoneskin Totem",        "spell_nature_stoneskintotem"},
-  {"Strength of Earth Totem","spell_nature_earthbindtotem"},
-  {"Tremor Totem",           "spell_nature_tremortotem"},
-  --{"Earth Elemental Totem",  "spell_nature_earthelemental_totem"},
-}
-TOCA.totems.WATER = {
-  {"Disease Cleansing Totem","spell_nature_diseasecleansingtotem"},
-  {"Fire Resistance Totem",  "spell_fireresistancetotem_01"},
-  {"Healing Stream Totem",   "inv_spear_04"},
-  {"Mana Spring Totem",      "spell_nature_manaregentotem"},
-  {"Mana Tide Totem",        "spell_frost_summonwaterelemental"},
-  {"Poison Cleansing Totem", "spell_nature_poisoncleansingtotem"},
-}
-TOCA.totems.AIR = {
-  {"Grace of Air Totem",     "spell_nature_invisibilitytotem"},
-  {"Grounding Totem",        "spell_nature_groundingtotem"},
-  {"Nature Resistance Totem","spell_nature_natureresistancetotem"},
-  {"Sentry Totem",           "spell_nature_removecurse"},
-  {"Tranquil Air Totem",     "spell_nature_brilliance"},
-  {"Windfury Totem",         "spell_nature_windfury"},
-  {"Windwall Totem",         "spell_nature_earthbind"},
-  {"Wrath of Air Totem",     "spell_nature_slowingtotem"},
-}
+TOCA.locale={}
+TOCA.totems={}
+TOCA.help={}
 
 TOCA.spell = {
   TOTEMIC_CALL = 36936,

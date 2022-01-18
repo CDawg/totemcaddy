@@ -65,7 +65,7 @@ TOCA.Main:RegisterEvent("UNIT_ENTERED_VEHICLE")
 TOCA.Main:RegisterEvent("UNIT_EXITED_VEHICLE")
 TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted, _spellID)
   if ((event == "ADDON_LOADED") and (prefix == TOCA.Global.prefix)) then
-    TOCA.Notification("v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " Initializing by " .. TOCA.Global.author .. ". Type /" .. TOCA.Global.command .. " for commands.")
+    TOCA.Notification("v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " (" .. GetLocale() .. ") " .. TOCA.locale.init_init .. ". " .. TOCA.locale.init_type .. " /" .. TOCA.Global.command .. " " .. TOCA.locale.init_commands)
     TOCA.Init()
   end
 
@@ -186,7 +186,7 @@ TOCA.Button.TotemicCallAtt:SetScript("OnEnter", function(self)
     TOCA.Button.TotemicCall:SetBackdropBorderColor(1, 1, 1, 1)
   end
   TOCA.Button.TotemicCall.highlight:Show()
-  TOCA.TooltipDisplay(self, "Totemic Call")
+  TOCA.TooltipDisplay(self, TOCA.locale.spell_totemiccall)
 end)
 TOCA.Button.TotemicCallAtt:SetScript("OnLeave", function(self)
   if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
@@ -646,7 +646,7 @@ TOCA.Button.Options:SetScript("OnEnter", function(self)
   else
     self:SetBackdropBorderColor(1, 1, 1, 0.6)
   end
-  TOCA.TooltipDisplay(self, "Options Menu", TOCA.Global.title .. " v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix)
+  TOCA.TooltipDisplay(self, TOCA.locale.options_menu, TOCA.Global.title .. " v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " ("..GetLocale()..")")
 end)
 TOCA.Button.Options:SetScript("OnLeave", function(self)
   if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
@@ -706,7 +706,7 @@ TOCA.FrameMain.ReincFrame.text:SetPoint("CENTER", TOCA.FrameMain.ReincFrame, "CE
 TOCA.FrameMain.ReincFrame.text:SetText("")
 TOCA.FrameMain.ReincFrame.text:SetShadowOffset(1, 1)
 TOCA.FrameMain.ReincFrame:SetScript("OnEnter", function(self)
-  TOCA.TooltipDisplay(self, "Reincarnation")
+  TOCA.TooltipDisplay(self, TOCA.locale.spell_reincarnation)
 end)
 TOCA.FrameMain.ReincFrame:SetScript("OnLeave", function(self)
   TOCA.CloseAllMenus()
@@ -727,7 +727,7 @@ TOCA.FrameMain.AnkhFrame.text:SetPoint("CENTER", TOCA.FrameMain.ReincFrame, "CEN
 TOCA.FrameMain.AnkhFrame.text:SetText(TOCA.InventoryCountItem(TOCA.item.ANKH))
 TOCA.FrameMain.AnkhFrame.text:SetShadowOffset(1, 1)
 TOCA.FrameMain.AnkhFrame:SetScript("OnEnter", function(self)
-  TOCA.TooltipDisplay(self, "Ankh Reminder", "Ankhs: |cffffffff".. TOCA.InventoryCountItem(TOCA.item.ANKH) .."|r|n|nAnkh Inventory Count Reminder.|nThis will display when you have less than " .. TOCA.AnkhReminder .. " Ankhs")
+	TOCA.TooltipDisplay(self, TOCA.locale.tooltip_ankh, TOCA.locale.Ankh())
 end)
 TOCA.FrameMain.AnkhFrame:SetScript("OnLeave", function(self)
   TOCA.CloseAllMenus()

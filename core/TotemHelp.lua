@@ -25,7 +25,6 @@ TOCA.FrameHelp:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.FrameHelp:SetFrameStrata("DIALOG")
 TOCA.FrameHelp.text={}
 
-TOCA.help={}
 TOCA.TabWidth.Help = 110
 TOCA.Button.Tab={}
 TOCA.Button.TabBack={}
@@ -84,7 +83,7 @@ end
 TOCA.Button.TabBack[1]:SetSize(TOCA.TabWidth.Help-20, 30) --first tab
 
 TOCA.help.updates = {
-  "Welcome to " .. TOCA.Global.title .. "|r v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " |cff4d4d4d " .. TOCA.Global.date .. "|r|n",
+  "Welcome to " .. TOCA.Global.title .. "|r v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " ("..GetLocale()..") |cff4d4d4d " .. TOCA.Global.date .. "|r|n",
   "|cffffdf96Please note:|r Totem Caddy is still evolving. Improvements will be made as time continues. There is an |cff7eabd5issue tracker|r now available on |cffff9f69Curseforge|r. Enjoy!|n",
   "|cffffdf96New Feature:|r Added an option to display the Totemic Call button (BCC version only)",
   "|n",
@@ -103,7 +102,6 @@ TOCA.help.contact = {
   "Please feel free to reach out and let me know what improvements can be made.\n",
   "|cffffdf96Curseforge:|r https://www.curseforge.com/wow/addons/totem-caddy/\n",
   "|cffffdf96Discord:|r https://discord.com/users/Porthios#8963\n",
-  "|cffffdf96Github:|r https://github.com/CDawg/totemcaddy",
 }
 TOCA.help.credit = {
   "Special thanks to some beta testers from the Myzrael realm.",
