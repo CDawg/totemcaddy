@@ -273,7 +273,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     --TOCA.CloseAllMenus()
     if (totemCat == "AIR") then
       tTotal = getn(TOCA.totems.AIR)
-      tCurrent = multiKeyFromValue(TOCA.totems.AIR, TOCASlotOne, 1)
+      tCurrent = getKeyFromValue(TOCA.totems.AIR, TOCASlotOne, 1)
       if (sTotem == nil) then
         sTotem = tCurrent
       end

@@ -87,6 +87,57 @@ TOCA.Backdrop.BorderOnly= {
   insets  = {left=2, right=2, top=2, bottom=2},
 }
 
+--all icons must in order to sync with totems by category
+TOCA.icons.FIRE = {
+  "spell_fire_sealoffire",
+  "spell_nature_guardianward",
+  "spell_frostresistancetotem_01",
+  "spell_fire_selfdestruct",
+  "spell_fire_searingtotem",
+  "spell_fire_totemofwrath",
+}
+TOCA.icons.EARTH = {
+  "spell_nature_strengthofearthtotem02",
+  "spell_nature_stoneclawtotem",
+  "spell_nature_stoneskintotem",
+  "spell_nature_earthbindtotem",
+  "spell_nature_tremortotem",
+}
+TOCA.icons.WATER = {
+  "spell_nature_diseasecleansingtotem",
+  "spell_fireresistancetotem_01",
+  "inv_spear_04",
+  "spell_nature_manaregentotem",
+  "spell_frost_summonwaterelemental",
+  "spell_nature_poisoncleansingtotem",
+}
+TOCA.icons.AIR = {
+  "spell_nature_invisibilitytotem",
+  "spell_nature_groundingtotem",
+  "spell_nature_natureresistancetotem",
+  "spell_nature_removecurse",
+  "spell_nature_brilliance",
+  "spell_nature_windfury",
+  "spell_nature_earthbind",
+  "spell_nature_slowingtotem",
+}
+
+--match the totems spells to their respective icons
+for totemCat,v in pairsByKeys(TOCA.totems) do
+	for k,v in pairsByKeys(TOCA.totems[totemCat]) do
+		TOCA.totems[totemCat][k][2] = TOCA.icons[totemCat][k]
+	end
+end
+
+--[==[
+for totemCat,v in pairsByKeys(TOCA.totems) do
+	print(totemCat)
+	for k,v in pairsByKeys(TOCA.totems[totemCat]) do
+		print(v[1] .. " = " .. v[2])
+	end
+end
+]==]--
+
 TOCA.version_alerted = 0
 function TOCA.VersionControl(netprefix, netpacket)
   if (netprefix == TOCA.Global.prefix) then
@@ -229,22 +280,22 @@ function TOCA.Round(num, numDecimalPlaces)
 end
 
 function TOCA.UpdateTotemSet()
-  local totemIconKey = multiKeyFromValue(TOCA.totems.AIR, TOCASlotOne, 1)
+  local totemIconKey = getKeyFromValue(TOCA.totems.AIR, TOCASlotOne, 1)
   local totemIcon = TOCA.SetIcon(TOCA.totems.AIR[totemIconKey][2])
   TOCA.Slot["AIR"]:SetBackdrop(totemIcon)
   TOCA.FrameSetsSlot["AIR"]:SetBackdrop(totemIcon)
 
-  local totemIconKey = multiKeyFromValue(TOCA.totems.EARTH, TOCASlotTwo, 1)
+  local totemIconKey = getKeyFromValue(TOCA.totems.EARTH, TOCASlotTwo, 1)
   local totemIcon = TOCA.SetIcon(TOCA.totems.EARTH[totemIconKey][2])
   TOCA.Slot["EARTH"]:SetBackdrop(totemIcon)
   TOCA.FrameSetsSlot["EARTH"]:SetBackdrop(totemIcon)
 
-  local totemIconKey = multiKeyFromValue(TOCA.totems.FIRE, TOCASlotThree, 1)
+  local totemIconKey = getKeyFromValue(TOCA.totems.FIRE, TOCASlotThree, 1)
   local totemIcon = TOCA.SetIcon(TOCA.totems.FIRE[totemIconKey][2])
   TOCA.Slot["FIRE"]:SetBackdrop(totemIcon)
   TOCA.FrameSetsSlot["FIRE"]:SetBackdrop(totemIcon)
 
-  local totemIconKey = multiKeyFromValue(TOCA.totems.WATER, TOCASlotFour, 1)
+  local totemIconKey = getKeyFromValue(TOCA.totems.WATER, TOCASlotFour, 1)
   local totemIcon = TOCA.SetIcon(TOCA.totems.WATER[totemIconKey][2])
   TOCA.Slot["WATER"]:SetBackdrop(totemIcon)
   TOCA.FrameSetsSlot["WATER"]:SetBackdrop(totemIcon)
@@ -911,19 +962,19 @@ function TOCA.TotemTimerResetBySpell(spellID)
   local spell = GetSpellInfo(spellID)
   local totemCatSpell={}
   if (spell) then
-    totemCatSpell.fire = multiKeyFromValue(TOCA.totems.FIRE, spell, 1)
+    totemCatSpell.fire = getKeyFromValue(TOCA.totems.FIRE, spell, 1)
     if (totemCatSpell.fire) then
       TOCA.TotemTimerReset(1)
     end
-    totemCatSpell.earth = multiKeyFromValue(TOCA.totems.EARTH, spell, 1)
+    totemCatSpell.earth = getKeyFromValue(TOCA.totems.EARTH, spell, 1)
     if (totemCatSpell.earth) then
       TOCA.TotemTimerReset(2)
     end
-    totemCatSpell.water = multiKeyFromValue(TOCA.totems.WATER, spell, 1)
+    totemCatSpell.water = getKeyFromValue(TOCA.totems.WATER, spell, 1)
     if (totemCatSpell.water) then
       TOCA.TotemTimerReset(3)
     end
-    totemCatSpell.air = multiKeyFromValue(TOCA.totems.AIR, spell, 1)
+    totemCatSpell.air = getKeyFromValue(TOCA.totems.AIR, spell, 1)
     if (totemCatSpell.air) then
       TOCA.TotemTimerReset(4)
     end

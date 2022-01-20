@@ -16,8 +16,8 @@ the copyright holders.
 TOCA={}
 TOCA.locale={}
 TOCA.totems={}
+TOCA.icons={}
 TOCA.help={}
-
 TOCA.spell = {
   TOTEMIC_CALL = 36936,
 }
@@ -62,7 +62,7 @@ function table.merge(t1, t2)
   return t1
 end
 
-function pairsByKeys (t, f)
+function pairsByKeys(t, f)
   local a = {}
   for n in pairs(t) do table.insert(a, n) end
   table.sort(a, f)
@@ -80,22 +80,18 @@ function firstToUpper(str)
   return (str:gsub("^%l", string.upper))
 end
 
---single key
-function singleKeyFromValue(_array, value)
-  for k,v in pairs(_array) do
-    if v==value then return k end
-  end
-  return nil
-end
--- matrix key
-function multiKeyFromValue(_array, value, index)
+function getKeyFromValue(_array, value, index)
   if ((index == nil) or (index == 0)) then
-    index = 1
-  end
-  for k,v in pairs(_array) do
-    if v[index]==value then return k end
-  end
-  return nil
+		for k,v in pairs(_array) do
+			if v==value then return k end
+		end
+		return nil
+  else
+	  for k,v in pairs(_array) do
+	    if v[index]==value then return k end
+	  end
+	  return nil
+	end
 end
 
 function reindexArray(input, reval)
@@ -125,14 +121,6 @@ function reindexArraySafe(array)
     newArray[n] = v
   end
   return newArray
-end
-
-function removeValueFromArray(array, value)
-  if (value) then
-    remove_key = singleKeyFromValue(array, value)
-    array[remove_key] = nil
-    reindexArray(array, array)
-  end
 end
 
 function TimeSecondsToMinutes(time)
