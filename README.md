@@ -6,7 +6,7 @@ WARNING!
 
 
 WHAT THE ADDON IS FOR:
-  Totem Caddy is a light weight Totem Managing addon allowing you to manage your totem slots easier with a small UI toolbar, categorized by Air, Earth, Fire, and Water totems for a quick and easy set up.
+  Totem Caddy is a World of Warcraft [Classic/TBC] light weight Totem Managing addon allowing you to manage your totem slots easier with a small UI toolbar, categorized by Air, Earth, Fire, and Water totems for a quick and easy set up.
 
 
 INSTALLATION:
