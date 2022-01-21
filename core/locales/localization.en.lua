@@ -27,38 +27,39 @@ TOCA.locale.commands = {
 	{"debug off", "Disable Debug Mode (/reload)"},
 }
 
-TOCA.totems.FIRE = {
-  {"Fire Nova Totem"},
-  {"Flametongue Totem"},
-  {"Frost Resistance Totem"},
-  {"Magma Totem"},
-  {"Searing Totem"},
-  {"Totem of Wrath"},
+--WARNING! Changing the order of these totems will cause synchronization issues.
+TOCA.totemspells.FIRE = {
+  "Fire Nova Totem",
+  "Flametongue Totem",
+  "Frost Resistance Totem",
+  "Magma Totem",
+  "Searing Totem",
+  "Totem of Wrath",
 }
-TOCA.totems.EARTH = {
-  {"Earthbind Totem"},
-  {"Stoneclaw Totem"},
-  {"Stoneskin Totem"},
-  {"Strength of Earth Totem"},
-  {"Tremor Totem"},
+TOCA.totemspells.EARTH = {
+  "Earthbind Totem",
+  "Stoneclaw Totem",
+  "Stoneskin Totem",
+  "Strength of Earth Totem",
+  "Tremor Totem",
 }
-TOCA.totems.WATER = {
-  {"Disease Cleansing Totem"},
-  {"Fire Resistance Totem"},
-  {"Healing Stream Totem"},
-  {"Mana Spring Totem"},
-  {"Mana Tide Totem"},
-  {"Poison Cleansing Totem"},
+TOCA.totemspells.WATER = {
+  "Disease Cleansing Totem",
+  "Fire Resistance Totem",
+  "Healing Stream Totem",
+  "Mana Spring Totem",
+  "Mana Tide Totem",
+  "Poison Cleansing Totem",
 }
-TOCA.totems.AIR = {
-  {"Grace of Air Totem"},
-  {"Grounding Totem"},
-  {"Nature Resistance Totem"},
-  {"Sentry Totem"},
-  {"Tranquil Air Totem"},
-  {"Windfury Totem"},
-  {"Windwall Totem"},
-  {"Wrath of Air Totem"},
+TOCA.totemspells.AIR = {
+  "Grace of Air Totem",
+  "Grounding Totem",
+  "Nature Resistance Totem",
+  "Sentry Totem",
+  "Tranquil Air Totem",
+  "Windfury Totem",
+  "Windwall Totem",
+  "Wrath of Air Totem",
 }
 
 function TOCA.CommandList(cmd)

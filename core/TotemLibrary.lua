@@ -15,8 +15,9 @@ the copyright holders.
 
 TOCA={}
 TOCA.locale={}
-TOCA.totems={}
+TOCA.totemspells={}
 TOCA.icons={}
+TOCA.totems={}
 TOCA.help={}
 TOCA.spell = {
   TOTEMIC_CALL = 36936,

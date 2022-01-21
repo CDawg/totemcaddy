@@ -87,7 +87,7 @@ TOCA.Backdrop.BorderOnly= {
   insets  = {left=2, right=2, top=2, bottom=2},
 }
 
---all icons must in order to sync with totems by category
+--all icons must in order to sync with totemspells[locales] by category
 TOCA.icons.FIRE = {
   "spell_fire_sealoffire",
   "spell_nature_guardianward",
@@ -123,20 +123,21 @@ TOCA.icons.AIR = {
 }
 
 --match the totems spells to their respective icons
+TOCA.totems = {FIRE={}, EARTH={}, WATER={}, AIR={}}
 for totemCat,v in pairsByKeys(TOCA.totems) do
-	for k,v in pairsByKeys(TOCA.totems[totemCat]) do
+	for k,v in pairsByKeys(TOCA.totemspells[totemCat]) do
+		TOCA.totems[totemCat][k] = {}
+		TOCA.totems[totemCat][k][1] = TOCA.totemspells[totemCat][k]
 		TOCA.totems[totemCat][k][2] = TOCA.icons[totemCat][k]
 	end
 end
 
---[==[
 for totemCat,v in pairsByKeys(TOCA.totems) do
 	print(totemCat)
 	for k,v in pairsByKeys(TOCA.totems[totemCat]) do
 		print(v[1] .. " = " .. v[2])
 	end
 end
-]==]--
 
 TOCA.version_alerted = 0
 function TOCA.VersionControl(netprefix, netpacket)
