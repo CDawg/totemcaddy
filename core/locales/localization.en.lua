@@ -1,10 +1,48 @@
 --default load in enUS, then load overwrites.
+
 TOCA.locale = {
 
 	SPELLS = {
 		Unknown       = "Unknown",
 		Reincarnation = "Reincarnation",
 		TotemicCall   = "Totemic Call",
+	},
+
+	TOTEMS = {
+		--WARNING! Changing the order of these totems will cause synchronization issues.
+		FIRE = {
+		  "Fire Nova Totem",
+		  "Flametongue Totem",
+		  "Frost Resistance Totem",
+		  "Magma Totem",
+		  "Searing Totem",
+		  "Totem of Wrath",
+		},
+		EARTH = {
+		  "Earthbind Totem",
+		  "Stoneclaw Totem",
+		  "Stoneskin Totem",
+		  "Strength of Earth Totem",
+		  "Tremor Totem",
+		},
+		WATER = {
+		  "Disease Cleansing Totem",
+		  "Fire Resistance Totem",
+		  "Healing Stream Totem",
+		  "Mana Spring Totem",
+		  "Mana Tide Totem",
+		  "Poison Cleansing Totem",
+		},
+		AIR = {
+		  "Grace of Air Totem",
+		  "Grounding Totem",
+		  "Nature Resistance Totem",
+		  "Sentry Totem",
+		  "Tranquil Air Totem",
+		  "Windfury Totem",
+		  "Windwall Totem",
+		  "Wrath of Air Totem",
+		}
 	},
 
 	INIT = {
@@ -145,43 +183,6 @@ end
 function TOCA.locale.Ankh()
 	return "Ankhs: |cffffffff".. TOCA.InventoryCountItem(TOCA.item.ANKH) .."|r|n|nAnkh Inventory Count Reminder.|nThis will display when you have less than " .. TOCA.AnkhReminder .. " Ankhs"
 end
-
---WARNING! Changing the order of these totems will cause synchronization issues.
-TOCA.totemspells = {
-	FIRE = {
-	  "Fire Nova Totem",
-	  "Flametongue Totem",
-	  "Frost Resistance Totem",
-	  "Magma Totem",
-	  "Searing Totem",
-	  "Totem of Wrath",
-	},
-	EARTH = {
-	  "Earthbind Totem",
-	  "Stoneclaw Totem",
-	  "Stoneskin Totem",
-	  "Strength of Earth Totem",
-	  "Tremor Totem",
-	},
-	WATER = {
-	  "Disease Cleansing Totem",
-	  "Fire Resistance Totem",
-	  "Healing Stream Totem",
-	  "Mana Spring Totem",
-	  "Mana Tide Totem",
-	  "Poison Cleansing Totem",
-	},
-	AIR = {
-	  "Grace of Air Totem",
-	  "Grounding Totem",
-	  "Nature Resistance Totem",
-	  "Sentry Totem",
-	  "Tranquil Air Totem",
-	  "Windfury Totem",
-	  "Windwall Totem",
-	  "Wrath of Air Totem",
-	}
-}
 
 function TOCA.CommandList(cmd)
 	if (cmd == "show") then

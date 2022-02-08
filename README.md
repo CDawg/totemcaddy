@@ -20,6 +20,4 @@ Enjoy!
 
 
 CONTACT:
-Porthios@Myzrael (west coast server)
-or
 Porthias@Myzrael (west coast server)

@@ -126,9 +126,9 @@ TOCA.icons = {
 --match the totems spells to their respective icons
 TOCA.totems = {FIRE={}, EARTH={}, WATER={}, AIR={}}
 for totemCat,v in pairsByKeys(TOCA.totems) do
-	for k,v in pairsByKeys(TOCA.totemspells[totemCat]) do
+	for k,v in pairsByKeys(TOCA.locale.TOTEMS[totemCat]) do
 		TOCA.totems[totemCat][k] = {}
-		TOCA.totems[totemCat][k][1] = TOCA.totemspells[totemCat][k]
+		TOCA.totems[totemCat][k][1] = TOCA.locale.TOTEMS[totemCat][k]
 		TOCA.totems[totemCat][k][2] = TOCA.icons[totemCat][k]
 	end
 end
