@@ -87,39 +87,41 @@ TOCA.Backdrop.BorderOnly= {
   insets  = {left=2, right=2, top=2, bottom=2},
 }
 
---all icons must in order to sync with totemspells[locales] by category
-TOCA.icons.FIRE = {
-  "spell_fire_sealoffire",
-  "spell_nature_guardianward",
-  "spell_frostresistancetotem_01",
-  "spell_fire_selfdestruct",
-  "spell_fire_searingtotem",
-  "spell_fire_totemofwrath",
-}
-TOCA.icons.EARTH = {
-  "spell_nature_strengthofearthtotem02",
-  "spell_nature_stoneclawtotem",
-  "spell_nature_stoneskintotem",
-  "spell_nature_earthbindtotem",
-  "spell_nature_tremortotem",
-}
-TOCA.icons.WATER = {
-  "spell_nature_diseasecleansingtotem",
-  "spell_fireresistancetotem_01",
-  "inv_spear_04",
-  "spell_nature_manaregentotem",
-  "spell_frost_summonwaterelemental",
-  "spell_nature_poisoncleansingtotem",
-}
-TOCA.icons.AIR = {
-  "spell_nature_invisibilitytotem",
-  "spell_nature_groundingtotem",
-  "spell_nature_natureresistancetotem",
-  "spell_nature_removecurse",
-  "spell_nature_brilliance",
-  "spell_nature_windfury",
-  "spell_nature_earthbind",
-  "spell_nature_slowingtotem",
+--all icons must be in order to sync with totemspells[locales] by category
+TOCA.icons = {
+	 FIRE = {
+	  "spell_fire_sealoffire",
+	  "spell_nature_guardianward",
+	  "spell_frostresistancetotem_01",
+	  "spell_fire_selfdestruct",
+	  "spell_fire_searingtotem",
+	  "spell_fire_totemofwrath",
+  },
+	EARTH = {
+	  "spell_nature_strengthofearthtotem02",
+	  "spell_nature_stoneclawtotem",
+	  "spell_nature_stoneskintotem",
+	  "spell_nature_earthbindtotem",
+	  "spell_nature_tremortotem",
+	},
+  WATER = {
+	  "spell_nature_diseasecleansingtotem",
+	  "spell_fireresistancetotem_01",
+	  "inv_spear_04",
+	  "spell_nature_manaregentotem",
+	  "spell_frost_summonwaterelemental",
+	  "spell_nature_poisoncleansingtotem",
+	},
+	AIR = {
+	  "spell_nature_invisibilitytotem",
+	  "spell_nature_groundingtotem",
+	  "spell_nature_natureresistancetotem",
+	  "spell_nature_removecurse",
+	  "spell_nature_brilliance",
+	  "spell_nature_windfury",
+	  "spell_nature_earthbind",
+	  "spell_nature_slowingtotem",
+	}
 }
 
 --match the totems spells to their respective icons
@@ -129,13 +131,6 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 		TOCA.totems[totemCat][k] = {}
 		TOCA.totems[totemCat][k][1] = TOCA.totemspells[totemCat][k]
 		TOCA.totems[totemCat][k][2] = TOCA.icons[totemCat][k]
-	end
-end
-
-for totemCat,v in pairsByKeys(TOCA.totems) do
-	print(totemCat)
-	for k,v in pairsByKeys(TOCA.totems[totemCat]) do
-		print(v[1] .. " = " .. v[2])
 	end
 end
 
@@ -156,6 +151,7 @@ function TOCA.VersionControl(netprefix, netpacket)
   end
 end
 
+--menu & frame system default structures
 TOCA.Button={}
 TOCA.Checkbox={}
 TOCA.Slider={}
@@ -179,7 +175,6 @@ TOCA.Framelevel = {
 TOCA.Slot_w=35
 TOCA.Slot_h=35
 TOCA.Slot_x=-TOCA.Slot_w/2
-TOCA.AnkhReminder = 3
 TOCA.TotemsEnabled = true
 
 if (TOCA.Game.version == 1) then --classic
@@ -187,7 +182,7 @@ if (TOCA.Game.version == 1) then --classic
   table.remove(TOCA.totems.AIR, 2) --grounding totem
 end
 
---defaults
+--default totem slots
 TOCASlotOne  = TOCA.totems.AIR[1][1]
 TOCASlotTwo  = TOCA.totems.EARTH[1][1]
 TOCASlotThree= TOCA.totems.FIRE[1][1]
@@ -520,11 +515,11 @@ function TOCA.Init()
     if (TOCADB[TOCA.player.combine]["HELP"] == nil) then
       TOCADB[TOCA.player.combine]["HELP"] = "YES"
     end
-    TOCA.Notification(TOCA.locale.profile_build .. ": " .. TOCA.player.combine)
+    TOCA.Notification(TOCA.locale.INIT[1] .. ": " .. TOCA.player.combine)
     TOCADB[TOCA.player.combine]["PROFILES"][TOCA.Dropdown.Menu[1]] = {TOCA_AIR=TOCASlotOne, TOCA_EARTH=TOCASlotTwo, TOCA_FIRE=TOCASlotThree, TOCA_WATER=TOCASlotFour}
     TOCA.UpdateTotemSet()
   else
-    TOCA.Notification(TOCA.locale.profile_load .. ": " .. TOCA.player.combine)
+    TOCA.Notification(TOCA.locale.INIT[2] .. ": " .. TOCA.player.combine)
     if (TOCADB[TOCA.player.combine]["DISABLED"] == "YES") then
       TOCA.FrameMain:Hide()
     end
@@ -578,6 +573,9 @@ function TOCA.Init()
       TOCA.FrameMain.AnkhFrame:Hide()
       TOCA.Checkbox.Ankh:SetChecked(nil)
     end
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGE"] == "OFF") then
+			TOCA.Checkbox.Ankh:SetChecked(nil)
+		end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMORDER"]) then
       TOCA.SetTotemOrderDropdown()
       TOCA.SetTotemOrder()
@@ -805,7 +803,7 @@ function TOCA.TooltipDisplay(owner, title, msg, anchor)
       if (msg) then
         GameTooltip:AddDoubleLine(msg, "", 1, 0.8, 0, 0,0,1)
       else
-        GameTooltip:AddDoubleLine(TOCA.locale.spell_unknown, "", 1, 0, 0, 0,0,1)
+        GameTooltip:AddDoubleLine(TOCA.locale.SPELLS.Unknown, "", 1, 0, 0, 0,0,1)
       end
     end
     GameTooltip:Show()
@@ -843,6 +841,19 @@ function TOCA.TimerFrame(i)
     TOCA.SlotGrid.VerticalTimer[i]:SetText("")
     TOCA.SlotGrid.HorizontalTimer[i]:SetText("")
   end
+
+	if (TOCA.isInCombat) then
+		if (TOCA.TotemTimer[i] == 10) then
+			if (TOCA.TotemName[i]) then
+				--if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRENOTIF"] ~= "OFF") then
+					TOCA.Notification("|cfff6d526 [" .. TOCA.TotemName[i] .. "]|r is expiring!")
+				--end
+				--if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESOUND"] ~= "OFF") then
+					PlaySoundFile(TOCA.Global.dir .. "sounds/totemexpire.ogg")
+				--end
+			end
+		end
+	end
 
   if (TOCADB[TOCA.player.combine]["CONFIG"]["TIMERS"] == "OFF") then
     for i=1, 4 do --hide all
@@ -913,7 +924,7 @@ function TOCA.GetReincTimer() --always checking
   local lC, eC, cI = UnitClass("player")
   if (eC == "SHAMAN") then
     local numTabs = GetNumTalentTabs()
-    local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(TOCA.locale.spell_reincarnation)
+    local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(TOCA.locale.SPELLS.Reincarnation)
     if (name) then
       local start, duration, enabled = GetSpellCooldown(name)
       if (duration) then
@@ -1042,6 +1053,12 @@ function TOCA.Combat(event)
       TOCA.Notification("Combat Ended", true)
     end
   end
+end
+
+function TotemExpiring(totem)
+	if (TOCA.isInCombat) then
+		print("in combat")
+	end
 end
 
 function TOCA.InventoryCountItem(itemID)
@@ -1188,27 +1205,4 @@ function SlashCmdList.TOCA(cmd)
 		end
 	end
 	TOCA.CommandList(cmd)
-
-	if ((cmd == "show") or (cmd == "open")) then
-	 TOCA.FrameMain:Show()
-	 TOCADB[TOCA.player.combine]["DISABLED"] = "NO"
-	elseif (cmd == "hide") then
-	 TOCA.FrameMain:Hide()
-	elseif (cmd == "sets") then
-	 TOCA.FrameSets:Show()
-	elseif (cmd == "profile") then
-	 TOCA.Notification("|r Profile: " .. TOCA.player.combine)
-	elseif ((cmd == "options") or (cmd == "config")) then
-	 TOCA.FrameOptions:Show()
-	elseif (cmd == "help") then
-	 TOCA.FrameHelp:Show()
-	elseif (cmd == "debug on") then
-	 TOCA.DEBUG = true
-	 TOCA.Notification("DEBUG ON")
-	elseif (cmd == "debug off") then
-	 TOCA.DEBUG = false
-	 TOCA.Notification("DEBUG OFF")
- elseif (cmd == "build") then
-	 print(string.format("version = %s, build = %s, date = '%s', tocversion = %s.", __Gversion, __Gbuild, __Gdate, __Gtoc))
-	end
 end

@@ -14,7 +14,6 @@ the copyright holders.
 ]==]--
 
 TOCA={}
-TOCA.locale={}
 TOCA.totemspells={}
 TOCA.icons={}
 TOCA.totems={}
@@ -27,12 +26,7 @@ TOCA.item = {
   ANKH = 17030,
 }
 
-TOCA.orderGame = { --how the ingame sorts totems
-  FIRE = 1,
-  EARTH= 2,
-  WATER= 3,
-  AIR  = 4,
-}
+TOCA.AnkhReminder = 3
 
 function arrayToString(array)
   formstring=""

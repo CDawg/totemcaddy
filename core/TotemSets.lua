@@ -13,7 +13,7 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
-TOCA.FrameSets = CreateFrame("Button", TOCA.FrameSets, TOCA.FrameOptionsPage[TOCA.OptionTabs[2]], "BackdropTemplate")
+TOCA.FrameSets = CreateFrame("Button", TOCA.FrameSets, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[2]], "BackdropTemplate")
 TOCA.FrameSets:SetWidth(300)
 TOCA.FrameSets:SetHeight(180)
 TOCA.FrameSets:SetPoint("TOPLEFT", 50, 0)
@@ -93,7 +93,7 @@ TOCA.Button.FrameSetsDeleteOpenPrompt:SetScript("OnClick", function()
     TOCA.Prompt.DeleteSetText:SetText('Delete Totem Set "' .. profileSaveText .. '" ?')
     TOCA.Prompt.DeleteSet:Show()
     --TOCA.FrameSets:Hide()
-    TOCA.FrameOptionsPage[TOCA.OptionTabs[2]]:SetAlpha(0.50)
+    TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[2]]:SetAlpha(0.50)
   end
 end)
 TOCA.Button.FrameSetsDeleteOpenPromptText = TOCA.Button.FrameSetsDeleteOpenPrompt:CreateFontString(nil, "ARTWORK")
@@ -141,7 +141,7 @@ TOCA.Button.FrameSetsDelete:SetScript("OnClick", function()
       TOCA.SetDDMenu(TOCA.Dropdown.Main, TOCA.Dropdown.Menu[1])
       TOCA.FrameSetsProfile:SetText("")
       TOCA.Prompt.DeleteSet:Hide()
-      TOCA.FrameOptionsPage[TOCA.OptionTabs[2]]:SetAlpha(1)
+      TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[2]]:SetAlpha(1)
     end
   end
   TOCA.CloseAllMenus()
@@ -166,7 +166,7 @@ end)
 TOCA.Button.FrameSetsCancel:SetScript("OnClick", function()
   --TOCA.FrameSets:Show()
   TOCA.Prompt.DeleteSet:Hide()
-  TOCA.FrameOptionsPage[TOCA.OptionTabs[2]]:SetAlpha(1)
+  TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[2]]:SetAlpha(1)
 end)
 TOCA.Button.FrameSetsCancelText = TOCA.Button.FrameSetsCancel:CreateFontString(nil, "ARTWORK")
 TOCA.Button.FrameSetsCancelText:SetFont(TOCA.Global.font, 11)
@@ -296,7 +296,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   end)
 end
 
-TOCA.FrameSetsProfileTitle = TOCA.FrameOptionsPage[TOCA.OptionTabs[2]]:CreateFontString(nil, "ARTWORK")
+TOCA.FrameSetsProfileTitle = TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[2]]:CreateFontString(nil, "ARTWORK")
 TOCA.FrameSetsProfileTitle:SetFont(TOCA.Global.font, 12)
 TOCA.FrameSetsProfileTitle:SetPoint("TOPLEFT", 30, -123)
 TOCA.FrameSetsProfileTitle:SetText("Set Name")
@@ -328,13 +328,13 @@ TOCA.FrameSetsProfile:SetScript("OnKeyUp", function(self)
   TOCA.CloseAllMenus()
 end)
 
-TOCA.DropdownTitle = TOCA.FrameOptionsPage[TOCA.OptionTabs[2]]:CreateFontString(nil, "ARTWORK")
+TOCA.DropdownTitle = TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[2]]:CreateFontString(nil, "ARTWORK")
 TOCA.DropdownTitle:SetFont(TOCA.Global.font, 12)
 TOCA.DropdownTitle:SetPoint("TOPLEFT", 30, -20)
 TOCA.DropdownTitle:SetText("Set Selection")
 TOCA.DropdownTitle:SetTextColor(1, 1, 0.5, 1)
 
-TOCA.Dropdown.Sets = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA.OptionTabs[2]], "UIDropDownMenuTemplate")
+TOCA.Dropdown.Sets = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[2]], "UIDropDownMenuTemplate")
 TOCA.Dropdown.Sets:SetPoint("TOPLEFT", 10, -35)
 TOCA.Dropdown.Sets.displayMode = "MENU"
 TOCA.Dropdown.Sets.text = TOCA.Dropdown.Sets:CreateFontString(nil, "ARTWORK")
