@@ -574,7 +574,10 @@ function TOCA.Init()
       TOCA.Checkbox.Ankh:SetChecked(nil)
     end
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGE"] == "OFF") then
-			TOCA.Checkbox.Ankh:SetChecked(nil)
+			TOCA.Checkbox.ExpireMessage:SetChecked(nil)
+		end
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGE"] == "OFF") then
+			TOCA.Checkbox.ExpireSound:SetChecked(nil)
 		end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMORDER"]) then
       TOCA.SetTotemOrderDropdown()
@@ -845,12 +848,12 @@ function TOCA.TimerFrame(i)
 	if (TOCA.isInCombat) then
 		if (TOCA.TotemTimer[i] == 10) then
 			if (TOCA.TotemName[i]) then
-				--if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRENOTIF"] ~= "OFF") then
+				if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGE"] ~= "OFF") then
 					TOCA.Notification("|cfff6d526 [" .. TOCA.TotemName[i] .. "]|r is expiring!")
-				--end
-				--if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESOUND"] ~= "OFF") then
+				end
+				if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESOUND"] ~= "OFF") then
 					PlaySoundFile(TOCA.Global.dir .. "sounds/totemexpire.ogg")
-				--end
+				end
 			end
 		end
 	end
