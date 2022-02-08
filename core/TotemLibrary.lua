@@ -14,6 +14,7 @@ the copyright holders.
 ]==]--
 
 TOCA={}
+__Gversion, __Gbuild, __Gdate, __Gtoc = GetBuildInfo()
 TOCA.totemspells={}
 TOCA.icons={}
 TOCA.totems={}

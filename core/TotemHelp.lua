@@ -67,11 +67,11 @@ for i=1, getn(TOCA.TABS.HELP) do
     end
     TOCA.Button.TabBack[i]:SetSize(TOCA.TabWidth.Help-20, 31)
     if (TOCA.TABS.HELP[i] == TOCA.TABS.HELP[3]) then
-      TOCA.TextFrame.text:SetText(arrayToString(TOCA.help.credit))
+      TOCA.TextFrame.text:SetText(arrayToString(TOCA.HELP.CREDIT))
     elseif (TOCA.TABS.HELP[i] == TOCA.TABS.HELP[2]) then
-      TOCA.TextFrame.text:SetText(arrayToString(TOCA.help.contact))
+      TOCA.TextFrame.text:SetText(arrayToString(TOCA.HELP.CONTACT))
     else
-      TOCA.TextFrame.text:SetText(arrayToString(TOCA.help.updates))
+      TOCA.TextFrame.text:SetText(arrayToString(TOCA.HELP.UPDATES))
     end
   end)
 end
@@ -110,7 +110,7 @@ TOCA.TextFrame.text:SetPoint("TOPLEFT", 4, -4)
 TOCA.TextFrame.text:SetMultiLine(true)
 TOCA.TextFrame.text:ClearFocus(self)
 TOCA.TextFrame.text:SetAutoFocus(false)
-TOCA.TextFrame.text:SetText(arrayToString(TOCA.help.updates))
+TOCA.TextFrame.text:SetText(arrayToString(TOCA.HELP.UPDATES))
 
 TOCA.Button.CloseFrameHelp= CreateFrame("Button", nil, TOCA.FrameHelp, "BackdropTemplate")
 TOCA.Button.CloseFrameHelp:SetSize(100, 25)
@@ -137,10 +137,10 @@ TOCA.ShowAgain={}
 TOCA.ShowAgain[1] = TOCA.FrameHelp:CreateFontString(nil, "ARTWORK")
 TOCA.ShowAgain[1]:SetFont(TOCA.Global.font, 10, "OUTLINE")
 TOCA.ShowAgain[1]:SetPoint("CENTER", 0, -105)
-TOCA.ShowAgain[1]:SetText("This message will not show again unless there is a new version.")
+TOCA.ShowAgain[1]:SetText(TOCA.HELP.FOOTER[1])
 TOCA.ShowAgain[1]:SetTextColor(0.7, 0.7, 0.6, 1)
 TOCA.ShowAgain[2] = TOCA.FrameHelp:CreateFontString(nil, "ARTWORK")
 TOCA.ShowAgain[2]:SetFont(TOCA.Global.font, 10, "OUTLINE")
 TOCA.ShowAgain[2]:SetPoint("CENTER", 0, -120)
-TOCA.ShowAgain[2]:SetText('Type "toca /help" anytime to display this help message.')
+TOCA.ShowAgain[2]:SetText(TOCA.HELP.FOOTER[2])
 TOCA.ShowAgain[2]:SetTextColor(0.7, 0.7, 0.6, 1)

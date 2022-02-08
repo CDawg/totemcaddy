@@ -1,5 +1,6 @@
 --default load in enUS, then load overwrites.
 TOCA.locale = {
+
 	SPELLS = {
 		Unknown       = "Unknown",
 		Reincarnation = "Reincarnation",
@@ -10,6 +11,7 @@ TOCA.locale = {
 	  "Building Profile",
 	  "Loading Profile",
 		"Ankh Reminder",
+		"is expiring!",
 	},
 
   UI = {
@@ -63,7 +65,7 @@ TOCA.locale = {
 			{"Display Totem Tooltip", "Toggle the mouseover of totem/spell details."},
 		},
 		NOTIFICATIONS = {
-			TITLE = "Notifications",
+			TITLE = "Notifications [In Combat]",
 			{"Notify Me When A Totem Is Expiring", "A personal notification in the chat window will alert when a totem is expiring.|nThis is only during combat."},
 			{"Play A Sound When A Totem Is Expiring", "A chime will sound off when a totem is expiring.|nThis is only during combat."},
 		},
@@ -75,6 +77,15 @@ TOCA.locale = {
 		}
 	},
 
+	COMMANDS = {
+		{"options",  "Open Totem Caddy Options"},
+		{"show",     "Display Totem Caddy (regardless of class)."},
+		{"hide",     "Close Totem Caddy."},
+		{"profile",  "Display the current saved profile."},
+		{"help",     "Display the help introduction."},
+		{"debug on", "Enable Debug Mode (Very Spammy)"},
+		{"debug off","Disable Debug Mode (/reload)"},
+	}
 }
 
 TOCA.TABS = {
@@ -89,39 +100,42 @@ TOCA.TABS = {
   }
 }
 
-TOCA.help.updates = {
-  "|cffffdf96Please note:|r Totem Caddy is still evolving. Improvements will be made as time continues. There is an |cff7eabd5issue tracker|r now available on |cffff9f69Curseforge|r. Enjoy!|n",
-	"|cffffdf96Coming Soon:|r Language versions different clients.",
-	"",
-  "|cffffdf96New Feature:|r Added an option to display the Totemic Call button (BCC version only)",
-	"",
-  "|cffffdf96First time using Totem Caddy?",
-	"",
-  "Let's get started by dragging the Totem Caddy anywhere on your screen saving the position.",
-  "You can select totems in a category order (air, earth, fire, or water) by selecting the top arrows above the current totem icons.",
-  "The set of totems are by default, and the order is currently alphabetical. The totem order can changed under the Totem Sets in the options window.",
-  "You can also display all totems on screen in vertical/horizontal order based on totem category under the Frame Style options.",
-  "For addition options or create totem sets:",
-  "Select the cogwheel button or type /toca 'options', then select Totem Sets",
-  "You can select which totem for each category, give it a name, then select the bottom arrow on the main frame dropdown to access it.",
-  "Totem slot keybindings for your totem category slots: If you assign key bindings to to the totem slots for the very first time, you may have to do a '/reload'.",
-  "\n",
-}
-TOCA.help.contact = {
-  "Please feel free to reach out and let me know what improvements can be made.",
-	"",
-  "|cffffdf96Curseforge:|r https://www.curseforge.com/wow/addons/totem-caddy/",
-	"",
-  "|cffffdf96Discord:|r https://discord.com/users/Porthios#8963",
-}
-TOCA.help.credit = {
-  "Special thanks to some beta testers from the Myzrael realm.",
-  "Especially to my shaman buddy |cff006aa6Shockpopz|r of Myzrael For all the valuable feedback and laughs!",
-	"|n|n|n|n|n|n|n",
-  "Written by |cff006aa6Porthias|r of Myzrael (a.k.a. Port)",
-}
-TOCA.help.footer = {
-  "This message will not show again unless there is a new version."
+TOCA.HELP = {
+	UPDATES = {
+	  "|cffffdf96Please note:|r Totem Caddy is still evolving. Improvements will be made as time continues. There is an |cff7eabd5issue tracker|r now available on |cffff9f69Curseforge|r. Enjoy!|n",
+		"|cffffdf96Coming Soon:|r Language versions different clients.",
+		"",
+	  "|cffffdf96New Feature:|r Added an option to display the Totemic Call button (BCC version only)",
+		"",
+	  "|cffffdf96First time using Totem Caddy?",
+		"",
+	  "Let's get started by dragging the Totem Caddy anywhere on your screen saving the position.",
+	  "You can select totems in a category order (air, earth, fire, or water) by selecting the top arrows above the current totem icons.",
+	  "The set of totems are by default, and the order is currently alphabetical. The totem order can changed under the Totem Sets in the options window.",
+	  "You can also display all totems on screen in vertical/horizontal order based on totem category under the Frame Style options.",
+	  "For addition options or create totem sets:",
+	  "Select the cogwheel button or type /toca 'options', then select Totem Sets",
+	  "You can select which totem for each category, give it a name, then select the bottom arrow on the main frame dropdown to access it.",
+	  "Totem slot keybindings for your totem category slots: If you assign key bindings to to the totem slots for the very first time, you may have to do a '/reload'.",
+	  "\n",
+	},
+	CONTACT = {
+	  "Please feel free to reach out and let me know what improvements can be made.",
+		"",
+	  "|cffffdf96Curseforge:|r https://www.curseforge.com/wow/addons/totem-caddy/",
+		"",
+	  "|cffffdf96Discord:|r https://discord.com/users/Porthios#8963",
+	},
+	CREDIT = {
+	  "Special thanks to some beta testers from the Myzrael realm.",
+	  "Especially to my shaman buddy |cff006aa6Shockpopz|r of Myzrael For all the valuable feedback and laughs!",
+		"|n",
+	  "Written by |cff006aa6Porthias|r of Myzrael (a.k.a. Port)",
+	},
+	FOOTER = {
+	  "This message will not show again unless there is a new version.",
+		'Type "toca /help" anytime to display this help message.'
+	}
 }
 
 function TOCA.locale.Init()
@@ -169,15 +183,6 @@ TOCA.totemspells = {
 	}
 }
 
-TOCA.locale.commands = {
-	{"options", "Open Totem Caddy Options"},
-	{"show", "Display Totem Caddy (regardless of class)."},
-	{"hide", "Close Totem Caddy."},
-	{"profile", "Display the current saved profile."},
-	{"help", "Display the help introduction."},
-	{"debug on", "Enable Debug Mode (Very Spammy)"},
-	{"debug off", "Disable Debug Mode (/reload)"},
-}
 function TOCA.CommandList(cmd)
 	if (cmd == "show") then
 		TOCA.FrameMain:Show()

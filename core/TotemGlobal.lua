@@ -31,7 +31,6 @@ TOCA.Global = {
 --local _LName, _LTitle = GetAddOnInfo(TOCA.Global.prefix)
 --TOCA.Global.version = tonumber(string.sub(_LTitle, 26, 29))
 
-local __Gversion, __Gbuild, __Gdate, __Gtoc = GetBuildInfo()
 TOCA.Game={}
 TOCA.Game.version = tonumber(string.sub(__Gversion, 1, 1))
 if (TOCA.Game.version == 1) then
@@ -849,7 +848,7 @@ function TOCA.TimerFrame(i)
 		if (TOCA.TotemTimer[i] == 10) then
 			if (TOCA.TotemName[i]) then
 				if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGE"] ~= "OFF") then
-					TOCA.Notification("|cfff6d526 [" .. TOCA.TotemName[i] .. "]|r is expiring!")
+					TOCA.Notification("|cfff6d526[" .. TOCA.TotemName[i] .. "]|r ".. TOCA.locale.INIT[4])
 				end
 				if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESOUND"] ~= "OFF") then
 					PlaySoundFile(TOCA.Global.dir .. "sounds/totemexpire.ogg")
@@ -1203,7 +1202,7 @@ SLASH_TOCA1 = TCCMD
 function SlashCmdList.TOCA(cmd)
   if ((cmd == nil) or (cmd == "")) then
     TOCA.Notification("v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " ("..GetLocale()..")")
-		for int,list in pairs(TOCA.locale.commands) do
+		for int,list in pairs(TOCA.locale.COMMANDS) do
 			print("|cffffff00".. list[1] .. "|r : " .. list[2] .. "|n")
 		end
 	end
