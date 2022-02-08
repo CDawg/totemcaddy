@@ -103,7 +103,7 @@ TOCA.locale = {
 			{"Display Totem Tooltip", "Toggle the mouseover of totem/spell details."},
 		},
 		NOTIFICATIONS = {
-			TITLE = "Notifications [In Combat]",
+			TITLE = "Notifications [During Combat]",
 			{"Notify Me When A Totem Is Expiring", "A personal notification in the chat window will alert when a totem is expiring.|nThis is only during combat."},
 			{"Play A Sound When A Totem Is Expiring", "A chime will sound off when a totem is expiring.|nThis is only during combat."},
 		},

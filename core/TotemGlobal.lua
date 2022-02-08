@@ -18,7 +18,7 @@ TOCA.DEBUG = false
 TOCA.Global = {
   title  = "|cff0070DDTotem Caddy|r",
   author = "Porthias of Myzrael",
-  version= 2.45,
+  version= 2.46,
   command= "toca",
   width  = 150,
   height = 85,
@@ -575,8 +575,11 @@ function TOCA.Init()
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGE"] == "OFF") then
 			TOCA.Checkbox.ExpireMessage:SetChecked(nil)
 		end
-		if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGE"] == "OFF") then
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESOUND"] == "OFF") then
 			TOCA.Checkbox.ExpireSound:SetChecked(nil)
+		end
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"]) then
+			TOCA.Dropdown.Sound.text:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"])
 		end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMORDER"]) then
       TOCA.SetTotemOrderDropdown()
@@ -851,7 +854,11 @@ function TOCA.TimerFrame(i)
 					TOCA.Notification("|cfff6d526[" .. TOCA.TotemName[i] .. "]|r ".. TOCA.locale.INIT[4])
 				end
 				if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESOUND"] ~= "OFF") then
-					PlaySoundFile(TOCA.Global.dir .. "sounds/totemexpire.ogg")
+					if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"]) then
+						PlaySoundFile(TOCA.Global.dir .. "sounds/" .. TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"] .. ".ogg")
+					else
+						PlaySoundFile(TOCA.Global.dir .. "sounds/totemexpire_1.ogg")
+					end
 				end
 			end
 		end

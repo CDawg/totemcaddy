@@ -14,15 +14,15 @@ the copyright holders.
 ]==]--
 
 TOCA.FrameOptions_w = 700
-TOCA.FrameOptions_h = 520
+TOCA.FrameOptions_h = 480
 
 TOCA.OptionsPosition_x={}
+TOCA.OptionsPosition_x["LEFT"]=30
 TOCA.OptionsPosition_x["RIGHT"]=400
 TOCA.OptionsPosition_y={}
 TOCA.OptionsPosition_y["FRAMEMENU"] = 0
 TOCA.OptionsPosition_y["TIMERS"] = -190
 TOCA.OptionsPosition_y["TOOLTIP"] = -310
-TOCA.OptionsPosition_y["NOTIFICATIONS"] = -390
 
 TOCA.FrameOptions={}
 TOCA.FrameOptions = CreateFrame("Frame", "TOCA.FrameOptions", UIParent, "BackdropTemplate")
@@ -131,7 +131,7 @@ end
 UIDropDownMenu_SetWidth(TOCA.Dropdown.FrameStyle, 125)
 TOCA.Dropdown.FrameStyle.title = TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]]:CreateFontString(nil, "ARTWORK")
 TOCA.Dropdown.FrameStyle.title:SetFont(TOCA.Global.font, 12)
-TOCA.Dropdown.FrameStyle.title:SetPoint("TOPLEFT", 30, -20)
+TOCA.Dropdown.FrameStyle.title:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -20)
 TOCA.Dropdown.FrameStyle.title:SetText(TOCA.locale.UI.OPTIONS[1][1])
 TOCA.Dropdown.FrameStyle.title:SetTextColor(1, 1, 0.5, 1)
 
@@ -174,20 +174,20 @@ end
 UIDropDownMenu_SetWidth(TOCA.Dropdown.FrameStrat, 125)
 TOCA.Dropdown.FrameStrat.title = TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]]:CreateFontString(nil, "ARTWORK")
 TOCA.Dropdown.FrameStrat.title:SetFont(TOCA.Global.font, 12)
-TOCA.Dropdown.FrameStrat.title:SetPoint("TOPLEFT", 30, -80)
+TOCA.Dropdown.FrameStrat.title:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -80)
 TOCA.Dropdown.FrameStrat.title:SetText(TOCA.locale.UI.OPTIONS[2][1])
 TOCA.Dropdown.FrameStrat.title:SetTextColor(1, 1, 0.5, 1)
 
 TOCA.FrameOptions.Title.Scale = TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]]:CreateFontString(nil, "ARTWORK")
 TOCA.FrameOptions.Title.Scale:SetFont(TOCA.Global.font, 12)
-TOCA.FrameOptions.Title.Scale:SetPoint("TOPLEFT", 30, -150)
+TOCA.FrameOptions.Title.Scale:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -150)
 TOCA.FrameOptions.Title.Scale:SetText(TOCA.locale.UI.OPTIONS[3][1])
 TOCA.FrameOptions.Title.Scale:SetTextColor(1, 1, 0.5, 1)
 TOCA.Slider.Scale={}
 TOCA.Slider.Scale = CreateFrame("Slider", "TOCA.Slider.Scale", TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]], "OptionsSliderTemplate")
 TOCA.Slider.Scale:SetWidth(140)
 TOCA.Slider.Scale:SetHeight(14)
-TOCA.Slider.Scale:SetPoint("TOPLEFT", 30, -170)
+TOCA.Slider.Scale:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -170)
 TOCA.Slider.Scale:SetOrientation('HORIZONTAL')
 TOCA.Slider.Scale:EnableMouse(true)
 TOCA.Slider.Scale:SetMinMaxValues(0.50, 2.00)
@@ -262,14 +262,14 @@ TOCA.Button.ResetPositionText:SetText("Reset Position")
 
 TOCA.FrameOptions.Title.OpacityBG = TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]]:CreateFontString(nil, "ARTWORK")
 TOCA.FrameOptions.Title.OpacityBG:SetFont(TOCA.Global.font, 12)
-TOCA.FrameOptions.Title.OpacityBG:SetPoint("TOPLEFT", 30, -220)
+TOCA.FrameOptions.Title.OpacityBG:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -220)
 TOCA.FrameOptions.Title.OpacityBG:SetText("Background Opacity")
 TOCA.FrameOptions.Title.OpacityBG:SetTextColor(1, 1, 0.5, 1)
 TOCA.Slider.OpacityBG={}
 TOCA.Slider.OpacityBG = CreateFrame("Slider", "TOCA.Slider.OpacityBG", TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]], "OptionsSliderTemplate")
 TOCA.Slider.OpacityBG:SetWidth(140)
 TOCA.Slider.OpacityBG:SetHeight(14)
-TOCA.Slider.OpacityBG:SetPoint("TOPLEFT", 30, -240)
+TOCA.Slider.OpacityBG:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -240)
 TOCA.Slider.OpacityBG:SetOrientation('HORIZONTAL')
 TOCA.Slider.OpacityBG:EnableMouse(true)
 TOCA.Slider.OpacityBG:SetMinMaxValues(0.00, 1.0)
@@ -322,14 +322,14 @@ TOCA.Button.ResetOpacityBG.icon:SetTexture("Interface/Buttons/UI-RefreshButton")
 
 TOCA.FrameOptions.Title.OpacityFG = TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]]:CreateFontString(nil, "ARTWORK")
 TOCA.FrameOptions.Title.OpacityFG:SetFont(TOCA.Global.font, 12)
-TOCA.FrameOptions.Title.OpacityFG:SetPoint("TOPLEFT", 30, -300)
+TOCA.FrameOptions.Title.OpacityFG:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -300)
 TOCA.FrameOptions.Title.OpacityFG:SetText("Foreground Opacity")
 TOCA.FrameOptions.Title.OpacityFG:SetTextColor(1, 1, 0.5, 1)
 TOCA.Slider.OpacityFG={}
 TOCA.Slider.OpacityFG = CreateFrame("Slider", "TOCA.Slider.OpacityFG", TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]], "OptionsSliderTemplate")
 TOCA.Slider.OpacityFG:SetWidth(140)
 TOCA.Slider.OpacityFG:SetHeight(14)
-TOCA.Slider.OpacityFG:SetPoint("TOPLEFT", 30, -320)
+TOCA.Slider.OpacityFG:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -320)
 TOCA.Slider.OpacityFG:SetOrientation('HORIZONTAL')
 TOCA.Slider.OpacityFG:EnableMouse(true)
 TOCA.Slider.OpacityFG:SetMinMaxValues(0.10, 1.0)
@@ -735,62 +735,12 @@ TOCA.Checkbox.TooltipMouse:SetScript("OnLeave", function()
   TOCA.CloseAllMenus()
 end)
 
-TOCA.FrameOptions.Title.Tooltip = TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]]:CreateFontString(nil, "ARTWORK")
-TOCA.FrameOptions.Title.Tooltip:SetFont(TOCA.Global.font, 12)
-TOCA.FrameOptions.Title.Tooltip:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["NOTIFICATIONS"])
-TOCA.FrameOptions.Title.Tooltip:SetText(TOCA.locale.UI.NOTIFICATIONS.TITLE)
-TOCA.FrameOptions.Title.Tooltip:SetTextColor(1, 1, 0.5, 1)
-
-TOCA.Checkbox.ExpireMessage={}
-TOCA.Checkbox.ExpireMessage = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.ExpireMessage:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["NOTIFICATIONS"]-20)
-TOCA.Checkbox.ExpireMessage:SetChecked(1)
-TOCA.Checkbox.ExpireMessage.text = TOCA.Checkbox.ExpireMessage:CreateFontString(nil, "ARTWORK")
-TOCA.Checkbox.ExpireMessage.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
-TOCA.Checkbox.ExpireMessage.text:SetPoint("TOPLEFT", 25, -6)
-TOCA.Checkbox.ExpireMessage.text:SetText(TOCA.locale.UI.NOTIFICATIONS[1][1])
-TOCA.Checkbox.ExpireMessage:SetScript("OnClick", function(self)
-  if (self:GetChecked()) then
-    TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGE"] = "ON"
-  else
-    TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGE"] = "OFF"
-  end
-end)
-TOCA.Checkbox.ExpireMessage:SetScript("OnEnter", function(self)
-  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA.locale.UI.NOTIFICATIONS[1][2])
-end)
-TOCA.Checkbox.ExpireMessage:SetScript("OnLeave", function()
-  TOCA.CloseAllMenus()
-end)
-
-TOCA.Checkbox.ExpireSound={}
-TOCA.Checkbox.ExpireSound = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.ExpireSound:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["NOTIFICATIONS"]-40)
-TOCA.Checkbox.ExpireSound:SetChecked(1)
-TOCA.Checkbox.ExpireSound.text = TOCA.Checkbox.ExpireSound:CreateFontString(nil, "ARTWORK")
-TOCA.Checkbox.ExpireSound.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
-TOCA.Checkbox.ExpireSound.text:SetPoint("TOPLEFT", 25, -6)
-TOCA.Checkbox.ExpireSound.text:SetText(TOCA.locale.UI.NOTIFICATIONS[2][1])
-TOCA.Checkbox.ExpireSound:SetScript("OnClick", function(self)
-  if (self:GetChecked()) then
-    TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESOUND"] = "ON"
-  else
-    TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESOUND"] = "OFF"
-  end
-end)
-TOCA.Checkbox.ExpireSound:SetScript("OnEnter", function(self)
-  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA.locale.UI.NOTIFICATIONS[2][2])
-end)
-TOCA.Checkbox.ExpireSound:SetScript("OnLeave", function()
-  TOCA.CloseAllMenus()
-end)
-
 movingTotem= "nil"
 overTotem = "nil"
 TOCA.SlotSets_x = -60
 TOCA.SlotOrderTitle = TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[2]]:CreateFontString(nil, "ARTWORK")
 TOCA.SlotOrderTitle:SetFont(TOCA.Global.font, 12)
-TOCA.SlotOrderTitle:SetPoint("TOPLEFT", 30, -190)
+TOCA.SlotOrderTitle:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -190)
 TOCA.SlotOrderTitle:SetText(TOCA.locale.UI.TOTEMSET[3])
 TOCA.SlotOrderTitle:SetTextColor(1, 1, 0.5, 1)
 
@@ -844,7 +794,7 @@ TOCA.FrameOptions.Title.Footer:SetText(TOCA.Global.title .. " v" .. TOCA.Global.
 TOCA.Button.OptionsClose= CreateFrame("Button", nil, TOCA.FrameOptions, "BackdropTemplate")
 TOCA.Button.OptionsClose:SetSize(100, 25)
 --TOCA.Button.OptionsClose:SetPoint("CENTER", 0, -180)
-TOCA.Button.OptionsClose:SetPoint("CENTER", 0, -TOCA.FrameOptions_h+290)
+TOCA.Button.OptionsClose:SetPoint("CENTER", 0, -TOCA.FrameOptions_h+270)
 TOCA.Button.OptionsClose:SetBackdrop(TOCA.Backdrop.Button)
 TOCA.Button.OptionsClose:SetBackdropColor(0.6, 0, 0, 1)
 TOCA.Button.OptionsClose:SetBackdropBorderColor(1, 1, 1, 0.6)
