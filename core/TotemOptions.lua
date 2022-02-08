@@ -830,8 +830,8 @@ for i=1, getn(TOCA.Dropdown.OrderSetMenu) do
   UIDropDownMenu_SetWidth(TOCA.Dropdown.OrderSet[i], 50)
 end
 
-TOCA.FrameOptions.Divider = TOCA.FrameOptions:CreateTexture(nil, "ARTWORK")
-TOCA.FrameOptions.Divider:SetSize(TOCA.FrameOptions_w-6, 4)
+TOCA.FrameOptions.Divider = TOCA.FrameOptions:CreateTexture(nil, "OVERLAY")
+TOCA.FrameOptions.Divider:SetSize(TOCA.FrameOptions_w-6, 8)
 TOCA.FrameOptions.Divider:SetPoint("TOPLEFT", 3, -TOCA.FrameOptions_h+60)
 TOCA.FrameOptions.Divider:SetTexture("Interface/DialogFrame/DialogFrame-TOP")
 --TOCA.FrameOptions.Divider:Hide()
@@ -844,7 +844,7 @@ TOCA.FrameOptions.Title.Footer:SetText(TOCA.Global.title .. " v" .. TOCA.Global.
 TOCA.Button.OptionsClose= CreateFrame("Button", nil, TOCA.FrameOptions, "BackdropTemplate")
 TOCA.Button.OptionsClose:SetSize(100, 25)
 --TOCA.Button.OptionsClose:SetPoint("CENTER", 0, -180)
-TOCA.Button.OptionsClose:SetPoint("CENTER", 0, -TOCA.FrameOptions_h+280)
+TOCA.Button.OptionsClose:SetPoint("CENTER", 0, -TOCA.FrameOptions_h+290)
 TOCA.Button.OptionsClose:SetBackdrop(TOCA.Backdrop.Button)
 TOCA.Button.OptionsClose:SetBackdropColor(0.6, 0, 0, 1)
 TOCA.Button.OptionsClose:SetBackdropBorderColor(1, 1, 1, 0.6)

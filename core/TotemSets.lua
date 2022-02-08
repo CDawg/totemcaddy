@@ -69,7 +69,7 @@ end)
 TOCA.Button.FrameSetsSaveText = TOCA.Button.FrameSetsSave:CreateFontString(nil, "ARTWORK")
 TOCA.Button.FrameSetsSaveText:SetFont(TOCA.Global.font, 11)
 TOCA.Button.FrameSetsSaveText:SetPoint("CENTER", 0, 0)
-TOCA.Button.FrameSetsSaveText:SetText("Save")
+TOCA.Button.FrameSetsSaveText:SetText(TOCA.locale.UI.BUTTON[2])
 
 TOCA.Button.FrameSetsDeleteOpenPrompt= CreateFrame("Button", nil, TOCA.FrameSets, "BackdropTemplate")
 TOCA.Button.FrameSetsDeleteOpenPrompt:SetSize(100, 25)
@@ -99,7 +99,7 @@ end)
 TOCA.Button.FrameSetsDeleteOpenPromptText = TOCA.Button.FrameSetsDeleteOpenPrompt:CreateFontString(nil, "ARTWORK")
 TOCA.Button.FrameSetsDeleteOpenPromptText:SetFont(TOCA.Global.font, 11)
 TOCA.Button.FrameSetsDeleteOpenPromptText:SetPoint("CENTER", 0, 0)
-TOCA.Button.FrameSetsDeleteOpenPromptText:SetText("Delete")
+TOCA.Button.FrameSetsDeleteOpenPromptText:SetText(TOCA.locale.UI.BUTTON[3])
 
 --PROMPT BO
 TOCA.Prompt.DeleteSet = CreateFrame("Frame", TOCA.Prompt.DeleteSet, UIParent, "BackdropTemplate")

@@ -178,7 +178,7 @@ TOCA.Button.TotemicCallAtt= CreateFrame("Button", nil, TOCA.Button.TotemicCall, 
 TOCA.Button.TotemicCallAtt:SetSize(TOCA.Button.TotemicCall_w, TOCA.Button.TotemicCall_h)
 TOCA.Button.TotemicCallAtt:SetPoint("CENTER", 0, 0)
 TOCA.Button.TotemicCallAtt:SetAttribute("type", "spell")
-TOCA.Button.TotemicCallAtt:SetAttribute("spell", "Totemic Call")
+TOCA.Button.TotemicCallAtt:SetAttribute("spell", TOCA.locale.SPELLS.TotemicCall)
 TOCA.Button.TotemicCallAtt:SetScript("OnEnter", function(self)
   --TOCA.CloseAllMenus() --bug with the totemic call button overlapping
   if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then

@@ -9,7 +9,7 @@ TOCA.locale = {
 	},
 
 	TOTEMS = {
-		--WARNING! Changing the order of these totems will cause synchronization issues.
+		--[==[ WARNING! Changing the order of these totems will cause synchronization issues. ]==]--
 		FIRE = {
 		  "Fire Nova Totem",
 		  "Flametongue Totem",
@@ -146,7 +146,7 @@ TOCA.HELP = {
 	  "|cffffdf96New Feature:|r Added an option to display the Totemic Call button (BCC version only)",
 		"",
 	  "|cffffdf96First time using Totem Caddy?",
-		"",
+		"|r",
 	  "Let's get started by dragging the Totem Caddy anywhere on your screen saving the position.",
 	  "You can select totems in a category order (air, earth, fire, or water) by selecting the top arrows above the current totem icons.",
 	  "The set of totems are by default, and the order is currently alphabetical. The totem order can changed under the Totem Sets in the options window.",
@@ -172,9 +172,13 @@ TOCA.HELP = {
 	},
 	FOOTER = {
 	  "This message will not show again unless there is a new version.",
-		'Type "toca /help" anytime to display this help message.'
+		'Type "/toca help" anytime to display this help message.'
 	}
 }
+
+function TOCA.locale.Help()
+  return "Welcome to " .. TOCA.Global.title .. " v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " (" .. GetLocale() .. ")|n|n"
+end
 
 function TOCA.locale.Init()
   return "v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " (" .. GetLocale() .. ") Initializing. Type /" .. TOCA.Global.command .. " for commands."
