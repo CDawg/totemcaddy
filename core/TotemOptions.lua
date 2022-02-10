@@ -36,7 +36,6 @@ TOCA.FrameOptions:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.FrameOptions:Hide()
 
 TOCA.FrameOptions.Title={}
-TOCA.FrameOptions.Section={}
 
 TOCA.TabWidth.Options = 140
 TOCA.Button.TabOptions={}

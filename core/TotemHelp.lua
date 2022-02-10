@@ -13,7 +13,7 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
-TOCA.FrameHelp_w = 400
+TOCA.FrameHelp_w = 500
 TOCA.FrameHelp_h = 350
 TOCA.FrameHelp = CreateFrame("Frame", TOCA.FrameHelp, UIParent, "BackdropTemplate")
 TOCA.FrameHelp:SetWidth(TOCA.FrameHelp_w)
@@ -30,11 +30,11 @@ TOCA.Button.Tab={}
 TOCA.Button.TabBack={}
 
 TOCA.FrameHelpPage={}
-for i=1, getn(TOCA.TABS.HELP) do
-  TOCA.FrameHelpPage[TOCA.TABS.HELP[i]] = CreateFrame("Frame", "TOCA.FrameHelp", TOCA.FrameHelp, "BackdropTemplate")
-  TOCA.FrameHelpPage[TOCA.TABS.HELP[i]]:SetWidth(TOCA.FrameHelp:GetWidth())
-  TOCA.FrameHelpPage[TOCA.TABS.HELP[i]]:SetHeight(TOCA.FrameHelp:GetHeight())
-  TOCA.FrameHelpPage[TOCA.TABS.HELP[i]]:SetPoint("CENTER", 0, 0)
+for i=1, getn(TOCA.locale.UI.TABS.HELP) do
+  TOCA.FrameHelpPage[TOCA.locale.UI.TABS.HELP[i]] = CreateFrame("Frame", "TOCA.FrameHelp", TOCA.FrameHelp, "BackdropTemplate")
+  TOCA.FrameHelpPage[TOCA.locale.UI.TABS.HELP[i]]:SetWidth(TOCA.FrameHelp:GetWidth())
+  TOCA.FrameHelpPage[TOCA.locale.UI.TABS.HELP[i]]:SetHeight(TOCA.FrameHelp:GetHeight())
+  TOCA.FrameHelpPage[TOCA.locale.UI.TABS.HELP[i]]:SetPoint("CENTER", 0, 0)
 
   TOCA.Button.TabBack[i]= CreateFrame("Button", nil, TOCA.FrameHelp, "BackdropTemplate")
   TOCA.Button.TabBack[i]:SetSize(TOCA.TabWidth.Help-20, 29)
@@ -60,15 +60,15 @@ for i=1, getn(TOCA.TABS.HELP) do
   TOCA.Button.Tab[i].text = TOCA.Button.Tab[i]:CreateFontString(nil, "ARTWORK")
   TOCA.Button.Tab[i].text:SetFont(TOCA.Global.font, 12, "OUTLINE")
   TOCA.Button.Tab[i].text:SetPoint("CENTER", 0, 0)
-  TOCA.Button.Tab[i].text:SetText(TOCA.TABS.HELP[i])
+  TOCA.Button.Tab[i].text:SetText(TOCA.locale.UI.TABS.HELP[i])
   TOCA.Button.Tab[i]:SetScript("OnClick", function()
-    for i=1, getn(TOCA.TABS.HELP) do
+    for i=1, getn(TOCA.locale.UI.TABS.HELP) do
       TOCA.Button.TabBack[i]:SetSize(TOCA.TabWidth.Help-20, 29)
     end
     TOCA.Button.TabBack[i]:SetSize(TOCA.TabWidth.Help-20, 31)
-    if (TOCA.TABS.HELP[i] == TOCA.TABS.HELP[3]) then
+    if (TOCA.locale.UI.TABS.HELP[i] == TOCA.locale.UI.TABS.HELP[3]) then
       TOCA.TextFrame.text:SetText(arrayToString(TOCA.HELP.CREDIT))
-    elseif (TOCA.TABS.HELP[i] == TOCA.TABS.HELP[2]) then
+    elseif (TOCA.locale.UI.TABS.HELP[i] == TOCA.locale.UI.TABS.HELP[2]) then
       TOCA.TextFrame.text:SetText(arrayToString(TOCA.HELP.CONTACT))
     else
       TOCA.TextFrame.text:SetText(TOCA.locale.Help() .. arrayToString(TOCA.HELP.UPDATES))
@@ -79,7 +79,7 @@ TOCA.Button.TabBack[1]:SetSize(TOCA.TabWidth.Help-20, 30) --first tab
 
 TOCA.TextFrame_w = TOCA.FrameHelp_w-20
 TOCA.TextFrame_h = TOCA.FrameHelp_h-50
---TOCA.TextFrame = CreateFrame("Frame", nil, TOCA.FrameHelpPage[TOCA.TABS.HELP[1]])
+--TOCA.TextFrame = CreateFrame("Frame", nil, TOCA.FrameHelpPage[TOCA.locale.UI.TABS.HELP[1]])
 TOCA.TextFrame = CreateFrame("Frame", nil, TOCA.FrameHelp)
 TOCA.TextFrame:SetWidth(TOCA.TextFrame_w)
 TOCA.TextFrame:SetHeight(TOCA.TextFrame_h)

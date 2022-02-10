@@ -198,26 +198,10 @@ end
 
 function TOCA.BuildKeyBindsInit()
   BINDING_HEADER_TOTEMCADDY = TOCA.Global.title
-  TOCA.KeyBindNames = {
-    TOTEM_RECALL= "Totem Recall",
-    TOTEM_AIR   = "Totem Slot: Air",
-    TOTEM_EARTH = "Totem Slot: Earth",
-    TOTEM_FIRE  = "Totem Slot: Fire",
-    TOTEM_WATER = "Totem Slot: Water",
-  }
-  for KeyBK,KeyBV in pairsByKeys(TOCA.KeyBindNames) do
+  for KeyBK,KeyBV in pairsByKeys(TOCA.locale.KEYBINDS) do
     _G["BINDING_NAME_"..KeyBK] = KeyBV
   end
   TOCA.Notification("TOCA.BuildKeyBindsInit()", true)
-end
-
-function TOCA.GetKeyBindings() --call after INIT all
-  for KeyBK,KeyBV in pairsByKeys(TOCA.KeyBindNames) do
-    local key1, key2 = GetBindingKey(KeyBK)
-    if (key1) then
-      TOCA.Notification(key1, true)
-    end
-  end
 end
 
 TOCA.KeyBindButton = CreateFrame("Button", nil, UIParent, "BackdropTemplate")
@@ -849,7 +833,7 @@ function TOCA.TimerFrame(i)
 
 	if (TOCA.isInCombat) then
 		if (TOCA.TotemTimer[i] == 10) then
-			if (TOCA.TotemName[i]) then
+			if ((TOCA.TotemName[i] ~= nil) or (TOCA.TotemName[i] ~= "")) then
 				if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGE"] ~= "OFF") then
 					TOCA.Notification("|cfff6d526[" .. TOCA.TotemName[i] .. "]|r ".. TOCA.locale.INIT[4])
 				end

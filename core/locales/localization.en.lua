@@ -116,6 +116,14 @@ TOCA.locale = {
 		}
 	},
 
+	KEYBINDS = {
+		TOTEM_RECALL= "Totem Recall",
+		TOTEM_AIR   = "Totem Slot: Air",
+		TOTEM_EARTH = "Totem Slot: Earth",
+		TOTEM_FIRE  = "Totem Slot: Fire",
+		TOTEM_WATER = "Totem Slot: Water",
+	},
+
 	COMMANDS = {
 		{"options",  "Open Totem Caddy Options"},
 		{"show",     "Display Totem Caddy (regardless of class)."},
@@ -125,18 +133,6 @@ TOCA.locale = {
 		{"debug on", "Enable Debug Mode (Very Spammy)"},
 		{"debug off","Disable Debug Mode (/reload)"},
 	}
-}
-
-TOCA.TABS = {
-  OPTIONS = {
-		"UI Frame",
-	  "Totem Set Builder",
-  },
-  HELP = {
-	  "Updates",
-	  "Contact",
-	  "Credit",
-  }
 }
 
 TOCA.HELP = {

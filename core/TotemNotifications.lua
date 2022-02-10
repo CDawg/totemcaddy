@@ -1,4 +1,4 @@
-
+TOCA.FrameOptions.Title.Notifs={}
 TOCA.FrameOptions.Title.Notifs = TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[3]]:CreateFontString(nil, "ARTWORK")
 TOCA.FrameOptions.Title.Notifs:SetFont(TOCA.Global.font, 12)
 TOCA.FrameOptions.Title.Notifs:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -20)
