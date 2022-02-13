@@ -109,12 +109,12 @@ TOCA.locale = {
 
 		NOTIFICATIONS = {
 			TITLE = "Notifications",
-			SHIELDS = {"Water Shield", "Lightning Shield", "Earth Shield"},
-			{"Enable Notifications Only During Combat","Notifications will only trigger while in combat."},
-			{"Notify Me When A Totem Is Expiring",     "A personal notification in the chat window will alert when a totem is expiring."},
-			{"Play A Sound When A Totem Is Expiring",  "A chime will sound off when a totem is expiring.|nThis is only during combat."},
-			{"Notify Me When A Shield Is Expiring",    "A personal notification in the chat window will alert when your shield is running low or expiring."},
-			{"Play A Sound When A Shield Is Expiring", "A chime will sound off when your shield is low / or expiring."},
+			SHIELDS = {"Water Shield", "Lightning Shield",  "Earth Shield"},
+			{"Enable All Notifications Only During Combat", "Notifications will only trigger while in combat."},
+			{"Notify Me When A Totem Is Expiring",          "A personal notification in the chat window will alert when a totem is expiring."},
+			{"Play A Sound When A Totem Is Expiring",       "A chime will sound off when a totem is expiring.|nThis is only during combat."},
+			{"Notify Me When A Shield Is Expiring Or Low",  "A personal notification in the chat window will alert when your shield is running low or expiring."},
+			{"Play A Sound When A Shield Is Expiring Or Low","A chime will sound off when your shield is low or expiring."},
 		},
 
 		TOTEMSET = {

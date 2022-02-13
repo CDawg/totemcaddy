@@ -131,14 +131,6 @@ TOCA.Dropdown.Sound.TotemExpire.initialize = function(self, level)
 end
 UIDropDownMenu_SetWidth(TOCA.Dropdown.Sound.TotemExpire, 125)
 
---[==[
-TOCA.Dropdown.Sound.TotemExpire.title = TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]]:CreateFontString(nil, "ARTWORK")
-TOCA.Dropdown.Sound.TotemExpire.title:SetFont(TOCA.Global.font, 12)
-TOCA.Dropdown.Sound.TotemExpire.title:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -110)
-TOCA.Dropdown.Sound.TotemExpire.title:SetText(TOCA.locale.UI.OPTIONS[1][1])
-TOCA.Dropdown.Sound.TotemExpire.title:SetTextColor(1, 1, 0.5, 1)
-]==]--
-
 TOCA.Checkbox.ShieldMessage={}
 TOCA.Checkbox.ShieldMessage = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[3]], "ChatConfigCheckButtonTemplate")
 TOCA.Checkbox.ShieldMessage:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -160)
@@ -188,53 +180,9 @@ for i=1, NumShieldNotificationSounds do
 	TOCA.Dropdown.SoundsShield[i] = "shieldexpire_" .. i
 end
 
-TOCA.Dropdown.Shields=TOCA.locale.UI.NOTIFICATIONS.SHIELDS
-TOCA.Dropdown.ShieldExpire={}
-TOCA.Dropdown.ShieldExpire = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[3]], "UIDropDownMenuTemplate")
-TOCA.Dropdown.ShieldExpire:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"]+10, -200)
-TOCA.Dropdown.ShieldExpire.displayMode = "MENU"
-TOCA.Dropdown.ShieldExpire.text = TOCA.Dropdown.ShieldExpire:CreateFontString(nil, "ARTWORK")
-TOCA.Dropdown.ShieldExpire.text:SetFont(TOCA.Global.font, 11)
-TOCA.Dropdown.ShieldExpire.text:SetPoint("TOPLEFT", TOCA.Dropdown.ShieldExpire, "TOPLEFT", 25, -8)
-TOCA.Dropdown.ShieldExpire.text:SetText(TOCA.Dropdown.Shields[1])
-TOCA.Dropdown.ShieldExpire:SetScript("OnEnter", function(self)
-  --TOCA.TooltipDisplay(self, TOCA.locale.UI.OPTIONS[1][1], TOCA.locale.UI.OPTIONS[1][2])
-end)
-TOCA.Dropdown.ShieldExpire:SetScript("OnLeave", function()
-  TOCA.CloseAllMenus()
-end)
-TOCA.Dropdown.ShieldExpire.onClick = function(self, checked)
-  TOCA.Dropdown.ShieldExpire.text:SetText(self.value)
-  TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESHIELDTYPE"] = self.value
-end
-TOCA.Dropdown.ShieldExpire.initialize = function(self, level)
-  local info = UIDropDownMenu_CreateInfo()
-  local i = 0
-  for k,v in pairs(TOCA.Dropdown.Shields) do
-    info.notCheckable = 1
-    info.padding = 2
-    info.text = v
-    info.value= v
-    info.fontObject = GameFontWhite
-    info.justifyH = "LEFT"
-    info.disabled = false
-    info.func = self.onClick
-    UIDropDownMenu_AddButton(info, level)
-  end
-end
-UIDropDownMenu_SetWidth(TOCA.Dropdown.ShieldExpire, 125)
-
---[==[
-TOCA.Dropdown.ShieldExpire.title = TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]]:CreateFontString(nil, "ARTWORK")
-TOCA.Dropdown.ShieldExpire.title:SetFont(TOCA.Global.font, 12)
-TOCA.Dropdown.ShieldExpire.title:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -130)
-TOCA.Dropdown.ShieldExpire.title:SetText(TOCA.locale.UI.OPTIONS[1][1])
-TOCA.Dropdown.ShieldExpire.title:SetTextColor(1, 1, 0.5, 1)
-]==]--
-
 TOCA.Dropdown.Sound.ShieldExpire={}
 TOCA.Dropdown.Sound.ShieldExpire = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[3]], "UIDropDownMenuTemplate")
-TOCA.Dropdown.Sound.ShieldExpire:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"]+10, -225)
+TOCA.Dropdown.Sound.ShieldExpire:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"]+10, -200)
 TOCA.Dropdown.Sound.ShieldExpire.displayMode = "MENU"
 TOCA.Dropdown.Sound.ShieldExpire.text = TOCA.Dropdown.Sound.ShieldExpire:CreateFontString(nil, "ARTWORK")
 TOCA.Dropdown.Sound.ShieldExpire.text:SetFont(TOCA.Global.font, 11)
@@ -267,11 +215,3 @@ TOCA.Dropdown.Sound.ShieldExpire.initialize = function(self, level)
   end
 end
 UIDropDownMenu_SetWidth(TOCA.Dropdown.Sound.ShieldExpire, 125)
-
---[==[
-TOCA.Dropdown.Sound.ShieldExpire.title = TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]]:CreateFontString(nil, "ARTWORK")
-TOCA.Dropdown.Sound.ShieldExpire.title:SetFont(TOCA.Global.font, 12)
-TOCA.Dropdown.Sound.ShieldExpire.title:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -20)
-TOCA.Dropdown.Sound.ShieldExpire.title:SetText(TOCA.locale.UI.OPTIONS[1][1])
-TOCA.Dropdown.Sound.ShieldExpire.title:SetTextColor(1, 1, 0.5, 1)
-]==]--

@@ -574,6 +574,10 @@ function TOCA.Init()
       TOCA.FrameMain.AnkhFrame:Hide()
       TOCA.Checkbox.Ankh:SetChecked(nil)
     end
+
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["NOTIFYCOMBAT"] == "OFF") then
+			TOCA.Checkbox.NotifyCombat:SetChecked(nil)
+	  end
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGE"] == "OFF") then
 			TOCA.Checkbox.ExpireMessage:SetChecked(nil)
 		end
@@ -583,6 +587,7 @@ function TOCA.Init()
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"]) then
 			TOCA.Dropdown.Sound.TotemExpire.text:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"])
 		end
+
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMORDER"]) then
       TOCA.SetTotemOrderDropdown()
       TOCA.SetTotemOrder()
@@ -830,6 +835,57 @@ for i=1, 4 do
   TOCA.TotemDuration[i] = 0
 end
 
+function TOCA.ExpireNotificationsTotems(totemname, totemtimer)
+	if (totemtimer == 10) then
+		if ((totemname ~= nil) or (totemname ~= "")) then
+			if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGE"] ~= "OFF") then
+				TOCA.Notification("|cfff6d526[" .. totemname .. "]|r ".. TOCA.locale.INIT[4])
+			end
+			if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESOUND"] ~= "OFF") then
+				if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"]) then
+					PlaySoundFile(TOCA.Global.dir .. "sounds/" .. TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"] .. ".ogg")
+				else
+					PlaySoundFile(TOCA.Global.dir .. "sounds/totemexpire_1.ogg")
+				end
+			end
+		end
+	end
+end
+
+shamanShieldDuration = 10 --10 minutes on ALL shields
+notificationAlertShield = 0
+function TOCA.ExpireNotificationsShield()
+	local _Uindex = 1
+	while UnitAura("player", _Uindex) do
+		local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura("player", _Uindex)
+		for k,v in pairs(TOCA.locale.UI.NOTIFICATIONS.SHIELDS) do
+			if (string.find(name, v)) then
+				local timeDuration = duration + expirationTime - GetTime()
+				timeDuration = timeDuration / 120
+				timeDuration = math.ceil(timeDuration)
+				if ((timeDuration >= shamanShieldDuration) and (count >= 2)) then
+				  notificationAlertShield = 0 --reset / refreshed the aura
+			  else
+					if ((timeDuration <= 1) or (count == 1)) then
+						if (notificationAlertShield ~= 1) then
+							notificationAlertShield = 1
+							if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESHIELD"] ~= "OFF") then
+								TOCA.Notification("|cfff6d526[" .. name .. "]|r ".. TOCA.locale.INIT[4])
+							end
+							if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"]) then
+								PlaySoundFile(TOCA.Global.dir .. "sounds/" .. TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"] .. ".ogg")
+							else
+								PlaySoundFile(TOCA.Global.dir .. "sounds/shieldexpire_1.ogg")
+							end
+						end
+					end
+				end
+			end
+		end
+		_Uindex = _Uindex + 1
+	end
+end
+
 function TOCA.TimerFrame(i)
   TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
   if (TOCA.TotemPresent[i]) then
@@ -849,20 +905,11 @@ function TOCA.TimerFrame(i)
     TOCA.SlotGrid.HorizontalTimer[i]:SetText("")
   end
 
-	if (TOCA.isInCombat) then
-		if (TOCA.TotemTimer[i] == 10) then
-			if ((TOCA.TotemName[i] ~= nil) or (TOCA.TotemName[i] ~= "")) then
-				if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGE"] ~= "OFF") then
-					TOCA.Notification("|cfff6d526[" .. TOCA.TotemName[i] .. "]|r ".. TOCA.locale.INIT[4])
-				end
-				if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESOUND"] ~= "OFF") then
-					if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"]) then
-						PlaySoundFile(TOCA.Global.dir .. "sounds/" .. TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"] .. ".ogg")
-					else
-						PlaySoundFile(TOCA.Global.dir .. "sounds/totemexpire_1.ogg")
-					end
-				end
-			end
+	if (TOCADB[TOCA.player.combine]["CONFIG"]["NOTIFYCOMBAT"] == "OFF") then
+		TOCA.ExpireNotificationsTotems(TOCA.TotemName[i], TOCA.TotemTimer[i])
+	else
+		if (TOCA.isInCombat) then
+			TOCA.ExpireNotificationsTotems(TOCA.TotemName[i], TOCA.TotemTimer[i])
 		end
 	end
 
@@ -1023,9 +1070,16 @@ function TOCA.TotemBarUpdate()
     end
   end
 
-  --TOCA.EnableKnownTotems()
   TOCA.GetReincTimer()
   TOCA.DisplayAnkhFrame()
+
+	if (TOCADB[TOCA.player.combine]["CONFIG"]["NOTIFYCOMBAT"] == "OFF") then
+		TOCA.ExpireNotificationsShield()
+	else
+		if (TOCA.isInCombat) then
+			TOCA.ExpireNotificationsShield()
+		end
+	end
 end
 
 function TOCA.Combat(event)
