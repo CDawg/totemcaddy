@@ -49,7 +49,7 @@ TOCA.Button.FrameSetsSave:SetScript("OnClick", function()
   local profileSaveText = TOCA.FrameSetsProfile:GetText()
   if ((profileSaveText == " ") or (profileSaveText == "") or (profileSaveText == nil)) then
     TOCA.Notification("Totem Set Updated: |cffffff00" .. TOCA.Dropdown.Sets.text:GetText())
-    TOCADB[TOCA.player.combine]["PROFILES"][TOCA.Dropdown.Sets.text:GetText()] = {TOCA_AIR=TOCASlotOne, TOCA_EARTH=TOCASlotTwo, TOCA_FIRE=TOCASlotThree, TOCA_WATER=TOCASlotFour}
+    TOCADB[TOCA.player.combine]["PROFILES"][TOCA.Dropdown.Sets.text:GetText()] = {TOCA_AIR=TOCA.cache[1], TOCA_EARTH=TOCA.cache[2], TOCA_FIRE=TOCA.cache[3], TOCA_WATER=TOCA.cache[4]}
   else
     if (profileSaveText:match("[^%w%s]")) then
       TOCA.FrameSetsProfile.border:SetBackdropBorderColor(1, 0.2, 0.2, 1)
@@ -60,7 +60,7 @@ TOCA.Button.FrameSetsSave:SetScript("OnClick", function()
       else
         TOCA.Notification("Totem Set Saved: |cffffff00" .. profileSaveText)
       end
-      TOCADB[TOCA.player.combine]["PROFILES"][profileSaveText] = {TOCA_AIR=TOCASlotOne, TOCA_EARTH=TOCASlotTwo, TOCA_FIRE=TOCASlotThree, TOCA_WATER=TOCASlotFour}
+      TOCADB[TOCA.player.combine]["PROFILES"][profileSaveText] = {TOCA_AIR=TOCA.cache[1], TOCA_EARTH=TOCA.cache[2], TOCA_FIRE=TOCA.cache[3], TOCA_WATER=TOCA.cache[4]}
       TOCA.UpdateDDMenu(TOCA.Dropdown.Sets)
       TOCA.UpdateDDMenu(TOCA.Dropdown.Main)
     end
@@ -253,16 +253,16 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetScript("OnClick", function()
       --TOCA.Notification(totemCat .. " ".. i .. " " .. totemSpell[1], true)
       if (totemCat == "AIR") then
-        TOCASlotOne = totemSpell[1]
+        TOCA.cache[1] = totemSpell[1]
       end
       if (totemCat == "EARTH") then
-        TOCASlotTwo = totemSpell[1]
+        TOCA.cache[2] = totemSpell[1]
       end
       if (totemCat == "FIRE") then
-        TOCASlotThree = totemSpell[1]
+        TOCA.cache[3] = totemSpell[1]
       end
       if (totemCat == "WATER") then
-        TOCASlotFour = totemSpell[1]
+        TOCA.cache[4] = totemSpell[1]
       end
       TOCA.FrameSetsSlot[totemCat]:SetBackdrop(TOCA.SetIcon(totemSpell[2]))
       TOCA.CloseAllMenus()
@@ -278,16 +278,16 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.FrameSetsSlot[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
   TOCA.FrameSetsSlot[totemCat]:SetScript("OnEnter", function(self)
     if (totemCat == "AIR") then
-      TOCA.TooltipDisplay(self, TOCASlotOne)
+      TOCA.TooltipDisplay(self, TOCA.cache[1])
     end
     if (totemCat == "EARTH") then
-      TOCA.TooltipDisplay(self, TOCASlotTwo)
+      TOCA.TooltipDisplay(self, TOCA.cache[2])
     end
     if (totemCat == "FIRE") then
-      TOCA.TooltipDisplay(self, TOCASlotThree)
+      TOCA.TooltipDisplay(self, TOCA.cache[3])
     end
     if (totemCat == "WATER") then
-      TOCA.TooltipDisplay(self, TOCASlotFour)
+      TOCA.TooltipDisplay(self, TOCA.cache[4])
     end
     self:SetBackdropBorderColor(1, 1, 0.8, 1)
   end)

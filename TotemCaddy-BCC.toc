@@ -4,7 +4,7 @@
 ## Version: 2.46
 ## Author: Porthias of Myzrael (aka Porthios)
 ## SavedVariables:TOCADB
-## OptionalDeps: Blizzard_RaidUI, Blizzard_CompactRaidFrames
+## OptionalDeps: Blizzard_RaidUI, Blizzard_CompactRaidFrames, Blizzard_BindingUI
 
 core/TotemLibrary.lua
 core/locales/localization.en.lua
@@ -23,4 +23,5 @@ core/TotemHelp.lua
 core/TotemOptions.lua
 core/TotemSets.lua
 core/TotemNotifications.lua
+core/TotemKeyBindings.lua
 ## core/TotemViewExp.lua

@@ -130,7 +130,6 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
   end
 
   TOCA.Combat(event)
-	--TotemExpiring(totem)
 
   if (event == "CHAT_MSG_ADDON") then
     TOCA.GetReincTimer()
@@ -274,7 +273,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     --TOCA.CloseAllMenus()
     if (totemCat == "AIR") then
       tTotal = getn(TOCA.totems.AIR)
-      tCurrent = getKeyFromValue(TOCA.totems.AIR, TOCASlotOne, 1)
+      tCurrent = getKeyFromValue(TOCA.totems.AIR, TOCA.cache[1], 1)
       if (sTotem == nil) then
         sTotem = tCurrent
       end
@@ -291,12 +290,12 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
         sTotem = sTotem - 1
       end
       print(sTotem)
-      --print(TOCASlotOne)
+      --print(TOCA.cache[1])
       --for totemCat,v in pairsByKeys(TOCA.totems.AIR) do
         --print(v[1])
       --end
-      TOCASlotOne = totemSpell[1]
-      TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotOne)
+      TOCA.cache[1] = totemSpell[1]
+      TOCA.Totem[totemCat]:SetAttribute("spell", TOCA.cache[1])
       TOCA.SetKeyBindReset("TOTEM_AIR", totemSpell[1])
       --TOCA.Notification("Setting AIR " .. totemSpell[1], true)
       TOCA.Notification("Setting AIR " .. totemSpell[1], false)
@@ -309,7 +308,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     if (TOCA.isInCombat) then
       TOCA.Notification("[1] In Combat, do nothing!", true)
     else
-      TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotOne)
+      TOCA.Totem[totemCat]:SetAttribute("spell", TOCA.cache[1])
       TOCA.Slot.Timer[4]= TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
       TOCA.Slot.Timer[4]:SetFont(TOCA.Global.font, 12, "OUTLINE")
       TOCA.Slot.Timer[4]:SetPoint("CENTER", 0, -8)
@@ -322,7 +321,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     if (TOCA.isInCombat) then
       TOCA.Notification("[1] In Combat, do nothing!", true)
     else
-      TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotTwo)
+      TOCA.Totem[totemCat]:SetAttribute("spell", TOCA.cache[2])
       TOCA.Slot.Timer[2]= TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
       TOCA.Slot.Timer[2]:SetFont(TOCA.Global.font, 12, "OUTLINE")
       TOCA.Slot.Timer[2]:SetPoint("CENTER", 0, -8)
@@ -335,7 +334,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     if (TOCA.isInCombat) then
       TOCA.Notification("[1] In Combat, do nothing!", true)
     else
-      TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotThree)
+      TOCA.Totem[totemCat]:SetAttribute("spell", TOCA.cache[3])
       TOCA.Slot.Timer[1]= TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
       TOCA.Slot.Timer[1]:SetFont(TOCA.Global.font, 12, "OUTLINE")
       TOCA.Slot.Timer[1]:SetPoint("CENTER", 0, -8)
@@ -348,7 +347,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     if (TOCA.isInCombat) then
       TOCA.Notification("[1] In Combat, do nothing!", true)
     else
-      TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotFour)
+      TOCA.Totem[totemCat]:SetAttribute("spell", TOCA.cache[4])
       TOCA.Slot.Timer[3]= TOCA.Slot[totemCat]:CreateFontString(nil, "ARTWORK")
       TOCA.Slot.Timer[3]:SetFont(TOCA.Global.font, 12, "OUTLINE")
       TOCA.Slot.Timer[3]:SetPoint("CENTER", 0, -8)
@@ -366,16 +365,16 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     end
     TOCA.Slot.highlight[totemCat]:Show()
     if (totemCat == "AIR") then
-      TOCA.TooltipDisplay(self, TOCASlotOne)
+      TOCA.TooltipDisplay(self, TOCA.cache[1])
     end
     if (totemCat == "EARTH") then
-      TOCA.TooltipDisplay(self, TOCASlotTwo)
+      TOCA.TooltipDisplay(self, TOCA.cache[2])
     end
     if (totemCat == "FIRE") then
-      TOCA.TooltipDisplay(self, TOCASlotThree)
+      TOCA.TooltipDisplay(self, TOCA.cache[3])
     end
     if (totemCat == "WATER") then
-      TOCA.TooltipDisplay(self, TOCASlotFour)
+      TOCA.TooltipDisplay(self, TOCA.cache[4])
     end
   end)
   TOCA.Totem[totemCat]:SetScript("OnLeave", function()
@@ -563,41 +562,41 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     end)
     TOCA.SlotSelectTotem[totemCat][i]:SetScript("OnClick", function(self)
       if (totemCat == "AIR") then
-        TOCASlotOne = totemSpell[1]
+        TOCA.cache[1] = totemSpell[1]
         if (TOCA.isInCombat) then
           TOCA.Notification("[2] In Combat, do nothing!", true)
         else
-          TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotOne)
+          TOCA.Totem[totemCat]:SetAttribute("spell", TOCA.cache[1])
           TOCA.SetKeyBindReset("TOTEM_AIR", totemSpell[1])
           TOCA.Notification("Setting AIR " .. totemSpell[1], true)
         end
       end
       if (totemCat == "EARTH") then
-        TOCASlotTwo = totemSpell[1]
+        TOCA.cache[2] = totemSpell[1]
         if (TOCA.isInCombat) then
           TOCA.Notification("[2] In Combat, do nothing!", true)
         else
-          TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotTwo)
+          TOCA.Totem[totemCat]:SetAttribute("spell", TOCA.cache[2])
           TOCA.SetKeyBindReset("TOTEM_EARTH", totemSpell[1])
           TOCA.Notification("Setting EARTH " .. totemSpell[1], true)
         end
       end
       if (totemCat == "FIRE") then
-        TOCASlotThree = totemSpell[1]
+        TOCA.cache[3] = totemSpell[1]
         if (TOCA.isInCombat) then
           TOCA.Notification("[2] In Combat, do nothing!", true)
         else
-          TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotThree)
+          TOCA.Totem[totemCat]:SetAttribute("spell", TOCA.cache[3])
           TOCA.SetKeyBindReset("TOTEM_FIRE", totemSpell[1])
           TOCA.Notification("Setting FIRE " .. totemSpell[1], true)
         end
       end
       if (totemCat == "WATER") then
-        TOCASlotFour = totemSpell[1]
+        TOCA.cache[4] = totemSpell[1]
         if (TOCA.isInCombat) then
           TOCA.Notification("[2] In Combat, do nothing!", true)
         else
-          TOCA.Totem[totemCat]:SetAttribute("spell", TOCASlotFour)
+          TOCA.Totem[totemCat]:SetAttribute("spell", TOCA.cache[4])
           TOCA.SetKeyBindReset("TOTEM_WATER", totemSpell[1])
           TOCA.Notification("Setting WATER " .. totemSpell[1], true)
         end

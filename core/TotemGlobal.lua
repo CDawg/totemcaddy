@@ -182,10 +182,10 @@ if (TOCA.Game.version == 1) then --classic
 end
 
 --default totem slots
-TOCASlotOne  = TOCA.totems.AIR[1][1]
-TOCASlotTwo  = TOCA.totems.EARTH[1][1]
-TOCASlotThree= TOCA.totems.FIRE[1][1]
-TOCASlotFour = TOCA.totems.WATER[1][1]
+TOCA.cache={}
+for totemInt,totemCat in pairsByKeys(TOCA.AlphaOrder) do
+	TOCA.cache[totemInt] = TOCA.totems[totemCat][1][1]
+end
 
 function TOCA.Notification(msg, debug)
   if ((debug) and (TOCA.DEBUG)) then
@@ -236,18 +236,36 @@ function TOCA.SetKeyBindOnLoad()
   if (TOCA.isInCombat) then
     TOCA.Notification("In combat, do nothing! TOCA.SetKeyBindOnLoad()", true)
   else
-    TOCA.SetKeyBindReset("TOTEM_RECALL", "Totemic Call")
-    if (TOCASlotOne) then
-      TOCA.SetKeyBindReset("TOTEM_AIR", TOCASlotOne)
+		if (TOCA.Game.version > 1) then
+			local title = "TOTEM_RECALL"
+	    TOCA.SetKeyBindReset(title, TOCA.locale.SPELLS.TotemicCall)
+			--TOCA.Button.KeyBind[1].Title:SetText(TOCA.locale.KEYBINDS[title])
+			--TOCA.Button.KeyBind[1].Text:SetText(GetBindingKey(title))
+		end
+
+		if (TOCA.cache[1]) then
+			local title = "TOTEM_AIR"
+      TOCA.SetKeyBindReset(title, TOCA.cache[1])
+			--TOCA.Button.KeyBind[2].Title:SetText(TOCA.locale.KEYBINDS[title])
+			--TOCA.Button.KeyBind[2].Text:SetText(GetBindingKey(title))
     end
-    if (TOCASlotTwo) then
-      TOCA.SetKeyBindReset("TOTEM_EARTH", TOCASlotTwo)
+    if (TOCA.cache[2]) then
+			local title = "TOTEM_EARTH"
+      TOCA.SetKeyBindReset(title, TOCA.cache[2])
+			--TOCA.Button.KeyBind[3].Title:SetText(TOCA.locale.KEYBINDS[title])
+			--TOCA.Button.KeyBind[3].Text:SetText(GetBindingKey(title))
     end
-    if (TOCASlotThree) then
-      TOCA.SetKeyBindReset("TOTEM_FIRE", TOCASlotThree)
+    if (TOCA.cache[3]) then
+			local title = "TOTEM_FIRE"
+      TOCA.SetKeyBindReset(title, TOCA.cache[3])
+			--TOCA.Button.KeyBind[4].Title:SetText(TOCA.locale.KEYBINDS[title])
+			--TOCA.Button.KeyBind[4].Text:SetText(GetBindingKey(title))
     end
-    if (TOCASlotFour) then
-      TOCA.SetKeyBindReset("TOTEM_WATER", TOCASlotFour)
+    if (TOCA.cache[4]) then
+			local title = "TOTEM_WATER"
+      TOCA.SetKeyBindReset(title, TOCA.cache[4])
+			--TOCA.Button.KeyBind[5].Title:SetText(TOCA.locale.KEYBINDS[title])
+			--TOCA.Button.KeyBind[5].Text:SetText(GetBindingKey(title))
     end
     TOCA.Notification("TOCA.SetKeyBindOnLoad()", true)
   end
@@ -259,22 +277,22 @@ function TOCA.Round(num, numDecimalPlaces)
 end
 
 function TOCA.UpdateTotemSet()
-  local totemIconKey = getKeyFromValue(TOCA.totems.AIR, TOCASlotOne, 1)
+  local totemIconKey = getKeyFromValue(TOCA.totems.AIR, TOCA.cache[1], 1)
   local totemIcon = TOCA.SetIcon(TOCA.totems.AIR[totemIconKey][2])
   TOCA.Slot["AIR"]:SetBackdrop(totemIcon)
   TOCA.FrameSetsSlot["AIR"]:SetBackdrop(totemIcon)
 
-  local totemIconKey = getKeyFromValue(TOCA.totems.EARTH, TOCASlotTwo, 1)
+  local totemIconKey = getKeyFromValue(TOCA.totems.EARTH, TOCA.cache[2], 1)
   local totemIcon = TOCA.SetIcon(TOCA.totems.EARTH[totemIconKey][2])
   TOCA.Slot["EARTH"]:SetBackdrop(totemIcon)
   TOCA.FrameSetsSlot["EARTH"]:SetBackdrop(totemIcon)
 
-  local totemIconKey = getKeyFromValue(TOCA.totems.FIRE, TOCASlotThree, 1)
+  local totemIconKey = getKeyFromValue(TOCA.totems.FIRE, TOCA.cache[3], 1)
   local totemIcon = TOCA.SetIcon(TOCA.totems.FIRE[totemIconKey][2])
   TOCA.Slot["FIRE"]:SetBackdrop(totemIcon)
   TOCA.FrameSetsSlot["FIRE"]:SetBackdrop(totemIcon)
 
-  local totemIconKey = getKeyFromValue(TOCA.totems.WATER, TOCASlotFour, 1)
+  local totemIconKey = getKeyFromValue(TOCA.totems.WATER, TOCA.cache[4], 1)
   local totemIcon = TOCA.SetIcon(TOCA.totems.WATER[totemIconKey][2])
   TOCA.Slot["WATER"]:SetBackdrop(totemIcon)
   TOCA.FrameSetsSlot["WATER"]:SetBackdrop(totemIcon)
@@ -499,7 +517,7 @@ function TOCA.Init()
       TOCADB[TOCA.player.combine]["HELP"] = "YES"
     end
     TOCA.Notification(TOCA.locale.INIT[1] .. ": " .. TOCA.player.combine)
-    TOCADB[TOCA.player.combine]["PROFILES"][TOCA.Dropdown.Menu[1]] = {TOCA_AIR=TOCASlotOne, TOCA_EARTH=TOCASlotTwo, TOCA_FIRE=TOCASlotThree, TOCA_WATER=TOCASlotFour}
+    TOCADB[TOCA.player.combine]["PROFILES"][TOCA.Dropdown.Menu[1]] = {TOCA_AIR=TOCA.cache[1], TOCA_EARTH=TOCA.cache[2], TOCA_FIRE=TOCA.cache[3], TOCA_WATER=TOCA.cache[4]}
     TOCA.UpdateTotemSet()
   else
     TOCA.Notification(TOCA.locale.INIT[2] .. ": " .. TOCA.player.combine)
@@ -657,7 +675,7 @@ function TOCA.SetDDMenu(DDFrame, value)
     for k,v in pairs(TOCADB[TOCA.player.combine]["PROFILES"][value]) do
       --TOCA.Notification("debug profile " .. k, true)
       if (k == "TOCA_AIR") then
-        TOCASlotOne = v
+        TOCA.cache[1] = v
         if (TOCA.isInCombat) then
           TOCA.Notification("In Combat, do nothing! TOCA.SetDDMenu", true)
         else
@@ -666,7 +684,7 @@ function TOCA.SetDDMenu(DDFrame, value)
         end
       end
       if (k == "TOCA_EARTH") then
-        TOCASlotTwo = v
+        TOCA.cache[2] = v
         if (TOCA.isInCombat) then
           TOCA.Notification("In Combat, do nothing! TOCA.SetDDMenu", true)
         else
@@ -675,7 +693,7 @@ function TOCA.SetDDMenu(DDFrame, value)
         end
       end
       if (k == "TOCA_FIRE") then
-        TOCASlotThree = v
+        TOCA.cache[3] = v
         if (TOCA.isInCombat) then
           TOCA.Notification("In Combat, do nothing! TOCA.SetDDMenu", true)
         else
@@ -684,7 +702,7 @@ function TOCA.SetDDMenu(DDFrame, value)
         end
       end
       if (k == "TOCA_WATER") then
-        TOCASlotFour = v
+        TOCA.cache[4] = v
         if (TOCA.isInCombat) then
           TOCA.Notification("In Combat, do nothing! TOCA.SetDDMenu", true)
         else
@@ -1048,12 +1066,6 @@ function TOCA.Combat(event)
   end
 end
 
-function TotemExpiring(totem)
-	if (TOCA.isInCombat) then
-		print("in combat")
-	end
-end
-
 function TOCA.InventoryCountItem(itemID)
   local i = 0
   for bag = 0, NUM_BAG_SLOTS do
@@ -1176,7 +1188,7 @@ function TOCA.SetTotemOrderDropdown() --handled on Init() ONLY
   end
 end
 
-TOCA.Dropdown.OrderSetMenu={"AIR", "EARTH", "FIRE", "WATER"}
+TOCA.Dropdown.OrderSetMenu=TOCA.AlphaOrder
 function TOCA.BuildTotemOrder()
   local buildOrder = ""
   local totemOrder = ""

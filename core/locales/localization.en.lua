@@ -57,6 +57,8 @@ TOCA.locale = {
 			"Close",
 			"Save",
 			"Delete",
+			"Yes",
+			"No",
 		},
 
 		TABS = {
@@ -64,6 +66,7 @@ TOCA.locale = {
 				"UI Frame",
 			  "Totem Set Builder",
 				"Notifications",
+				"Key Bindings",
 		  },
 		  HELP = {
 			  "Updates",
@@ -104,7 +107,8 @@ TOCA.locale = {
 			{"Display Totem Tooltip", "Toggle the mouseover of totem/spell details."},
 		},
 		NOTIFICATIONS = {
-			TITLE = "Notifications [During Combat]",
+			TITLE = "Notifications",
+			{"Notify Me Only During Combat", "Notifications will only trigger while in combat."},
 			{"Notify Me When A Totem Is Expiring", "A personal notification in the chat window will alert when a totem is expiring.|nThis is only during combat."},
 			{"Play A Sound When A Totem Is Expiring", "A chime will sound off when a totem is expiring.|nThis is only during combat."},
 		},
@@ -117,7 +121,7 @@ TOCA.locale = {
 	},
 
 	KEYBINDS = {
-		TOTEM_RECALL= "Totem Recall",
+		TOTEM_RECALL= "Totemic Call",
 		TOTEM_AIR   = "Totem Slot: Air",
 		TOTEM_EARTH = "Totem Slot: Earth",
 		TOTEM_FIRE  = "Totem Slot: Fire",

@@ -78,6 +78,15 @@ for i=1, getn(TOCA.locale.UI.TABS.OPTIONS) do
       TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[i]]:Hide()
       TOCA.Button.TabOptionsBack[i]:SetSize(TOCA.TabWidth.Options-20, 29)
     end
+		if (i == 4) then --key bindings tab, open the UIParent keybindings
+			TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]]:Show() --hacky - show the first page
+	    TOCA.Button.TabOptionsBack[1]:SetSize(TOCA.TabWidth.Options-20, 30)
+			TOCA.FrameOptions:Hide()
+			if (not GameMenuFrame:IsShown()) then
+		    ShowUIPanel(KeyBindingFrame)
+	    end
+			return
+		end
     TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[i]]:Show()
     TOCA.Button.TabOptionsBack[i]:SetSize(TOCA.TabWidth.Options-20, 30)
   end)

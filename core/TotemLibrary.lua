@@ -27,6 +27,8 @@ TOCA.item = {
   ANKH = 17030,
 }
 
+TOCA.AlphaOrder = {"AIR", "EARTH", "FIRE", "WATER"}
+
 TOCA.AnkhReminder = 3
 
 function arrayToString(array)
