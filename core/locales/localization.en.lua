@@ -63,7 +63,7 @@ TOCA.locale = {
 
 		TABS = {
 		  OPTIONS = {
-				"UI Frame",
+				"Frame",
 			  "Totem Set Builder",
 				"Notifications",
 				"Key Bindings",

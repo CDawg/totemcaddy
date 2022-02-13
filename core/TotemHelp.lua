@@ -25,7 +25,7 @@ TOCA.FrameHelp:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.FrameHelp:SetFrameStrata("DIALOG")
 TOCA.FrameHelp.text={}
 
-TOCA.TabWidth.Help = 110
+TOCA.TabWidth.Help = 140
 TOCA.Button.Tab={}
 TOCA.Button.TabBack={}
 
@@ -38,7 +38,7 @@ for i=1, getn(TOCA.locale.UI.TABS.HELP) do
 
   TOCA.Button.TabBack[i]= CreateFrame("Button", nil, TOCA.FrameHelp, "BackdropTemplate")
   TOCA.Button.TabBack[i]:SetSize(TOCA.TabWidth.Help-20, 29)
-  TOCA.Button.TabBack[i]:SetPoint("TOPLEFT", -80+i*92, 25)
+  TOCA.Button.TabBack[i]:SetPoint("TOPLEFT", -110+i*120, 25)
   TOCA.Button.TabBack[i]:SetBackdrop({
     bgFile  = "Interface/ToolTips/CHATBUBBLE-BACKGROUND",
     edgeFile= "",

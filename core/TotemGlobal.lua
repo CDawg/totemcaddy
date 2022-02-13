@@ -278,24 +278,32 @@ end
 
 function TOCA.UpdateTotemSet()
   local totemIconKey = getKeyFromValue(TOCA.totems.AIR, TOCA.cache[1], 1)
-  local totemIcon = TOCA.SetIcon(TOCA.totems.AIR[totemIconKey][2])
-  TOCA.Slot["AIR"]:SetBackdrop(totemIcon)
-  TOCA.FrameSetsSlot["AIR"]:SetBackdrop(totemIcon)
+	if (totemIconKey) then
+	  local totemIcon = TOCA.SetIcon(TOCA.totems.AIR[totemIconKey][2])
+	  TOCA.Slot["AIR"]:SetBackdrop(totemIcon)
+	  TOCA.FrameSetsSlot["AIR"]:SetBackdrop(totemIcon)
+	end
 
   local totemIconKey = getKeyFromValue(TOCA.totems.EARTH, TOCA.cache[2], 1)
-  local totemIcon = TOCA.SetIcon(TOCA.totems.EARTH[totemIconKey][2])
-  TOCA.Slot["EARTH"]:SetBackdrop(totemIcon)
-  TOCA.FrameSetsSlot["EARTH"]:SetBackdrop(totemIcon)
+	if (totemIconKey) then
+	  local totemIcon = TOCA.SetIcon(TOCA.totems.EARTH[totemIconKey][2])
+	  TOCA.Slot["EARTH"]:SetBackdrop(totemIcon)
+	  TOCA.FrameSetsSlot["EARTH"]:SetBackdrop(totemIcon)
+	end
 
   local totemIconKey = getKeyFromValue(TOCA.totems.FIRE, TOCA.cache[3], 1)
-  local totemIcon = TOCA.SetIcon(TOCA.totems.FIRE[totemIconKey][2])
-  TOCA.Slot["FIRE"]:SetBackdrop(totemIcon)
-  TOCA.FrameSetsSlot["FIRE"]:SetBackdrop(totemIcon)
+	if (totemIconKey) then
+	  local totemIcon = TOCA.SetIcon(TOCA.totems.FIRE[totemIconKey][2])
+	  TOCA.Slot["FIRE"]:SetBackdrop(totemIcon)
+	  TOCA.FrameSetsSlot["FIRE"]:SetBackdrop(totemIcon)
+	end
 
   local totemIconKey = getKeyFromValue(TOCA.totems.WATER, TOCA.cache[4], 1)
-  local totemIcon = TOCA.SetIcon(TOCA.totems.WATER[totemIconKey][2])
-  TOCA.Slot["WATER"]:SetBackdrop(totemIcon)
-  TOCA.FrameSetsSlot["WATER"]:SetBackdrop(totemIcon)
+	if (totemIconKey) then
+	  local totemIcon = TOCA.SetIcon(TOCA.totems.WATER[totemIconKey][2])
+	  TOCA.Slot["WATER"]:SetBackdrop(totemIcon)
+	  TOCA.FrameSetsSlot["WATER"]:SetBackdrop(totemIcon)
+	end
 end
 
 TOCA.SlotSelectTotemDisabled={}

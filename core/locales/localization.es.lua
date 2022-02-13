@@ -66,7 +66,7 @@ TOCA.locale = {
 				"Marco",
 			  "Orden de tótem",
 				"Notificaciones",
-				"Key Bindings",
+				"Teclado",
 		  },
 		  HELP = {
 			  "Actualizaciones",
