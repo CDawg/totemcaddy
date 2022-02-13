@@ -595,6 +595,15 @@ function TOCA.Init()
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"]) then
 			TOCA.Dropdown.Sound.TotemExpire.text:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"])
 		end
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGESHIELD"] == "OFF") then
+			TOCA.Checkbox.ShieldMessage:SetChecked(nil)
+		end
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESHIELD"] == "OFF") then
+			TOCA.Checkbox.ShieldExpire:SetChecked(nil)
+		end
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"]) then
+			TOCA.Dropdown.Sound.ShieldExpire.text:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"])
+		end
 
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMORDER"]) then
       TOCA.SetTotemOrderDropdown()
@@ -877,13 +886,15 @@ function TOCA.ExpireNotificationsShield()
 					if ((timeDuration <= 1) or (count == 1)) then
 						if (notificationAlertShield ~= 1) then
 							notificationAlertShield = 1
-							if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESHIELD"] ~= "OFF") then
+							if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGESHIELD"] ~= "OFF") then
 								TOCA.Notification("|cfff6d526[" .. name .. "]|r ".. TOCA.locale.INIT[4])
 							end
-							if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"]) then
-								PlaySoundFile(TOCA.Global.dir .. "sounds/" .. TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"] .. ".ogg")
-							else
-								PlaySoundFile(TOCA.Global.dir .. "sounds/shieldexpire_1.ogg")
+							if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESHIELD"] ~= "OFF") then
+								if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"]) then
+									PlaySoundFile(TOCA.Global.dir .. "sounds/" .. TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"] .. ".ogg")
+								else
+									PlaySoundFile(TOCA.Global.dir .. "sounds/shieldexpire_1.ogg")
+								end
 							end
 						end
 					end
