@@ -13,6 +13,9 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
+local NumTotemNotificationSounds = 10
+local NumShieldNotificationSounds = 10
+
 TOCA.FrameOptions.Title.Notifs={}
 TOCA.FrameOptions.Title.Notifs = TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[3]]:CreateFontString(nil, "ARTWORK")
 TOCA.FrameOptions.Title.Notifs:SetFont(TOCA.Global.font, 12)
@@ -20,9 +23,31 @@ TOCA.FrameOptions.Title.Notifs:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"
 TOCA.FrameOptions.Title.Notifs:SetText(TOCA.locale.UI.NOTIFICATIONS.TITLE)
 TOCA.FrameOptions.Title.Notifs:SetTextColor(1, 1, 0.5, 1)
 
+TOCA.Checkbox.NotifyCombat={}
+TOCA.Checkbox.NotifyCombat = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[3]], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.NotifyCombat:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -40)
+TOCA.Checkbox.NotifyCombat:SetChecked(1)
+TOCA.Checkbox.NotifyCombat.text = TOCA.Checkbox.NotifyCombat:CreateFontString(nil, "ARTWORK")
+TOCA.Checkbox.NotifyCombat.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
+TOCA.Checkbox.NotifyCombat.text:SetPoint("TOPLEFT", 25, -6)
+TOCA.Checkbox.NotifyCombat.text:SetText(TOCA.locale.UI.NOTIFICATIONS[1][1])
+TOCA.Checkbox.NotifyCombat:SetScript("OnClick", function(self)
+  if (self:GetChecked()) then
+    TOCADB[TOCA.player.combine]["CONFIG"]["NOTIFYCOMBAT"] = "ON"
+  else
+    TOCADB[TOCA.player.combine]["CONFIG"]["NOTIFYCOMBAT"] = "OFF"
+  end
+end)
+TOCA.Checkbox.NotifyCombat:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA.locale.UI.NOTIFICATIONS[1][2])
+end)
+TOCA.Checkbox.NotifyCombat:SetScript("OnLeave", function()
+  TOCA.CloseAllMenus()
+end)
+
 TOCA.Checkbox.ExpireMessage={}
 TOCA.Checkbox.ExpireMessage = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[3]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.ExpireMessage:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -40)
+TOCA.Checkbox.ExpireMessage:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -80)
 TOCA.Checkbox.ExpireMessage:SetChecked(1)
 TOCA.Checkbox.ExpireMessage.text = TOCA.Checkbox.ExpireMessage:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.ExpireMessage.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
@@ -44,7 +69,7 @@ end)
 
 TOCA.Checkbox.ExpireSound={}
 TOCA.Checkbox.ExpireSound = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[3]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.ExpireSound:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -60)
+TOCA.Checkbox.ExpireSound:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -100)
 TOCA.Checkbox.ExpireSound:SetChecked(1)
 TOCA.Checkbox.ExpireSound.text = TOCA.Checkbox.ExpireSound:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.ExpireSound.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
@@ -64,32 +89,32 @@ TOCA.Checkbox.ExpireSound:SetScript("OnLeave", function()
   TOCA.CloseAllMenus()
 end)
 
-local NotificationSounds = 19
 TOCA.Dropdown.Sounds={}
-for i=1, 19 do
+for i=1, NumTotemNotificationSounds do
 	TOCA.Dropdown.Sounds[i] = "totemexpire_" .. i
 end
 
 TOCA.Dropdown.Sound={}
-TOCA.Dropdown.Sound = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[3]], "UIDropDownMenuTemplate")
-TOCA.Dropdown.Sound:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"]+10, -80)
-TOCA.Dropdown.Sound.displayMode = "MENU"
-TOCA.Dropdown.Sound.text = TOCA.Dropdown.Sound:CreateFontString(nil, "ARTWORK")
-TOCA.Dropdown.Sound.text:SetFont(TOCA.Global.font, 11)
-TOCA.Dropdown.Sound.text:SetPoint("TOPLEFT", TOCA.Dropdown.Sound, "TOPLEFT", 25, -8)
-TOCA.Dropdown.Sound.text:SetText(TOCA.Dropdown.Sounds[1])
-TOCA.Dropdown.Sound:SetScript("OnEnter", function(self)
+TOCA.Dropdown.Sound.TotemExpire={}
+TOCA.Dropdown.Sound.TotemExpire = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[3]], "UIDropDownMenuTemplate")
+TOCA.Dropdown.Sound.TotemExpire:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"]+10, -120)
+TOCA.Dropdown.Sound.TotemExpire.displayMode = "MENU"
+TOCA.Dropdown.Sound.TotemExpire.text = TOCA.Dropdown.Sound.TotemExpire:CreateFontString(nil, "ARTWORK")
+TOCA.Dropdown.Sound.TotemExpire.text:SetFont(TOCA.Global.font, 11)
+TOCA.Dropdown.Sound.TotemExpire.text:SetPoint("TOPLEFT", TOCA.Dropdown.Sound.TotemExpire, "TOPLEFT", 25, -8)
+TOCA.Dropdown.Sound.TotemExpire.text:SetText(TOCA.Dropdown.Sounds[1])
+TOCA.Dropdown.Sound.TotemExpire:SetScript("OnEnter", function(self)
   --TOCA.TooltipDisplay(self, TOCA.locale.UI.OPTIONS[1][1], TOCA.locale.UI.OPTIONS[1][2])
 end)
-TOCA.Dropdown.Sound:SetScript("OnLeave", function()
+TOCA.Dropdown.Sound.TotemExpire:SetScript("OnLeave", function()
   TOCA.CloseAllMenus()
 end)
-TOCA.Dropdown.Sound.onClick = function(self, checked)
-  TOCA.Dropdown.Sound.text:SetText(self.value)
+TOCA.Dropdown.Sound.TotemExpire.onClick = function(self, checked)
+  TOCA.Dropdown.Sound.TotemExpire.text:SetText(self.value)
   TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"] = self.value
 	PlaySoundFile(TOCA.Global.dir .. "sounds/" .. self.value .. ".ogg")
 end
-TOCA.Dropdown.Sound.initialize = function(self, level)
+TOCA.Dropdown.Sound.TotemExpire.initialize = function(self, level)
   local info = UIDropDownMenu_CreateInfo()
   local i = 0
   for k,v in pairs(TOCA.Dropdown.Sounds) do
@@ -104,9 +129,149 @@ TOCA.Dropdown.Sound.initialize = function(self, level)
     UIDropDownMenu_AddButton(info, level)
   end
 end
-UIDropDownMenu_SetWidth(TOCA.Dropdown.Sound, 125)
-TOCA.Dropdown.Sound.title = TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]]:CreateFontString(nil, "ARTWORK")
-TOCA.Dropdown.Sound.title:SetFont(TOCA.Global.font, 12)
-TOCA.Dropdown.Sound.title:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -20)
-TOCA.Dropdown.Sound.title:SetText(TOCA.locale.UI.OPTIONS[1][1])
-TOCA.Dropdown.Sound.title:SetTextColor(1, 1, 0.5, 1)
+UIDropDownMenu_SetWidth(TOCA.Dropdown.Sound.TotemExpire, 125)
+
+--[==[
+TOCA.Dropdown.Sound.TotemExpire.title = TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]]:CreateFontString(nil, "ARTWORK")
+TOCA.Dropdown.Sound.TotemExpire.title:SetFont(TOCA.Global.font, 12)
+TOCA.Dropdown.Sound.TotemExpire.title:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -110)
+TOCA.Dropdown.Sound.TotemExpire.title:SetText(TOCA.locale.UI.OPTIONS[1][1])
+TOCA.Dropdown.Sound.TotemExpire.title:SetTextColor(1, 1, 0.5, 1)
+]==]--
+
+TOCA.Checkbox.ShieldMessage={}
+TOCA.Checkbox.ShieldMessage = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[3]], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.ShieldMessage:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -160)
+TOCA.Checkbox.ShieldMessage:SetChecked(1)
+TOCA.Checkbox.ShieldMessage.text = TOCA.Checkbox.ShieldMessage:CreateFontString(nil, "ARTWORK")
+TOCA.Checkbox.ShieldMessage.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
+TOCA.Checkbox.ShieldMessage.text:SetPoint("TOPLEFT", 25, -6)
+TOCA.Checkbox.ShieldMessage.text:SetText(TOCA.locale.UI.NOTIFICATIONS[4][1])
+TOCA.Checkbox.ShieldMessage:SetScript("OnClick", function(self)
+  if (self:GetChecked()) then
+    TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGESHIELD"] = "ON"
+  else
+    TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGESHIELD"] = "OFF"
+  end
+end)
+TOCA.Checkbox.ShieldMessage:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA.locale.UI.NOTIFICATIONS[4][2])
+end)
+TOCA.Checkbox.ShieldMessage:SetScript("OnLeave", function()
+  TOCA.CloseAllMenus()
+end)
+
+TOCA.Checkbox.ShieldExpire={}
+TOCA.Checkbox.ShieldExpire = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[3]], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.ShieldExpire:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -180)
+TOCA.Checkbox.ShieldExpire:SetChecked(1)
+TOCA.Checkbox.ShieldExpire.text = TOCA.Checkbox.ShieldExpire:CreateFontString(nil, "ARTWORK")
+TOCA.Checkbox.ShieldExpire.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
+TOCA.Checkbox.ShieldExpire.text:SetPoint("TOPLEFT", 25, -6)
+TOCA.Checkbox.ShieldExpire.text:SetText(TOCA.locale.UI.NOTIFICATIONS[5][1])
+TOCA.Checkbox.ShieldExpire:SetScript("OnClick", function(self)
+  if (self:GetChecked()) then
+    TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESHIELD"] = "ON"
+  else
+    TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESHIELD"] = "OFF"
+  end
+end)
+TOCA.Checkbox.ShieldExpire:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA.locale.UI.NOTIFICATIONS[5][2])
+end)
+TOCA.Checkbox.ShieldExpire:SetScript("OnLeave", function()
+  TOCA.CloseAllMenus()
+end)
+
+TOCA.Dropdown.SoundsShield={}
+for i=1, NumShieldNotificationSounds do
+	TOCA.Dropdown.SoundsShield[i] = "shieldexpire_" .. i
+end
+
+TOCA.Dropdown.Shields=TOCA.locale.UI.NOTIFICATIONS.SHIELDS
+TOCA.Dropdown.ShieldExpire={}
+TOCA.Dropdown.ShieldExpire = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[3]], "UIDropDownMenuTemplate")
+TOCA.Dropdown.ShieldExpire:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"]+10, -200)
+TOCA.Dropdown.ShieldExpire.displayMode = "MENU"
+TOCA.Dropdown.ShieldExpire.text = TOCA.Dropdown.ShieldExpire:CreateFontString(nil, "ARTWORK")
+TOCA.Dropdown.ShieldExpire.text:SetFont(TOCA.Global.font, 11)
+TOCA.Dropdown.ShieldExpire.text:SetPoint("TOPLEFT", TOCA.Dropdown.ShieldExpire, "TOPLEFT", 25, -8)
+TOCA.Dropdown.ShieldExpire.text:SetText(TOCA.Dropdown.Shields[1])
+TOCA.Dropdown.ShieldExpire:SetScript("OnEnter", function(self)
+  --TOCA.TooltipDisplay(self, TOCA.locale.UI.OPTIONS[1][1], TOCA.locale.UI.OPTIONS[1][2])
+end)
+TOCA.Dropdown.ShieldExpire:SetScript("OnLeave", function()
+  TOCA.CloseAllMenus()
+end)
+TOCA.Dropdown.ShieldExpire.onClick = function(self, checked)
+  TOCA.Dropdown.ShieldExpire.text:SetText(self.value)
+  TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESHIELDTYPE"] = self.value
+end
+TOCA.Dropdown.ShieldExpire.initialize = function(self, level)
+  local info = UIDropDownMenu_CreateInfo()
+  local i = 0
+  for k,v in pairs(TOCA.Dropdown.Shields) do
+    info.notCheckable = 1
+    info.padding = 2
+    info.text = v
+    info.value= v
+    info.fontObject = GameFontWhite
+    info.justifyH = "LEFT"
+    info.disabled = false
+    info.func = self.onClick
+    UIDropDownMenu_AddButton(info, level)
+  end
+end
+UIDropDownMenu_SetWidth(TOCA.Dropdown.ShieldExpire, 125)
+
+--[==[
+TOCA.Dropdown.ShieldExpire.title = TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]]:CreateFontString(nil, "ARTWORK")
+TOCA.Dropdown.ShieldExpire.title:SetFont(TOCA.Global.font, 12)
+TOCA.Dropdown.ShieldExpire.title:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -130)
+TOCA.Dropdown.ShieldExpire.title:SetText(TOCA.locale.UI.OPTIONS[1][1])
+TOCA.Dropdown.ShieldExpire.title:SetTextColor(1, 1, 0.5, 1)
+]==]--
+
+TOCA.Dropdown.Sound.ShieldExpire={}
+TOCA.Dropdown.Sound.ShieldExpire = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[3]], "UIDropDownMenuTemplate")
+TOCA.Dropdown.Sound.ShieldExpire:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"]+10, -225)
+TOCA.Dropdown.Sound.ShieldExpire.displayMode = "MENU"
+TOCA.Dropdown.Sound.ShieldExpire.text = TOCA.Dropdown.Sound.ShieldExpire:CreateFontString(nil, "ARTWORK")
+TOCA.Dropdown.Sound.ShieldExpire.text:SetFont(TOCA.Global.font, 11)
+TOCA.Dropdown.Sound.ShieldExpire.text:SetPoint("TOPLEFT", TOCA.Dropdown.Sound.ShieldExpire, "TOPLEFT", 25, -8)
+TOCA.Dropdown.Sound.ShieldExpire.text:SetText(TOCA.Dropdown.SoundsShield[1])
+TOCA.Dropdown.Sound.ShieldExpire:SetScript("OnEnter", function(self)
+  --TOCA.TooltipDisplay(self, TOCA.locale.UI.OPTIONS[1][1], TOCA.locale.UI.OPTIONS[1][2])
+end)
+TOCA.Dropdown.Sound.ShieldExpire:SetScript("OnLeave", function()
+  TOCA.CloseAllMenus()
+end)
+TOCA.Dropdown.Sound.ShieldExpire.onClick = function(self, checked)
+  TOCA.Dropdown.Sound.ShieldExpire.text:SetText(self.value)
+  TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"] = self.value
+	PlaySoundFile(TOCA.Global.dir .. "sounds/" .. self.value .. ".ogg")
+end
+TOCA.Dropdown.Sound.ShieldExpire.initialize = function(self, level)
+  local info = UIDropDownMenu_CreateInfo()
+  local i = 0
+  for k,v in pairs(TOCA.Dropdown.SoundsShield) do
+    info.notCheckable = 1
+    info.padding = 2
+    info.text = v
+    info.value= v
+    info.fontObject = GameFontWhite
+    info.justifyH = "LEFT"
+    info.disabled = false
+    info.func = self.onClick
+    UIDropDownMenu_AddButton(info, level)
+  end
+end
+UIDropDownMenu_SetWidth(TOCA.Dropdown.Sound.ShieldExpire, 125)
+
+--[==[
+TOCA.Dropdown.Sound.ShieldExpire.title = TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]]:CreateFontString(nil, "ARTWORK")
+TOCA.Dropdown.Sound.ShieldExpire.title:SetFont(TOCA.Global.font, 12)
+TOCA.Dropdown.Sound.ShieldExpire.title:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -20)
+TOCA.Dropdown.Sound.ShieldExpire.title:SetText(TOCA.locale.UI.OPTIONS[1][1])
+TOCA.Dropdown.Sound.ShieldExpire.title:SetTextColor(1, 1, 0.5, 1)
+]==]--

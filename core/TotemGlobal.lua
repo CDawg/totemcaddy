@@ -581,7 +581,7 @@ function TOCA.Init()
 			TOCA.Checkbox.ExpireSound:SetChecked(nil)
 		end
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"]) then
-			TOCA.Dropdown.Sound.text:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"])
+			TOCA.Dropdown.Sound.TotemExpire.text:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"])
 		end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMORDER"]) then
       TOCA.SetTotemOrderDropdown()
