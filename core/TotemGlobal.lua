@@ -875,15 +875,16 @@ function TOCA.ExpireNotificationsShield()
 	local _Uindex = 1
 	while UnitAura("player", _Uindex) do
 		local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura("player", _Uindex)
-		for k,v in pairs(TOCA.locale.UI.NOTIFICATIONS.SHIELDS) do
+		for k,v in pairs(TOCA.locale.SPELLS.SHIELDS) do
 			if (string.find(name, v)) then
 				local timeDuration = duration + expirationTime - GetTime()
 				timeDuration = timeDuration / 120
 				timeDuration = math.ceil(timeDuration)
+				print(timeDuration)
 				if ((timeDuration >= shamanShieldDuration) and (count >= 2)) then
 				  notificationAlertShield = 0 --reset / refreshed the aura
 			  else
-					if ((timeDuration <= 1) or (count == 1)) then
+					if ((timeDuration < 1) or (count <= 1)) then
 						if (notificationAlertShield ~= 1) then
 							notificationAlertShield = 1
 							if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGESHIELD"] ~= "OFF") then
@@ -1070,6 +1071,16 @@ function TOCA.TotemTimerResetBySpell(spellID)
   end
 end
 
+function TOCA.HandleShieldAlert()
+	if (TOCADB[TOCA.player.combine]["CONFIG"]["NOTIFYCOMBAT"] == "OFF") then
+		TOCA.ExpireNotificationsShield()
+	else
+		if (TOCA.isInCombat) then
+			TOCA.ExpireNotificationsShield()
+		end
+	end
+end
+
 function TOCA.TotemBarUpdate()
   local percMana = (UnitPower("player")/UnitPowerMax("player"))*100
   local percMana = floor(percMana+0.5)
@@ -1091,14 +1102,7 @@ function TOCA.TotemBarUpdate()
 
   TOCA.GetReincTimer()
   TOCA.DisplayAnkhFrame()
-
-	if (TOCADB[TOCA.player.combine]["CONFIG"]["NOTIFYCOMBAT"] == "OFF") then
-		TOCA.ExpireNotificationsShield()
-	else
-		if (TOCA.isInCombat) then
-			TOCA.ExpireNotificationsShield()
-		end
-	end
+	TOCA.HandleShieldAlert()
 end
 
 function TOCA.Combat(event)

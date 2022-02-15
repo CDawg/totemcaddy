@@ -134,6 +134,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
   if (event == "CHAT_MSG_ADDON") then
     TOCA.GetReincTimer()
     TOCA.VersionControl(prefix, netpacket)
+		TOCA.HandleShieldAlert()
   end
 end)
 
