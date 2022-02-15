@@ -967,7 +967,7 @@ function TOCA.TimerFrame(i)
   end
 end
 
-TOCA.RechargeTimer = 2
+TOCA.RechargeTimer = 0
 function TOCA.TimerFrameRecharge()
 	TOCA.RechargeTimer = TOCA.RechargeTimer -1
 	--print(TOCA.RechargeTimer)
@@ -992,9 +992,36 @@ TOCA.TotemRechargeFunc = 0
 TOCA.TotemRechargeFunc = C_Timer.NewTicker(0, function() TOCA.TimerFrameRecharge() end, 0)
 TOCA.TotemRechargeFunc:Cancel()
 
-function TOCA.TimerRechargeStart()
-	TOCA.TotemRechargeFunc = C_Timer.NewTicker(0.010, function() TOCA.TimerFrameRecharge() end, 50) --50ms
-	TOCA.RechargeTimer = 50
+--trigger only on totem drops
+function TOCA.TimerRechargeStart(spell, instant)
+	local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(spell)
+	local skillType, contextualID = GetSpellBookItemInfo(name)
+	local msCountdown = 0.010
+	if ((instant) and (skillType == "SPELL")) then --trigger only on totems
+		for totemCat,k in pairs(TOCA.totems) do
+			for totemSpell,v in pairs(TOCA.totems[totemCat]) do
+				if (v[1] == name) then
+					TOCA.TotemRechargeFunc = C_Timer.NewTicker(msCountdown, function() TOCA.TimerFrameRecharge() end, 50)
+					TOCA.RechargeTimer = 50
+				end
+			end
+		end
+		if (name == TOCA.locale.SPELLS.TotemicCall) then
+			TOCA.TotemRechargeFunc = C_Timer.NewTicker(msCountdown, function() TOCA.TimerFrameRecharge() end, 50)
+			TOCA.RechargeTimer = 50
+		end
+		for spellCat,v in pairs(TOCA.locale.SPELLS.SHIELDS) do
+			if (v == name) then
+				TOCA.TotemRechargeFunc = C_Timer.NewTicker(msCountdown, function() TOCA.TimerFrameRecharge() end, 50)
+				TOCA.RechargeTimer = 50
+			end
+		end
+	else
+		if (skillType == "SPELL") then
+			TOCA.TotemRechargeFunc = C_Timer.NewTicker(msCountdown, function() TOCA.TimerFrameRecharge() end, 50)
+			TOCA.RechargeTimer = 50
+		end
+	end
 end
 
 function TOCA.TotemBarTimerStart()

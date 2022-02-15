@@ -80,6 +80,15 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
     TOCA.TotemBarUpdate()
   end
 
+	if (event == "UNIT_SPELLCAST_START") then
+		local isPlayer = UnitIsPlayer("player")
+    if ((isPlayer) and (_casted)) then
+			if (TOCA.RechargeTimer <= 0) then
+				TOCA.TimerRechargeStart(_casted, false)
+			end
+		end
+	end
+
   --technically, this needs to be handled on a different event
   if (event == "UNIT_SPELLCAST_SENT") then
     TOCA.TotemBarUpdate()
@@ -95,7 +104,11 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
     end
   end
 	if (event == "UNIT_SPELLCAST_SUCCEEDED") then
-		TOCA.TimerRechargeStart()
+		if (_casted) then
+			if (TOCA.RechargeTimer <= 0) then
+				TOCA.TimerRechargeStart(_casted, true)
+			end
+		end
 	end
 
   if (event == "UNIT_MAXPOWER") then
