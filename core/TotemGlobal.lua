@@ -879,12 +879,12 @@ function TOCA.ExpireNotificationsShield()
 			if (string.find(name, v)) then
 				local timeDuration = duration + expirationTime - GetTime()
 				timeDuration = timeDuration / 120
-				timeDuration = math.ceil(timeDuration)
-				print(timeDuration)
+				--timeDuration = floor(timeDuration)
+				--print(timeDuration)
 				if ((timeDuration >= shamanShieldDuration) and (count >= 2)) then
 				  notificationAlertShield = 0 --reset / refreshed the aura
 			  else
-					if ((timeDuration < 1) or (count <= 1)) then
+					if ((timeDuration < 1.0) or (count <= 1)) then
 						if (notificationAlertShield ~= 1) then
 							notificationAlertShield = 1
 							if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGESHIELD"] ~= "OFF") then
