@@ -967,24 +967,34 @@ function TOCA.TimerFrame(i)
   end
 end
 
+TOCA.RechargeTimer = 2
+function TOCA.TimerFrameRecharge()
+	TOCA.RechargeTimer = TOCA.RechargeTimer -1
+	--print(TOCA.RechargeTimer)
+	local rechargeFadeHeight = TOCA.RechargeTimer-10
+	if (rechargeFadeHeight <= 1) then
+		rechargeFadeHeight = 0
+	end
+	--print(rechargeFadeHeight)
+	TOCA.Button.TotemicCall.recharge:SetSize(40, -rechargeFadeHeight-4)
+	for totemCat,v in pairs(TOCA.totems) do
+		TOCA.Slot.Recharge[totemCat]:SetSize(TOCA.Slot_w, -rechargeFadeHeight-4)
+	end
+end
+
 --build timers
 for i=1, 4 do
   TOCA.TotemFunc[i] = 0
   TOCA.TotemFunc[i] = C_Timer.NewTicker(0, function() TOCA.TimerFrame(i) end, 0)
   TOCA.TotemFunc[i]:Cancel()
 end
+TOCA.TotemRechargeFunc = 0
+TOCA.TotemRechargeFunc = C_Timer.NewTicker(0, function() TOCA.TimerFrameRecharge() end, 0)
+TOCA.TotemRechargeFunc:Cancel()
 
-function TOCA.TotemRecharge(totemName, totemCat)
-  local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(totemName)
-  if (name) then
-    --print(name)
-    local start, duration, enabled = GetSpellCooldown(name)
-    if (duration) then
-      local rechargeCooldown = start + duration - GetTime()
-      rechargeCooldown = math.ceil(rechargeCooldown)
-      --print(rechargeCooldown)
-    end
-  end
+function TOCA.TimerRechargeStart()
+	TOCA.TotemRechargeFunc = C_Timer.NewTicker(0.010, function() TOCA.TimerFrameRecharge() end, 50) --50ms
+	TOCA.RechargeTimer = 50
 end
 
 function TOCA.TotemBarTimerStart()
@@ -993,7 +1003,6 @@ function TOCA.TotemBarTimerStart()
     if (TOCA.TotemTimer[i] <= 0) then
       TOCA.TotemFunc[i] = C_Timer.NewTicker(1, function() TOCA.TimerFrame(i) end, TOCA.TotemDuration[i])
       TOCA.TotemTimer[i] = TOCA.TotemDuration[i]
-      TOCA.TotemRecharge(TOCA.TotemName[i], i)
     end
   end
 end

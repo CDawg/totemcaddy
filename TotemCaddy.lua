@@ -52,11 +52,14 @@ TOCA.Main:RegisterEvent("PLAYER_CONTROL_LOST")
 TOCA.Main:RegisterEvent("CHAT_MSG_ADDON")
 TOCA.Main:RegisterEvent("UNIT_SPELLCAST_START")
 TOCA.Main:RegisterEvent("UNIT_SPELLCAST_STOP")
+TOCA.Main:RegisterEvent("UNIT_SPELLCAST_SENT")
+TOCA.Main:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 TOCA.Main:RegisterEvent("UNIT_AURA")
 TOCA.Main:RegisterEvent("UNIT_MAXPOWER")
 TOCA.Main:RegisterEvent("UNIT_POWER_FREQUENT")
-TOCA.Main:RegisterEvent("UNIT_SPELLCAST_SENT")
 TOCA.Main:RegisterEvent("UNIT_INVENTORY_CHANGED")
+TOCA.Main:RegisterEvent("PLAYER_STARTED_MOVING")
+TOCA.Main:RegisterEvent("PLAYER_STARTED_LOOKING")
 TOCA.Main:RegisterEvent("PLAYER_REGEN_ENABLED")
 TOCA.Main:RegisterEvent("PLAYER_REGEN_DISABLED")
 TOCA.Main:RegisterEvent("PLAYER_DEAD")
@@ -71,9 +74,12 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
 
   if ((event == "UNIT_SPELLCAST_START") or
   (event == "UNIT_SPELLCAST_STOP") or
-  (event == "UNIT_POWER_FREQUENT")) then
+  (event == "UNIT_POWER_FREQUENT") or
+	(event == "PLAYER_STARTED_LOOKING") or
+  (event == "PLAYER_STARTED_MOVING")) then
     TOCA.TotemBarUpdate()
   end
+
   --technically, this needs to be handled on a different event
   if (event == "UNIT_SPELLCAST_SENT") then
     TOCA.TotemBarUpdate()
@@ -88,6 +94,10 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
       end
     end
   end
+	if (event == "UNIT_SPELLCAST_SUCCEEDED") then
+		TOCA.TimerRechargeStart()
+	end
+
   if (event == "UNIT_MAXPOWER") then
     TOCA.TotemBarUpdate()
   end
@@ -162,6 +172,13 @@ TOCA.Button.TotemicCall.disable:SetPoint("CENTER", 0, 0)
 TOCA.Button.TotemicCall.disable:SetBackdrop(TOCA.Backdrop.General)
 TOCA.Button.TotemicCall.disable:SetBackdropBorderColor(1, 1, 1, 0)
 TOCA.Button.TotemicCall.disable:Hide()
+TOCA.Button.TotemicCall.recharge = CreateFrame("Frame", nil, TOCA.Button.TotemicCall, "BackdropTemplate")
+TOCA.Button.TotemicCall.recharge:SetSize(TOCA.Button.TotemicCall_w, 0)
+TOCA.Button.TotemicCall.recharge:SetPoint("CENTER", 0, 0)
+TOCA.Button.TotemicCall.recharge:SetBackdrop(TOCA.Backdrop.RGB)
+TOCA.Button.TotemicCall.recharge:SetBackdropColor(0, 0, 0, 0.8)
+TOCA.Button.TotemicCall.recharge:SetBackdropBorderColor(1, 1, 1, 0)
+--TOCA.Button.TotemicCall.recharge:Hide()
 TOCA.Button.TotemicCall:SetBackdropBorderColor(1, 1, 1, 0.5)
 
 TOCA.Button.TotemicCall.ECL = TOCA.FrameMain:CreateTexture(nil, "ARTWORK")
@@ -259,12 +276,13 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.Slot.Disable[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)
   TOCA.Slot.Disable[totemCat]:Hide()
   TOCA.Slot.Recharge[totemCat]= CreateFrame("Frame", nil, TOCA.Slot[totemCat], "BackdropTemplate")
-  TOCA.Slot.Recharge[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
-  TOCA.Slot.Recharge[totemCat]:SetPoint("CENTER", 0, 0)
-  TOCA.Slot.Recharge[totemCat]:SetBackdrop(TOCA.Backdrop.General)
+  TOCA.Slot.Recharge[totemCat]:SetSize(TOCA.Slot_w, 0)
+  --TOCA.Slot.Recharge[totemCat]:SetPoint("TOPLEFT", 0, -TOCA.Slot_h)
+	TOCA.Slot.Recharge[totemCat]:SetPoint("CENTER", 0, 0)
+  TOCA.Slot.Recharge[totemCat]:SetBackdrop(TOCA.Backdrop.RGB)
+	TOCA.Slot.Recharge[totemCat]:SetBackdropColor(0, 0, 0, 0.8)
   TOCA.Slot.Recharge[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)
-  TOCA.Slot.Recharge[totemCat]:Hide()
-  TOCA.Slot.Disable[totemCat]:Hide()
+  --TOCA.Slot.Recharge[totemCat]:Hide()
   TOCA.Totem[totemCat] = CreateFrame("Button", nil, TOCA.Slot[totemCat], "SecureActionButtonTemplate")
   TOCA.Totem[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
   TOCA.Totem[totemCat]:SetPoint("CENTER", 0, 0)
