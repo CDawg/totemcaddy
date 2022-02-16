@@ -81,8 +81,8 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
   end
 
 	if (event == "UNIT_SPELLCAST_START") then
-		local isPlayer = UnitIsPlayer("player")
-    if ((isPlayer) and (_casted)) then
+		local isSelf = UnitIsPlayer(TOCA.player.name)
+    if ((isSelf) and (_casted)) then
 			if (TOCA.RechargeTimer <= 0) then
 				TOCA.TimerRechargeStart(_casted, false)
 			end
@@ -92,8 +92,8 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
   --technically, this needs to be handled on a different event
   if (event == "UNIT_SPELLCAST_SENT") then
     TOCA.TotemBarUpdate()
-    local isPlayer = UnitIsPlayer("player")
-    if ((isPlayer) and (_spellID)) then
+    local isSelf = UnitIsPlayer(TOCA.player.name)
+    if ((isSelf) and (_spellID)) then
       if(_spellID == TOCA.spell.TOTEMIC_CALL) then
         TOCA.TotemTimerReset("all")
       end
@@ -104,7 +104,8 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
     end
   end
 	if (event == "UNIT_SPELLCAST_SUCCEEDED") then
-		if (_casted) then
+		local isSelf = UnitIsPlayer(TOCA.player.name)
+    if ((isSelf) and (_casted)) then
 			if (TOCA.RechargeTimer <= 0) then
 				TOCA.TimerRechargeStart(_casted, true)
 			end

@@ -3,7 +3,7 @@ if GetLocale() ~= "esES" and GetLocale() ~= "esMX" then return end
 TOCA.locale = {
 
 	SPELLS = {
-		Unknown       = "Unknown",
+		Unknown       = "No conocida",
 		Reincarnation = "Reencarnación",
 		TotemicCall   = "Llamada totémica",
 		SHIELDS = {"Escudo de agua", "Escudo de relámpagos",  "Escudo de tierra"},

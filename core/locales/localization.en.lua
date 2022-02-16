@@ -148,7 +148,7 @@ TOCA.HELP = {
 	  "|cffffdf96Please note:|r Totem Caddy is still evolving. Improvements will be made as time continues. There is an |cff7eabd5issue tracker|r now available on |cffff9f69Curseforge|r. Enjoy!|n",
 		"|cffffdf96Coming Soon:|r Language versions different clients.",
 		"",
-	  "|cffffdf96New Feature:|r Added an option to display the Totemic Call button (BCC version only)",
+	  "|cffffdf96New Feature:|r Added Notifications for Totems and Shields that are expiring.",
 		"",
 	  "|cffffdf96First time using Totem Caddy?",
 		"|r",
