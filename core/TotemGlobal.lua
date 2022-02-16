@@ -343,6 +343,11 @@ end
 
 function TOCA.EnableKnownTotems()
   if (TOCA.TotemsEnabled) then
+		local TotemicCall = GetSpellInfo(TOCA.locale.SPELLS.TotemicCall)
+		if (not TotemicCall) then
+			TOCA.HideUnknownSpells(true)
+		end
+
     if (TOCA.isInCombat) then
       TOCA.Notification("In Combat, do nothing! TOCA.EnableKnownTotems()", true)
     else
@@ -489,6 +494,17 @@ function TOCA.BorderFrame(enable)
     end
   end
   TOCA.Notification("TOCA.BorderFrame()", true)
+end
+
+function TOCA.HideUnknownSpells(force)
+	if ((TOCA.Game.version == 1) or (force)) then
+		TOCA.Button.TotemicCall:Hide()
+		TOCA.Button.TotemicCall.ECL:Hide()
+		TOCA.Button.TotemicCall.ECR:Hide()
+		TOCA.Checkbox.EndCaps:Hide()
+		TOCA.Checkbox.Totemic:Hide()
+		TOCA.Dropdown.FrameGryphons:Hide()
+	end
 end
 
 function TOCA.Init()
@@ -674,14 +690,7 @@ function TOCA.Init()
   TOCA.FrameOptionsMain.name = TOCA.Global.title
   InterfaceOptions_AddCategory(TOCA.FrameOptionsMain)
 
-  if (TOCA.Game.version == 1) then
-    TOCA.Button.TotemicCall:Hide()
-    TOCA.Button.TotemicCall.ECL:Hide()
-    TOCA.Button.TotemicCall.ECR:Hide()
-    TOCA.Checkbox.EndCaps:Hide()
-    TOCA.Checkbox.Totemic:Hide()
-    TOCA.Dropdown.FrameGryphons:Hide()
-  end
+  TOCA.HideUnknownSpells(false) --check game version first
 
   if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMICCALL"] == "OFF") then
     TOCA.Button.TotemicCall:Hide()

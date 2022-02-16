@@ -132,5 +132,6 @@ TOCA.player = {
   realm  = GetRealmName(),
   class  = UnitClass("player"),
   faction= UnitFactionGroup("player"),
+	GUID   = UnitGUID("player"),
 }
 TOCA.player.combine = TOCA.player.name .. "-" .. TOCA.player.realm
