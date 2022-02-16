@@ -1003,32 +1003,36 @@ TOCA.TotemRechargeFunc:Cancel()
 
 --trigger only on totem drops
 function TOCA.TimerRechargeStart(spell, instant)
-	local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(spell)
-	local skillType, contextualID = GetSpellBookItemInfo(name)
 	local msCountdown = 0.010
-	if ((instant) and (skillType == "SPELL")) then --trigger only on totems
-		for totemCat,k in pairs(TOCA.totems) do
-			for totemSpell,v in pairs(TOCA.totems[totemCat]) do
-				if (v[1] == name) then
+	local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(spell)
+	--local manaConsume = GetSpellPowerCost(name)
+	--print(manaConsume.cost)
+	if (name) then
+		local skillType, contextualID = GetSpellBookItemInfo(name)
+		if (skillType == "SPELL") then
+			if (instant) then --trigger only on totems
+				for totemCat,k in pairs(TOCA.totems) do
+					for totemSpell,v in pairs(TOCA.totems[totemCat]) do
+						if (v[1] == name) then
+							TOCA.TotemRechargeFunc = C_Timer.NewTicker(msCountdown, function() TOCA.TimerFrameRecharge() end, 50)
+							TOCA.RechargeTimer = 50
+						end
+					end
+				end
+				if (name == TOCA.locale.SPELLS.TotemicCall) then
 					TOCA.TotemRechargeFunc = C_Timer.NewTicker(msCountdown, function() TOCA.TimerFrameRecharge() end, 50)
 					TOCA.RechargeTimer = 50
 				end
-			end
-		end
-		if (name == TOCA.locale.SPELLS.TotemicCall) then
-			TOCA.TotemRechargeFunc = C_Timer.NewTicker(msCountdown, function() TOCA.TimerFrameRecharge() end, 50)
-			TOCA.RechargeTimer = 50
-		end
-		for spellCat,v in pairs(TOCA.locale.SPELLS.SHIELDS) do
-			if (v == name) then
+				for spellCat,v in pairs(TOCA.locale.SPELLS.SHIELDS) do
+					if (v == name) then
+						TOCA.TotemRechargeFunc = C_Timer.NewTicker(msCountdown, function() TOCA.TimerFrameRecharge() end, 50)
+						TOCA.RechargeTimer = 50
+					end
+				end
+			else
 				TOCA.TotemRechargeFunc = C_Timer.NewTicker(msCountdown, function() TOCA.TimerFrameRecharge() end, 50)
 				TOCA.RechargeTimer = 50
 			end
-		end
-	else
-		if (skillType == "SPELL") then
-			TOCA.TotemRechargeFunc = C_Timer.NewTicker(msCountdown, function() TOCA.TimerFrameRecharge() end, 50)
-			TOCA.RechargeTimer = 50
 		end
 	end
 end
