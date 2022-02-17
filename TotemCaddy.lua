@@ -68,7 +68,7 @@ TOCA.Main:RegisterEvent("UNIT_ENTERED_VEHICLE")
 TOCA.Main:RegisterEvent("UNIT_EXITED_VEHICLE")
 TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted, _spellID)
   if ((event == "ADDON_LOADED") and (prefix == TOCA.Global.prefix)) then
-    TOCA.Notification(TOCA.locale.Init())
+    TOCA.Notification("v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " (" .. GetLocale() .. ") " .. TOCA.locale.INIT[6] .. ". Type /" .. TOCA.Global.command .. " for commands.")
     TOCA.Init()
   end
 

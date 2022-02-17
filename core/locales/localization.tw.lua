@@ -1,33 +1,35 @@
 if GetLocale() ~= "zhTW" then return end
 
 TOCA.locale = {
-  TITLE = "图腾球童",
+	TITLE = "圖騰球童",
 
 	SPELLS = {
 		Unknown = "未知",
 	},
 
 	KEYBINDS = {
-		TOTEM_RECALL= "图腾召唤",
-		TOTEM_AIR   = "图腾槽：空气",
-		TOTEM_EARTH = "图腾槽：地球",
-		TOTEM_FIRE  = "图腾槽：火",
-		TOTEM_WATER = "图腾槽：水",
+		TOTEM_RECALL= "圖騰召喚",
+		TOTEM_AIR   = "圖騰槽：空氣",
+		TOTEM_EARTH = "圖騰槽：地球",
+		TOTEM_FIRE  = "圖騰槽：火",
+		TOTEM_WATER = "圖騰槽：水",
 	},
 
 	INIT = {
-	  "建筑简介",
-	  "加载配置文件",
+	  "建築簡介",
+	  "加載配置文件",
 		"十字章提醒",
-		"即将到期!",
+		"即將到期 !",
+		"歡迎來到",
+		"初始化",
 	},
 
   UI = {
-		BUTTON = {"关闭", "保存", "删除", "是的", "不"},
+		BUTTON = {"關閉", "保存", "刪除", "是的", "不"},
 
 		TABS = {
-		  OPTIONS= {"框架", "图腾集", "通知", "键盘"},
-		  HELP   = {"更新", "接触", "信用"}
+		  OPTIONS= {"框架", "圖騰套裝", "通知", "鍵盤"},
+		  HELP   = {"更新", "接觸", "信用"}
 		},
 
 		OPTIONS = {
@@ -63,9 +65,9 @@ TOCA.locale = {
 		},
 
 		TOTEMSET = {
-			"设置选择",
-			"设置名称",
-			"图腾秩序",
+			"設置選擇",
+			"設置名稱",
+			"圖騰秩序",
 		},
 
 		NOTIFICATIONS = {
@@ -88,14 +90,6 @@ TOCA.locale = {
 		{"debug off","Disable Debug Mode (/reload)"},
 	}
 }
-
-function TOCA.locale.Help()
-  return "Welcome to " .. TOCA.Global.title .. " v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " (" .. GetLocale() .. ")|n|n"
-end
-
-function TOCA.locale.Init()
-  return "v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " (" .. GetLocale() .. ") Initializing. Type /" .. TOCA.Global.command .. " for commands."
-end
 
 function TOCA.locale.Ankh()
 	return "Ankhs: |cffffffff".. TOCA.InventoryCountItem(TOCA.item.ANKH) .."|r|n|nAnkh Inventory Count Reminder.|nThis will display when you have less than " .. TOCA.AnkhReminder .. " Ankhs"

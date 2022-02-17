@@ -20,6 +20,8 @@ TOCA.locale = {
 	  "加载配置文件",
 		"十字章提醒",
 		"即将到期!",
+		"Welcome to",
+		"Initializing",
 	},
 
   UI = {
@@ -88,14 +90,6 @@ TOCA.locale = {
 		{"debug off","Disable Debug Mode (/reload)"},
 	}
 }
-
-function TOCA.locale.Help()
-  return "Welcome to " .. TOCA.Global.title .. " v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " (" .. GetLocale() .. ")|n|n"
-end
-
-function TOCA.locale.Init()
-  return "v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " (" .. GetLocale() .. ") Initializing. Type /" .. TOCA.Global.command .. " for commands."
-end
 
 function TOCA.locale.Ankh()
 	return "Ankhs: |cffffffff".. TOCA.InventoryCountItem(TOCA.item.ANKH) .."|r|n|nAnkh Inventory Count Reminder.|nThis will display when you have less than " .. TOCA.AnkhReminder .. " Ankhs"

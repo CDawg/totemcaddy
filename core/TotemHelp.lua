@@ -108,7 +108,7 @@ for i=1, getn(TOCA.locale.UI.TABS.HELP) do
     elseif (TOCA.locale.UI.TABS.HELP[i] == TOCA.locale.UI.TABS.HELP[2]) then
       TOCA.TextFrame.text:SetText(arrayToString(TOCA.HELP.CONTACT))
     else
-      TOCA.TextFrame.text:SetText(TOCA.locale.Help() .. arrayToString(TOCA.HELP.UPDATES))
+      TOCA.TextFrame.text:SetText(TOCA.locale.INIT[5].. " " .. TOCA.Global.title .. " v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " (" .. GetLocale() .. ")|n|n" .. arrayToString(TOCA.HELP.UPDATES))
     end
   end)
 end

@@ -1,33 +1,35 @@
 if GetLocale() ~= "itIT" then return end
 
 TOCA.locale = {
-  TITLE = "Caja de tótem",
+  TITLE = "Totem Caddy",
 
 	SPELLS = {
-		Unknown = "Unknown",
+		Unknown = "Sconosciuto",
 	},
 
 	KEYBINDS = {
-		TOTEM_RECALL= "Llamada totémica",
-		TOTEM_AIR   = "Ranura de tótem: Aire",
-		TOTEM_EARTH = "Ranura de tótem: Tierra",
-		TOTEM_FIRE  = "Ranura de tótem: Fuego",
-		TOTEM_WATER = "Espacio para tótem: Agua",
+		TOTEM_RECALL= "Totemic Call",
+		TOTEM_AIR   = "Slot Totem: Aria",
+		TOTEM_EARTH = "Totem Slot: Terra",
+		TOTEM_FIRE  = "Slot totem: fuoco",
+		TOTEM_WATER = "Slot Totem: Acqua",
 	},
 
 	INIT = {
-	  "Creando perfil",
-	  "Cargando perfil",
-		"Recordatorio Ankh",
-		"está expirando!",
+	  "Profilo dell'edificio",
+	  "Caricamento del profilo",
+		"Ankh Promemoria",
+		"sta scadendo!",
+		"Welcome to",
+		"Initializing",
 	},
 
-  UI = {
-		BUTTON = {"Cerca", "Ahorrar", "Borrar", "sí", "No"},
+	UI = {
+		BUTTON = {"Vicino", "Salva", "Eliminare", "sì", "No"},
 
 		TABS = {
-		  OPTIONS= {"Marco", "Orden de tótem", "Notificaciones", "Teclado"},
-		  HELP   = {"Actualizaciones", "Contactos", "Crédito"}
+		  OPTIONS= {"Portafoto", "Set di totem", "Notifiche", "Legature chiave"},
+		  HELP   = {"Aggiornamenti", "Contatto", "Credito"}
 		},
 
 		OPTIONS = {
@@ -63,9 +65,9 @@ TOCA.locale = {
 		},
 
 		TOTEMSET = {
-			"Establecer selección",
-			"Escoger un nombre",
-			"Totem Order",
+			"Imposta selezione",
+			"Imposta nome",
+			"Ordine Totem",
 		},
 
 		NOTIFICATIONS = {
@@ -88,14 +90,6 @@ TOCA.locale = {
 		{"debug off","Disable Debug Mode (/reload)"},
 	}
 }
-
-function TOCA.locale.Help()
-  return "Welcome to " .. TOCA.Global.title .. " v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " (" .. GetLocale() .. ")|n|n"
-end
-
-function TOCA.locale.Init()
-  return "v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " (" .. GetLocale() .. ") Initializing. Type /" .. TOCA.Global.command .. " for commands."
-end
 
 function TOCA.locale.Ankh()
 	return "Ankhs: |cffffffff".. TOCA.InventoryCountItem(TOCA.item.ANKH) .."|r|n|nAnkh Inventory Count Reminder.|nThis will display when you have less than " .. TOCA.AnkhReminder .. " Ankhs"
