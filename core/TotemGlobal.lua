@@ -1392,5 +1392,24 @@ function SlashCmdList.TOCA(cmd)
 			print("|cffffff00".. list[1] .. "|r : " .. list[2] .. "|n")
 		end
 	end
-	TOCA.CommandList(cmd)
+	if (cmd == TOCA.locale.COMMANDS[1][1]) then
+	  TOCA.FrameOptions:Show()
+  elseif (cmd == TOCA.locale.COMMANDS[2][1]) then
+		TOCA.FrameMain:Show()
+		TOCADB[TOCA.player.combine]["DISABLED"] = "NO"
+	elseif (cmd == TOCA.locale.COMMANDS[3][1]) then
+		TOCA.FrameMain:Hide()
+	elseif (cmd == TOCA.locale.COMMANDS[4][1]) then
+		TOCA.Notification("|r : " .. TOCA.player.combine)
+	elseif (cmd == TOCA.locale.COMMANDS[5][1]) then
+		TOCA.FrameHelp:Show()
+	elseif (cmd == TOCA.locale.COMMANDS[6][1]) then
+		TOCA.DEBUG = true
+		TOCA.Notification("DEBUG ON")
+	elseif (cmd == TOCA.locale.COMMANDS[7][1]) then
+		TOCA.DEBUG = false
+		TOCA.Notification("DEBUG OFF")
+	elseif (cmd == TOCA.locale.COMMANDS[8][1]) then
+		print(string.format("version = %s, build = %s, date = '%s', tocversion = %s.", __Gversion, __Gbuild, __Gdate, __Gtoc))
+	end
 end

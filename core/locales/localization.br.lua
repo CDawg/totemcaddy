@@ -88,34 +88,10 @@ TOCA.locale = {
 		{"help",     "Display the help introduction."},
 		{"debug on", "Enable Debug Mode (Very Spammy)"},
 		{"debug off","Disable Debug Mode (/reload)"},
+		{"build",    "View latest game version and build"},
 	}
 }
 
 function TOCA.locale.Ankh()
 	return "Ankhs: |cffffffff".. TOCA.InventoryCountItem(TOCA.item.ANKH) .."|r|n|nAnkh Inventory Count Reminder.|nThis will display when you have less than " .. TOCA.AnkhReminder .. " Ankhs"
-end
-
-function TOCA.CommandList(cmd)
-	if (cmd == "show") then
-		TOCA.FrameMain:Show()
-		TOCADB[TOCA.player.combine]["DISABLED"] = "NO"
-	elseif (cmd == "hide") then
-		TOCA.FrameMain:Hide()
-	elseif (cmd == "sets") then
-		TOCA.FrameSets:Show()
-	elseif (cmd == "profile") then
-		TOCA.Notification("|r Profile: " .. TOCA.player.combine)
-	elseif (cmd == "options") then
-		TOCA.FrameOptions:Show()
-	elseif (cmd == "help") then
-		TOCA.FrameHelp:Show()
-	elseif (cmd == "debug on") then
-		TOCA.DEBUG = true
-		TOCA.Notification("DEBUG ON")
-	elseif (cmd == "debug off") then
-		TOCA.DEBUG = false
-		TOCA.Notification("DEBUG OFF")
-	elseif (cmd == "build") then
-		print(string.format("version = %s, build = %s, date = '%s', tocversion = %s.", __Gversion, __Gbuild, __Gdate, __Gtoc))
-	 end
 end
