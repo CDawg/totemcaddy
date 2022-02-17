@@ -26,7 +26,8 @@ TOCA.Global = {
   dir    = "Interface/Addons/TotemCaddy/",
   prefix = "TotemCaddy",
   suffix = "BCC",
-  date   = "2021-01-09",
+	date   = date("%Y%m%d"),
+	update = 20220320,
 }
 --local _LName, _LTitle = GetAddOnInfo(TOCA.Global.prefix)
 --TOCA.Global.version = tonumber(string.sub(_LTitle, 26, 29))
@@ -192,19 +193,23 @@ end
 
 TOCA.version_alerted = 0
 function TOCA.VersionControl(netprefix, netpacket)
-  if (netprefix == TOCA.Global.prefix) then
-      if (TOCA.version_alerted == 0) then
-      local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.prefix)
-      if (getPacket) then
-        local latest_version = tonumber(getPacket)
-        local my_version = tonumber(TOCA.Global.version)
-        if (latest_version > my_version) then --2 minor
-          TOCA.Notification("|cfffc2121You have an outdated version! Latest version:|cffffedad " .. latest_version)
-          TOCA.version_alerted = tonumber(latest_version)
-        end
-      end
-    end
-  end
+	if (TOCA.version_alerted == 0) then
+	  if (netprefix == TOCA.Global.prefix) then
+	    local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.prefix)
+	    if (getPacket) then
+	      local latest_version = tonumber(getPacket)
+	      local my_version = tonumber(TOCA.Global.version)
+	      if (latest_version > my_version) then --2 minor
+	        TOCA.Notification("|cfffc2121You have an outdated version! Latest version:|cffffedad " .. latest_version)
+	        TOCA.version_alerted = tonumber(latest_version)
+	      end
+	    end
+	  end
+		if (tonumber(TOCA.Global.date) >= tonumber(TOCA.Global.update)) then
+	    TOCA.Notification("|cfffc2121You have an outdated version!")
+			TOCA.version_alerted = 1
+		end
+	end
 end
 
 --menu & frame system default structures

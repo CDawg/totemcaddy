@@ -65,8 +65,10 @@ TOCA.FrameHelp.text={}
 TOCA.TabWidth.Help = 140
 TOCA.Button.Tab={}
 TOCA.Button.TabBack={}
-
 TOCA.FrameHelpPage={}
+
+local HelpIntro = TOCA.locale.INIT[5].. " " .. TOCA.Global.title .. " v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " (" .. GetLocale() .. ")|n|n"
+
 for i=1, getn(TOCA.locale.UI.TABS.HELP) do
   TOCA.FrameHelpPage[TOCA.locale.UI.TABS.HELP[i]] = CreateFrame("Frame", "TOCA.FrameHelp", TOCA.FrameHelp, "BackdropTemplate")
   TOCA.FrameHelpPage[TOCA.locale.UI.TABS.HELP[i]]:SetWidth(TOCA.FrameHelp:GetWidth())
@@ -108,7 +110,7 @@ for i=1, getn(TOCA.locale.UI.TABS.HELP) do
     elseif (TOCA.locale.UI.TABS.HELP[i] == TOCA.locale.UI.TABS.HELP[2]) then
       TOCA.TextFrame.text:SetText(arrayToString(TOCA.HELP.CONTACT))
     else
-      TOCA.TextFrame.text:SetText(TOCA.locale.INIT[5].. " " .. TOCA.Global.title .. " v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " (" .. GetLocale() .. ")|n|n" .. arrayToString(TOCA.HELP.UPDATES))
+      TOCA.TextFrame.text:SetText(HelpIntro .. arrayToString(TOCA.HELP.UPDATES))
     end
   end)
 end
@@ -147,7 +149,7 @@ TOCA.TextFrame.text:SetPoint("TOPLEFT", 4, -4)
 TOCA.TextFrame.text:SetMultiLine(true)
 TOCA.TextFrame.text:ClearFocus(self)
 TOCA.TextFrame.text:SetAutoFocus(false)
-TOCA.TextFrame.text:SetText(TOCA.locale.Help() .. arrayToString(TOCA.HELP.UPDATES))
+TOCA.TextFrame.text:SetText(HelpIntro .. arrayToString(TOCA.HELP.UPDATES))
 
 TOCA.Button.CloseFrameHelp= CreateFrame("Button", nil, TOCA.FrameHelp, "BackdropTemplate")
 TOCA.Button.CloseFrameHelp:SetSize(100, 25)
