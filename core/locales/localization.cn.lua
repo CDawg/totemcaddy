@@ -1,4 +1,4 @@
-if GetLocale() ~= "zhCN" then return end
+if GetLocale() ~= "zhCN" then return end --Simplified
 
 TOCA.locale = {
   TITLE = "图腾球童",
@@ -20,8 +20,9 @@ TOCA.locale = {
 	  "加载配置文件",
 		"十字章提醒",
 		"即将到期!",
-		"Welcome to",
-		"Initializing",
+		"欢迎来到",
+		"初始化",
+		"过时的版本"
 	},
 
   UI = {

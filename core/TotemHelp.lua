@@ -29,7 +29,7 @@ TOCA.HELP = {
 	  "Select the cogwheel button or type /toca 'options', then select Totem Sets",
 	  "You can select which totem for each category, give it a name, then select the bottom arrow on the main frame dropdown to access it.",
 	  "Totem slot keybindings for your totem category slots: If you assign key bindings to to the totem slots for the very first time, you may have to do a '/reload'.",
-	  "\n",
+	  "|n",
 	},
 	CONTACT = {
 	  "Please feel free to reach out and let me know what improvements can be made.",

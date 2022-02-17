@@ -22,6 +22,7 @@ TOCA.locale = {
 		"is expiring!",
 		"Welcome to",
 		"Initializing",
+		"outdated version!"
 	},
 
   UI = {

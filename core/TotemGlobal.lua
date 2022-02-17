@@ -200,13 +200,13 @@ function TOCA.VersionControl(netprefix, netpacket)
 	      local latest_version = tonumber(getPacket)
 	      local my_version = tonumber(TOCA.Global.version)
 	      if (latest_version > my_version) then --2 minor
-	        TOCA.Notification("|cfffc2121You have an outdated version! Latest version:|cffffedad " .. latest_version)
+	        TOCA.Notification("|cfffc2121" .. TOCA.locale.INIT[7] .. ". Latest version:|cffffedad " .. latest_version)
 	        TOCA.version_alerted = tonumber(latest_version)
 	      end
 	    end
 	  end
 		if (tonumber(TOCA.Global.date) >= tonumber(TOCA.Global.update)) then
-	    TOCA.Notification("|cfffc2121You have an outdated version!")
+	    TOCA.Notification("|cfffc2121" .. TOCA.locale.INIT[7])
 			TOCA.version_alerted = 1
 		end
 	end
@@ -571,9 +571,6 @@ end
 
 function TOCA.Init()
   local lC, eC, cI = UnitClass("player")
-  if (GetLocale() ~= "enUS") then
-    TOCA.Notification("|cfffc2121Incorrect locale: " .. GetLocale() .. ". The current locale is set for enUS.")
-  end
 
   TOCA.FrameMain:Hide()
   if (eC == "SHAMAN") then

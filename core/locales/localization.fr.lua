@@ -20,8 +20,9 @@ TOCA.locale = {
 	  "Profil de chargement",
 		"Rappel Ankh",
 		"arrive à expiration !",
-		"Welcome to",
-		"Initializing",
+		"Bienvenue à",
+		"Initialisation",
+		"version obsolète !"
 	},
 
   UI = {

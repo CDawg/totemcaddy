@@ -1,4 +1,4 @@
-if GetLocale() ~= "zhTW" then return end
+if GetLocale() ~= "zhTW" then return end --Traditional
 
 TOCA.locale = {
 	TITLE = "圖騰球童",
@@ -22,6 +22,7 @@ TOCA.locale = {
 		"即將到期 !",
 		"歡迎來到",
 		"初始化",
+		"過時的版本"
 	},
 
   UI = {

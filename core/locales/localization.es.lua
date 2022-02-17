@@ -20,8 +20,9 @@ TOCA.locale = {
 	  "Cargando perfil",
 		"Recordatorio Ankh",
 		"está expirando!",
-		"Welcome to",
-		"Initializing",
+		"Bienvenido a",
+		"Inicializando",
+		"¡versión desactualizada!"
 	},
 
   UI = {
