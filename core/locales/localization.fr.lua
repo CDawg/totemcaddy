@@ -61,6 +61,12 @@ TOCA.locale = {
 			{"Display Totem Tooltip", "Toggle the mouseover of totem/spell details."},
 		},
 
+		TOTEMSET = {
+			"Set Selection",
+			"Set Name",
+			"Totem Order",
+		},
+
 		NOTIFICATIONS = {
 			TITLE = "Notifications",
 			{"Trigger Notifications Only During Combat",    "Notifications will only trigger while in combat."},
@@ -68,12 +74,6 @@ TOCA.locale = {
 			{"Play A Sound When A Totem Is Expiring",       "A chime will sound off when a totem is expiring.|nThis is only during combat."},
 			{"Notify Me When A Shield Is Expiring Or Low",  "A personal notification in the chat window will alert when your shield is running low or expiring."},
 			{"Play A Sound When A Shield Is Expiring Or Low","A chime will sound off when your shield is low or expiring."},
-		},
-
-		TOTEMSET = {
-			"Set Selection",
-			"Set Name",
-			"Totem Order",
 		}
 	},
 
