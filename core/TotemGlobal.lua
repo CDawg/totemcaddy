@@ -16,7 +16,7 @@ the copyright holders.
 TOCA.DEBUG = false
 
 TOCA.Global = {
-  title  = "|cff0070DDTotem Caddy|r",
+  title  = "|cff0070DD".. TOCA.locale.TITLE .."|r",
   author = "Porthias of Myzrael",
   version= 2.47,
   command= "toca",
@@ -922,7 +922,7 @@ function TOCA.ExpireNotificationsTotems(totemname, totemtimer)
 	if (totemtimer == 10) then
 		if ((totemname ~= nil) or (totemname ~= "")) then
 			if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGE"] ~= "OFF") then
-				TOCA.Notification("|cfff6d526[" .. totemname .. "]|r ".. TOCA.locale.INIT[4])
+				TOCA.Notification("|cfff6d526" .. totemname .. "|r ".. TOCA.locale.INIT[4])
 			end
 			if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESOUND"] ~= "OFF") then
 				if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"]) then
@@ -954,7 +954,7 @@ function TOCA.ExpireNotificationsShield()
 						if (notificationAlertShield ~= 1) then
 							notificationAlertShield = 1
 							if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGESHIELD"] ~= "OFF") then
-								TOCA.Notification("|cfff6d526[" .. name .. "]|r ".. TOCA.locale.INIT[4])
+								TOCA.Notification("|cfff6d526" .. name .. "|r ".. TOCA.locale.INIT[4])
 							end
 							if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESHIELD"] ~= "OFF") then
 								if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"]) then
