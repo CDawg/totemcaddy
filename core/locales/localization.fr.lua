@@ -3,47 +3,15 @@ if GetLocale() ~= "frFR" then return end
 TOCA.locale = {
 
 	SPELLS = {
-		Unknown       = "Inconnue",
-		Reincarnation = "Réincarnation",
-		TotemicCall   = "Appel totémique",
-		SHIELDS = {"Bouclier d'eau", "Bouclier de foudre",  "Bouclier de terre"},
+		Unknown = "Inconnue",
 	},
 
-	TOTEMS = {
-		--[==[ WARNING! Changing the order of these totems will cause synchronization issues. ]==]--
-		FIRE = {
-		  "Totem Nova de feu",
-		  "Totem langue de feu",
-		  "Totem de résistance au Givre",
-		  "Totem de magma",
-		  "Totem incendiaire",
-		  "Totem de colère",
-		},
-		EARTH = {
-		  "Totem de lien terrestre",
-		  "Totem de Griffes de pierre",
-		  "Totem de Peau de pierre",
-		  "Totem de Force de la Terre",
-		  "Totem de Séisme",
-		},
-		WATER = {
-		  "Totem de purification des maladies",
-		  "Totem de résistance au feu",
-		  "Totem guérisseur",
-		  "Totem Fontaine de mana",
-			"Totem de Vague de mana",
-		  "Totem de Purification du poison",
-		},
-		AIR = {
-		  "Totem de Grâce aérienne",
-		  "Totem de Glèbe",
-		  "Totem de résistance à la nature",
-		  "Totem sentinelle",
-		  "Totem de Tranquillité de l'air",
-		  "Totem furie-des-vents",
-		  "Totem de Mur des vents",
-		  "Totem de courroux de l'air",
-		}
+	KEYBINDS = {
+		TOTEM_RECALL= "Totemic Call",
+		TOTEM_AIR   = "Totem Slot: Air",
+		TOTEM_EARTH = "Totem Slot: Earth",
+		TOTEM_FIRE  = "Totem Slot: Fire",
+		TOTEM_WATER = "Totem Slot: Water",
 	},
 
 	INIT = {
@@ -54,26 +22,11 @@ TOCA.locale = {
 	},
 
   UI = {
-		BUTTON = {
-			"Fermer",
-			"Sauvegarder",
-			"Supprimer",
-			"Oui",
-			"Non",
-		},
+		BUTTON = {"Fermer", "Sauvegarder", "Supprimer", "Oui", "Non"},
 
 		TABS = {
-		  OPTIONS = {
-				"Cadre",
-			  "Ensembles",
-				"Avis",
-				"Shortcuts",
-		  },
-		  HELP = {
-			  "Mises à jour",
-			  "Contact",
-			  "Crédit",
-		  }
+		  OPTIONS = {"Cadre", "Ensembles", "Avis", "Shortcuts"},
+		  HELP = {"Mises à jour", "Contact", "Crédit"}
 		},
 
 		OPTIONS = {
@@ -122,14 +75,6 @@ TOCA.locale = {
 			"Set Name",
 			"Totem Order",
 		}
-	},
-
-	KEYBINDS = {
-		TOTEM_RECALL= "Totemic Call",
-		TOTEM_AIR   = "Totem Slot: Air",
-		TOTEM_EARTH = "Totem Slot: Earth",
-		TOTEM_FIRE  = "Totem Slot: Fire",
-		TOTEM_WATER = "Totem Slot: Water",
 	},
 
 	COMMANDS = {

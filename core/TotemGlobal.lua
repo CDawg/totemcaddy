@@ -123,8 +123,65 @@ TOCA.icons = {
 	}
 }
 
+--TOCA.IdentifySpellName(15107) --fire nova totem
+TOCA.totems.ID = {}
+TOCA.totems.ID.FIRE = {
+	1535, --fire nova
+	8227, --flametongue
+	8181, --frost resist
+	8190, --magma
+	3599, --searing
+	30706, --totem of wrath
+}
+TOCA.totems.ID.EARTH = {
+  2484, --eathbind
+	5730, --stoneclaw
+  8071, --stoneskin
+	8075, --strength of earth
+	8143, --tremor
+}
+TOCA.totems.ID.WATER = {
+	8170, --disease cleanse
+	8184, --fire resist
+	5394, --healing stream
+  5675, --mana spring
+	16190, --mana tide
+	38306, --poison cleansing
+}
+TOCA.totems.ID.AIR = {
+	8835, --grace
+	8177, --grounding
+	10595, --nature resist
+	6495, --sentry
+	25908, --tranquil air
+	8512, --windfury
+	15107, --windwall
+	3738, --wrath of air
+}
+
+function TOCA.IdentifySpell(spellID) --used for different languages
+  local spell = GetSpellInfo(spellID)
+	if (spell) then return spell end
+end
+
+--build all totems for the respective language (rank 1)
+TOCA.locale.TOTEMS = {FIRE={}, EARTH={}, WATER={}, AIR={}}
+for totemCat,v in pairsByKeys(TOCA.totems.ID) do
+	for k,v in pairsByKeys(TOCA.totems.ID[totemCat]) do
+		TOCA.locale.TOTEMS[totemCat][k] = TOCA.IdentifySpell(TOCA.totems.ID[totemCat][k])
+	end
+end
+
+TOCA.locale.SPELLS.Reincarnation = TOCA.IdentifySpell(TOCA.spell.REINCARNATION)
+TOCA.locale.SPELLS.TotemicCall = TOCA.IdentifySpell(TOCA.spell.TOTEMIC_CALL)
+TOCA.locale.SPELLS.SHIELDS = {
+	TOCA.IdentifySpell(TOCA.spell.WATER_SHIELD),
+	TOCA.IdentifySpell(TOCA.spell.LIGHTNING_SHIELD),
+	TOCA.IdentifySpell(TOCA.spell.EARTH_SHIELD),
+}
+
 --match the totems spells to their respective icons
-TOCA.totems = {FIRE={}, EARTH={}, WATER={}, AIR={}}
+TOCA.totems = {FIRE={}, EARTH={}, WATER={}, AIR={}} --cached order
 for totemCat,v in pairsByKeys(TOCA.totems) do
 	for k,v in pairsByKeys(TOCA.locale.TOTEMS[totemCat]) do
 		TOCA.totems[totemCat][k] = {}

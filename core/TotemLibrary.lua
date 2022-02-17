@@ -18,18 +18,21 @@ __Gversion, __Gbuild, __Gdate, __Gtoc = GetBuildInfo()
 TOCA.totemspells={}
 TOCA.icons={}
 TOCA.totems={}
+TOCA.locale={}
 TOCA.help={}
 TOCA.spell = {
-  TOTEMIC_CALL = 36936,
+	REINCARNATION   = 20608,
+  TOTEMIC_CALL    = 36936,
+	WATER_SHIELD    = 24398,
+	LIGHTNING_SHIELD= 23551,
+	EARTH_SHIELD    = 974,
 }
-
 TOCA.item = {
   ANKH = 17030,
 }
-
-TOCA.AlphaOrder = {"AIR", "EARTH", "FIRE", "WATER"}
-
 TOCA.AnkhReminder = 3
+TOCA.AlphaOrder = {"AIR", "EARTH", "FIRE", "WATER"}
+--TOCA.locale = {TOTEMS = {FIRE={}, EARTH={}, WATER={}, AIR={}}} --this order regardless of language
 
 function arrayToString(array)
   formstring=""

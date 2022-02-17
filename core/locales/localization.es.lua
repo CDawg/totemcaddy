@@ -3,47 +3,15 @@ if GetLocale() ~= "esES" and GetLocale() ~= "esMX" then return end
 TOCA.locale = {
 
 	SPELLS = {
-		Unknown       = "No conocida",
-		Reincarnation = "Reencarnación",
-		TotemicCall   = "Llamada totémica",
-		SHIELDS = {"Escudo de agua", "Escudo de relámpagos",  "Escudo de tierra"},
+		Unknown = "Unknown",
 	},
 
-	TOTEMS = {
-		--[==[ WARNING! Changing the order of these totems will cause synchronization issues. ]==]--
-		FIRE = {
-		  "Tótem Nova de Fuego",
-		  "Tótem lengua de Fuego",
-		  "Tótem de resistencia a la Escarcha",
-		  "Tótem de Magma",
-		  "Tótem abrasador",
-		  "Tótem de cólera",
-		},
-		EARTH = {
-		  "Tótem Nexo Terrestre",
-		  "Tótem Garra de piedra",
-		  "Tótem piel de piedra",
-		  "Tótem Fuerza de la tierra",
-		  "Tótem de tremor",
-		},
-		WATER = {
-		  "Tótem de limpieza de enfermedades",
-		  "Tótem de resistencia al Fuego",
-		  "Tótem Corriente de Sanación",
-		  "Tótem Fuente de maná",
-		  "Tótem Marea de maná",
-		  "Tótem contraveneno",
-		},
-		AIR = {
-		  "Tótem gracia del aire",
-		  "Tótem derribador",
-		  "Tótem de resistencia a la naturaleza",
-		  "Tótem avizor",
-		  "Tótem de aire sosegado",
-		  "Tótem Viento Furioso",
-		  "Tótem muro de viento",
-		  "Tótem cólera de aire",
-		}
+	KEYBINDS = {
+		TOTEM_RECALL= "Totemic Call",
+		TOTEM_AIR   = "Totem Slot: Air",
+		TOTEM_EARTH = "Totem Slot: Earth",
+		TOTEM_FIRE  = "Totem Slot: Fire",
+		TOTEM_WATER = "Totem Slot: Water",
 	},
 
 	INIT = {
@@ -54,26 +22,11 @@ TOCA.locale = {
 	},
 
   UI = {
-		BUTTON = {
-			"Cerca",
-			"Ahorrar",
-			"Borrar",
-			"sí",
-			"No",
-		},
+		BUTTON = {"Cerca", "Ahorrar", "Borrar", "sí", "No"},
 
 		TABS = {
-		  OPTIONS = {
-				"Marco",
-			  "Orden de tótem",
-				"Notificaciones",
-				"Teclado",
-		  },
-		  HELP = {
-			  "Actualizaciones",
-			  "Contactos",
-			  "Crédito",
-		  }
+		  OPTIONS= {"Marco", "Orden de tótem", "Notificaciones", "Teclado"},
+		  HELP   = {"Actualizaciones", "Contactos", "Crédito"}
 		},
 
 		OPTIONS = {
@@ -122,14 +75,6 @@ TOCA.locale = {
 			"Set Name",
 			"Totem Order",
 		}
-	},
-
-	KEYBINDS = {
-		TOTEM_RECALL= "Totemic Call",
-		TOTEM_AIR   = "Totem Slot: Air",
-		TOTEM_EARTH = "Totem Slot: Earth",
-		TOTEM_FIRE  = "Totem Slot: Fire",
-		TOTEM_WATER = "Totem Slot: Water",
 	},
 
 	COMMANDS = {

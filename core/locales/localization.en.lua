@@ -3,47 +3,15 @@
 TOCA.locale = {
 
 	SPELLS = {
-		Unknown       = "Unknown",
-		Reincarnation = "Reincarnation",
-		TotemicCall   = "Totemic Call",
-		SHIELDS = {"Water Shield", "Lightning Shield",  "Earth Shield"},
+		Unknown = "Unknown",
 	},
 
-	TOTEMS = {
-		--[==[ WARNING! Changing the order of these totems will cause synchronization issues. ]==]--
-		FIRE = {
-		  "Fire Nova Totem",
-		  "Flametongue Totem",
-		  "Frost Resistance Totem",
-		  "Magma Totem",
-		  "Searing Totem",
-		  "Totem of Wrath",
-		},
-		EARTH = {
-		  "Earthbind Totem",
-		  "Stoneclaw Totem",
-		  "Stoneskin Totem",
-		  "Strength of Earth Totem",
-		  "Tremor Totem",
-		},
-		WATER = {
-		  "Disease Cleansing Totem",
-		  "Fire Resistance Totem",
-		  "Healing Stream Totem",
-		  "Mana Spring Totem",
-		  "Mana Tide Totem",
-		  "Poison Cleansing Totem",
-		},
-		AIR = {
-		  "Grace of Air Totem",
-		  "Grounding Totem",
-		  "Nature Resistance Totem",
-		  "Sentry Totem",
-		  "Tranquil Air Totem",
-		  "Windfury Totem",
-		  "Windwall Totem",
-		  "Wrath of Air Totem",
-		}
+	KEYBINDS = {
+		TOTEM_RECALL= "Totemic Call",
+		TOTEM_AIR   = "Totem Slot: Air",
+		TOTEM_EARTH = "Totem Slot: Earth",
+		TOTEM_FIRE  = "Totem Slot: Fire",
+		TOTEM_WATER = "Totem Slot: Water",
 	},
 
 	INIT = {
@@ -54,26 +22,11 @@ TOCA.locale = {
 	},
 
   UI = {
-		BUTTON = {
-			"Close",
-			"Save",
-			"Delete",
-			"Yes",
-			"No",
-		},
+		BUTTON = {"Close", "Save", "Delete", "Yes", "No"},
 
 		TABS = {
-		  OPTIONS = {
-				"Frame",
-			  "Totem Set Builder",
-				"Notifications",
-				"Key Bindings",
-		  },
-		  HELP = {
-			  "Updates",
-			  "Contact",
-			  "Credit",
-		  }
+		  OPTIONS= {"Frame", "Totem Set Builder", "Notifications", "Key Bindings"},
+		  HELP   = {"Updates", "Contact", "Credit"}
 		},
 
 		OPTIONS = {
@@ -122,14 +75,6 @@ TOCA.locale = {
 			"Set Name",
 			"Totem Order",
 		}
-	},
-
-	KEYBINDS = {
-		TOTEM_RECALL= "Totemic Call",
-		TOTEM_AIR   = "Totem Slot: Air",
-		TOTEM_EARTH = "Totem Slot: Earth",
-		TOTEM_FIRE  = "Totem Slot: Fire",
-		TOTEM_WATER = "Totem Slot: Water",
 	},
 
 	COMMANDS = {
