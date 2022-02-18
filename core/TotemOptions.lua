@@ -728,7 +728,7 @@ TOCA.Checkbox.TooltipMouse:SetChecked(1)
 TOCA.Checkbox.TooltipMouse.text = TOCA.Checkbox.TooltipMouse:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.TooltipMouse.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
 TOCA.Checkbox.TooltipMouse.text:SetPoint("TOPLEFT", 25, -6)
-TOCA.Checkbox.TooltipMouse.text:SetText("Anchor Tooltip to Cursor")
+TOCA.Checkbox.TooltipMouse.text:SetText(TOCA.locale.UI.TOOLTIP[2][1])
 TOCA.Checkbox.TooltipMouse:SetScript("OnClick", function(self)
   if (self:GetChecked()) then
     TOCADB[TOCA.player.combine]["CONFIG"]["TOOLMOUSE"] = "ON"
@@ -737,7 +737,7 @@ TOCA.Checkbox.TooltipMouse:SetScript("OnClick", function(self)
   end
 end)
 TOCA.Checkbox.TooltipMouse:SetScript("OnEnter", function(self)
-  TOCA.TooltipDisplay(self, self.text:GetText(), "Toggle the tooltip to follow over the mouse cursor.")
+  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA.locale.UI.TOOLTIP[2][2])
 end)
 TOCA.Checkbox.TooltipMouse:SetScript("OnLeave", function()
   TOCA.CloseAllMenus()

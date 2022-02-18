@@ -62,13 +62,19 @@ TOCA.locale = {
 		},
 		TOOLTIP = {
 			TITLE = "Tooltip",
-			{"Display Totem Tooltip", "Toggle the mouseover of totem/spell details."},
+			{"Display Totem Tooltip",   "Toggle the mouseover of totem/spell details."},
+			{"Anchor Tooltip to Cursor","Toggle the tooltip to follow over the mouse cursor."}
 		},
 
 		TOTEMSET = {
-			"선택 설정",
-			"세트 이름",
-			"토템 주문",
+			{"선택 설정", ""},
+			{"세트 이름", ""},
+			{"토템 주문", ""},
+			{"Delete Totem Set", ""},
+			{"Save Totem Set",   ""},
+			{"Unable to remove", ""},
+			{"Totem Set Saved",  ""},
+			{"Totem Set Updated",""},
 		},
 
 		NOTIFICATIONS = {
