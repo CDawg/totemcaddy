@@ -80,7 +80,7 @@ do
 				if (IsResting()) then
 					mapSize = 1
 				end
-				print(mapSize)
+				--print(mapSize)
 				totemX = stampX - distX *(_GMMapW+_GMMapH)*math.pi *mapSize --*playerX * 20	/ (_GMMapW+_GMMapH) --factor = (mapRadius - iconDiameter) / dist;
 				totemY = stampY - distY *(_GMMapW+_GMMapH)*math.pi *mapSize --*playerY * 20 / (_GMMapW+_GMMapH)
 				--print(IsIndoors())

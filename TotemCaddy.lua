@@ -123,7 +123,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
     TOCA.TotemBarTimerStart()
 		local inInstance, instanceType = IsInInstance()
 		if (not inInstance) then
-		  TOCA.TotemStampPos(prefix)
+		  --TOCA.TotemStampPos(prefix)
 	  end
   end
 
