@@ -66,6 +66,11 @@ TOCA.Main:RegisterEvent("UNIT_ENTERED_VEHICLE")
 TOCA.Main:RegisterEvent("UNIT_EXITED_VEHICLE")
 TOCA.Main:RegisterEvent("BAG_UPDATE")
 TOCA.Main:RegisterEvent("CHAT_MSG_ADDON")
+TOCA.Main:RegisterEvent("MINIMAP_UPDATE_ZOOM")
+TOCA.Main:RegisterEvent("PLAYER_ENTERING_WORLD")
+TOCA.Main:RegisterEvent("NEW_WMO_CHUNK")
+TOCA.Main:RegisterEvent("ZONE_CHANGED")
+TOCA.Main:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted, _spellID)
   if ((event == "ADDON_LOADED") and (prefix == TOCA.Global.prefix)) then
     TOCA.Notification("v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " (" .. GetLocale() .. ") " .. TOCA.locale.INIT[6] .. ". Type /" .. TOCA.Global.command .. " for commands.")
@@ -104,7 +109,6 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
 			if (TOCA.RechargeTimer <= 0) then
 				TOCA.TimerRechargeStart(_casted, true)
 			end
-			--TOCA.TotemStampPos(_casted)
 		end
 	end
 
@@ -117,7 +121,10 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
   if (event == "PLAYER_TOTEM_UPDATE") then
     TOCA.TotemBarUpdate()
     TOCA.TotemBarTimerStart()
-		TOCA.TotemStampPos(prefix)
+		local inInstance, instanceType = IsInInstance()
+		if (not inInstance) then
+		  TOCA.TotemStampPos(prefix)
+	  end
   end
 
 	--[==[

@@ -18,11 +18,13 @@ the copyright holders.
 
 TOCA.TotemRadiusAlpha = 0.5
 TOCA.TotemRadius={}
+--mapzoom in = 32
+--get spell leanred increase totems??
 for i=1, 4 do
 	--TOCA.TotemRadius[i] = CreateFrame("Frame", nil, UIParent)
 	TOCA.TotemRadius[i] = CreateFrame("Button", nil, Minimap)
-	TOCA.TotemRadius[i]:SetWidth(24)
-	TOCA.TotemRadius[i]:SetHeight(24)
+	TOCA.TotemRadius[i]:SetWidth(42)
+	TOCA.TotemRadius[i]:SetHeight(42)
 	TOCA.TotemRadius[i]:SetPoint("CENTER", 0, 0)
 	TOCA.TotemRadius[i]:SetFrameStrata("FULLSCREEN")
 	TOCA.TotemRadius[i]:Hide()
@@ -44,6 +46,12 @@ for i=1, 4 do
 	--TOCA.TotemRadius[i].radius:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 end
 
+--[==[
+hooksecurefunc(WorldMapFrame, "OnMapChanged", function()
+  local mapID = WorldMapFrame.mapID
+end)
+]==]--
+
 do
 	function TOCA.UpdateTotemPosition(totem, totemCat, stampX, stampY)
 		local _GMMapW = Minimap:GetWidth()
@@ -59,9 +67,25 @@ do
 				local map = C_Map.GetBestMapForUnit("player")
 				local position = C_Map.GetPlayerMapPosition(map, "player")
 				local playerX, playerY = position:GetXY()
+				local playerD = GetPlayerFacing()
+				local mapSize = 4 --the outside world needs to calc above 3
+				--local x, y, z, instanceID = UnitPosition("player")
+				--print(playerX)
+				--print(x)
 				--point, relativeTo, relativePoint, xOfs, yOfs = self:GetPoint()
-				totemX = playerX / stampX - _GMMapW
-				totemY =-playerY / stampY - _GMMapH
+				distX = stampX - playerX
+				distY = stampY - playerY
+				--totemX = stampX - distX *(_GMMapW+_GMMapH)*math.pi --*playerX * 20	/ (_GMMapW+_GMMapH) --factor = (mapRadius - iconDiameter) / dist;
+				--totemY = stampY - distY *(_GMMapW+_GMMapH)*math.pi --*playerY * 20 / (_GMMapW+_GMMapH)
+				if (IsResting()) then
+					mapSize = 1
+				end
+				print(mapSize)
+				totemX = stampX - distX *(_GMMapW+_GMMapH)*math.pi *mapSize --*playerX * 20	/ (_GMMapW+_GMMapH) --factor = (mapRadius - iconDiameter) / dist;
+				totemY = stampY - distY *(_GMMapW+_GMMapH)*math.pi *mapSize --*playerY * 20 / (_GMMapW+_GMMapH)
+				--print(IsIndoors())
+				--local mapFileName, textureHeight, textureWidth, isMicrodungeon, microDungeonMapName = GetMapInfo(map)
+				--print(mapID)
         self.frame = self.frame + lapse
 				if (self.frame >= 7500) then --roughly 2mins
 					return --no reason to continue if a totem mismatches after expiring
@@ -85,9 +109,11 @@ do
 				xOfs = self.oX -- + 5
 				yOfs = self.oY -- + 5
 				self:ClearAllPoints()
-				--print(totemX)
+				--print("TX " .. totemX)
+				--print("PX " .. playerX)
+				--print("DX " .. distX)
 				--print(totemY)
-				self:SetPoint(point, relativeTo, relativePoint, totemX, totemY)
+				self:SetPoint(point, relativeTo, relativePoint, -totemX, totemY)
 			end)
 		end
 
@@ -101,7 +127,10 @@ function TOCA.TotemStampPos(totemCat) --stamp the last pos for the specific tote
 	if (totemCat) then --just in case a conflict with a bogus spell
 		local map = C_Map.GetBestMapForUnit("player")
 		local position = C_Map.GetPlayerMapPosition(map, "player")
+		local playerD = GetPlayerFacing()
 		local posX, posY = position:GetXY()
+
+		WorldMapFrame:Hide()
 
 		TOCA.TotemPresent[totemCat], TOCA.TotemName[totemCat], TOCA.TotemStartTime[totemCat], TOCA.TotemDuration[totemCat] = GetTotemInfo(totemCat)
 		if (TOCA.TotemPresent[totemCat]) then
@@ -123,6 +152,7 @@ function TOCA.TotemStampPos(totemCat) --stamp the last pos for the specific tote
 			--PlayerFrame:SetUserPlaced(true)
 		end
 
+		--print(playerD)
 		TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]], TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]])
 
 	end
