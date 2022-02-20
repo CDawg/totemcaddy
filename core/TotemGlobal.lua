@@ -937,8 +937,8 @@ function TOCA.ExpireNotificationsTotems(totemname, totemtimer)
 	end
 end
 
-shamanShieldDuration = 10 --10 minutes on ALL shields
-notificationAlertShield = 0
+local shamanShieldDuration = 10 --10 minutes on ALL shields
+local notificationAlertShield = 0
 function TOCA.ExpireNotificationsShield()
 	local _Uindex = 1
 	while UnitAura("player", _Uindex) do

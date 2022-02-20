@@ -49,7 +49,11 @@ TOCA.Main:RegisterEvent("PLAYER_TOTEM_UPDATE")
 TOCA.Main:RegisterEvent("PLAYER_FLAGS_CHANGED") --resting
 TOCA.Main:RegisterEvent("PLAYER_CONTROL_GAINED")
 TOCA.Main:RegisterEvent("PLAYER_CONTROL_LOST")
-TOCA.Main:RegisterEvent("CHAT_MSG_ADDON")
+TOCA.Main:RegisterEvent("PLAYER_STARTED_MOVING")
+TOCA.Main:RegisterEvent("PLAYER_STOPPED_MOVING")
+TOCA.Main:RegisterEvent("PLAYER_REGEN_ENABLED")
+TOCA.Main:RegisterEvent("PLAYER_REGEN_DISABLED")
+TOCA.Main:RegisterEvent("PLAYER_DEAD")
 TOCA.Main:RegisterEvent("UNIT_SPELLCAST_START")
 TOCA.Main:RegisterEvent("UNIT_SPELLCAST_STOP")
 TOCA.Main:RegisterEvent("UNIT_SPELLCAST_SENT")
@@ -58,14 +62,10 @@ TOCA.Main:RegisterEvent("UNIT_AURA")
 TOCA.Main:RegisterEvent("UNIT_MAXPOWER")
 TOCA.Main:RegisterEvent("UNIT_POWER_FREQUENT")
 TOCA.Main:RegisterEvent("UNIT_INVENTORY_CHANGED")
-TOCA.Main:RegisterEvent("PLAYER_STARTED_MOVING")
-TOCA.Main:RegisterEvent("PLAYER_STARTED_LOOKING")
-TOCA.Main:RegisterEvent("PLAYER_REGEN_ENABLED")
-TOCA.Main:RegisterEvent("PLAYER_REGEN_DISABLED")
-TOCA.Main:RegisterEvent("PLAYER_DEAD")
-TOCA.Main:RegisterEvent("BAG_UPDATE")
 TOCA.Main:RegisterEvent("UNIT_ENTERED_VEHICLE")
 TOCA.Main:RegisterEvent("UNIT_EXITED_VEHICLE")
+TOCA.Main:RegisterEvent("BAG_UPDATE")
+TOCA.Main:RegisterEvent("CHAT_MSG_ADDON")
 TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted, _spellID)
   if ((event == "ADDON_LOADED") and (prefix == TOCA.Global.prefix)) then
     TOCA.Notification("v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " (" .. GetLocale() .. ") " .. TOCA.locale.INIT[6] .. ". Type /" .. TOCA.Global.command .. " for commands.")
@@ -74,9 +74,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
 
   if ((event == "UNIT_SPELLCAST_START") or
   (event == "UNIT_SPELLCAST_STOP") or
-  (event == "UNIT_POWER_FREQUENT") or
-	(event == "PLAYER_STARTED_LOOKING") or
-  (event == "PLAYER_STARTED_MOVING")) then
+  (event == "UNIT_POWER_FREQUENT")) then
     TOCA.TotemBarUpdate()
   end
 
@@ -106,6 +104,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
 			if (TOCA.RechargeTimer <= 0) then
 				TOCA.TimerRechargeStart(_casted, true)
 			end
+			--TOCA.TotemStampPos(_casted)
 		end
 	end
 
@@ -118,8 +117,16 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
   if (event == "PLAYER_TOTEM_UPDATE") then
     TOCA.TotemBarUpdate()
     TOCA.TotemBarTimerStart()
-    TOCA.Notification("event " .. event, true)
+		TOCA.TotemStampPos(prefix)
   end
+
+	--[==[
+	if ((event == "PLAYER_TOTEM_UPDATE") or
+	(event == "PLAYER_STARTED_MOVING") or
+	(event == "PLAYER_STOPPED_MOVING")) then
+		TOCA.TotemAuraRadius()
+	end
+	]==]--
 
   if (event == "PLAYER_DEAD") then
     TOCA.TotemTimerReset("all")

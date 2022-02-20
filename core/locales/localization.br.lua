@@ -29,7 +29,7 @@ TOCA.locale = {
 		BUTTON = {"Fechar", "Salve", "Excluir", "sim", "Não"},
 
 		TABS = {
-		  OPTIONS= {"Quadro", "Conjuntos", "Notificações", "Teclado"},
+		  OPTIONS= {"Quadro", "Conjuntos", "Notificações", "Minimapa", "Teclado"},
 		  HELP   = {"Atualizações", "Contato", "Crédito"}
 		},
 

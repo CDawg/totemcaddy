@@ -124,6 +124,31 @@ function reindexArraySafe(array)
   return newArray
 end
 
+function matchString(source, target)
+	local _source_match = ""
+	local _target_match = ""
+	local _source_reiterate = 1
+	local _target_reiterate = 1
+	if ((source) and (target)) then
+		for _split in string.gmatch(source, "%a+") do
+			_source_reiterate = _source_reiterate -1
+			if (_source_reiterate >= 0) then
+				_source_match = _source_match .. string.lower(_split)
+		  end
+		end
+		for _split in string.gmatch(target, "%a+") do
+			_target_reiterate = _target_reiterate -1
+			if (_target_reiterate >= 0) then
+				_target_match = _target_match .. string.lower(_split)
+			end
+		end
+
+		if (_source_match == _target_match) then
+			return 1
+		end
+	end
+end
+
 function TimeSecondsToMinutes(time)
   local minutes = floor(mod(time,3600)/60)
   local seconds = floor(mod(time,60))

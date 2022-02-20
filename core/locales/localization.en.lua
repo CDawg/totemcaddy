@@ -29,7 +29,7 @@ TOCA.locale = {
 		BUTTON = {"Close", "Save", "Delete", "Yes", "No"},
 
 		TABS = {
-		  OPTIONS= {"Frame", "Totem Set Builder", "Notifications", "Key Bindings"},
+		  OPTIONS= {"Frame", "Totem Set Builder", "Notifications", "Minimap", "Key Bindings"},
 		  HELP   = {"Updates", "Contact", "Credit"}
 		},
 
