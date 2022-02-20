@@ -13,58 +13,81 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
---print(Minimap:GetZoom())
---MinimapBorder:SetTexture("")
---GetCVar("rotateMinimap")
---if(Minimap:GetZoom()
+--MiniMapTrackingIcon:SetTexCoord(.08, .92, .08, .92) --function round icon
 
-local _GMMapW = Minimap:GetWidth()
-local _GMMapH = Minimap:GetHeight()
+
+TOCA.TotemRadiusAlpha = 0.5
 TOCA.TotemRadius={}
 for i=1, 4 do
-	TOCA.TotemRadius[i] = CreateFrame("Frame", nil, UIParent)
+	--TOCA.TotemRadius[i] = CreateFrame("Frame", nil, UIParent)
+	TOCA.TotemRadius[i] = CreateFrame("Button", nil, Minimap)
 	TOCA.TotemRadius[i]:SetWidth(24)
 	TOCA.TotemRadius[i]:SetHeight(24)
 	TOCA.TotemRadius[i]:SetPoint("CENTER", 0, 0)
-	TOCA.TotemRadius[i]:SetFrameStrata("TOOLTIP")
+	TOCA.TotemRadius[i]:SetFrameStrata("FULLSCREEN")
 	TOCA.TotemRadius[i]:Hide()
 	TOCA.TotemRadius[i].radius = TOCA.TotemRadius[i]:CreateTexture(nil, "ARTWORK")
 	TOCA.TotemRadius[i].radius:SetSize(TOCA.TotemRadius[i]:GetWidth(), TOCA.TotemRadius[i]:GetHeight())
 	TOCA.TotemRadius[i].radius:SetPoint("CENTER", 0, 0)
 	TOCA.TotemRadius[i].radius:SetTexture(TOCA.Global.dir .. "images/radius.tga")
 	TOCA.TotemRadius[i].radius:SetBlendMode("BLEND")
-	--if (i  )
-	TOCA.TotemRadius[i].radius:SetVertexColor(0, 1, 0, 0.4)
+	TOCA.TotemRadius[i].radius:SetVertexColor(0, 1, 0, TotemRadiusAlpha) --default a green just in case
+	if (i == 1) then --FIRE
+		TOCA.TotemRadius[i].radius:SetVertexColor(0.8, 0.4, 0, TOCA.TotemRadiusAlpha)
+	elseif (i == 2) then --EARTH
+		TOCA.TotemRadius[i].radius:SetVertexColor(0.5, 0.5, 0, TOCA.TotemRadiusAlpha)
+	elseif (i == 3) then --WATER
+		TOCA.TotemRadius[i].radius:SetVertexColor(0, 0.8, 1, TOCA.TotemRadiusAlpha)
+	elseif (i == 4) then --AIR
+		TOCA.TotemRadius[i].radius:SetVertexColor(0.5, 0.9, 1, TOCA.TotemRadiusAlpha)
+	end
 	--TOCA.TotemRadius[i].radius:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-	--Minimap:SetWidth(_MMapW)
-	--Minimap:SetHeight(_MMapH)
 end
 
 do
-	local GetPlayerMapPosition = GetPlayerMapPosition
-	local math_random = math.random
-	local point, relativeTo, relativePoint, xOfs, yOfs
-	function TOCA.UpdateTotemPosition(totem)
-	  point, relativeTo, relativePoint, xOfs, yOfs = totem:GetPoint()
-		if xOfs ~= 0 or yOfs ~= 0 then
-			totem.oX = xOfs
-			totem.oY = yOfs
-			totem.IsShaking = true
-			totem.lastUpdate = 0
-			totem:SetScript("OnUpdate", function(self, elapsed)
-				self.lastUpdate = self.lastUpdate + elapsed
-				point, relativeTo, relativePoint, xOfs, yOfs = self:GetPoint()
-				if self.lastUpdate >= 0.5 then
+	function TOCA.UpdateTotemPosition(totem, totemCat, stampX, stampY)
+		local _GMMapW = Minimap:GetWidth()
+		local _GMMapH = Minimap:GetHeight()
+		local point, relativeTo, relativePoint, xOfs, yOfs = totem:GetPoint()
+		--GetCVar("rotateMinimap")
+		--if(Minimap:GetZoom()
+		if ((xOfs ~= 0) or (yOfs ~= 0)) then
+			--totem.oX = xOfs
+			--totem.oY = yOfs
+			totem.frame = 0
+			totem:SetScript("OnUpdate", function(self, lapse)
+				local map = C_Map.GetBestMapForUnit("player")
+				local position = C_Map.GetPlayerMapPosition(map, "player")
+				local playerX, playerY = position:GetXY()
+				--point, relativeTo, relativePoint, xOfs, yOfs = self:GetPoint()
+				totemX = playerX / stampX - _GMMapW
+				totemY =-playerY / stampY - _GMMapH
+        self.frame = self.frame + lapse
+				if (self.frame >= 7500) then --roughly 2mins
+					return --no reason to continue if a totem mismatches after expiring
+				end
+				--[==[
+				if self.lastUpdate >= 1.5 then
 					self:SetScript("OnUpdate", nil)
 					totem.IsShaking = false
 					--core:TotemUpdate(self.totemGUID, GetPlayerMapPosition("player"))
-					print(self.lastUpdate)
+					--print(self.lastUpdate)
 					return
 				end
 				xOfs = self.oX + (math_random(0, 10) - 5)
 				yOfs = self.oY + (math_random(0, 10) - 5)
+
+				if (totemCat == 4) then
+					xOfs = self.oX + 5
+					yOfs = self.oY + 5
+				end
+				]==]--
+				xOfs = self.oX -- + 5
+				yOfs = self.oY -- + 5
 				self:ClearAllPoints()
-				self:SetPoint(point, relativeTo, relativePoint, xOfs, yOfs)
+				--print(totemX)
+				--print(totemY)
+				self:SetPoint(point, relativeTo, relativePoint, totemX, totemY)
 			end)
 		end
 
@@ -100,7 +123,7 @@ function TOCA.TotemStampPos(totemCat) --stamp the last pos for the specific tote
 			--PlayerFrame:SetUserPlaced(true)
 		end
 
-		TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat])
+		TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]], TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]])
 
 	end
 end
