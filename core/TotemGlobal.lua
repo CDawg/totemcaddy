@@ -443,8 +443,9 @@ end
 function TOCA.FrameStyleSet(style)
   if (style == TOCA.Dropdown.FrameStyles[1]) then --classic
     TOCA.FrameStyleDefault()
-    TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
-    TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -44)
+		TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
+    TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -44)
+    TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", -28, -14)
     TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 61)
     TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 61)
     for totemCat,v in pairsByKeys(TOCA.totems) do
@@ -455,8 +456,9 @@ function TOCA.FrameStyleSet(style)
     end
   elseif (style == TOCA.Dropdown.FrameStyles[2]) then --vert
     TOCA.FrameStyleDefault()
-    TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
-    TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -44)
+		TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
+    TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -44)
+    TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -74)
     TOCA.FrameMain:SetHeight(TOCA.Global.height+240)
     TOCA.FrameMain.Background:SetHeight(TOCA.Global.height+240)
     TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 160)
@@ -470,8 +472,9 @@ function TOCA.FrameStyleSet(style)
     end
   elseif (style == TOCA.Dropdown.FrameStyles[3]) then --horz
     TOCA.FrameStyleDefault()
-    TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width+171, -22)
-    TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", TOCA.Global.width+171, -52)
+		TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA.Global.width+171, -22)
+    TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width+171, -52)
+    TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", TOCA.Global.width+171, -82)
     TOCA.FrameMain:SetHeight(TOCA.Global.height+84)
     TOCA.FrameMain.Background:SetHeight(TOCA.Global.height+84)
     TOCA.FrameMain:SetWidth(TOCA.Global.height+240)
@@ -512,6 +515,7 @@ function TOCA.BorderFrame(enable)
     TOCA.Button.Options:SetBackdropBorderColor(1, 1, 1, 0.8)
     TOCA.Button.CloseMain:SetBackdropBorderColor(1, 1, 1, 0.8)
     TOCA.Button.DropdownMain:SetBackdropBorderColor(1, 1, 1, 0.6)
+		TOCA.FrameMain.ShieldFrame:SetBackdropBorderColor(1, 1, 1, 0.6)
     TOCA.FrameMain.ReincFrame:SetBackdropBorderColor(1, 1, 1, 0.6)
     TOCA.FrameMain.AnkhFrame:SetBackdropBorderColor(1, 1, 1, 0.6)
     for totemCat,v in pairsByKeys(TOCA.totems) do
@@ -536,6 +540,7 @@ function TOCA.BorderFrame(enable)
     TOCA.Button.Options:SetBackdropBorderColor(1, 1, 1, 0)
     TOCA.Button.CloseMain:SetBackdropBorderColor(1, 1, 1, 0)
     TOCA.Button.DropdownMain:SetBackdropBorderColor(1, 1, 1, 0)
+		TOCA.FrameMain.ShieldFrame:SetBackdropBorderColor(1, 1, 1, 0)
     TOCA.FrameMain.ReincFrame:SetBackdropBorderColor(1, 1, 1, 0)
     TOCA.FrameMain.AnkhFrame:SetBackdropBorderColor(1, 1, 1, 0)
     for totemCat,v in pairsByKeys(TOCA.totems) do
@@ -649,6 +654,11 @@ function TOCA.Init()
       TOCA.globalTimerInMinutes = false
       TOCA.Checkbox.TimersInMinutes:SetChecked(nil)
     end
+
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["SHIELD"] == "OFF") then
+			TOCA.FrameMain.ShieldFrame:Hide()
+			--TOCA.Checkbox.Shield:SetChecked(nil)
+		end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["REINC"] == "OFF") then
       TOCA.FrameMain.ReincFrame:Hide()
       TOCA.Checkbox.Reinc:SetChecked(nil)
@@ -937,6 +947,7 @@ function TOCA.ExpireNotificationsTotems(totemname, totemtimer)
 	end
 end
 
+TOCA.hasShieldOn = 0
 local shamanShieldDuration = 10 --10 minutes on ALL shields
 local notificationAlertShield = 0
 function TOCA.ExpireNotificationsShield()
@@ -945,6 +956,23 @@ function TOCA.ExpireNotificationsShield()
 		local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura("player", _Uindex)
 		for k,v in pairs(TOCA.locale.SPELLS.SHIELDS) do
 			if (string.find(name, v)) then
+				TOCA.hasShieldOn = 1
+				local current_shield = nil
+				for shieldCat,shieldIndex in pairs(TOCA.spell.ShieldRanks) do
+					for k,shieldID in pairs(TOCA.spell.ShieldRanks[shieldCat]) do
+						if (spellId == shieldID) then
+							current_shield = shieldCat
+					  end
+					end
+				end
+				if (current_shield == "LIGHTNING_SHIELD") then
+					--TOCA.FrameMain.ShieldFrame:SetBackdrop(TOCA.SetIcon("ability_shaman_watershield"))
+					TOCA.FrameMain.ShieldFrame:SetBackdrop(TOCA.SetIcon("spell_nature_lightningshield"))
+				elseif (current_shield == "EARTH_SHIELD") then
+				  TOCA.FrameMain.ShieldFrame:SetBackdrop(TOCA.SetIcon("spell_nature_skinofearth"))
+			  else --default to water
+					TOCA.FrameMain.ShieldFrame:SetBackdrop(TOCA.SetIcon("ability_shaman_watershield"))
+				end
 				local timeDuration = duration + expirationTime - GetTime()
 				timeDuration = timeDuration / 120
 				--timeDuration = floor(timeDuration)
@@ -1050,6 +1078,9 @@ function TOCA.TimerFrameRecharge()
 	end
 end
 
+function TOCA.TimerShieldFrame()
+end
+
 --build timers
 for i=1, 4 do
   TOCA.TotemFunc[i] = 0
@@ -1059,6 +1090,12 @@ end
 TOCA.TotemRechargeFunc = 0
 TOCA.TotemRechargeFunc = C_Timer.NewTicker(0, function() TOCA.TimerFrameRecharge() end, 0)
 TOCA.TotemRechargeFunc:Cancel()
+TOCA.TotemShieldFunc = 0
+TOCA.TotemShieldFunc = C_Timer.NewTicker(0, function() TOCA.TimerShieldFrame() end, 0)
+TOCA.TotemShieldFunc:Cancel()
+
+function TOCA.TimerRechargeStart(spell, instant)
+end
 
 --trigger only on totem drops
 function TOCA.TimerRechargeStart(spell, instant)
@@ -1107,33 +1144,67 @@ function TOCA.TotemBarTimerStart()
 end
 
 function TOCA.GetReincTimer() --always checking
-  local lC, eC, cI = UnitClass("player")
-  if (eC == "SHAMAN") then
-    local numTabs = GetNumTalentTabs()
-    local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(TOCA.locale.SPELLS.Reincarnation)
-    if (name) then
-      local start, duration, enabled = GetSpellCooldown(name)
-      if (duration) then
-        if (enabled == 0) then
-          --DEFAULT_CHAT_FRAME:AddMessage(name.." is currently active, use it and wait " .. duration .. " seconds for the next one.")
-        elseif (start > 0 and duration > 0) then
-          local reincTimeLeftCalc = start + duration - GetTime()
-          local reincTimeLeftRT = reincTimeLeftCalc / 60
-          TOCA.ReincTimer = math.ceil(reincTimeLeftCalc / 60)
-          --TOCA.Notification(name.." is cooling down, wait " .. TOCA.ReincTimer, true)
-          TOCA.FrameMain.ReincFrame.text:SetText(TOCA.ReincTimer.."m")
-          TOCA.FrameMain.ReincFrame:Show()
-        else
-          TOCA.FrameMain.ReincFrame:Hide()
-          --TOCA.Notification(name.." is ready.", true)
-        end
+  --local numTabs = GetNumTalentTabs()
+  local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(TOCA.locale.SPELLS.Reincarnation)
+  if (name) then
+    local start, duration, enabled = GetSpellCooldown(name)
+    if (duration) then
+      if (enabled == 0) then
+        --DEFAULT_CHAT_FRAME:AddMessage(name.." is currently active, use it and wait " .. duration .. " seconds for the next one.")
+      elseif (start > 0 and duration > 0) then
+        local reincTimeLeftCalc = start + duration - GetTime()
+        local reincTimeLeftRT = reincTimeLeftCalc / 60
+        TOCA.ReincTimer = math.ceil(reincTimeLeftCalc / 60)
+        --TOCA.Notification(name.." is cooling down, wait " .. TOCA.ReincTimer, true)
+        TOCA.FrameMain.ReincFrame.text:SetText(TOCA.ReincTimer.."m")
+        TOCA.FrameMain.ReincFrame:Show()
+      else
+        TOCA.FrameMain.ReincFrame:Hide()
+        --TOCA.Notification(name.." is ready.", true)
       end
     end
   end
+
   if (TOCA.Game.version == 1) then
     TOCA.FrameMain.ReincFrame:Hide()
   end
 end
+
+--[==[
+function TOCA.GetShieldTimer() --and count
+  --local numTabs = GetNumTalentTabs()
+	local shield = nil
+	for spellCat,v in pairs(TOCA.locale.SPELLS.SHIELDS) do
+    shield, rank, icon, castTime, minRange, maxRange = GetSpellInfo(v)
+		print(shield)
+  end
+
+	if (shield) then
+		--print(shield)
+	end
+
+	if (name) then
+    local start, duration, enabled = GetSpellCooldown(name)
+    if (duration) then
+      if (enabled == 0) then
+        --DEFAULT_CHAT_FRAME:AddMessage(name.." is currently active, use it and wait " .. duration .. " seconds for the next one.")
+      elseif (start > 0 and duration > 0) then
+        local shieldTimeLeftCalc = start + duration - GetTime()
+        local shieldTimeLeftRT = shieldLeftCalc / 60
+        TOCA.ShieldTimer = math.ceil(shieldTimeLeftCalc / 60)
+        --TOCA.Notification(name.." is cooling down, wait " .. TOCA.ShieldTimer, true)
+        TOCA.FrameMain.ShieldFrame.text:SetText(TOCA.ShieldTimer.."m")
+        TOCA.FrameMain.ShieldFrame:Show()
+      else
+        TOCA.FrameMain.ShieldFrame:Hide()
+        --TOCA.Notification(name.." is ready.", true)
+      end
+    end
+  end
+
+--TOCA.FrameMain.ShieldFrame:Hide()
+end
+]==]--
 
 TOCA.SlotGrid.VerticalTimer={}
 TOCA.SlotGrid.HorizontalTimer={}
@@ -1208,9 +1279,13 @@ function TOCA.TotemBarUpdate()
     end
   end
 
-  TOCA.GetReincTimer()
-  TOCA.DisplayAnkhFrame()
-	TOCA.HandleShieldAlert()
+	local lC, eC, cI = UnitClass("player")
+  if (eC == "SHAMAN") then
+		TOCA.GetReincTimer()
+		--TOCA.GetShieldTimer()
+	  TOCA.DisplayAnkhFrame()
+		TOCA.HandleShieldAlert()
+	end
 end
 
 function TOCA.Combat(event)

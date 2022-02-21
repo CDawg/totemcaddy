@@ -121,10 +121,12 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
   if (event == "PLAYER_TOTEM_UPDATE") then
     TOCA.TotemBarUpdate()
     TOCA.TotemBarTimerStart()
+		--[==[
 		local inInstance, instanceType = IsInInstance()
 		if (not inInstance) then
-		  --TOCA.TotemStampPos(prefix)
+		  TOCA.TotemStampPos(prefix)
 	  end
+		]==]--
   end
 
 	--[==[
@@ -736,10 +738,33 @@ TOCA.Button.CloseMain:SetScript("OnClick", function()
   TOCA.Notification("closed. Type '"..TCCMD.." show' to reopen.")
 end)
 
+TOCA.FrameMain.ShieldFrame = CreateFrame("Frame", TOCA.FrameMain.Background, TOCA.FrameMain, "BackdropTemplate", -7)
+TOCA.FrameMain.ShieldFrame:SetWidth(30)
+TOCA.FrameMain.ShieldFrame:SetHeight(30)
+TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
+TOCA.FrameMain.ShieldFrame:SetBackdrop(TOCA.SetIcon("ability_shaman_watershield")) --default
+TOCA.FrameMain.ShieldFrame:SetBackdropColor(0.7, 0.7, 0.7, 0.8)
+TOCA.FrameMain.ShieldFrame:SetBackdropBorderColor(1, 1, 1, 0.6)
+TOCA.FrameMain.ShieldFrame:SetFrameLevel(TOCA.Framelevel.Background)
+TOCA.FrameMain.ShieldFrame.timer = TOCA.FrameMain.ShieldFrame:CreateFontString(nil, "ARTWORK")
+TOCA.FrameMain.ShieldFrame.timer:SetFont(TOCA.Global.font, 10)
+TOCA.FrameMain.ShieldFrame.timer:SetPoint("CENTER", TOCA.FrameMain.ShieldFrame, "CENTER", 0, -6)
+TOCA.FrameMain.ShieldFrame.timer:SetText("")
+TOCA.FrameMain.ShieldFrame.timer:SetShadowOffset(1, 1)
+--[==[
+TOCA.FrameMain.ShieldFrame:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, TOCA.locale.SPELLS.Reincarnation)
+end)
+TOCA.FrameMain.ShieldFrame:SetScript("OnLeave", function(self)
+  TOCA.CloseAllMenus()
+end)
+]==]--
+--TOCA.FrameMain.ShieldFrame:Hide()
+
 TOCA.FrameMain.ReincFrame = CreateFrame("Frame", TOCA.FrameMain.Background, TOCA.FrameMain, "BackdropTemplate", -7)
 TOCA.FrameMain.ReincFrame:SetWidth(30)
 TOCA.FrameMain.ReincFrame:SetHeight(30)
-TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
+TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -44)
 TOCA.FrameMain.ReincFrame:SetBackdrop(TOCA.SetIcon("spell_nature_reincarnation"))
 TOCA.FrameMain.ReincFrame:SetBackdropColor(0.7, 0.7, 0.7, 0.8)
 TOCA.FrameMain.ReincFrame:SetBackdropBorderColor(1, 1, 1, 0.6)
@@ -760,14 +785,14 @@ TOCA.FrameMain.ReincFrame:Hide()
 TOCA.FrameMain.AnkhFrame = CreateFrame("Frame", TOCA.FrameMain.Background, TOCA.FrameMain, "BackdropTemplate", -7)
 TOCA.FrameMain.AnkhFrame:SetWidth(30)
 TOCA.FrameMain.AnkhFrame:SetHeight(30)
-TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -44)
+TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", -28, -14)
 TOCA.FrameMain.AnkhFrame:SetBackdrop(TOCA.SetIcon("inv_jewelry_talisman_06"))
 TOCA.FrameMain.AnkhFrame:SetBackdropColor(0.7, 0.7, 0.7, 0.8)
 TOCA.FrameMain.AnkhFrame:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.FrameMain.AnkhFrame:SetFrameLevel(TOCA.Framelevel.Background)
 TOCA.FrameMain.AnkhFrame.text = TOCA.FrameMain.AnkhFrame:CreateFontString(nil, "ARTWORK")
 TOCA.FrameMain.AnkhFrame.text:SetFont(TOCA.Global.font, 12)
-TOCA.FrameMain.AnkhFrame.text:SetPoint("CENTER", TOCA.FrameMain.ReincFrame, "CENTER", 0, -32)
+TOCA.FrameMain.AnkhFrame.text:SetPoint("CENTER", TOCA.FrameMain.AnkhFrame, "CENTER", 0, -2)
 TOCA.FrameMain.AnkhFrame.text:SetText(TOCA.InventoryCountItem(TOCA.item.ANKH))
 TOCA.FrameMain.AnkhFrame.text:SetShadowOffset(1, 1)
 TOCA.FrameMain.AnkhFrame:SetScript("OnEnter", function(self)

@@ -34,6 +34,30 @@ TOCA.AnkhReminder = 3
 TOCA.AlphaOrder = {"AIR", "EARTH", "FIRE", "WATER"}
 --TOCA.locale = {TOTEMS = {FIRE={}, EARTH={}, WATER={}, AIR={}}} --this order regardless of language
 
+--rank all shield for locales and leveling shamans
+TOCA.spell.ShieldRanks = {
+  WATER_SHIELD = {
+		24398, --rank 1
+		33736, --rank 2
+	},
+	LIGHTNING_SHIELD = {
+		324,  --rank 1
+		325,  --rank 2
+		905,  --rank 3
+		945,  --rank 4
+		8134, --rank 5
+		10431, --rank 6
+		10432, --rank 7
+		25469, --rank 8
+		25472, --rank 9
+	},
+	EARTH_SHIELD = {
+		974, -- rank 1
+		32593, --rank 2
+		32594, --rank 3
+	}
+}
+
 function arrayToString(array)
   formstring=""
   for k,v in pairs(array) do

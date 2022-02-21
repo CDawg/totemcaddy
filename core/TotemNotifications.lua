@@ -215,3 +215,49 @@ TOCA.Dropdown.Sound.ShieldExpire.initialize = function(self, level)
   end
 end
 UIDropDownMenu_SetWidth(TOCA.Dropdown.Sound.ShieldExpire, 125)
+
+--[==[
+TOCA.Checkbox.ShieldStartCombatMessage={}
+TOCA.Checkbox.ShieldStartCombatMessage = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[3]], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.ShieldStartCombatMessage:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -240)
+TOCA.Checkbox.ShieldStartCombatMessage:SetChecked(1)
+TOCA.Checkbox.ShieldStartCombatMessage.text = TOCA.Checkbox.ShieldStartCombatMessage:CreateFontString(nil, "ARTWORK")
+TOCA.Checkbox.ShieldStartCombatMessage.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
+TOCA.Checkbox.ShieldStartCombatMessage.text:SetPoint("TOPLEFT", 25, -6)
+TOCA.Checkbox.ShieldStartCombatMessage.text:SetText(TOCA.locale.UI.NOTIFICATIONS[6][1])
+TOCA.Checkbox.ShieldStartCombatMessage:SetScript("OnClick", function(self)
+  if (self:GetChecked()) then
+    TOCADB[TOCA.player.combine]["CONFIG"]["SHIELDCOMBATMESSAGE"] = "ON"
+  else
+    TOCADB[TOCA.player.combine]["CONFIG"]["SHIELDCOMBATMESSAGE"] = "OFF"
+  end
+end)
+TOCA.Checkbox.ShieldStartCombatMessage:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA.locale.UI.NOTIFICATIONS[6][2])
+end)
+TOCA.Checkbox.ShieldStartCombatMessage:SetScript("OnLeave", function()
+  TOCA.CloseAllMenus()
+end)
+
+TOCA.Checkbox.ShieldStartCombatSound={}
+TOCA.Checkbox.ShieldStartCombatSound = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[3]], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.ShieldStartCombatSound:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -260)
+TOCA.Checkbox.ShieldStartCombatSound:SetChecked(1)
+TOCA.Checkbox.ShieldStartCombatSound.text = TOCA.Checkbox.ShieldStartCombatSound:CreateFontString(nil, "ARTWORK")
+TOCA.Checkbox.ShieldStartCombatSound.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
+TOCA.Checkbox.ShieldStartCombatSound.text:SetPoint("TOPLEFT", 25, -6)
+TOCA.Checkbox.ShieldStartCombatSound.text:SetText(TOCA.locale.UI.NOTIFICATIONS[7][1])
+TOCA.Checkbox.ShieldStartCombatSound:SetScript("OnClick", function(self)
+  if (self:GetChecked()) then
+    TOCADB[TOCA.player.combine]["CONFIG"]["SHIELDCOMBATALERT"] = "ON"
+  else
+    TOCADB[TOCA.player.combine]["CONFIG"]["SHIELDCOMBATALERT"] = "OFF"
+  end
+end)
+TOCA.Checkbox.ShieldStartCombatSound:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA.locale.UI.NOTIFICATIONS[7][2])
+end)
+TOCA.Checkbox.ShieldStartCombatSound:SetScript("OnLeave", function()
+  TOCA.CloseAllMenus()
+end)
+]==]--

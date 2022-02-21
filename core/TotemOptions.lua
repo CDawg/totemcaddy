@@ -358,7 +358,9 @@ TOCA.Slider.OpacityFG:SetScript("OnValueChanged", function()
       TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetAlpha(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))
       TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:SetAlpha(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))
     end
+		TOCA.FrameMain.ShieldFrame:SetAlpha(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))
     TOCA.FrameMain.ReincFrame:SetAlpha(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))
+		TOCA.FrameMain.AnkhFrame:SetAlpha(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))
   end
   TOCA.Button.CloseMain:SetAlpha(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))
   TOCA.Button.Options:SetAlpha(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))

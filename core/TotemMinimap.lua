@@ -15,6 +15,8 @@ the copyright holders.
 
 --MiniMapTrackingIcon:SetTexCoord(.08, .92, .08, .92) --function round icon
 
+-- this only works outside of instances, so will have to improvise on aura raidus
+-- https://worldofwarcraft.com/en-us/news/20335228/patch-notes-world-of-warcraft-71-return-to-karazhan
 
 TOCA.TotemRadiusAlpha = 0.5
 TOCA.TotemRadius={}
