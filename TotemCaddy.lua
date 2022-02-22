@@ -199,7 +199,7 @@ TOCA.Button.TotemicCall.recharge = CreateFrame("Cooldown", nil, TOCA.Button.Tote
 TOCA.Button.TotemicCall.recharge:SetSize(TOCA.Button.TotemicCall_w, TOCA.Button.TotemicCall_h)
 TOCA.Button.TotemicCall.recharge:SetPoint("CENTER", 0, 0)
 TOCA.Button.TotemicCall.recharge:SetAllPoints()
-TOCA.Button.TotemicCall.recharge:SetCooldown(GetTime(), 0.6)
+TOCA.Button.TotemicCall.recharge:SetCooldown(GetTime(), 2)
 TOCA.Button.TotemicCall.recharge:SetUseCircularEdge(true)
 
 TOCA.Button.TotemicCall:SetBackdropBorderColor(1, 1, 1, 0.5)
@@ -302,7 +302,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 	TOCA.Slot.Recharge[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
 	TOCA.Slot.Recharge[totemCat]:SetPoint("CENTER", 0, 0)
 	TOCA.Slot.Recharge[totemCat]:SetAllPoints()
-	TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), 0.6)
+	TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), 2)
 	TOCA.Slot.Recharge[totemCat]:SetUseCircularEdge(true)
 
   TOCA.Totem[totemCat] = CreateFrame("Button", nil, TOCA.Slot[totemCat], "SecureActionButtonTemplate")
