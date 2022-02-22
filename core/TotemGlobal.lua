@@ -1060,30 +1060,12 @@ function TOCA.TimerFrame(i)
   end
 end
 
-TOCA.RechargeTimer = 0
-function TOCA.TimerFrameRecharge()
-	TOCA.RechargeTimer = TOCA.RechargeTimer -1
-	--print(TOCA.RechargeTimer)
-	local rechargeFadeHeight = TOCA.RechargeTimer-10
-	if (rechargeFadeHeight <= 1) then
-		rechargeFadeHeight = 0
-	end
-	--print(rechargeFadeHeight)
-	TOCA.Button.TotemicCall.recharge:SetSize(40, -rechargeFadeHeight-4)
-	for totemCat,v in pairs(TOCA.totems) do
-		TOCA.Slot.Recharge[totemCat]:SetSize(TOCA.Slot_w, -rechargeFadeHeight-4)
-	end
-end
-
 --build timers
 for i=1, 4 do
   TOCA.TotemFunc[i] = 0
   TOCA.TotemFunc[i] = C_Timer.NewTicker(0, function() TOCA.TimerFrame(i) end, 0)
   TOCA.TotemFunc[i]:Cancel()
 end
-TOCA.TotemRechargeFunc = 0
-TOCA.TotemRechargeFunc = C_Timer.NewTicker(0, function() TOCA.TimerFrameRecharge() end, 0)
-TOCA.TotemRechargeFunc:Cancel()
 
 TOCA.ShieldExpirationTimer = 0
 do
@@ -1096,7 +1078,7 @@ do
 				--print(TOCA.ShieldExpirationTimer)
 				shieldTime = TOCA.ShieldExpirationTimer / 60
 				if (shieldTime>= 1) then
-					TOCA.FrameMain.ShieldFrame.timer:SetText(math.ceil(shieldTime) .. "m.")
+					TOCA.FrameMain.ShieldFrame.timer:SetText(math.ceil(shieldTime) .. "m")
 				end
 			end)
 		end
@@ -1105,7 +1087,7 @@ end
 
 --trigger only on totem drops / self spells
 function TOCA.TimerRechargeStart(spell, instant)
-	local msCountdown = 0.010
+	local countDown = 1.1
 	local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(spell)
 	--local manaConsume = GetSpellPowerCost(name)
 	--print(manaConsume.cost)
@@ -1116,19 +1098,25 @@ function TOCA.TimerRechargeStart(spell, instant)
 				for totemCat,k in pairs(TOCA.totems) do
 					for totemSpell,v in pairs(TOCA.totems[totemCat]) do
 						if (v[1] == name) then
-							TOCA.TotemRechargeFunc = C_Timer.NewTicker(msCountdown, function() TOCA.TimerFrameRecharge() end, 50)
-							TOCA.RechargeTimer = 50
+							TOCA.Button.TotemicCall.recharge:SetCooldown(GetTime(), countDown)
+							for totemCat,k in pairs(TOCA.totems) do --trigger ALL 4
+								TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
+							end
 						end
 					end
 				end
 				if (name == TOCA.locale.SPELLS.TotemicCall) then
-					TOCA.TotemRechargeFunc = C_Timer.NewTicker(msCountdown, function() TOCA.TimerFrameRecharge() end, 50)
-					TOCA.RechargeTimer = 50
+					TOCA.Button.TotemicCall.recharge:SetCooldown(GetTime(), countDown)
+					for totemCat,k in pairs(TOCA.totems) do
+						TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
+					end
 				end
 				for spellCat,v in pairs(TOCA.locale.SPELLS.SHIELDS) do
 					if (v == name) then
-						TOCA.TotemRechargeFunc = C_Timer.NewTicker(msCountdown, function() TOCA.TimerFrameRecharge() end, 50)
-						TOCA.RechargeTimer = 50
+						TOCA.Button.TotemicCall.recharge:SetCooldown(GetTime(), countDown)
+						for totemCat,k in pairs(TOCA.totems) do
+							TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
+						end
 						TOCA.TimerShield(TOCA.FrameMain.ShieldFrame, TOCA.ShamanShieldDuration*60)
 						TOCA.NotificationAlertShield = 0 --clear the alerts
 						TOCA.HasShield = 1
@@ -1136,8 +1124,10 @@ function TOCA.TimerRechargeStart(spell, instant)
 					end
 				end
 			else
-				TOCA.TotemRechargeFunc = C_Timer.NewTicker(msCountdown, function() TOCA.TimerFrameRecharge() end, 50)
-				TOCA.RechargeTimer = 50
+				TOCA.Button.TotemicCall.recharge:SetCooldown(GetTime(), countDown)
+				for totemCat,k in pairs(TOCA.totems) do
+					TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
+				end
 			end
 		end
 	end

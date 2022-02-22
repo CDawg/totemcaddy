@@ -85,9 +85,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
 
 	if (event == "UNIT_SPELLCAST_START") then
 		if ((prefix == "player") and (_casted)) then
-			if (TOCA.RechargeTimer <= 0) then
-				TOCA.TimerRechargeStart(_casted, false)
-			end
+			TOCA.TimerRechargeStart(_casted, false)
 		end
 	end
 
@@ -106,9 +104,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
   end
 	if (event == "UNIT_SPELLCAST_SUCCEEDED") then
 		if ((prefix == "player") and (_casted)) then --spell came from self
-			if (TOCA.RechargeTimer <= 0) then
-				TOCA.TimerRechargeStart(_casted, true)
-			end
+			TOCA.TimerRechargeStart(_casted, true)
 		end
 	end
 
@@ -199,13 +195,13 @@ TOCA.Button.TotemicCall.disable:SetPoint("CENTER", 0, 0)
 TOCA.Button.TotemicCall.disable:SetBackdrop(TOCA.Backdrop.General)
 TOCA.Button.TotemicCall.disable:SetBackdropBorderColor(1, 1, 1, 0)
 TOCA.Button.TotemicCall.disable:Hide()
-TOCA.Button.TotemicCall.recharge = CreateFrame("Frame", nil, TOCA.Button.TotemicCall, "BackdropTemplate")
-TOCA.Button.TotemicCall.recharge:SetSize(TOCA.Button.TotemicCall_w, 0)
+TOCA.Button.TotemicCall.recharge = CreateFrame("Cooldown", nil, TOCA.Button.TotemicCall, "CooldownFrameTemplate")
+TOCA.Button.TotemicCall.recharge:SetSize(TOCA.Button.TotemicCall_w, TOCA.Button.TotemicCall_h)
 TOCA.Button.TotemicCall.recharge:SetPoint("CENTER", 0, 0)
-TOCA.Button.TotemicCall.recharge:SetBackdrop(TOCA.Backdrop.RGB)
-TOCA.Button.TotemicCall.recharge:SetBackdropColor(0, 0, 0, 0.8)
-TOCA.Button.TotemicCall.recharge:SetBackdropBorderColor(1, 1, 1, 0)
---TOCA.Button.TotemicCall.recharge:Hide()
+TOCA.Button.TotemicCall.recharge:SetAllPoints()
+TOCA.Button.TotemicCall.recharge:SetCooldown(GetTime(), 0.6)
+TOCA.Button.TotemicCall.recharge:SetUseCircularEdge(true)
+
 TOCA.Button.TotemicCall:SetBackdropBorderColor(1, 1, 1, 0.5)
 
 TOCA.Button.TotemicCall.ECL = TOCA.FrameMain:CreateTexture(nil, "ARTWORK")
@@ -302,14 +298,13 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.Slot.Disable[totemCat]:SetBackdrop(TOCA.Backdrop.General)
   TOCA.Slot.Disable[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)
   TOCA.Slot.Disable[totemCat]:Hide()
-  TOCA.Slot.Recharge[totemCat]= CreateFrame("Frame", nil, TOCA.Slot[totemCat], "BackdropTemplate")
-  TOCA.Slot.Recharge[totemCat]:SetSize(TOCA.Slot_w, 0)
-  --TOCA.Slot.Recharge[totemCat]:SetPoint("TOPLEFT", 0, -TOCA.Slot_h)
+	TOCA.Slot.Recharge[totemCat] = CreateFrame("Cooldown", nil, TOCA.Slot[totemCat], "CooldownFrameTemplate")
+	TOCA.Slot.Recharge[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
 	TOCA.Slot.Recharge[totemCat]:SetPoint("CENTER", 0, 0)
-  TOCA.Slot.Recharge[totemCat]:SetBackdrop(TOCA.Backdrop.RGB)
-	TOCA.Slot.Recharge[totemCat]:SetBackdropColor(0, 0, 0, 0.8)
-  TOCA.Slot.Recharge[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)
-  --TOCA.Slot.Recharge[totemCat]:Hide()
+	TOCA.Slot.Recharge[totemCat]:SetAllPoints()
+	TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), 0.6)
+	TOCA.Slot.Recharge[totemCat]:SetUseCircularEdge(true)
+
   TOCA.Totem[totemCat] = CreateFrame("Button", nil, TOCA.Slot[totemCat], "SecureActionButtonTemplate")
   TOCA.Totem[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
   TOCA.Totem[totemCat]:SetPoint("CENTER", 0, 0)
