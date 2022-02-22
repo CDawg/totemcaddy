@@ -509,8 +509,9 @@ function TOCA.DisplayAnkhFrame()
   if (pL >= 30) then
     TOCA.FrameMain.AnkhFrame.text:SetText(TOCA.InventoryCountItem(TOCA.item.ANKH))
     if (TOCA.InventoryCountItem(TOCA.item.ANKH) <= TOCA.AnkhReminder) then
+			TOCA.FrameMain.AnkhFrame.text:SetTextColor(1, 1, 1, 1)
 			if (TOCA.InventoryCountItem(TOCA.item.ANKH) <= 1) then
-			  TOCA.FrameMain.AnkhFrame.text:SetTextColor(1,0,0,1)
+			  TOCA.FrameMain.AnkhFrame.text:SetTextColor(1, 0, 0, 1)
 		  end
       TOCA.FrameMain.AnkhFrame:Show()
     else
