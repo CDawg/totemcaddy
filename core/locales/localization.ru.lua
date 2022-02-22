@@ -8,11 +8,14 @@ TOCA.locale = {
 	},
 
 	KEYBINDS = {
-		TOTEM_RECALL= "Тотемный зов",
-		TOTEM_AIR   = "Слот Тотема: Воздух",
-		TOTEM_EARTH = "Слот тотема: Земля",
-		TOTEM_FIRE  = "Слот Тотема: Огонь",
-		TOTEM_WATER = "Слот Тотема: Вода",
+		TOTEM_RECALL    = "Тотемный зов",
+		TOTEM_AIR       = "Слот Тотема: Воздух",
+		TOTEM_EARTH     = "Слот тотема: Земля",
+		TOTEM_FIRE      = "Слот Тотема: Огонь",
+		TOTEM_WATER     = "Слот Тотема: Вода",
+		SHIELD_WATER    = "Щит: вода",
+		SHIELD_LIGHTNING= "Щит: молния",
+		SHIELD_EARTH    = "Щит: Земля",
 	},
 
 	INIT = {

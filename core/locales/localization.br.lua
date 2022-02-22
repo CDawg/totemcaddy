@@ -8,11 +8,14 @@ TOCA.locale = {
 	},
 
 	KEYBINDS = {
-		TOTEM_RECALL= "Chamada Totêmica",
-		TOTEM_AIR   = "Ranhura do Totem: Ar",
-		TOTEM_EARTH = "Espaço do Totem: Terra",
-		TOTEM_FIRE  = "Espaço do Totem: Fogo",
-		TOTEM_WATER = "Ranhura do Totem: Água",
+		TOTEM_RECALL    = "Chamada Totêmica",
+		TOTEM_AIR       = "Ranhura do Totem: Ar",
+		TOTEM_EARTH     = "Espaço do Totem: Terra",
+		TOTEM_FIRE      = "Espaço do Totem: Fogo",
+		TOTEM_WATER     = "Ranhura do Totem: Água",
+		SHIELD_WATER    = "Escudo: Água",
+		SHIELD_LIGHTNING= "Escudo: Relâmpago",
+		SHIELD_EARTH    = "Escudo: Terra",
 	},
 
 	INIT = {

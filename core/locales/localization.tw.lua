@@ -8,11 +8,14 @@ TOCA.locale = {
 	},
 
 	KEYBINDS = {
-		TOTEM_RECALL= "圖騰召喚",
-		TOTEM_AIR   = "圖騰槽：空氣",
-		TOTEM_EARTH = "圖騰槽：地球",
-		TOTEM_FIRE  = "圖騰槽：火",
-		TOTEM_WATER = "圖騰槽：水",
+		TOTEM_RECALL    = "圖騰召喚",
+		TOTEM_AIR       = "圖騰槽：空氣",
+		TOTEM_EARTH     = "圖騰槽：地球",
+		TOTEM_FIRE      = "圖騰槽：火",
+		TOTEM_WATER     = "圖騰槽：水",
+		SHIELD_WATER    = "盾牌：水",
+		SHIELD_LIGHTNING= "盾牌：閃電",
+		SHIELD_EARTH    = "盾牌：地球",
 	},
 
 	INIT = {

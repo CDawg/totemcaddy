@@ -27,7 +27,7 @@ TOCA.Global = {
   prefix = "TotemCaddy",
   suffix = "BCC",
 	date   = date("%Y%m%d"),
-	update = 20220320,
+	update = 20220316,
 }
 --local _LName, _LTitle = GetAddOnInfo(TOCA.Global.prefix)
 --TOCA.Global.version = tonumber(string.sub(_LTitle, 26, 29))
@@ -337,6 +337,9 @@ function TOCA.SetKeyBindOnLoad()
 			--TOCA.Button.KeyBind[5].Title:SetText(TOCA.locale.KEYBINDS[title])
 			--TOCA.Button.KeyBind[5].Text:SetText(GetBindingKey(title))
     end
+		TOCA.SetKeyBindReset("SHIELD_WATER",    TOCA.IdentifySpell(TOCA.spell.WATER_SHIELD))
+		TOCA.SetKeyBindReset("SHIELD_LIGHTNING",TOCA.IdentifySpell(TOCA.spell.LIGHTNING_SHIELD))
+		TOCA.SetKeyBindReset("SHIELD_EARTH",    TOCA.IdentifySpell(TOCA.spell.EARTH_SHIELD))
     TOCA.Notification("TOCA.SetKeyBindOnLoad()", true)
   end
 end

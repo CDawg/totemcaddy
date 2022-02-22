@@ -1,12 +1,18 @@
 <Bindings>
-  <Binding name="TOTEM_RECALL" header="TOTEMCADDY" category="Totem Caddy">
+  <Binding name="TOTEM_RECALL" header="TOTEMCADDY" category="|cff0070DDTotem Caddy">
   </Binding>
-  <Binding name="TOTEM_AIR" category="Totem Caddy">
+  <Binding name="TOTEM_AIR" category="|cff0070DDTotem Caddy">
   </Binding>
-  <Binding name="TOTEM_EARTH" category="Totem Caddy">
+  <Binding name="TOTEM_EARTH" category="|cff0070DDTotem Caddy">
   </Binding>
-  <Binding name="TOTEM_FIRE" category="Totem Caddy">
+  <Binding name="TOTEM_FIRE" category="|cff0070DDTotem Caddy">
   </Binding>
-  <Binding name="TOTEM_WATER" category="Totem Caddy">
+  <Binding name="TOTEM_WATER" category="|cff0070DDTotem Caddy">
   </Binding>
+	<Binding name="SHIELD_WATER" category="|cff0070DDTotem Caddy">
+	</Binding>
+	<Binding name="SHIELD_LIGHTNING" category="|cff0070DDTotem Caddy">
+	</Binding>
+	<Binding name="SHIELD_EARTH" category="|cff0070DDTotem Caddy">
+	</Binding>
 </Bindings>

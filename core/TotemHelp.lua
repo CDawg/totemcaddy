@@ -17,8 +17,10 @@ TOCA.HELP = {
 	UPDATES = {
 	  "|cffffdf96Please note:|r Totem Caddy is still evolving. Improvements will be made as time continues. There is an |cff7eabd5issue tracker|r now available on |cffff9f69Curseforge|r. Enjoy!|n",
 		"",
-	  "|cffffdf96Update:|r Added all localization for all languages to work with all totems & spells.",
-		"|cffffdf96Bugfix:|r Fixed an issue with raid/party spells affecting local player recharge cooldowns.",
+	  "|cffffdf96Update:|r Updated a few localization for totems & spells/keybindings.",
+		"|cffffdf96Update:|r Updated cooldown timer to match current action bars.",
+		"|cffffdf96Feature:|r Added Shield Icon and timers to main frame [Water|Lightning|Earth].",
+		"|cffffdf96Feature:|r Added Key Bindings for Shields [Water|Lightning|Earth].",
 		"",
 	  "|cffffdf96First time using Totem Caddy?|r",
 	  "Let's get started by dragging the Totem Caddy anywhere on your screen saving the position.",

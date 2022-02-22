@@ -8,11 +8,14 @@ TOCA.locale = {
 	},
 
 	KEYBINDS = {
-		TOTEM_RECALL= "토템 콜",
-		TOTEM_AIR   = "토템 슬롯: 공기",
-		TOTEM_EARTH = "토템 슬롯: 대지",
-		TOTEM_FIRE  = "토템 슬롯: 불",
-		TOTEM_WATER = "토템 슬롯: 물",
+		TOTEM_RECALL    = "토템 콜",
+		TOTEM_AIR       = "토템 슬롯: 공기",
+		TOTEM_EARTH     = "토템 슬롯: 대지",
+		TOTEM_FIRE      = "토템 슬롯: 불",
+		TOTEM_WATER     = "토템 슬롯: 물",
+		SHIELD_WATER    = "방패: 물",
+		SHIELD_LIGHTNING= "방패: 번개",
+		SHIELD_EARTH    = "방패: 지구",
 	},
 
 	INIT = {

@@ -8,11 +8,14 @@ TOCA.locale = {
 	},
 
 	KEYBINDS = {
-		TOTEM_RECALL= "Totemischer Ruf",
-		TOTEM_AIR   = "Totem Slot: Luft",
-		TOTEM_EARTH = "Totem Slot: Erde",
-		TOTEM_FIRE  = "Totem Slot: Feuer",
-		TOTEM_WATER = "Totem Slot: Wasser",
+		TOTEM_RECALL    = "Totemischer Ruf",
+		TOTEM_AIR       = "Totem Slot: Luft",
+		TOTEM_EARTH     = "Totem Slot: Erde",
+		TOTEM_FIRE      = "Totem Slot: Feuer",
+		TOTEM_WATER     = "Totem Slot: Wasser",
+		SHIELD_WATER    = "Schild: Wasser",
+		SHIELD_LIGHTNING= "Schild: Blitz",
+		SHIELD_EARTH    = "Schild: Erde",
 	},
 
 	INIT = {

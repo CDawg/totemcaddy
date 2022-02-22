@@ -204,7 +204,7 @@ TOCA.Button.TotemicCall.recharge:SetCooldown(GetTime(), 2)
 TOCA.Button.TotemicCall.recharge:SetEdgeScale(0)
 
 TOCA.Button.TotemicCall.ECL = TOCA.FrameMain:CreateTexture(nil, "ARTWORK")
-TOCA.Button.TotemicCall.ECL:SetSize(40, 40)
+TOCA.Button.TotemicCall.ECL:SetSize(TOCA.Button.TotemicCall_w, TOCA.Button.TotemicCall_h)
 TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 61)
 TOCA.Button.TotemicCall.ECL:SetTexture("Interface/MainMenuBar/UI-MainMenuBar-EndCap-Dwarf")
 TOCA.Button.TotemicCall.ECR = TOCA.FrameMain:CreateTexture(nil, "ARTWORK")
