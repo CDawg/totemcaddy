@@ -179,6 +179,15 @@ function TimeSecondsToMinutes(time)
   return format("%2d:%02d",minutes,seconds)
 end
 
+function round(number)
+  if (number - (number % 0.1)) - (number - (number % 1)) < 0.5 then
+    number = number - (number % 1)
+  else
+    number = (number - (number % 1)) + 1
+  end
+ return number
+end
+
 TOCA.player = {
   name   = UnitName("player"),
   realm  = GetRealmName(),

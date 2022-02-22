@@ -22,7 +22,7 @@ TOCA.OptionsPosition_x["RIGHT"]=400
 TOCA.OptionsPosition_y={}
 TOCA.OptionsPosition_y["FRAMEMENU"] = 0
 TOCA.OptionsPosition_y["TIMERS"] = -190
-TOCA.OptionsPosition_y["TOOLTIP"] = -310
+TOCA.OptionsPosition_y["TOOLTIP"] = -330
 
 TOCA.FrameOptions={}
 TOCA.FrameOptions = CreateFrame("Frame", "TOCA.FrameOptions", UIParent, "BackdropTemplate")
@@ -470,9 +470,11 @@ TOCA.Checkbox.FrameBorder:SetScript("OnClick", function(self)
   if (self:GetChecked()) then
     TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] = "ON"
     TOCA.BorderFrame(true)
+		TOCA.BorderFrames = 1
   else
     TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] = "OFF"
     TOCA.BorderFrame(false)
+		TOCA.BorderFrames = 0
   end
 end)
 TOCA.Checkbox.FrameBorder:SetScript("OnEnter", function(self)
@@ -672,14 +674,39 @@ TOCA.Checkbox.Reinc:SetScript("OnLeave", function(self)
   TOCA.CloseAllMenus()
 end)
 
+
+TOCA.Checkbox.AuraShield={}
+TOCA.Checkbox.AuraShield = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.AuraShield:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["TIMERS"]-80)
+TOCA.Checkbox.AuraShield:SetChecked(1)
+TOCA.Checkbox.AuraShield.text = TOCA.Checkbox.AuraShield:CreateFontString(nil, "ARTWORK")
+TOCA.Checkbox.AuraShield.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
+TOCA.Checkbox.AuraShield.text:SetPoint("TOPLEFT", 25, -6)
+TOCA.Checkbox.AuraShield.text:SetText(TOCA.locale.UI.TIMERS[4][1])
+TOCA.Checkbox.AuraShield:SetScript("OnClick", function(self)
+  if (self:GetChecked()) then
+    TOCADB[TOCA.player.combine]["CONFIG"]["SHIELD"] = "ON"
+    TOCA.FrameMain.ShieldFrame:Show()
+  else
+    TOCADB[TOCA.player.combine]["CONFIG"]["SHIELD"] = "OFF"
+    TOCA.FrameMain.ShieldFrame:Hide()
+  end
+end)
+TOCA.Checkbox.AuraShield:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA.locale.UI.TIMERS[4][2])
+end)
+TOCA.Checkbox.AuraShield:SetScript("OnLeave", function(self)
+  TOCA.CloseAllMenus()
+end)
+
 TOCA.Checkbox.Ankh={}
 TOCA.Checkbox.Ankh = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.Ankh:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["TIMERS"]-80)
+TOCA.Checkbox.Ankh:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["TIMERS"]-100)
 TOCA.Checkbox.Ankh:SetChecked(1)
 TOCA.Checkbox.Ankh.text = TOCA.Checkbox.Ankh:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.Ankh.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
 TOCA.Checkbox.Ankh.text:SetPoint("TOPLEFT", 25, -6)
-TOCA.Checkbox.Ankh.text:SetText(TOCA.locale.UI.TIMERS[4][1])
+TOCA.Checkbox.Ankh.text:SetText(TOCA.locale.UI.TIMERS[5][1])
 TOCA.Checkbox.Ankh:SetScript("OnClick", function(self)
   if (self:GetChecked()) then
     TOCADB[TOCA.player.combine]["CONFIG"]["ANKH"] = "ON"
@@ -690,7 +717,7 @@ TOCA.Checkbox.Ankh:SetScript("OnClick", function(self)
   end
 end)
 TOCA.Checkbox.Ankh:SetScript("OnEnter", function(self)
-  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA.locale.UI.TIMERS[4][2])
+  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA.locale.UI.TIMERS[5][2])
 end)
 TOCA.Checkbox.Ankh:SetScript("OnLeave", function(self)
   TOCA.CloseAllMenus()

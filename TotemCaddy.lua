@@ -129,13 +129,12 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
 		]==]--
   end
 
-	--[==[
 	if ((event == "PLAYER_TOTEM_UPDATE") or
 	(event == "PLAYER_STARTED_MOVING") or
 	(event == "PLAYER_STOPPED_MOVING")) then
-		TOCA.TotemAuraRadius()
+	  TOCA.TotemBarUpdate()
+		--TOCA.TotemAuraRadius()
 	end
-	]==]--
 
   if (event == "PLAYER_DEAD") then
     TOCA.TotemTimerReset("all")
@@ -169,7 +168,8 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
   TOCA.Combat(event)
 
   if (event == "CHAT_MSG_ADDON") then
-    TOCA.GetReincTimer()
+    TOCA.GetShieldTimer()
+		TOCA.GetReincTimer()
     TOCA.VersionControl(prefix, netpacket)
 		TOCA.HandleShieldAlert()
   end
@@ -748,9 +748,17 @@ TOCA.FrameMain.ShieldFrame:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.FrameMain.ShieldFrame:SetFrameLevel(TOCA.Framelevel.Background)
 TOCA.FrameMain.ShieldFrame.timer = TOCA.FrameMain.ShieldFrame:CreateFontString(nil, "ARTWORK")
 TOCA.FrameMain.ShieldFrame.timer:SetFont(TOCA.Global.font, 10)
-TOCA.FrameMain.ShieldFrame.timer:SetPoint("CENTER", TOCA.FrameMain.ShieldFrame, "CENTER", 0, -6)
+TOCA.FrameMain.ShieldFrame.timer:SetPoint("CENTER", TOCA.FrameMain.ShieldFrame, "CENTER", 0, 18)
 TOCA.FrameMain.ShieldFrame.timer:SetText("")
+TOCA.FrameMain.ShieldFrame.timer:SetTextColor(1, 0.8, 0, 1)
 TOCA.FrameMain.ShieldFrame.timer:SetShadowOffset(1, 1)
+TOCA.FrameMain.ShieldFrame.count = TOCA.FrameMain.ShieldFrame:CreateFontString(nil, "ARTWORK")
+TOCA.FrameMain.ShieldFrame.count:SetFont(TOCA.Global.font, 12)
+TOCA.FrameMain.ShieldFrame.count:SetPoint("CENTER", TOCA.FrameMain.ShieldFrame, "CENTER", 0, 0)
+TOCA.FrameMain.ShieldFrame.count:SetText("")
+--TOCA.FrameMain.ShieldFrame.count:SetTextColor(1, 1, 0, 1)
+TOCA.FrameMain.ShieldFrame.count:SetShadowColor(0, 0, 0, 1)
+TOCA.FrameMain.ShieldFrame.count:SetShadowOffset(1, 1)
 --[==[
 TOCA.FrameMain.ShieldFrame:SetScript("OnEnter", function(self)
   TOCA.TooltipDisplay(self, TOCA.locale.SPELLS.Reincarnation)
@@ -759,7 +767,7 @@ TOCA.FrameMain.ShieldFrame:SetScript("OnLeave", function(self)
   TOCA.CloseAllMenus()
 end)
 ]==]--
---TOCA.FrameMain.ShieldFrame:Hide()
+TOCA.FrameMain.ShieldFrame:Hide()
 
 TOCA.FrameMain.ReincFrame = CreateFrame("Frame", TOCA.FrameMain.Background, TOCA.FrameMain, "BackdropTemplate", -7)
 TOCA.FrameMain.ReincFrame:SetWidth(30)
@@ -771,7 +779,7 @@ TOCA.FrameMain.ReincFrame:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.FrameMain.ReincFrame:SetFrameLevel(TOCA.Framelevel.Background)
 TOCA.FrameMain.ReincFrame.text = TOCA.FrameMain.ReincFrame:CreateFontString(nil, "ARTWORK")
 TOCA.FrameMain.ReincFrame.text:SetFont(TOCA.Global.font, 10)
-TOCA.FrameMain.ReincFrame.text:SetPoint("CENTER", TOCA.FrameMain.ReincFrame, "CENTER", 0, -6)
+TOCA.FrameMain.ReincFrame.text:SetPoint("CENTER", TOCA.FrameMain.ReincFrame, "CENTER", 0, -18)
 TOCA.FrameMain.ReincFrame.text:SetText("")
 TOCA.FrameMain.ReincFrame.text:SetShadowOffset(1, 1)
 TOCA.FrameMain.ReincFrame:SetScript("OnEnter", function(self)

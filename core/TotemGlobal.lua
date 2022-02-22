@@ -273,12 +273,20 @@ TOCA.KeyBindButton:SetPoint("TOPLEFT", -100, 0)
 TOCA.BuildKeyBindsInit()
 
 function TOCA.SetIcon(icon)
-  local array = {
-    bgFile="Interface/AddOns/".. TOCA.Global.prefix .."/images/" .. icon,
-    edgeFile="Interface/ToolTips/UI-Tooltip-Border",
-    edgeSize=12,
-    insets={left=2, right=2, top=2, bottom=2},
-  }
+	local array = {
+		bgFile="Interface/AddOns/".. TOCA.Global.prefix .."/images/" .. icon,
+		edgeFile="Interface/ToolTips/UI-Tooltip-Border",
+		edgeSize=12,
+		insets={left=2, right=2, top=2, bottom=2},
+	}
+	if (TOCA.BorderFrames <= 0) then
+		array = {
+	    bgFile="Interface/AddOns/".. TOCA.Global.prefix .."/images/" .. icon,
+	    edgeFile="",
+	    edgeSize=12,
+	    insets={left=2, right=2, top=2, bottom=2},
+	  }
+	end
   return array
 end
 
@@ -501,6 +509,9 @@ function TOCA.DisplayAnkhFrame()
   if (pL >= 30) then
     TOCA.FrameMain.AnkhFrame.text:SetText(TOCA.InventoryCountItem(TOCA.item.ANKH))
     if (TOCA.InventoryCountItem(TOCA.item.ANKH) <= TOCA.AnkhReminder) then
+			if (TOCA.InventoryCountItem(TOCA.item.ANKH) <= 1) then
+			  TOCA.FrameMain.AnkhFrame.text:SetTextColor(1,0,0,1)
+		  end
       TOCA.FrameMain.AnkhFrame:Show()
     else
       TOCA.FrameMain.AnkhFrame:Hide()
@@ -574,6 +585,8 @@ function TOCA.HideUnknownSpells(force)
 	end
 end
 
+TOCA.BorderFrames = 1 --called after building icons
+
 function TOCA.Init()
   local lC, eC, cI = UnitClass("player")
 
@@ -626,6 +639,7 @@ function TOCA.Init()
     if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
       TOCA.Checkbox.FrameBorder:SetChecked(nil)
       TOCA.BorderFrame(false)
+			TOCA.BorderFrames = 0
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["ENDCAPS"] == "OFF") then
       TOCA.Button.TotemicCall.ECL:Hide()
@@ -657,7 +671,7 @@ function TOCA.Init()
 
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["SHIELD"] == "OFF") then
 			TOCA.FrameMain.ShieldFrame:Hide()
-			--TOCA.Checkbox.Shield:SetChecked(nil)
+			TOCA.Checkbox.AuraShield:SetChecked(nil)
 		end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["REINC"] == "OFF") then
       TOCA.FrameMain.ReincFrame:Hide()
@@ -947,42 +961,24 @@ function TOCA.ExpireNotificationsTotems(totemname, totemtimer)
 	end
 end
 
-TOCA.hasShieldOn = 0
-local shamanShieldDuration = 10 --10 minutes on ALL shields
-local notificationAlertShield = 0
+TOCA.ShamanShieldDuration = 10 --10 minutes on ALL shields
+TOCA.NotificationAlertShield = 0
+TOCA.HasShield = 0
 function TOCA.ExpireNotificationsShield()
 	local _Uindex = 1
 	while UnitAura("player", _Uindex) do
 		local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura("player", _Uindex)
 		for k,v in pairs(TOCA.locale.SPELLS.SHIELDS) do
 			if (string.find(name, v)) then
-				TOCA.hasShieldOn = 1
-				local current_shield = nil
-				for shieldCat,shieldIndex in pairs(TOCA.spell.ShieldRanks) do
-					for k,shieldID in pairs(TOCA.spell.ShieldRanks[shieldCat]) do
-						if (spellId == shieldID) then
-							current_shield = shieldCat
-					  end
-					end
-				end
-				if (current_shield == "LIGHTNING_SHIELD") then
-					--TOCA.FrameMain.ShieldFrame:SetBackdrop(TOCA.SetIcon("ability_shaman_watershield"))
-					TOCA.FrameMain.ShieldFrame:SetBackdrop(TOCA.SetIcon("spell_nature_lightningshield"))
-				elseif (current_shield == "EARTH_SHIELD") then
-				  TOCA.FrameMain.ShieldFrame:SetBackdrop(TOCA.SetIcon("spell_nature_skinofearth"))
-			  else --default to water
-					TOCA.FrameMain.ShieldFrame:SetBackdrop(TOCA.SetIcon("ability_shaman_watershield"))
-				end
 				local timeDuration = duration + expirationTime - GetTime()
 				timeDuration = timeDuration / 120
-				--timeDuration = floor(timeDuration)
-				--print(timeDuration)
-				if ((timeDuration >= shamanShieldDuration) and (count >= 2)) then
-				  notificationAlertShield = 0 --reset / refreshed the aura
+				if ((timeDuration >= TOCA.ShamanShieldDuration) and (count >= 2)) then
+				  TOCA.NotificationAlertShield = 0 --reset / refreshed the aura
+					TOCA.HasShield = 1
 			  else
 					if ((timeDuration < 1.0) or (count <= 1)) then
-						if (notificationAlertShield ~= 1) then
-							notificationAlertShield = 1
+						if (TOCA.NotificationAlertShield ~= 1) then
+							TOCA.NotificationAlertShield = 1
 							if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGESHIELD"] ~= "OFF") then
 								TOCA.Notification("|cfff6d526" .. name .. "|r ".. TOCA.locale.INIT[4])
 							end
@@ -1078,9 +1074,6 @@ function TOCA.TimerFrameRecharge()
 	end
 end
 
-function TOCA.TimerShieldFrame()
-end
-
 --build timers
 for i=1, 4 do
   TOCA.TotemFunc[i] = 0
@@ -1090,14 +1083,26 @@ end
 TOCA.TotemRechargeFunc = 0
 TOCA.TotemRechargeFunc = C_Timer.NewTicker(0, function() TOCA.TimerFrameRecharge() end, 0)
 TOCA.TotemRechargeFunc:Cancel()
-TOCA.TotemShieldFunc = 0
-TOCA.TotemShieldFunc = C_Timer.NewTicker(0, function() TOCA.TimerShieldFrame() end, 0)
-TOCA.TotemShieldFunc:Cancel()
 
-function TOCA.TimerRechargeStart(spell, instant)
+TOCA.ShieldExpirationTimer = 0
+do
+	function TOCA.TimerShield(frame, exptime)
+		if (exptime) then
+			frame.frame = 0
+			frame:SetScript("OnUpdate", function(self, lapse)
+				self.frame = self.frame + lapse
+				TOCA.ShieldExpirationTimer = exptime - self.frame
+				--print(TOCA.ShieldExpirationTimer)
+				shieldTime = TOCA.ShieldExpirationTimer / 60
+				if (shieldTime>= 1) then
+					TOCA.FrameMain.ShieldFrame.timer:SetText(math.ceil(shieldTime) .. "m.")
+				end
+			end)
+		end
+	end
 end
 
---trigger only on totem drops
+--trigger only on totem drops / self spells
 function TOCA.TimerRechargeStart(spell, instant)
 	local msCountdown = 0.010
 	local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(spell)
@@ -1123,6 +1128,10 @@ function TOCA.TimerRechargeStart(spell, instant)
 					if (v == name) then
 						TOCA.TotemRechargeFunc = C_Timer.NewTicker(msCountdown, function() TOCA.TimerFrameRecharge() end, 50)
 						TOCA.RechargeTimer = 50
+						TOCA.TimerShield(TOCA.FrameMain.ShieldFrame, TOCA.ShamanShieldDuration*60)
+						TOCA.NotificationAlertShield = 0 --clear the alerts
+						TOCA.HasShield = 1
+						--print("TOCA.HasShield " .. TOCA.HasShield)
 					end
 				end
 			else
@@ -1170,41 +1179,49 @@ function TOCA.GetReincTimer() --always checking
   end
 end
 
---[==[
-function TOCA.GetShieldTimer() --and count
-  --local numTabs = GetNumTalentTabs()
-	local shield = nil
-	for spellCat,v in pairs(TOCA.locale.SPELLS.SHIELDS) do
-    shield, rank, icon, castTime, minRange, maxRange = GetSpellInfo(v)
-		print(shield)
-  end
-
-	if (shield) then
-		--print(shield)
+function TOCA.GetShieldTimer()
+  if (TOCADB[TOCA.player.combine]["CONFIG"]["SHIELD"] == "OFF") then
+		return
 	end
-
-	if (name) then
-    local start, duration, enabled = GetSpellCooldown(name)
-    if (duration) then
-      if (enabled == 0) then
-        --DEFAULT_CHAT_FRAME:AddMessage(name.." is currently active, use it and wait " .. duration .. " seconds for the next one.")
-      elseif (start > 0 and duration > 0) then
-        local shieldTimeLeftCalc = start + duration - GetTime()
-        local shieldTimeLeftRT = shieldLeftCalc / 60
-        TOCA.ShieldTimer = math.ceil(shieldTimeLeftCalc / 60)
-        --TOCA.Notification(name.." is cooling down, wait " .. TOCA.ShieldTimer, true)
-        TOCA.FrameMain.ShieldFrame.text:SetText(TOCA.ShieldTimer.."m")
-        TOCA.FrameMain.ShieldFrame:Show()
-      else
-        TOCA.FrameMain.ShieldFrame:Hide()
-        --TOCA.Notification(name.." is ready.", true)
-      end
-    end
+  local _Uindex = 1
+	TOCA.FrameMain.ShieldFrame:Hide()
+  while UnitAura("player", _Uindex) do
+	  local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura("player", _Uindex)
+		for k,v in pairs(TOCA.locale.SPELLS.SHIELDS) do --it's a shield spell, ignore everything else
+			if (string.find(name, v)) then
+				TOCA.FrameMain.ShieldFrame:Show()
+				local current_shield = nil
+				for shieldCat,shieldIndex in pairs(TOCA.spell.ShieldRanks) do
+					for k,shieldID in pairs(TOCA.spell.ShieldRanks[shieldCat]) do
+						if (spellId == shieldID) then
+							current_shield = shieldCat
+						end
+					end
+				end
+				if (current_shield == "LIGHTNING_SHIELD") then
+					TOCA.FrameMain.ShieldFrame:SetBackdrop(TOCA.SetIcon("spell_nature_lightningshield"))
+				elseif (current_shield == "EARTH_SHIELD") then
+					TOCA.FrameMain.ShieldFrame:SetBackdrop(TOCA.SetIcon("spell_nature_skinofearth"))
+				else --default to water
+					TOCA.FrameMain.ShieldFrame:SetBackdrop(TOCA.SetIcon("ability_shaman_watershield"))
+				end
+				if (TOCA.ShieldExpirationTimer <= 0) then --something went wrong, have a timer display backup
+					local timeDuration = duration + expirationTime - GetTime()
+					timeDuration = timeDuration / 120 --on first load or reload
+					local shieldTime = timeDuration
+					if (shieldTime >= 9.5) then shieldTime=10 end
+					--print(shieldTime)
+					TOCA.FrameMain.ShieldFrame.timer:SetText(math.floor(shieldTime) .. "m")
+				end
+				TOCA.FrameMain.ShieldFrame.count:SetText("")
+				if (count >= 2) then
+					TOCA.FrameMain.ShieldFrame.count:SetText(count)
+				end
+		  end
+	  end
+		_Uindex = _Uindex + 1
   end
-
---TOCA.FrameMain.ShieldFrame:Hide()
 end
-]==]--
 
 TOCA.SlotGrid.VerticalTimer={}
 TOCA.SlotGrid.HorizontalTimer={}
@@ -1261,28 +1278,28 @@ function TOCA.HandleShieldAlert()
 end
 
 function TOCA.TotemBarUpdate()
-  local percMana = (UnitPower("player")/UnitPowerMax("player"))*100
-  local percMana = floor(percMana+0.5)
-  local onTaxi = UnitOnTaxi("player")
-  --TOCA.Notification("mana: " .. percMana, true)
-  TOCA.Button.TotemicCall.flash:Hide()
-  if ((UnitOnTaxi("player")) or (percMana <= 1)) then
-    TOCA.EnableTotems(false)
-  else
-    TOCA.EnableTotems(true)
-  end
-
-  for i=1, 4 do
-    TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
-    if (TOCA.TotemPresent[i]) then
-      TOCA.Button.TotemicCall.flash:Show()
-    end
-  end
-
 	local lC, eC, cI = UnitClass("player")
-  if (eC == "SHAMAN") then
+	if (eC == "SHAMAN") then
+	  local percMana = (UnitPower("player")/UnitPowerMax("player"))*100
+	  local percMana = floor(percMana+0.5)
+	  local onTaxi = UnitOnTaxi("player")
+	  --TOCA.Notification("mana: " .. percMana, true)
+	  TOCA.Button.TotemicCall.flash:Hide()
+	  if ((UnitOnTaxi("player")) or (percMana <= 1)) then
+	    TOCA.EnableTotems(false)
+	  else
+	    TOCA.EnableTotems(true)
+	  end
+
+	  for i=1, 4 do
+	    TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
+	    if (TOCA.TotemPresent[i]) then
+	      TOCA.Button.TotemicCall.flash:Show()
+	    end
+	  end
+
 		TOCA.GetReincTimer()
-		--TOCA.GetShieldTimer()
+		TOCA.GetShieldTimer()
 	  TOCA.DisplayAnkhFrame()
 		TOCA.HandleShieldAlert()
 	end
