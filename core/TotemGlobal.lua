@@ -1085,12 +1085,37 @@ do
 	end
 end
 
+function TOCA.ExtendedTotemCooldowns(totemCat, spell, countDown)
+	--print(TOCA.cache[1])
+	if (totemCat == "EARTH") then
+		TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
+	  if (spell == 2484) then
+			TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), 15) --earthbind
+	  elseif ((spell == 5730) or (spell == 6390) or (spell == 6391) or (spell == 10428) or (spell == 25525)) then
+			TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), 30) --stoneclaws
+		end
+	elseif (totemCat == "FIRE") then
+		TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
+	elseif (totemCat == "WATER") then
+		TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
+		if (spell == 16190) then
+			TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), 300) --mana tide
+		end
+	elseif (totemCat == "AIR") then
+		TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
+		if (spell == 8177) then
+			TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), 15) --grounding
+		end
+	end
+end
+
 --trigger only on totem drops / self spells
 function TOCA.TimerRechargeStart(spell, instant)
 	local countDown = 1.1
 	local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(spell)
 	--local manaConsume = GetSpellPowerCost(name)
 	--print(manaConsume.cost)
+	--print(spell)
 	if (name) then
 		local skillType, contextualID = GetSpellBookItemInfo(name)
 		if (skillType == "SPELL") then
@@ -1099,8 +1124,8 @@ function TOCA.TimerRechargeStart(spell, instant)
 					for totemSpell,v in pairs(TOCA.totems[totemCat]) do
 						if (v[1] == name) then
 							TOCA.Button.TotemicCall.recharge:SetCooldown(GetTime(), countDown)
-							for totemCat,k in pairs(TOCA.totems) do --trigger ALL 4
-								TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
+							for totemCat,k in pairs(TOCA.totems) do
+								TOCA.ExtendedTotemCooldowns(totemCat, spell, countDown)
 							end
 						end
 					end
@@ -1108,14 +1133,14 @@ function TOCA.TimerRechargeStart(spell, instant)
 				if (name == TOCA.locale.SPELLS.TotemicCall) then
 					TOCA.Button.TotemicCall.recharge:SetCooldown(GetTime(), countDown)
 					for totemCat,k in pairs(TOCA.totems) do
-						TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
+						TOCA.ExtendedTotemCooldowns(totemCat, spell, countDown)
 					end
 				end
 				for spellCat,v in pairs(TOCA.locale.SPELLS.SHIELDS) do
 					if (v == name) then
 						TOCA.Button.TotemicCall.recharge:SetCooldown(GetTime(), countDown)
 						for totemCat,k in pairs(TOCA.totems) do
-							TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
+							TOCA.ExtendedTotemCooldowns(totemCat, spell, countDown)
 						end
 						TOCA.TimerShield(TOCA.FrameMain.ShieldFrame, TOCA.ShamanShieldDuration*60)
 						TOCA.NotificationAlertShield = 0 --clear the alerts
@@ -1126,7 +1151,7 @@ function TOCA.TimerRechargeStart(spell, instant)
 			else
 				TOCA.Button.TotemicCall.recharge:SetCooldown(GetTime(), countDown)
 				for totemCat,k in pairs(TOCA.totems) do
-					TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
+					TOCA.ExtendedTotemCooldowns(totemCat, spell, countDown)
 				end
 			end
 		end
