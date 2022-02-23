@@ -58,6 +58,28 @@ TOCA.spell.ShieldRanks = {
 	}
 }
 
+--all ranks
+TOCA.TotemAuras = {
+	AIR = {
+		{10596, 10598, 10599, 25573}, --nature res
+		{15108, 15109, 15110, 25576}, --windwall
+		{2895}, -- Wrath of Air
+		{25909}, --tranquility
+	},
+	EARTH = {
+		{8072, 8156, 8157, 10403, 10404, 10405, 25506, 25507}, --stoneskin
+		{8076, 8162, 8163, 10441, 25362, 25527}, --strength
+	},
+	FIRE = {
+		{8182, 10476, 10477, 25559}, --frost res
+	},
+	WATER = {
+	  {8185, 10534, 10535, 25562}, --fire res
+		{5672, 6371, 6372, 10460, 10461, 25566}, --healing stream
+		{5677, 10491, 10493, 10494, 25569}, --mana spring
+	}
+}
+
 function arrayToString(array)
   formstring=""
   for k,v in pairs(array) do

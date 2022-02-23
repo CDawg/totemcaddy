@@ -113,6 +113,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
   end
   if (event == "UNIT_AURA") then --more accurate on usable spells
     TOCA.TotemBarUpdate()
+		--TOCA.TotemAuraRadius()
   end
   if (event == "PLAYER_TOTEM_UPDATE") then
     TOCA.TotemBarUpdate()
@@ -261,6 +262,7 @@ end
 TOCA.Slot={}
 TOCA.Slot.Disable={}
 TOCA.Slot.highlight={}
+TOCA.Slot.Range={}
 TOCA.Slot.Recharge={}
 TOCA.Totem={}
 TOCA.TotemFlash={}
@@ -291,6 +293,13 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.Slot.highlight[totemCat]:SetTexture("Interface/Buttons/ButtonHilight-Square")
   TOCA.Slot.highlight[totemCat]:SetBlendMode("ADD")
   TOCA.Slot.highlight[totemCat]:Hide()
+	TOCA.Slot.Range[totemCat]= TOCA.Slot[totemCat]:CreateTexture(nil, "ARTWORK", TOCA.Slot[totemCat], 0)
+	TOCA.Slot.Range[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
+	TOCA.Slot.Range[totemCat]:SetPoint("CENTER", 0, 0)
+	TOCA.Slot.Range[totemCat]:SetTexture("Interface/Buttons/RedGrad64")
+	TOCA.Slot.Range[totemCat]:SetVertexColor(1, 0, 0, 0.7)
+	TOCA.Slot.Range[totemCat]:SetBlendMode("ADD")
+	TOCA.Slot.Range[totemCat]:Hide()
   TOCA.Slot.Disable[totemCat]= CreateFrame("Frame", nil, TOCA.Slot[totemCat], "BackdropTemplate")
   TOCA.Slot.Disable[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
   TOCA.Slot.Disable[totemCat]:SetPoint("CENTER", 0, 0)
