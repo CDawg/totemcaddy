@@ -80,7 +80,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
   if ((event == "UNIT_SPELLCAST_START") or
   (event == "UNIT_SPELLCAST_STOP") or
   (event == "UNIT_POWER_FREQUENT")) then
-    TOCA.TotemBarUpdate()
+    TOCA.TotemBarUpdate(event)
   end
 
 	if (event == "UNIT_SPELLCAST_START") then
@@ -91,7 +91,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
 
   --technically, this needs to be handled on a different event
   if (event == "UNIT_SPELLCAST_SENT") then
-    TOCA.TotemBarUpdate()
+    TOCA.TotemBarUpdate(event)
     if ((prefix == "player") and (_spellID)) then
       if(_spellID == TOCA.spell.TOTEMIC_CALL) then
         TOCA.TotemTimerReset("all")
@@ -110,13 +110,13 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
 	end
 
   if (event == "UNIT_MAXPOWER") then
-    TOCA.TotemBarUpdate()
+    TOCA.TotemBarUpdate(event)
   end
   if (event == "UNIT_AURA") then --more accurate on usable spells
-    TOCA.TotemBarUpdate()
+    TOCA.TotemBarUpdate(event)
   end
   if (event == "PLAYER_TOTEM_UPDATE") then
-    TOCA.TotemBarUpdate()
+    TOCA.TotemBarUpdate(event)
     TOCA.TotemBarTimerStart()
 		--[==[
 		local inInstance, instanceType = IsInInstance()
@@ -129,7 +129,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
 	if ((event == "PLAYER_TOTEM_UPDATE") or
 	(event == "PLAYER_STARTED_MOVING") or
 	(event == "PLAYER_STOPPED_MOVING")) then
-	  TOCA.TotemBarUpdate()
+	  TOCA.TotemBarUpdate(event)
 	end
 
   if (event == "PLAYER_DEAD") then
@@ -146,7 +146,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
   end
 
   if (event == "BAG_UPDATE") then
-    TOCA.TotemBarUpdate() --fire off when enable/disable
+    TOCA.TotemBarUpdate(event) --fire off when enable/disable
   end
 
   if (event == "PLAYER_CONTROL_GAINED") then

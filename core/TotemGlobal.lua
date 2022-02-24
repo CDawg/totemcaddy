@@ -163,6 +163,10 @@ TOCA.totems.ID.AIR = {
 
 TOCA.ShamanShieldDuration = 10 --10 minutes on ALL shields
 TOCA.NotificationAlertShield = 0
+TOCA.NotificationAlertRadius = {}
+for i=1, 4 do
+	TOCA.NotificationAlertRadius[i] = 0
+end
 
 function TOCA.IdentifySpell(spellID) --used for different languages
   local spell = GetSpellInfo(spellID)
@@ -711,6 +715,9 @@ function TOCA.Init()
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"]) then
 			TOCA.Dropdown.Sound.ShieldExpire.text:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"])
 		end
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMRADIUSVISUAL"] == "OFF") then
+			TOCA.Checkbox.TotemRadiusVisual:SetChecked(nil)
+		end
 
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMORDER"]) then
       TOCA.SetTotemOrderDropdown()
@@ -953,6 +960,13 @@ for i=1, 4 do
   TOCA.TotemDuration[i] = 0
 end
 
+function TOCA.HasEarthShield()
+	--974
+	--32593
+	local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(32594)
+	print(name)
+end
+
 function TOCA.ExpireNotificationsTotems(totemname, totemtimer)
 	if (totemtimer == 10) then
 		if ((totemname ~= nil) or (totemname ~= "")) then
@@ -1007,7 +1021,7 @@ end
 
 TOCA.TotemInRange={}
 --TOCA.AuraMatchTotem={}
-function TOCA.TotemAuraRadius()
+function TOCA.TotemAuraRadius(event)
 	local _Uindex = 1
 	local totemCat={}
 	for k,v in pairs(TOCA.totems) do
@@ -1019,16 +1033,6 @@ function TOCA.TotemAuraRadius()
 	end
 	for i=1, 4 do
 		TOCA.TotemInRange[i] = nil --clear the array
-	end
-	for i=1, 4 do
-		TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i], TOCA.TotemID[i] = GetTotemInfo(i)
-		for v,k in pairs(TOCA.GameOrder) do
-			if (not TOCA.TotemPresent[k]) then
-				TOCA.Slot.Radius[v]:Hide()
-				TOCA.Slot.Radius.Border[v]:Hide()
-				return --just hide the alert frame and not even check for an aura
-			end
-		end
 	end
 
 	--[==[
@@ -1394,7 +1398,7 @@ function TOCA.HandleShieldAlert()
 	end
 end
 
-function TOCA.TotemBarUpdate()
+function TOCA.TotemBarUpdate(event)
 	local lC, eC, cI = UnitClass("player")
 	if (eC == "SHAMAN") then
 	  local percMana = (UnitPower("player")/UnitPowerMax("player"))*100
@@ -1409,7 +1413,9 @@ function TOCA.TotemBarUpdate()
 	    TOCA.EnableTotems(true)
 	  end
 
-		TOCA.TotemAuraRadius() --call before totemic
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMRADIUSVISUAL"] ~= "OFF") then
+			TOCA.TotemAuraRadius(event)
+		end
 
 	  for i=1, 4 do
 	    TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
