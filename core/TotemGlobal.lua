@@ -1020,6 +1020,16 @@ function TOCA.TotemAuraRadius()
 	for i=1, 4 do
 		TOCA.TotemInRange[i] = nil --clear the array
 	end
+	for i=1, 4 do
+		TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i], TOCA.TotemID[i] = GetTotemInfo(i)
+		for v,k in pairs(TOCA.GameOrder) do
+			if (not TOCA.TotemPresent[k]) then
+				TOCA.Slot.Radius[v]:Hide()
+				TOCA.Slot.Radius.Border[v]:Hide()
+				return --just hide the alert frame and not even check for an aura
+			end
+		end
+	end
 
 	--[==[
 	--used for a debug aura check on the totem
@@ -1078,15 +1088,15 @@ function TOCA.TotemAuraRadius()
 			--exempt totems, due to no aura
 			for totemCat,v in pairs(TOCA.TotemAuraExempt) do
 				for k,totemID in pairs(TOCA.TotemAuraExempt[totemCat]) do
-					if (TOCA.TotemID[i] == totemID) then
+					if (TOCA.TotemID[i] == totemID) then --use the icon id, since it's unique and totems dont have an actual ID
 						--print(totemID .. " is exempt " .. totemCat)
 						TOCA.Slot.Radius[totemCat]:Hide()
 						TOCA.Slot.Radius.Border[totemCat]:Hide()
 					end
 				end
 			end
-		end
-	end --totempresent
+		end --totempresent
+	end
 
 end
 

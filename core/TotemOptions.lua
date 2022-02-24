@@ -457,7 +457,6 @@ TOCA.Checkbox.MainMenu:SetScript("OnLeave", function(self)
   TOCA.CloseAllMenus()
 end)
 
-
 TOCA.Checkbox.FrameBorder={}
 TOCA.Checkbox.FrameBorder = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]], "ChatConfigCheckButtonTemplate")
 TOCA.Checkbox.FrameBorder:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["FRAMEMENU"]-80)
