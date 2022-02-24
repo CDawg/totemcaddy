@@ -160,6 +160,10 @@ TOCA.totems.ID.AIR = {
 	3738, --wrath of air
 }
 
+
+TOCA.ShamanShieldDuration = 10 --10 minutes on ALL shields
+TOCA.NotificationAlertShield = 0
+
 function TOCA.IdentifySpell(spellID) --used for different languages
   local spell = GetSpellInfo(spellID)
 	if (spell) then return spell end
@@ -966,8 +970,6 @@ function TOCA.ExpireNotificationsTotems(totemname, totemtimer)
 	end
 end
 
-TOCA.ShamanShieldDuration = 10 --10 minutes on ALL shields
-TOCA.NotificationAlertShield = 0
 TOCA.HasShield = 0
 function TOCA.ExpireNotificationsShield()
 	local _Uindex = 1
