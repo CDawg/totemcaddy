@@ -15,7 +15,9 @@ the copyright holders.
 
 TOCA.HELP = {
 	UPDATES = {
-	  "|cffffdf96Please note:|r Totem Caddy is still evolving. Improvements will be made as time continues. There is an |cff7eabd5issue tracker|r now available on |cffff9f69Curseforge|r. Enjoy!|n",
+	  "|cffffdf96Please note:|r Totem Caddy is still evolving. Improvements will be made as time continues. There is an |cff7eabd5issue tracker|r now available on |cffff9f69Curseforge|r. Enjoy!",
+		"",
+		"Type |cffffdf96/toca options|r for all available options and settings.",
 		"",
 	  "|cffffdf96Update:|r Updated a few localization for totems & spells/keybindings.",
 		"|cffffdf96Update:|r Updated the cooldown timer to match current action bars.",

@@ -4,7 +4,7 @@ TOCA.locale = {
   TITLE = "Caja de tótem",
 
 	SPELLS = {
-		Unknown = "Unknown",
+		Unknown = "Desconocido",
 	},
 
 	KEYBINDS = {
