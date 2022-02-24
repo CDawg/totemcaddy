@@ -940,6 +940,7 @@ TOCA.TotemPresent={}
 TOCA.TotemName={}
 TOCA.TotemStartTime={}
 TOCA.TotemDuration={}
+TOCA.TotemID={}
 TOCA.TotemFunc={}
 
 TOCA.TotemTimer={}
@@ -1003,29 +1004,29 @@ function TOCA.ExpireNotificationsShield()
 end
 
 TOCA.TotemInRange={}
+--TOCA.AuraMatchTotem={}
 function TOCA.TotemAuraRadius()
 	local _Uindex = 1
 	local totemCat={}
-	TOCA.Slot.Range["AIR"]:Hide()
-	TOCA.Slot.Range["EARTH"]:Hide()
-	TOCA.Slot.Range["FIRE"]:Hide()
-	TOCA.Slot.Range["WATER"]:Hide()
-	for i=1, 4 do
-		--print("resetting " .. i) --reset the red frame
-		TOCA.TotemInRange[i] = nil --clear the array
-		TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
-		if (TOCA.TotemPresent[i]) then
-			if (i == 1) then
-			  totemCat[1] = "FIRE"
-		  elseif (i == 2) then
-			  totemCat[2] = "EARTH"
-			elseif (i == 3) then
-			  totemCat[3] = "WATER"
-			elseif (i == 4) then
-				totemCat[4] = "AIR"
-			end
-		end
+	for k,v in pairs(TOCA.totems) do
+		TOCA.Slot.Radius[k]:Hide()
+		TOCA.Slot.Radius.Border[k]:Hide()
 	end
+	for v,k in pairs(TOCA.GameOrder) do
+		totemCat[k] = v
+	end
+	for i=1, 4 do
+		TOCA.TotemInRange[i] = nil --clear the array
+	end
+
+	--[==[
+	--used for a debug aura check on the totem
+	while UnitAura("player", _Uindex) do
+		local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura("player", _Uindex)
+		print(spellId)
+		_Uindex = _Uindex + 1
+	end
+	]==]--
 
   while UnitAura("player", _Uindex) do
 	  local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura("player", _Uindex)
@@ -1037,9 +1038,11 @@ function TOCA.TotemAuraRadius()
 							--print("a totem aura has been identified: " .. spellId)
 							--print(auraCat)
 							for i=1, 4 do
+								--TOCA.AuraMatchTotem[i] = nil
 								if (totemCat[i]) then --totem is down and we are in range for the moment
 									if (auraCat == totemCat[i]) then
-										--print("match : " .. auraCat)
+										--print("Aura and Totem : " .. auraCat)
+										--TOCA.AuraMatchTotem[i] = auraCat
 										TOCA.TotemInRange[i] = auraCat
 									end
 								end
@@ -1054,28 +1057,35 @@ function TOCA.TotemAuraRadius()
 
 	--trap the totem second time around
 	for i=1, 4 do
-		TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
+		TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i], TOCA.TotemID[i] = GetTotemInfo(i)
 		if (TOCA.TotemPresent[i]) then
+			--print(TOCA.TotemID[i])
 			if (TOCA.TotemInRange[i]) then
-				--print("resetting " .. i) --reset the red frame
-				TOCA.Slot.Range["AIR"]:Hide()
-				TOCA.Slot.Range["EARTH"]:Hide()
-				TOCA.Slot.Range["FIRE"]:Hide()
-				TOCA.Slot.Range["WATER"]:Hide()
-			else
-				--print("go red " .. i)
-				if (i == 1) then
-					TOCA.Slot.Range["FIRE"]:Show()
-			  elseif (i == 2) then
-					TOCA.Slot.Range["EARTH"]:Show()
-				elseif (i == 3) then
-					TOCA.Slot.Range["WATER"]:Show()
-				elseif (i == 4) then
-					TOCA.Slot.Range["AIR"]:Show()
+				--print("In Range : " .. TOCA.TotemInRange[i])
+				TOCA.Slot.Radius[TOCA.TotemInRange[i]]:Hide()
+				TOCA.Slot.Radius.Border[TOCA.TotemInRange[i]]:Hide()
+			else --Not in range of an aura but the totem is present
+				--print("Out of Range : " ..  i)
+				for v,k in pairs(TOCA.GameOrder) do
+					if (i == k) then
+						TOCA.Slot.Radius[v]:Show()
+						TOCA.Slot.Radius.Border[v]:Show()
+					end
+				end
+			end
+			--exempt totems, due to no aura
+			for totemCat,v in pairs(TOCA.TotemAuraExempt) do
+				for k,totemID in pairs(TOCA.TotemAuraExempt[totemCat]) do
+					if (TOCA.TotemID[i] == totemID) then
+						--print(totemID .. " is exempt " .. totemCat)
+						TOCA.Slot.Radius[totemCat]:Hide()
+						TOCA.Slot.Radius.Border[totemCat]:Hide()
+					end
 				end
 			end
 		end
-	end
+	end --totempresent
+
 end
 
 function TOCA.TimerFrame(i)
@@ -1157,7 +1167,7 @@ do
 				--print(TOCA.ShieldExpirationTimer)
 				shieldTime = TOCA.ShieldExpirationTimer / 60
 				if (shieldTime>= 1) then
-					TOCA.FrameMain.ShieldFrame.timer:SetText(math.ceil(shieldTime) .. "m")
+					TOCA.FrameMain.ShieldFrame.timer:SetText(math.ceil(shieldTime) .. " m")
 				end
 			end)
 		end
@@ -1260,7 +1270,7 @@ function TOCA.GetReincTimer() --always checking
         local reincTimeLeftRT = reincTimeLeftCalc / 60
         TOCA.ReincTimer = math.ceil(reincTimeLeftCalc / 60)
         --TOCA.Notification(name.." is cooling down, wait " .. TOCA.ReincTimer, true)
-        TOCA.FrameMain.ReincFrame.text:SetText(TOCA.ReincTimer.."m")
+        TOCA.FrameMain.ReincFrame.text:SetText(TOCA.ReincTimer .. " m")
         TOCA.FrameMain.ReincFrame:Show()
       else
         TOCA.FrameMain.ReincFrame:Hide()
@@ -1306,7 +1316,7 @@ function TOCA.GetShieldTimer()
 					local shieldTime = timeDuration
 					if (shieldTime >= 9.5) then shieldTime=10 end
 					--print(shieldTime)
-					TOCA.FrameMain.ShieldFrame.timer:SetText(math.floor(shieldTime) .. "m")
+					TOCA.FrameMain.ShieldFrame.timer:SetText(math.floor(shieldTime) .. " m")
 				end
 				TOCA.FrameMain.ShieldFrame.count:SetText("")
 				if (count >= 2) then
@@ -1387,18 +1397,19 @@ function TOCA.TotemBarUpdate()
 	    TOCA.EnableTotems(true)
 	  end
 
+		TOCA.TotemAuraRadius() --call before totemic
+
 	  for i=1, 4 do
 	    TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
 	    if (TOCA.TotemPresent[i]) then
 	      TOCA.Button.TotemicCall.flash:Show()
-	    end
+			end
 	  end
 
 		TOCA.GetReincTimer()
 		TOCA.GetShieldTimer()
 	  TOCA.DisplayAnkhFrame()
 		TOCA.HandleShieldAlert()
-		--TOCA.TotemAuraRadius()
 	end
 end
 

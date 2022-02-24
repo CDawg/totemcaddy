@@ -32,8 +32,12 @@ TOCA.item = {
 }
 TOCA.AnkhReminder = 3
 TOCA.AlphaOrder = {"AIR", "EARTH", "FIRE", "WATER"}
---TOCA.locale = {TOTEMS = {FIRE={}, EARTH={}, WATER={}, AIR={}}} --this order regardless of language
-
+TOCA.GameOrder = {
+	FIRE = 1,
+	EARTH= 2,
+	WATER= 3,
+	AIR  = 4,
+}
 --rank all shield for locales and leveling shamans
 TOCA.spell.ShieldRanks = {
   WATER_SHIELD = {
@@ -61,22 +65,49 @@ TOCA.spell.ShieldRanks = {
 --all ranks
 TOCA.TotemAuras = {
 	AIR = {
-		{10596, 10598, 10599, 25573}, --nature res
+		{6495}, --sentry
+		{8178}, --grounding
+		{8836, 10626, 25360}, --grace of air
+		{10596, 10598, 10599, 25573}, --nature resist
 		{15108, 15109, 15110, 25576}, --windwall
 		{2895}, -- Wrath of Air
 		{25909}, --tranquility
 	},
 	EARTH = {
 		{8072, 8156, 8157, 10403, 10404, 10405, 25506, 25507}, --stoneskin
-		{8076, 8162, 8163, 10441, 25362, 25527}, --strength
+		{8076, 8162, 8163, 10441, 25362, 25527}, --strength of earth
 	},
 	FIRE = {
-		{8182, 10476, 10477, 25559}, --frost res
+		{8182, 10476, 10477, 25559}, --frost resist
+		{30706}, --totem of wrath
 	},
 	WATER = {
-	  {8185, 10534, 10535, 25562}, --fire res
+	  {8185, 10534, 10535, 25562}, --fire resist
 		{5672, 6371, 6372, 10460, 10461, 25566}, --healing stream
 		{5677, 10491, 10493, 10494, 25569}, --mana spring
+	}
+}
+
+TOCA.TotemAuraExempt = { --totems that don't have an aura id (even hidden)
+	AIR = {
+		136114, --windfury
+	},
+	EARTH = {
+		136108, --tremor
+		136097, --stoneclaw
+		136102, --earthbind
+	},
+	FIRE = {
+		135824, --firenova
+		136040, --flametongue
+		135826, --magma
+		135825, --searing
+
+	},
+	WATER = {
+		136019, --disease cleansing
+		135861, --mana tide
+		136070, --poison cleansing
 	}
 }
 

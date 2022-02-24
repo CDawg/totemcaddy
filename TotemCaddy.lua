@@ -97,13 +97,14 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
         TOCA.TotemTimerReset("all")
       end
       if(_spellID) then
-        --TOCA.Notification("debug spell: " .. _spellID, true)
+        --print("debug spell: " .. _spellID)
         TOCA.TotemTimerResetBySpell(_spellID)
       end
     end
   end
 	if (event == "UNIT_SPELLCAST_SUCCEEDED") then
 		if ((prefix == "player") and (_casted)) then --spell came from self
+			--print("debug spell: " .. _casted)
 			TOCA.TimerRechargeStart(_casted, true)
 		end
 	end
@@ -113,7 +114,6 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
   end
   if (event == "UNIT_AURA") then --more accurate on usable spells
     TOCA.TotemBarUpdate()
-		--TOCA.TotemAuraRadius()
   end
   if (event == "PLAYER_TOTEM_UPDATE") then
     TOCA.TotemBarUpdate()
@@ -130,7 +130,6 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
 	(event == "PLAYER_STARTED_MOVING") or
 	(event == "PLAYER_STOPPED_MOVING")) then
 	  TOCA.TotemBarUpdate()
-		--TOCA.TotemAuraRadius()
 	end
 
   if (event == "PLAYER_DEAD") then
@@ -262,7 +261,8 @@ end
 TOCA.Slot={}
 TOCA.Slot.Disable={}
 TOCA.Slot.highlight={}
-TOCA.Slot.Range={}
+TOCA.Slot.Radius={}
+TOCA.Slot.Radius.Border={}
 TOCA.Slot.Recharge={}
 TOCA.Totem={}
 TOCA.TotemFlash={}
@@ -293,13 +293,21 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.Slot.highlight[totemCat]:SetTexture("Interface/Buttons/ButtonHilight-Square")
   TOCA.Slot.highlight[totemCat]:SetBlendMode("ADD")
   TOCA.Slot.highlight[totemCat]:Hide()
-	TOCA.Slot.Range[totemCat]= TOCA.Slot[totemCat]:CreateTexture(nil, "ARTWORK", TOCA.Slot[totemCat], 0)
-	TOCA.Slot.Range[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
-	TOCA.Slot.Range[totemCat]:SetPoint("CENTER", 0, 0)
-	TOCA.Slot.Range[totemCat]:SetTexture("Interface/Buttons/RedGrad64")
-	TOCA.Slot.Range[totemCat]:SetVertexColor(1, 0, 0, 0.7)
-	TOCA.Slot.Range[totemCat]:SetBlendMode("ADD")
-	TOCA.Slot.Range[totemCat]:Hide()
+	TOCA.Slot.Radius[totemCat]= TOCA.Slot[totemCat]:CreateTexture(nil, "ARTWORK", TOCA.Slot[totemCat], 0)
+	TOCA.Slot.Radius[totemCat]:SetSize(TOCA.Slot_w-2, TOCA.Slot_h-2)
+	TOCA.Slot.Radius[totemCat]:SetPoint("CENTER", 0, 0)
+	TOCA.Slot.Radius[totemCat]:SetTexture("Interface/Buttons/GoldGradiant")
+	TOCA.Slot.Radius[totemCat]:SetVertexColor(1, 0, 0, 0.8)
+	TOCA.Slot.Radius[totemCat]:SetBlendMode("ADD")
+	TOCA.Slot.Radius[totemCat]:Hide()
+	TOCA.Slot.Radius.Border[totemCat] = TOCA.Slot[totemCat]:CreateTexture(nil, "ARTWORK", TOCA.Slot[totemCat], 0)
+	TOCA.Slot.Radius.Border[totemCat]:SetSize(TOCA.Slot_w*2, TOCA.Slot_h*2)
+	TOCA.Slot.Radius.Border[totemCat]:SetPoint("CENTER", 0, 0)
+	--TOCA.Slot.Radius.Border[totemCat]:SetTexture("Interface/Buttons/CheckButtonHilight")
+	TOCA.Slot.Radius.Border[totemCat]:SetTexture("Interface/Buttons/CheckButtonGlow")
+	TOCA.Slot.Radius.Border[totemCat]:SetVertexColor(1, 0, 0, 0.8)
+	--TOCA.Slot.Radius.Border[totemCat]:SetBlendMode("ADD")
+	TOCA.Slot.Radius.Border[totemCat]:Hide()
   TOCA.Slot.Disable[totemCat]= CreateFrame("Frame", nil, TOCA.Slot[totemCat], "BackdropTemplate")
   TOCA.Slot.Disable[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
   TOCA.Slot.Disable[totemCat]:SetPoint("CENTER", 0, 0)
@@ -756,8 +764,8 @@ TOCA.FrameMain.ShieldFrame.timer:SetText("")
 TOCA.FrameMain.ShieldFrame.timer:SetTextColor(1, 0.8, 0, 1)
 TOCA.FrameMain.ShieldFrame.timer:SetShadowOffset(1, 1)
 TOCA.FrameMain.ShieldFrame.count = TOCA.FrameMain.ShieldFrame:CreateFontString(nil, "ARTWORK")
-TOCA.FrameMain.ShieldFrame.count:SetFont(TOCA.Global.font, 12)
-TOCA.FrameMain.ShieldFrame.count:SetPoint("CENTER", TOCA.FrameMain.ShieldFrame, "CENTER", 0, 0)
+TOCA.FrameMain.ShieldFrame.count:SetFont(TOCA.Global.font, 10)
+TOCA.FrameMain.ShieldFrame.count:SetPoint("CENTER", TOCA.FrameMain.ShieldFrame, "CENTER", 17, -2)
 TOCA.FrameMain.ShieldFrame.count:SetText("")
 --TOCA.FrameMain.ShieldFrame.count:SetTextColor(1, 1, 0, 1)
 TOCA.FrameMain.ShieldFrame.count:SetShadowColor(0, 0, 0, 1)
@@ -784,6 +792,7 @@ TOCA.FrameMain.ReincFrame.text = TOCA.FrameMain.ReincFrame:CreateFontString(nil,
 TOCA.FrameMain.ReincFrame.text:SetFont(TOCA.Global.font, 10)
 TOCA.FrameMain.ReincFrame.text:SetPoint("CENTER", TOCA.FrameMain.ReincFrame, "CENTER", 0, -18)
 TOCA.FrameMain.ReincFrame.text:SetText("")
+TOCA.FrameMain.ReincFrame.text:SetTextColor(1, 0.8, 0, 1)
 TOCA.FrameMain.ReincFrame.text:SetShadowOffset(1, 1)
 TOCA.FrameMain.ReincFrame:SetScript("OnEnter", function(self)
   TOCA.TooltipDisplay(self, TOCA.locale.SPELLS.Reincarnation)

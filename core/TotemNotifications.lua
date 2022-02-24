@@ -13,8 +13,8 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
-local NumTotemNotificationSounds = 10
-local NumShieldNotificationSounds = 10
+local NumTotemNotificationSounds = 20
+local NumShieldNotificationSounds = 20
 
 TOCA.FrameOptions.Title.Notifs={}
 TOCA.FrameOptions.Title.Notifs = TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[3]]:CreateFontString(nil, "ARTWORK")
