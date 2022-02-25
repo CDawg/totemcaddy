@@ -31,7 +31,7 @@ TOCA.FrameOptions:SetHeight(TOCA.FrameOptions_h)
 TOCA.FrameOptions:SetPoint("CENTER", 0, 20)
 TOCA.FrameOptions:SetBackdrop(TOCA.Backdrop.General)
 TOCA.FrameOptions:SetFrameStrata("DIALOG")
-TOCA.FrameOptions:SetBackdropColor(0, 0, 0, 0.8)
+TOCA.FrameOptions:SetBackdropColor(0, 0, 0, 1)
 TOCA.FrameOptions:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.FrameOptions:Hide()
 
@@ -436,7 +436,6 @@ TOCA.Checkbox.MainMenu.text:SetPoint("TOPLEFT", 25, -6)
 TOCA.Checkbox.MainMenu.text:SetText(TOCA.locale.UI.FRAME[2][1])
 TOCA.Checkbox.MainMenu:SetScript("OnClick", function(self)
   if (self:GetChecked()) then
-    --TOCA.FrameMain.Background:SetBackdrop(TOCA.Backdrop.Main)
     TOCADB[TOCA.player.combine]["CONFIG"]["MAINMENU"] = "ON"
     TOCA.Button.CloseMain:Show()
     TOCA.Button.Options:Show()

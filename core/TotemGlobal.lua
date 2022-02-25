@@ -48,16 +48,9 @@ TCCMD = "/"..TOCA.Global.command
 
 TOCA.Backdrop={}
 TOCA.Backdrop.General = {
-  bgFile  = "Interface/ToolTips/CHATBUBBLE-BACKGROUND",
+  bgFile  = "Interface/Tooltips/UI-Tooltip-Background",
   edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
   edgeSize= 12,
-  insets  = {left=2, right=2, top=2, bottom=2},
-}
-
-TOCA.Backdrop.Main = {
-  bgFile  = "Interface/ToolTips/CHATBUBBLE-BACKGROUND",
-  edgeFile= "Interface/TUTORIALFRAME/TUTORIALFRAMEBORDER",
-  edgeSize= 20,
   insets  = {left=2, right=2, top=2, bottom=2},
 }
 
@@ -68,25 +61,11 @@ TOCA.Backdrop.Button = {
   insets  = {left=2, right=2, top=2, bottom=2},
 }
 
-TOCA.Backdrop.RGB = {
-  bgFile  = "Interface/Tooltips/UI-Tooltip-Background",
-  edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
-  edgeSize= 12,
-  insets  = {left=2, right=2, top=2, bottom=2},
-}
-
-TOCA.Backdrop.Borderless = {
-  bgFile  = "Interface/ToolTips/CHATBUBBLE-BACKGROUND",
-  edgeFile= "",
-  edgeSize= 20,
-  insets  = {left=2, right=2, top=2, bottom=2},
-}
-
-TOCA.Backdrop.BorderOnly= {
-  bgFile  = "",
-  edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
-  edgeSize= 12,
-  insets  = {left=2, right=2, top=2, bottom=2},
+TOCA.Colors = {
+	FIRE = {1, 0.3, 0, 1},
+	EARTH= {0, 1, 0.3, 1},
+	WATER= {0, 0.3, 1, 1},
+	AIR  = {0.4, 0.4, 0.7, 1}
 }
 
 --all icons must be in order to sync with totemspells[locales] by category
@@ -475,9 +454,10 @@ function TOCA.FrameStyleSet(style)
     for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:Show()
       TOCA.Button.DropdownMain:Show()
-      TOCA.FrameMainGridVertical:Hide()
-      TOCA.FrameMainGridHorizontal:Hide()
+      TOCA.FrameMainGridVertical[totemCat]:Hide()
     end
+		TOCA.FrameMainGridHorizontal:Hide()
+
   elseif (style == TOCA.Dropdown.FrameStyles[2]) then --vert
     TOCA.FrameStyleDefault()
 		TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
@@ -491,9 +471,9 @@ function TOCA.FrameStyleSet(style)
     for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:Hide()
       TOCA.Button.DropdownMain:Hide()
-      TOCA.FrameMainGridVertical:Show()
-      TOCA.FrameMainGridHorizontal:Hide()
+      TOCA.FrameMainGridVertical[totemCat]:Show()
     end
+		TOCA.FrameMainGridHorizontal:Hide()
   elseif (style == TOCA.Dropdown.FrameStyles[3]) then --horz
     TOCA.FrameStyleDefault()
 		TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA.Global.width+171, -22)
@@ -506,12 +486,12 @@ function TOCA.FrameStyleSet(style)
     TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 84)
     TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 103)
     TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 103)
+		TOCA.Button.DropdownMain:Hide()
     for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:Hide()
-      TOCA.Button.DropdownMain:Hide()
-      TOCA.FrameMainGridVertical:Hide()
-      TOCA.FrameMainGridHorizontal:Show()
+      TOCA.FrameMainGridVertical[totemCat]:Hide()
     end
+		TOCA.FrameMainGridHorizontal:Show()
   end
   TOCA.Notification("Frame Style: " .. style, true)
 end
@@ -1520,7 +1500,7 @@ function TOCA.GetTotemOrder()
   return buildOrder
 end
 
-local totemNum = 0
+--TOCA.TotemNum={}
 local totemButtonPos_X={}
 local totemButtonPos_Y={}
 function TOCA.SetTotemOrder()
@@ -1531,7 +1511,7 @@ function TOCA.SetTotemOrder()
     TOCA.FrameSetsSlot[v]:SetPoint("TOPLEFT", -60+TOCA.SlotSetsPosX[k], -70) --options frame
 
     for totemCat,notUsed in pairsByKeys(TOCA.totems) do
-      totemNum = totemNum +1
+      --totemNum = totemNum +1
       totemButtonPos_Y[totemCat] = 0
       totemButtonPos_X[totemCat] = 0
       for i,totemSpell in pairs(TOCA.totems[totemCat]) do
@@ -1539,7 +1519,8 @@ function TOCA.SetTotemOrder()
         totemButtonPos_X[totemCat] = totemButtonPos_X[totemCat]+TOCA.Slot_w
         local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:GetPoint()
         if (TOCA.SlotGrid.VerticalTotemButton[v][i]) then
-          TOCA.SlotGrid.VerticalTotemButton[v][i]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[k], yOfs)
+          --TOCA.SlotGrid.VerticalTotemButton[v][i]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[k], yOfs)
+					TOCA.SlotGrid.VerticalTotemButton[v][i]:SetPoint("CENTER", 0, yOfs)
           if (TOCA.totems.AIR[1][1] == totemSpell[1]) then
             local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.SlotGrid.VerticalTotemButton.AIR[1]:GetPoint()
             TOCA.SlotGrid.VerticalTimer[4]:SetPoint("TOPLEFT", xOfs, -26)
