@@ -406,19 +406,6 @@ function TOCA.EnableTotems(enable)
   end
 end
 
-TOCA.KnownTotems={}
-for totemCat,v in pairsByKeys(TOCA.totems) do
-	TOCA.KnownTotems[totemCat] = 0
-	for i,totemSpell in pairs(TOCA.totems[totemCat]) do
-    --TOCA.KnownTotems[totemCat] = i
-		local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(totemSpell[1])
-		if (name) then
-			TOCA.KnownTotems[totemCat] = i
-		end
-  end
-  print(totemCat .. " - " .. TOCA.KnownTotems[totemCat])
-end
-
 function TOCA.EnableKnownTotems()
   if (TOCA.TotemsEnabled) then
 		local TotemicCall = GetSpellInfo(TOCA.locale.SPELLS.TotemicCall)
