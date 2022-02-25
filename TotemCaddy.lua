@@ -171,7 +171,6 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
 		TOCA.HandleShieldAlert()
   end
 
---[==[
 	if (event == "GROUP_ROSTER_UPDATE") then
 		if (IsInRaid()) then
 			for i=1, MAX_RAID_MEMBERS do
@@ -185,7 +184,6 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
 			end
 		end
 	end
-	]==]--
 
 end)
 
@@ -781,12 +779,12 @@ TOCA.FrameMain.ShieldFrame.timer:SetText("")
 TOCA.FrameMain.ShieldFrame.timer:SetTextColor(1, 0.8, 0, 1)
 TOCA.FrameMain.ShieldFrame.timer:SetShadowOffset(1, 1)
 TOCA.FrameMain.ShieldFrame.count = TOCA.FrameMain.ShieldFrame:CreateFontString(nil, "ARTWORK")
-TOCA.FrameMain.ShieldFrame.count:SetFont(TOCA.Global.font, 10)
-TOCA.FrameMain.ShieldFrame.count:SetPoint("CENTER", TOCA.FrameMain.ShieldFrame, "CENTER", 17, 0)
+TOCA.FrameMain.ShieldFrame.count:SetFont(TOCA.Global.font, 11, "OUTLINE")
+TOCA.FrameMain.ShieldFrame.count:SetPoint("CENTER", TOCA.FrameMain.ShieldFrame, "CENTER", 7, -5)
 TOCA.FrameMain.ShieldFrame.count:SetText("")
 --TOCA.FrameMain.ShieldFrame.count:SetTextColor(1, 1, 0, 1)
-TOCA.FrameMain.ShieldFrame.count:SetShadowColor(0, 0, 0, 1)
-TOCA.FrameMain.ShieldFrame.count:SetShadowOffset(1, 1)
+--TOCA.FrameMain.ShieldFrame.count:SetShadowColor(0, 0, 0, 1)
+--TOCA.FrameMain.ShieldFrame.count:SetShadowOffset(1, 1)
 --[==[
 TOCA.FrameMain.ShieldFrame:SetScript("OnEnter", function(self)
   TOCA.TooltipDisplay(self, TOCA.locale.SPELLS.Reincarnation)
