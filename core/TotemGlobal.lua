@@ -453,11 +453,10 @@ function TOCA.FrameStyleSet(style)
     TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 61)
     for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:Show()
-      TOCA.Button.DropdownMain:Show()
-      TOCA.FrameMainGridVertical[totemCat]:Hide()
     end
+		TOCA.Button.DropdownMain:Show()
+		TOCA.FrameMainGridVertical:Hide()
 		TOCA.FrameMainGridHorizontal:Hide()
-
   elseif (style == TOCA.Dropdown.FrameStyles[2]) then --vert
     TOCA.FrameStyleDefault()
 		TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
@@ -470,9 +469,9 @@ function TOCA.FrameStyleSet(style)
     TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 181)
     for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:Hide()
-      TOCA.Button.DropdownMain:Hide()
-      TOCA.FrameMainGridVertical[totemCat]:Show()
     end
+		TOCA.Button.DropdownMain:Hide()
+		TOCA.FrameMainGridVertical:Show()
 		TOCA.FrameMainGridHorizontal:Hide()
   elseif (style == TOCA.Dropdown.FrameStyles[3]) then --horz
     TOCA.FrameStyleDefault()
@@ -489,8 +488,8 @@ function TOCA.FrameStyleSet(style)
 		TOCA.Button.DropdownMain:Hide()
     for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:Hide()
-      TOCA.FrameMainGridVertical[totemCat]:Hide()
     end
+		TOCA.FrameMainGridVertical:Hide()
 		TOCA.FrameMainGridHorizontal:Show()
   end
   TOCA.Notification("Frame Style: " .. style, true)

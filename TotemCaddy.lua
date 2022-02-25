@@ -33,7 +33,6 @@ TOCA.FrameMain.Background = CreateFrame("Frame", TOCA.FrameMain.Background, TOCA
 TOCA.FrameMain.Background:SetWidth(TOCA.Global.width)
 TOCA.FrameMain.Background:SetHeight(TOCA.Global.height)
 TOCA.FrameMain.Background:SetPoint("CENTER", 0, 0)
---TOCA.FrameMain.Background:SetBackdrop(TOCA.Backdrop.Main)
 TOCA.FrameMain.Background:SetBackdrop(TOCA.Backdrop.General)
 TOCA.FrameMain.Background:SetBackdropColor(0, 0, 0, 1)
 TOCA.FrameMain.Background:SetBackdropBorderColor(1, 1, 1, 0.6)
@@ -474,16 +473,10 @@ end
 --local totemNum = 0
 TOCA.SlotGrid.VerticalTotemButtonAction={}
 TOCA.SlotGrid.HorizontalTotemButtonAction={}
-TOCA.FrameMainGridVertical={}
-for totemCat,v in pairsByKeys(TOCA.totems) do
-	TOCA.FrameMainGridVertical[totemCat] = CreateFrame("Frame", nil, TOCA.FrameMain, "BackdropTemplate", -2)
-	TOCA.FrameMainGridVertical[totemCat]:SetSize(40, 250)
-	TOCA.FrameMainGridVertical[totemCat]:SetPoint("TOPLEFT", 0, 0)
-	TOCA.FrameMainGridVertical[totemCat]:SetBackdrop(TOCA.Backdrop.General)
-	--TOCA.FrameMainGridVertical[totemCat]:SetBackdropColor(0,0,0,1)
-	TOCA.FrameMainGridVertical[totemCat]:Hide()
-end
-
+TOCA.FrameMainGridVertical = CreateFrame("Frame", nil, TOCA.FrameMain)
+TOCA.FrameMainGridVertical:SetSize(40, 250)
+TOCA.FrameMainGridVertical:SetPoint("TOPLEFT", 0, 0)
+TOCA.FrameMainGridVertical:Hide()
 TOCA.FrameMainGridHorizontal = CreateFrame("Frame", nil, TOCA.FrameMain)
 TOCA.FrameMainGridHorizontal:SetSize(1,1)
 TOCA.FrameMainGridHorizontal:SetPoint("TOPLEFT", 0, 0)
@@ -499,10 +492,9 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   for i,totemSpell in pairs(TOCA.totems[totemCat]) do
     totemButtonPos_X[totemCat] = totemButtonPos_X[totemCat]+TOCA.Slot_w
     totemButtonPos_Y[totemCat] = totemButtonPos_Y[totemCat]+TOCA.Slot_h
-    TOCA.SlotGrid.VerticalTotemButton[totemCat][i]= CreateFrame("Button", nil, TOCA.FrameMainGridVertical[totemCat], "BackdropTemplate")
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i]= CreateFrame("Button", nil, TOCA.FrameMainGridVertical, "BackdropTemplate")
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
-		TOCA.FrameMainGridVertical[totemCat]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[TOCA.TotemNum["ROW"]], 0)
-    --TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[TOCA.TotemNum["ROW"]], -40-totemButtonPos_Y[totemCat]+TOCA.Slot_h)
+    TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[TOCA.TotemNum["ROW"]], -40-totemButtonPos_Y[totemCat]+TOCA.Slot_h)
 		TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetPoint("CENTER", 0, -40-totemButtonPos_Y[totemCat]+TOCA.Slot_h)
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetFrameLevel(TOCA.Framelevel.Buttons)
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetBackdrop(TOCA.SetIcon(totemSpell[2]))
