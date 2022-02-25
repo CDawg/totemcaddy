@@ -501,9 +501,9 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     totemButtonPos_Y[totemCat] = totemButtonPos_Y[totemCat]+TOCA.Slot_h
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i]= CreateFrame("Button", nil, TOCA.FrameMainGridVertical[totemCat], "BackdropTemplate")
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
-		TOCA.FrameMainGridVertical[totemCat]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[TOCA.TotemNum["ROW"]], 0)
+		TOCA.FrameMainGridVertical[totemCat]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[TOCA.TotemNum["ROW"]], 0) --position the back frame here
     --TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[TOCA.TotemNum["ROW"]], -40-totemButtonPos_Y[totemCat]+TOCA.Slot_h)
-		TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetPoint("CENTER", 0, -40-totemButtonPos_Y[totemCat]+TOCA.Slot_h)
+		TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetPoint("CENTER", 0, 80-totemButtonPos_Y[totemCat]+TOCA.Slot_h)
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetFrameLevel(TOCA.Framelevel.Buttons)
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetBackdrop(TOCA.SetIcon(totemSpell[2]))
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
