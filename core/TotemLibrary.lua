@@ -79,7 +79,7 @@ TOCA.TotemAuras = {
 	},
 	FIRE = {
 		{8182, 10476, 10477, 25559}, --frost resist
-		{30706}, --totem of wrath
+		{30706, 30708}, --totem of wrath
 	},
 	WATER = {
 	  {8185, 10534, 10535, 25562}, --fire resist

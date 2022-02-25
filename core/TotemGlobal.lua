@@ -18,7 +18,7 @@ TOCA.DEBUG = false
 TOCA.Global = {
   title  = "|cff0070DD".. TOCA.locale.TITLE .."|r",
   author = "Porthias of Myzrael",
-  version= 2.50,
+  version= 2.51,
   command= "toca",
   width  = 150,
   height = 85,
@@ -31,6 +31,8 @@ TOCA.Global = {
 }
 --local _LName, _LTitle = GetAddOnInfo(TOCA.Global.prefix)
 --TOCA.Global.version = tonumber(string.sub(_LTitle, 26, 29))
+
+MAX_RAID_SLOTS = 40
 
 TOCA.Game={}
 TOCA.Game.version = tonumber(string.sub(__Gversion, 1, 1))
@@ -167,6 +169,9 @@ TOCA.NotificationAlertRadius = {}
 for i=1, 4 do
 	TOCA.NotificationAlertRadius[i] = 0
 end
+
+TOCA.Raid={}
+TOCA.Raid.Member={}
 
 function TOCA.IdentifySpell(spellID) --used for different languages
   local spell = GetSpellInfo(spellID)

@@ -71,6 +71,7 @@ TOCA.Main:RegisterEvent("PLAYER_ENTERING_WORLD")
 TOCA.Main:RegisterEvent("NEW_WMO_CHUNK")
 TOCA.Main:RegisterEvent("ZONE_CHANGED")
 TOCA.Main:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+TOCA.Main:RegisterEvent("GROUP_ROSTER_UPDATE")
 TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted, _spellID)
   if ((event == "ADDON_LOADED") and (prefix == TOCA.Global.prefix)) then
     TOCA.Notification("v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " (" .. GetLocale() .. ") " .. TOCA.locale.INIT[6] .. ". Type /" .. TOCA.Global.command .. " for commands.")
@@ -169,6 +170,23 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
     TOCA.VersionControl(prefix, netpacket)
 		TOCA.HandleShieldAlert()
   end
+
+--[==[
+	if (event == "GROUP_ROSTER_UPDATE") then
+		if (IsInRaid()) then
+			for i=1, MAX_RAID_MEMBERS do
+				local name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML, combatRole = GetRaidRosterInfo(i)
+				if (name) then
+					--print(name)
+				end
+				if (role == "MAINTANK") then
+					--print(name)
+				end
+			end
+		end
+	end
+	]==]--
+
 end)
 
 TOCA.Button.TotemicCall_w=40
