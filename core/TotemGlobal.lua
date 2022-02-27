@@ -803,7 +803,7 @@ function TOCA.Init()
     TOCA.Button.TotemicCall.ECR:Hide()
   end
 
-  TOCA.AssignmentESRaidSend()
+  --TOCA.AssignmentESRaidSend()
 
   TOCA.Notification("TOCA.Init()", true)
 end
