@@ -97,6 +97,7 @@ TOCA.locale = {
 		{"show",     "Display Totem Caddy (regardless of class)"},
 		{"hide",     "Close Totem Caddy"},
 		{"profile",  "Display the current saved profile"},
+		--{"assign",   "Open the Earth Shield Raid Assignment panel"},
 		{"help",     "Display the help introduction"},
 		{"debug on", "Enable Debug Mode (Very Spammy)"},
 		{"debug off","Disable Debug Mode (/reload)"},

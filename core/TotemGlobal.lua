@@ -41,10 +41,15 @@ if (TOCA.Game.version == 1) then
 end
 
 TOCA.Net = {
-  prefix = "0xEFVe",
+	Success = C_ChatInfo.RegisterAddonMessagePrefix(TOCA.Global.prefix),
+  version   = "0xEFVe", --version
+	assign_es = "0xEFES", --earthshield assign
 }
 
 TCCMD = "/"..TOCA.Global.command
+
+TOCA.Raid={}
+TOCA.Raid.Name={}
 
 TOCA.Backdrop={}
 TOCA.Backdrop.General = {
@@ -150,7 +155,9 @@ for i=1, 4 do
 end
 
 TOCA.Raid={}
-TOCA.Raid.Member={}
+TOCA.Raid.Name={}
+TOCA.Raid.Class={}
+TOCA.Raid.Role={}
 
 function TOCA.IdentifySpell(spellID) --used for different languages
   local spell = GetSpellInfo(spellID)
@@ -187,7 +194,7 @@ TOCA.version_alerted = 0
 function TOCA.VersionControl(netprefix, netpacket)
 	if (TOCA.version_alerted == 0) then
 	  if (netprefix == TOCA.Global.prefix) then
-	    local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.prefix)
+	    local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.version)
 	    if (getPacket) then
 	      local latest_version = tonumber(getPacket)
 	      local my_version = tonumber(TOCA.Global.version)
@@ -371,6 +378,7 @@ function TOCA.UpdateTotemSet()
 	end
 end
 
+TOCA.KnownTotems={}
 TOCA.SlotSelectTotemDisabled={}
 TOCA.FrameSetsSlotDisabled={}
 TOCA.SlotGrid={}
@@ -381,6 +389,14 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.FrameSetsSlotDisabled[totemCat]={}
   TOCA.SlotGrid.VerticalTotemButton[totemCat]={}
   TOCA.SlotGrid.HorizontalTotemButton[totemCat]={}
+	TOCA.KnownTotems[totemCat] = 0
+	for i,totemSpell in pairs(TOCA.totems[totemCat]) do
+		local name = GetSpellInfo(totemSpell[1])
+		if (name) then
+			TOCA.KnownTotems[totemCat] = i
+		end
+  end
+	--print(TOCA.KnownTotems[totemCat])
 end
 
 function TOCA.EnableTotems(enable)
@@ -434,6 +450,13 @@ function TOCA.EnableKnownTotems()
       TOCA.Notification("TOCA.EnableKnownTotems()", true)
     end
   end
+end
+
+function TOCA.HasEarthShield()
+	local usable, nomana = IsUsableSpell(TOCA.spell.EARTH_SHIELD)
+	if (usable) then
+		return usable
+	end
 end
 
 function TOCA.FrameStyleDefault()
@@ -780,6 +803,8 @@ function TOCA.Init()
     TOCA.Button.TotemicCall.ECR:Hide()
   end
 
+  TOCA.AssignmentESRaidSend()
+
   TOCA.Notification("TOCA.Init()", true)
 end
 
@@ -831,6 +856,24 @@ function TOCA.SetDDMenu(DDFrame, value)
   TOCADB[TOCA.player.combine]["LASTSAVED"] = value
   TOCA.UpdateTotemSet()
   TOCA.Notification("TOCA.SetDDMenu(...)", true)
+end
+
+function TOCA.AddDDItem(DDFrame, DDArray)
+  DDFrame.initialize = function(self, level)
+    local info = UIDropDownMenu_CreateInfo()
+    local i = 0
+    for k,v in pairs(DDArray) do
+      info.notCheckable = 1
+      info.padding = 2
+      info.text = v
+      info.value= v
+      info.fontObject = GameFontWhite
+      info.justifyH = "LEFT"
+      info.disabled = false
+      info.func = self.onClick
+      UIDropDownMenu_AddButton(info, level)
+    end
+  end
 end
 
 function TOCA.UpdateDDMenu(DDFrame, value)
@@ -942,13 +985,6 @@ TOCA.TotemTimer={}
 for i=1, 4 do
   TOCA.TotemTimer[i] = 0
   TOCA.TotemDuration[i] = 0
-end
-
-function TOCA.HasEarthShield()
-	--974
-	--32593
-	local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(32594)
-	print(name)
 end
 
 function TOCA.ExpireNotificationsTotems(totemname, totemtimer)
@@ -1465,21 +1501,19 @@ function TOCA.InventoryCountItem(itemID)
   return i
 end
 
-function TOCA.SendPacket(packet, filtered, rec)
+function TOCA.SendPacket(packet, filtered, channel)
   filteredPacket = nil
-  local msg_to = "GUILD"
-  if (rec) then
-    msg_to = rec
-  end
   if (filtered) then
     filteredPacket = packet:gsub("%s+", "") --filter spaces
   else
     filteredPacket = packet
   end
-  if (IsInGuild()) then
-    C_ChatInfo.SendAddonMessage(TOCA.Global.prefix, filteredPacket, msg_to)
-    TOCA.Notification("sending packet " .. filteredPacket, true)
-  end
+	TOCA.Notification("sending packet " .. filteredPacket, true)
+	if (channel == "GUILD") then
+		if (not IsInGuild()) then return end
+	end
+  C_ChatInfo.SendAddonMessage(TOCA.Global.prefix, filteredPacket, channel)
+  TOCA.Notification("sending packet " .. filteredPacket, true)
 end
 
 function TOCA.ParsePacket(netpacket, code)
@@ -1607,14 +1641,16 @@ function SlashCmdList.TOCA(cmd)
 	elseif (cmd == TOCA.locale.COMMANDS[4][1]) then
 		TOCA.Notification("|r : " .. TOCA.player.combine)
 	elseif (cmd == TOCA.locale.COMMANDS[5][1]) then
-		TOCA.FrameHelp:Show()
+		TOCA.FrameAssignments:Show()
 	elseif (cmd == TOCA.locale.COMMANDS[6][1]) then
+		TOCA.FrameHelp:Show()
+	elseif (cmd == TOCA.locale.COMMANDS[7][1]) then
 		TOCA.DEBUG = true
 		TOCA.Notification("DEBUG ON")
-	elseif (cmd == TOCA.locale.COMMANDS[7][1]) then
+	elseif (cmd == TOCA.locale.COMMANDS[8][1]) then
 		TOCA.DEBUG = false
 		TOCA.Notification("DEBUG OFF")
-	elseif (cmd == TOCA.locale.COMMANDS[8][1]) then
+	elseif (cmd == TOCA.locale.COMMANDS[9][1]) then
 		print(string.format("version = %s, build = %s, date = '%s', tocversion = %s.", __Gversion, __Gbuild, __Gdate, __Gtoc))
 	end
 end

@@ -41,7 +41,6 @@ TOCA.FrameMain.Background:SetFrameLevel(TOCA.Framelevel.Background)
 TOCA.KeyBindsSetOnLoad = 1
 
 TOCA.Main = CreateFrame("Frame")
-local success = C_ChatInfo.RegisterAddonMessagePrefix(TOCA.Global.prefix)
 TOCA.Main:RegisterEvent("ADDON_LOADED")
 TOCA.Main:RegisterEvent("PLAYER_LOGIN")
 TOCA.Main:RegisterEvent("PLAYER_TOTEM_UPDATE")
@@ -52,6 +51,7 @@ TOCA.Main:RegisterEvent("PLAYER_STARTED_MOVING")
 TOCA.Main:RegisterEvent("PLAYER_STOPPED_MOVING")
 TOCA.Main:RegisterEvent("PLAYER_REGEN_ENABLED")
 TOCA.Main:RegisterEvent("PLAYER_REGEN_DISABLED")
+TOCA.Main:RegisterEvent("PLAYER_ROLES_ASSIGNED")
 TOCA.Main:RegisterEvent("PLAYER_DEAD")
 TOCA.Main:RegisterEvent("UNIT_SPELLCAST_START")
 TOCA.Main:RegisterEvent("UNIT_SPELLCAST_STOP")
@@ -137,7 +137,7 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
   end
 
   if (event == "PLAYER_LOGIN") then
-    TOCA.SendPacket(TOCA.Net.prefix .. TOCA.Global.version, true)
+    TOCA.SendPacket(TOCA.Net.version .. TOCA.Global.version, "GUILD")
     if (TOCA.KeyBindsSetOnLoad == 1) then
       TOCA.SetKeyBindOnLoad()
       TOCA.KeyBindsSetOnLoad = 2
@@ -163,27 +163,15 @@ TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted,
 
   TOCA.Combat(event)
 
-  if (event == "CHAT_MSG_ADDON") then
-    TOCA.GetShieldTimer()
-		TOCA.GetReincTimer()
-    TOCA.VersionControl(prefix, netpacket)
-		TOCA.HandleShieldAlert()
-  end
-
-	if (event == "GROUP_ROSTER_UPDATE") then
-		if (IsInRaid()) then
-			for i=1, MAX_RAID_MEMBERS do
-				local name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML, combatRole = GetRaidRosterInfo(i)
-				if (name) then
-					--print(name)
-				end
-				if (role == "MAINTANK") then
-					--print(name)
-				end
-			end
-		end
+	if ((event == "GROUP_ROSTER_UPDATE") or (event == "PLAYER_ROLES_ASSIGNED")) then
+		--TOCA.AssignmentESRaidSend() --send my resto data
 	end
 
+	--Load event last
+  if (event == "CHAT_MSG_ADDON") then
+		TOCA.VersionControl(prefix, netpacket) --get version from guild
+		--TOCA.AssignmentESRaidGet()
+  end
 end)
 
 TOCA.Button.TotemicCall_w=40
