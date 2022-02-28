@@ -116,7 +116,6 @@ TOCA.Dropdown.FrameStyle:SetScript("OnLeave", function()
 end)
 TOCA.Dropdown.FrameStyle.onClick = function(self, checked)
   TOCA.Dropdown.FrameStyle.text:SetText(self.value)
-	print(self.value)
 
   if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMORDER"]) then
     --TOCA.BuildTotemOrder()

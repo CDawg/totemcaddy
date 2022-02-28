@@ -747,7 +747,7 @@ function TOCA.Init()
       TOCA.FrameStyleSet(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"])
       TOCA.Dropdown.FrameStyle.text:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"])
     else
-      TOCA.FrameStyleSet(TOCA.locale.UI.FRAMESTYLES)
+      TOCA.FrameStyleSet(TOCA.locale.UI.FRAMESTYLES[1]) --default
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMELEVEL"]) then
       TOCA.FrameMain:SetFrameStrata(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMELEVEL"])
@@ -1165,7 +1165,7 @@ function TOCA.TimerFrame(i)
     return
   end
 
-  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.Dropdown.FrameStyles[1]) then --classic
+  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.locale.UI.FRAMESTYLES[1]) then --classic
     for i=1, 4 do
       TOCA.Slot.Timer[i]:Show()
       TOCA.SlotGrid.VerticalTimer[i]:Hide()
@@ -1173,7 +1173,7 @@ function TOCA.TimerFrame(i)
     end
   end
 
-  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.Dropdown.FrameStyles[2]) then --vert
+  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.locale.UI.FRAMESTYLES[2]) then --vert
     for i=1, 4 do
       TOCA.Slot.Timer[i]:Hide()
       TOCA.SlotGrid.VerticalTimer[i]:Show()
@@ -1181,7 +1181,7 @@ function TOCA.TimerFrame(i)
     end
   end
 
-  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.Dropdown.FrameStyles[3]) then --horz
+  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.locale.UI.FRAMESTYLES[3]) then --horz
     for i=1, 4 do
       TOCA.Slot.Timer[i]:Hide()
       TOCA.SlotGrid.VerticalTimer[i]:Hide()
