@@ -29,6 +29,7 @@ TOCA.locale = {
 	},
 
   UI = {
+		FRAMESTYLES = {"Classique", "Grille verticale", "Grille horizontale"},
 		BUTTON = {"Fermer", "Sauvegarder", "Supprimer", "Oui", "Non"},
 
 		TABS = {

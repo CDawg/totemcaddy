@@ -94,7 +94,12 @@ end
 TOCA.Button.TabOptionsBack[1]:SetSize(TOCA.TabWidth.Options-20, 30) --first tab
 TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]]:Show() --show first tab
 
-TOCA.Dropdown.FrameStyles={"Classic", "Grid Vertical", "Grid Horizontal"}
+TOCA.FrameStyleIndex={}
+--TOCA.Dropdown.FrameStyles={"Classic", "Grid Vertical", "Grid Horizontal"}
+for k,v in pairs(TOCA.locale.UI.FRAMESTYLES) do
+  TOCA.FrameStyleIndex[v]=k
+end
+
 TOCA.Dropdown.FrameStyle={}
 TOCA.Dropdown.FrameStyle = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]], "UIDropDownMenuTemplate")
 TOCA.Dropdown.FrameStyle:SetPoint("TOPLEFT", 10, -35)
@@ -102,7 +107,7 @@ TOCA.Dropdown.FrameStyle.displayMode = "MENU"
 TOCA.Dropdown.FrameStyle.text = TOCA.Dropdown.FrameStyle:CreateFontString(nil, "ARTWORK")
 TOCA.Dropdown.FrameStyle.text:SetFont(TOCA.Global.font, 11)
 TOCA.Dropdown.FrameStyle.text:SetPoint("TOPLEFT", TOCA.Dropdown.FrameStyle, "TOPLEFT", 25, -8)
-TOCA.Dropdown.FrameStyle.text:SetText(TOCA.Dropdown.FrameStyles[1])
+TOCA.Dropdown.FrameStyle.text:SetText(TOCA.locale.UI.FRAMESTYLES[1])
 TOCA.Dropdown.FrameStyle:SetScript("OnEnter", function(self)
   TOCA.TooltipDisplay(self, TOCA.locale.UI.OPTIONS[1][1], TOCA.locale.UI.OPTIONS[1][2])
 end)
@@ -111,6 +116,7 @@ TOCA.Dropdown.FrameStyle:SetScript("OnLeave", function()
 end)
 TOCA.Dropdown.FrameStyle.onClick = function(self, checked)
   TOCA.Dropdown.FrameStyle.text:SetText(self.value)
+	print(self.value)
 
   if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMORDER"]) then
     --TOCA.BuildTotemOrder()
@@ -124,7 +130,7 @@ end
 TOCA.Dropdown.FrameStyle.initialize = function(self, level)
   local info = UIDropDownMenu_CreateInfo()
   local i = 0
-  for k,v in pairs(TOCA.Dropdown.FrameStyles) do
+  for k,v in pairs(TOCA.locale.UI.FRAMESTYLES) do
     info.notCheckable = 1
     info.padding = 2
     info.text = v

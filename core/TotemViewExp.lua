@@ -14,8 +14,8 @@ the copyright holders.
 ]==]--
 
 TOCA.FrameExp = CreateFrame("Button", TOCA.FrameExp, UIParent, "BackdropTemplate")
-TOCA.FrameExp:SetWidth(100)
-TOCA.FrameExp:SetHeight(120)
+TOCA.FrameExp:SetWidth(60)
+TOCA.FrameExp:SetHeight(80)
 TOCA.FrameExp:SetPoint("CENTER", 0, -140)
 TOCA.FrameExp:SetMovable(true)
 TOCA.FrameExp:EnableMouse(true)

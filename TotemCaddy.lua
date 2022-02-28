@@ -692,23 +692,6 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   end
 end
 
-local function ScrollToCategory(panelName)
-  local idx
-  for i,cat in ipairs(INTERFACEOPTIONS_ADDONCATEGORIES) do
-    if not cat.hidden then
-      idx=(idx or 0) + 1
-      if cat.name == panelName then
-        break
-      end
-    end
-  end
-  local numbuttons = #(InterfaceOptionsFrameAddOns.buttons)
-  if idx and numbuttons and idx > numbuttons then
-    local btnHeight = InterfaceOptionsFrameAddOns.buttons[1]:GetHeight()
-    InterfaceOptionsFrameAddOnsListScrollBar:SetValue((idx-numbuttons)*btnHeight)
-  end
-end
-
 TOCA.Button.Options= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTemplate")
 TOCA.Button.Options:SetSize(16, 16)
 TOCA.Button.Options:SetPoint("TOPRIGHT", -14, 0)

@@ -459,6 +459,11 @@ function TOCA.HasEarthShield()
 	end
 end
 
+TOCA.FrameStyleIndex={} --build an index for localization
+for k,v in pairs(TOCA.locale.UI.FRAMESTYLES) do
+  TOCA.FrameStyleIndex[v]=k
+end
+
 function TOCA.FrameStyleDefault()
   TOCA.FrameMain:SetHeight(TOCA.Global.height)
   TOCA.FrameMain:SetWidth(TOCA.Global.width)
@@ -467,7 +472,7 @@ function TOCA.FrameStyleDefault()
   TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 40)
 end
 function TOCA.FrameStyleSet(style)
-  if (style == TOCA.Dropdown.FrameStyles[1]) then --classic
+  if (style == TOCA.locale.UI.FRAMESTYLES[1]) then --classic
     TOCA.FrameStyleDefault()
 		TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
     TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -44)
@@ -480,7 +485,7 @@ function TOCA.FrameStyleSet(style)
 		TOCA.Button.DropdownMain:Show()
 		TOCA.FrameMainGridVertical:Hide()
 		TOCA.FrameMainGridHorizontal:Hide()
-  elseif (style == TOCA.Dropdown.FrameStyles[2]) then --vert
+  elseif (style == TOCA.locale.UI.FRAMESTYLES[2]) then --vert
     TOCA.FrameStyleDefault()
 		TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
     TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -44)
@@ -496,7 +501,7 @@ function TOCA.FrameStyleSet(style)
 		TOCA.Button.DropdownMain:Hide()
 		TOCA.FrameMainGridVertical:Show()
 		TOCA.FrameMainGridHorizontal:Hide()
-  elseif (style == TOCA.Dropdown.FrameStyles[3]) then --horz
+  elseif (style == TOCA.locale.UI.FRAMESTYLES[3]) then --horz
     TOCA.FrameStyleDefault()
 		TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA.Global.width+171, -22)
     TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width+171, -52)
@@ -742,7 +747,7 @@ function TOCA.Init()
       TOCA.FrameStyleSet(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"])
       TOCA.Dropdown.FrameStyle.text:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"])
     else
-      TOCA.FrameStyleSet(TOCA.Dropdown.FrameStyles[1])
+      TOCA.FrameStyleSet(TOCA.locale.UI.FRAMESTYLES)
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMELEVEL"]) then
       TOCA.FrameMain:SetFrameStrata(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMELEVEL"])
@@ -1018,7 +1023,7 @@ function TOCA.ExpireNotificationsShield()
 					TOCA.HasShield = 1
 			  else
 					if ((timeDuration < 1.0) or (count <= 1)) then
-						if (TOCA.NotificationAlertShield ~= 1) then
+						if (TOCA.NotificationAlertShield <= 0) then
 							TOCA.NotificationAlertShield = 1
 							if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGESHIELD"] ~= "OFF") then
 								TOCA.Notification("|cfff6d526" .. name .. "|r ".. TOCA.locale.INIT[4])

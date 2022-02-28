@@ -29,6 +29,7 @@ TOCA.locale = {
 	},
 
   UI = {
+		FRAMESTYLES = {"经典的", "网格垂直", "水平网格"},
 		BUTTON = {"关闭", "保存", "删除", "是的", "不"},
 
 		TABS = {

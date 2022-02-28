@@ -29,6 +29,7 @@ TOCA.locale = {
 	},
 
   UI = {
+		FRAMESTYLES = {"Klassisch", "Raster vertikal", "Gitter horizontal"},
 		BUTTON = {"Nah dran", "Speichern", "Löschen", "ja", "Nein"},
 
 		TABS = {

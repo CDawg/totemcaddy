@@ -29,6 +29,7 @@ TOCA.locale = {
 	},
 
 	UI = {
+		FRAMESTYLES = {"Classico", "Griglia verticale", "Griglia Orizzontale"},
 		BUTTON = {"Vicino", "Salva", "Eliminare", "sì", "No"},
 
 		TABS = {

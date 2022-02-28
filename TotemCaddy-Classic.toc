@@ -23,7 +23,8 @@ core/TotemHelp.lua
 core/TotemOptions.lua
 core/TotemSets.lua
 core/TotemNotifications.lua
+core/TotemSegmented.lua
+core/TotemViewExp.lua
 core/TotemAssignments.lua
 core/TotemMinimap.lua
 core/TotemKeyBindings.lua
-## core/TotemViewExp.lua
