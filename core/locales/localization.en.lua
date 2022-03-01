@@ -29,7 +29,7 @@ TOCA.locale = {
 	},
 
   UI = {
-		FRAMESTYLES = {"Classic", "Grid Vertical", "Grid Horizontal"},
+		FRAMESTYLES = {"Classic", "Segmented", "Grid Vertical", "Grid Horizontal"},
 		BUTTON = {"Close", "Save", "Delete", "Yes", "No"},
 
 		TABS = {

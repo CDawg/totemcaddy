@@ -66,13 +66,6 @@ TOCA.Backdrop.Button = {
   insets  = {left=2, right=2, top=2, bottom=2},
 }
 
-TOCA.Colors = {
-	FIRE = {1, 0.3, 0, 1},
-	EARTH= {0, 1, 0.3, 1},
-	WATER= {0, 0.3, 1, 1},
-	AIR  = {0.4, 0.4, 0.7, 1}
-}
-
 --all icons must be in order to sync with totemspells[locales] by category
 TOCA.icons = {
 	 FIRE = {
@@ -384,19 +377,16 @@ TOCA.FrameSetsSlotDisabled={}
 TOCA.SlotGrid={}
 TOCA.SlotGrid.VerticalTotemButton={}
 TOCA.SlotGrid.HorizontalTotemButton={}
+TOCA.FrameSeg={}
+TOCA.FrameSeg.Button={}
+
 for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.SlotSelectTotemDisabled[totemCat]={}
   TOCA.FrameSetsSlotDisabled[totemCat]={}
   TOCA.SlotGrid.VerticalTotemButton[totemCat]={}
   TOCA.SlotGrid.HorizontalTotemButton[totemCat]={}
-	TOCA.KnownTotems[totemCat] = 0
-	for i,totemSpell in pairs(TOCA.totems[totemCat]) do
-		local name = GetSpellInfo(totemSpell[1])
-		if (name) then
-			TOCA.KnownTotems[totemCat] = i
-		end
-  end
-	--print(TOCA.KnownTotems[totemCat])
+	TOCA.FrameSeg.Button[totemCat]={}
+	TOCA.KnownTotems[totemCat] = 40 --min
 end
 
 function TOCA.EnableTotems(enable)
@@ -407,6 +397,7 @@ function TOCA.EnableTotems(enable)
       for i,totemSpell in pairs(TOCA.totems[totemCat]) do
         TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:Hide()
         TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:Hide()
+				--TOCA.FrameSeg.Button[totemCat][i]:Hide()
       end
     end
     TOCA.Notification("TOCA.EnableTotems()", true)
@@ -417,9 +408,21 @@ function TOCA.EnableTotems(enable)
       for i,totemSpell in pairs(TOCA.totems[totemCat]) do
         TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:Show()
         TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:Show()
+				--TOCA.FrameSeg.Button[totemCat][i]:Show()
       end
     end
   end
+end
+
+function TOCA.SizeSegmentedBars()
+	if (TOCA.player.classID == 7) then --shaman
+		for totemCat,v in pairsByKeys(TOCA.totems) do
+			TOCA.FrameSeg[totemCat]:SetHeight(38.8*TOCA.KnownTotems[totemCat])
+			print(totemCat .. " = " .. 38.8*TOCA.KnownTotems[totemCat])
+			TOCA.FrameSeg[totemCat].Background:SetWidth(TOCA.FrameSeg[totemCat]:GetWidth())
+			TOCA.FrameSeg[totemCat].Background:SetHeight(TOCA.FrameSeg[totemCat]:GetHeight())
+	  end
+	end
 end
 
 function TOCA.EnableKnownTotems()
@@ -438,18 +441,22 @@ function TOCA.EnableKnownTotems()
           TOCA.FrameSetsSlotDisabled[totemCat][i]:Show()
           TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:Hide()
           TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:Hide()
+					TOCA.FrameSeg.Button[totemCat][i]:Hide()
           local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(totemSpell[1])
           if (name) then
             TOCA.SlotSelectTotemDisabled[totemCat][i]:Hide()
             TOCA.FrameSetsSlotDisabled[totemCat][i]:Hide()
             TOCA.SlotGrid.VerticalTotemButton[totemCat][i]:Show()
             TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:Show()
+						TOCA.FrameSeg.Button[totemCat][i]:Show()
+						TOCA.KnownTotems[totemCat] = i
           end
         end
       end
       TOCA.Notification("TOCA.EnableKnownTotems()", true)
     end
   end
+	TOCA.SizeSegmentedBars()
 end
 
 function TOCA.HasEarthShield()
@@ -464,13 +471,14 @@ for k,v in pairs(TOCA.locale.UI.FRAMESTYLES) do
   TOCA.FrameStyleIndex[v]=k
 end
 
-function TOCA.FrameStyleDefault()
+function TOCA.FrameStyleDefault() --used for emergency recovery
   TOCA.FrameMain:SetHeight(TOCA.Global.height)
   TOCA.FrameMain:SetWidth(TOCA.Global.width)
   TOCA.FrameMain.Background:SetWidth(TOCA.Global.width)
   TOCA.FrameMain.Background:SetHeight(TOCA.Global.height)
   TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 40)
 end
+
 function TOCA.FrameStyleSet(style)
   if (style == TOCA.locale.UI.FRAMESTYLES[1]) then --classic
     TOCA.FrameStyleDefault()
@@ -481,11 +489,17 @@ function TOCA.FrameStyleSet(style)
     TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 61)
     for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:Show()
+			TOCA.FrameSeg[totemCat]:Hide()
     end
 		TOCA.Button.DropdownMain:Show()
 		TOCA.FrameMainGridVertical:Hide()
 		TOCA.FrameMainGridHorizontal:Hide()
-  elseif (style == TOCA.locale.UI.FRAMESTYLES[2]) then --vert
+	elseif (style == TOCA.locale.UI.FRAMESTYLES[2]) then --segmented
+	    TOCA.FrameStyleDefault()
+			for totemCat,v in pairsByKeys(TOCA.totems) do
+	      TOCA.FrameSeg[totemCat]:Show()
+			end
+  elseif (style == TOCA.locale.UI.FRAMESTYLES[3]) then --vert
     TOCA.FrameStyleDefault()
 		TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
     TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -44)
@@ -497,11 +511,12 @@ function TOCA.FrameStyleSet(style)
     TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 181)
     for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:Hide()
+			TOCA.FrameSeg[totemCat]:Hide()
     end
 		TOCA.Button.DropdownMain:Hide()
 		TOCA.FrameMainGridVertical:Show()
 		TOCA.FrameMainGridHorizontal:Hide()
-  elseif (style == TOCA.locale.UI.FRAMESTYLES[3]) then --horz
+  elseif (style == TOCA.locale.UI.FRAMESTYLES[4]) then --horz
     TOCA.FrameStyleDefault()
 		TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA.Global.width+171, -22)
     TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width+171, -52)
@@ -516,6 +531,7 @@ function TOCA.FrameStyleSet(style)
 		TOCA.Button.DropdownMain:Hide()
     for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:Hide()
+			TOCA.FrameSeg[totemCat]:Hide()
     end
 		TOCA.FrameMainGridVertical:Hide()
 		TOCA.FrameMainGridHorizontal:Show()
@@ -612,10 +628,8 @@ end
 TOCA.BorderFrames = 1 --called after building icons
 
 function TOCA.Init()
-  local lC, eC, cI = UnitClass("player")
-
   TOCA.FrameMain:Hide()
-  if (eC == "SHAMAN") then
+  if (TOCA.player.classID == 7) then --shaman
     TOCA.FrameMain:Show()
   else
     TOCA.FrameHelp:Hide()
@@ -766,6 +780,14 @@ function TOCA.Init()
       TOCA.FrameMain:ClearAllPoints()
       TOCA.FrameMain:SetPoint(TOCAFrameMainPos[1], tonumber(TOCAFrameMainPos[2]), tonumber(TOCAFrameMainPos[3]))
     end
+		for totemCat,v in pairsByKeys(TOCA.totems) do
+			if (TOCADB[TOCA.player.combine]["CONFIG"]["SEG_POS_" .. totemCat]) then
+				local TOCAFrameMainPos = {}
+				TOCAFrameMainPos = split(TOCADB[TOCA.player.combine]["CONFIG"]["SEG_POS_" .. totemCat], ",")
+				TOCA.FrameSeg[totemCat]:ClearAllPoints()
+				TOCA.FrameSeg[totemCat]:SetPoint(TOCAFrameMainPos[1], tonumber(TOCAFrameMainPos[2]), tonumber(TOCAFrameMainPos[3]))
+			end
+		end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPLODEPOS"]) then
       local TOCAFrameExplodePos = {}
       TOCAFrameExplodePos = split(TOCADB[TOCA.player.combine]["CONFIG"]["EXPLODEPOS"], ",")
@@ -1424,8 +1446,7 @@ function TOCA.HandleShieldAlert()
 end
 
 function TOCA.TotemBarUpdate(event)
-	local lC, eC, cI = UnitClass("player")
-	if (eC == "SHAMAN") then
+	if (TOCA.player.classID == 7) then --shaman
 	  local percMana = (UnitPower("player")/UnitPowerMax("player"))*100
 	  local percMana = floor(percMana+0.5)
 	  local onTaxi = UnitOnTaxi("player")

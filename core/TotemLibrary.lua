@@ -244,8 +244,34 @@ end
 TOCA.player = {
   name   = UnitName("player"),
   realm  = GetRealmName(),
-  class  = UnitClass("player"),
-  faction= UnitFactionGroup("player"),
+	classID= select(3, UnitClass("player")), --use the class ID, due to locales
+  faction= UnitFactionGroup("player"), --first use English for the time being
 	GUID   = UnitGUID("player"),
 }
 TOCA.player.combine = TOCA.player.name .. "-" .. TOCA.player.realm
+
+TOCA.colors={}
+TOCA.colors.totems = {
+	FIRE = {1, 0.2, 0, 1},
+	EARTH= {0, 1, 0.3, 1},
+	WATER= {0, 0.2, 0.8, 1},
+	AIR  = {0.7, 0.7, 0.8, 1}
+}
+TOCA.colors.class = {
+}
+
+--[==[
+None = 0
+Warrior = 1
+Paladin = 2
+Hunter = 3
+Rogue = 4
+Priest = 5
+DeathKnight = 6
+Shaman = 7
+Mage = 8
+Warlock = 9
+Monk = 10
+Druid = 11
+Demon Hunter = 12
+]==]--

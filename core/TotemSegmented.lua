@@ -12,3 +12,67 @@ This addon is free to use and the authors hereby grants you the following rights
 All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
+
+local totemButtonPos_X={}
+local totemButtonPos_Y={}
+TOCA.SegBarSize={}
+TOCA.TotemNum["SEG"] = 0
+for totemCat,v in pairsByKeys(TOCA.totems) do
+	TOCA.TotemNum["SEG"] = TOCA.TotemNum["SEG"] +1
+	totemButtonPos_X[totemCat] = 0
+	totemButtonPos_Y[totemCat] = 0
+	TOCA.FrameSeg[totemCat] = CreateFrame("Frame", "TOCA.FrameSeg", UIParent, "BackdropTemplate") --independent
+	TOCA.FrameSeg[totemCat]:SetWidth(41)
+	TOCA.FrameSeg[totemCat]:SetHeight(40)
+	--local _defaultPointSet = (TOCA.FrameSeg[totemCat]:GetWidth()/2)-(TOCA.TotemNum["SEG"]*TOCA.FrameSeg[totemCat]:GetWidth())
+	local _defaultPointSet = TOCA.TotemNum["SEG"]*TOCA.FrameSeg[totemCat]:GetWidth()
+	TOCA.FrameSeg[totemCat]:SetPoint("TOPLEFT", 200+_defaultPointSet, -200)
+	TOCA.FrameSeg[totemCat]:SetMovable(true)
+	TOCA.FrameSeg[totemCat]:EnableMouse(true)
+	TOCA.FrameSeg[totemCat]:RegisterForDrag("LeftButton")
+	TOCA.FrameSeg[totemCat]:SetScript("OnDragStart", function()
+	  TOCA.FrameSeg[totemCat]:StartMoving()
+	end)
+	TOCA.FrameSeg[totemCat]:SetScript("OnDragStop", function()
+	  TOCA.FrameSeg[totemCat]:StopMovingOrSizing()
+	  local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.FrameSeg[totemCat]:GetPoint()
+	  TOCADB[TOCA.player.combine]["CONFIG"]["SEG_POS_" .. totemCat] = point .. "," .. xOfs .. "," .. yOfs
+	end)
+	TOCA.FrameSeg[totemCat]:Hide()
+
+	TOCA.FrameSeg[totemCat].Background = CreateFrame("Frame", nil, TOCA.FrameSeg[totemCat], "BackdropTemplate", -6)
+	TOCA.FrameSeg[totemCat].Background:SetWidth(TOCA.FrameSeg[totemCat]:GetWidth())
+	TOCA.FrameSeg[totemCat].Background:SetHeight(TOCA.FrameSeg[totemCat]:GetHeight())
+	TOCA.FrameSeg[totemCat].Background:SetPoint("CENTER", 0, 0)
+	TOCA.FrameSeg[totemCat].Background:SetBackdrop(TOCA.Backdrop.General)
+	TOCA.FrameSeg[totemCat].Background:SetBackdropColor(
+	TOCA.colors.totems[totemCat][1],
+	TOCA.colors.totems[totemCat][2],
+	TOCA.colors.totems[totemCat][3],
+	TOCA.colors.totems[totemCat][4])
+	TOCA.FrameSeg[totemCat].Background:SetBackdropBorderColor(
+	TOCA.colors.totems[totemCat][1],
+	TOCA.colors.totems[totemCat][2],
+	TOCA.colors.totems[totemCat][3],
+	TOCA.colors.totems[totemCat][4])
+	TOCA.FrameSeg[totemCat].Background:SetFrameLevel(TOCA.Framelevel.Background)
+
+	for i,totemSpell in pairs(TOCA.totems[totemCat]) do
+		totemButtonPos_X[totemCat] = totemButtonPos_X[totemCat]+TOCA.Slot_w
+		totemButtonPos_Y[totemCat] = totemButtonPos_Y[totemCat]+TOCA.Slot_h
+		TOCA.FrameSeg.Button[totemCat][i] = CreateFrame("Button", nil, TOCA.FrameSeg[totemCat], "BackdropTemplate")
+		--TOCA.FrameSeg.Button[totemCat][i] = CreateFrame("Button", nil, TOCA.FrameSeg[totemCat], "SecureActionButtonTemplate")
+	  TOCA.FrameSeg.Button[totemCat][i]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
+		TOCA.FrameSeg.Button[totemCat][i]:SetPoint("TOPLEFT", 3, -15.1-totemButtonPos_Y[totemCat]+TOCA.Slot_h)
+		TOCA.FrameSeg.Button[totemCat][i]:SetFrameLevel(TOCA.Framelevel.Buttons)
+		TOCA.FrameSeg.Button[totemCat][i]:SetBackdrop(TOCA.SetIcon(totemSpell[2]))
+		TOCA.FrameSeg.Button[totemCat][i]:SetAttribute("type", "spell")
+		TOCA.FrameSeg.Button[totemCat][i]:SetAttribute("spell", totemSpell[1])
+		TOCA.FrameSeg.Button[totemCat][i].action = CreateFrame("Button", nil, TOCA.FrameSeg.Button[totemCat][i], "SecureActionButtonTemplate")
+		TOCA.FrameSeg.Button[totemCat][i].action:SetSize(TOCA.Slot_w, TOCA.Slot_h)
+		TOCA.FrameSeg.Button[totemCat][i].action:SetPoint("CENTER", 0, 0)
+		TOCA.FrameSeg.Button[totemCat][i].action:SetAttribute("type", "spell")
+		TOCA.FrameSeg.Button[totemCat][i].action:SetAttribute("spell", totemSpell[1])
+	end
+
+end
