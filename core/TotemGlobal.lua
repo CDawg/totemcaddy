@@ -16,7 +16,7 @@ the copyright holders.
 TOCA.DEBUG = false
 
 TOCA.Global = {
-  title  = "|cff0070DD".. TOCA.locale.TITLE .."|r",
+  title  = TOCA.colors.class[7][4] .. TOCA.locale.TITLE .."|r",
   author = "Porthias of Myzrael",
   version= 2.51,
   command= "toca",
