@@ -50,6 +50,8 @@ TCCMD = "/"..TOCA.Global.command
 
 TOCA.Raid={}
 TOCA.Raid.Name={}
+TOCA.Raid.Class={}
+TOCA.Raid.Role={}
 
 TOCA.Backdrop={}
 TOCA.Backdrop.General = {
@@ -146,11 +148,6 @@ TOCA.NotificationAlertRadius = {}
 for i=1, 4 do
 	TOCA.NotificationAlertRadius[i] = 0
 end
-
-TOCA.Raid={}
-TOCA.Raid.Name={}
-TOCA.Raid.Class={}
-TOCA.Raid.Role={}
 
 function TOCA.IdentifySpell(spellID) --used for different languages
   local spell = GetSpellInfo(spellID)
@@ -301,33 +298,23 @@ function TOCA.SetKeyBindOnLoad()
 		if (TOCA.Game.version > 1) then
 			local title = "TOTEM_RECALL"
 	    TOCA.SetKeyBindReset(title, TOCA.locale.SPELLS.TotemicCall)
-			--TOCA.Button.KeyBind[1].Title:SetText(TOCA.locale.KEYBINDS[title])
-			--TOCA.Button.KeyBind[1].Text:SetText(GetBindingKey(title))
 		end
 
 		if (TOCA.cache[1]) then
 			local title = "TOTEM_AIR"
       TOCA.SetKeyBindReset(title, TOCA.cache[1])
-			--TOCA.Button.KeyBind[2].Title:SetText(TOCA.locale.KEYBINDS[title])
-			--TOCA.Button.KeyBind[2].Text:SetText(GetBindingKey(title))
     end
     if (TOCA.cache[2]) then
 			local title = "TOTEM_EARTH"
       TOCA.SetKeyBindReset(title, TOCA.cache[2])
-			--TOCA.Button.KeyBind[3].Title:SetText(TOCA.locale.KEYBINDS[title])
-			--TOCA.Button.KeyBind[3].Text:SetText(GetBindingKey(title))
     end
     if (TOCA.cache[3]) then
 			local title = "TOTEM_FIRE"
       TOCA.SetKeyBindReset(title, TOCA.cache[3])
-			--TOCA.Button.KeyBind[4].Title:SetText(TOCA.locale.KEYBINDS[title])
-			--TOCA.Button.KeyBind[4].Text:SetText(GetBindingKey(title))
     end
     if (TOCA.cache[4]) then
 			local title = "TOTEM_WATER"
       TOCA.SetKeyBindReset(title, TOCA.cache[4])
-			--TOCA.Button.KeyBind[5].Title:SetText(TOCA.locale.KEYBINDS[title])
-			--TOCA.Button.KeyBind[5].Text:SetText(GetBindingKey(title))
     end
 		TOCA.SetKeyBindReset("SHIELD_WATER",    TOCA.IdentifySpell(TOCA.spell.WATER_SHIELD))
 		TOCA.SetKeyBindReset("SHIELD_LIGHTNING",TOCA.IdentifySpell(TOCA.spell.LIGHTNING_SHIELD))
@@ -418,7 +405,7 @@ function TOCA.SizeSegmentedBars()
 	if (TOCA.player.classID == 7) then --shaman
 		for totemCat,v in pairsByKeys(TOCA.totems) do
 			TOCA.FrameSeg[totemCat]:SetHeight(38.8*TOCA.KnownTotems[totemCat])
-			print(totemCat .. " = " .. 38.8*TOCA.KnownTotems[totemCat])
+			--print(totemCat .. " = " .. 38.8*TOCA.KnownTotems[totemCat])
 			TOCA.FrameSeg[totemCat].Background:SetWidth(TOCA.FrameSeg[totemCat]:GetWidth())
 			TOCA.FrameSeg[totemCat].Background:SetHeight(TOCA.FrameSeg[totemCat]:GetHeight())
 	  end
@@ -474,38 +461,44 @@ end
 function TOCA.FrameStyleDefault() --used for emergency recovery
   TOCA.FrameMain:SetHeight(TOCA.Global.height)
   TOCA.FrameMain:SetWidth(TOCA.Global.width)
-  TOCA.FrameMain.Background:SetWidth(TOCA.Global.width)
-  TOCA.FrameMain.Background:SetHeight(TOCA.Global.height)
   TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 40)
+	TOCA.Button.DropdownMain:Show()
+	TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
+	TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -44)
+	TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", -28, -14)
+	TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 61)
+	TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 61)
+	for totemCat,v in pairsByKeys(TOCA.totems) do
+		TOCA.Slot[totemCat]:Show()
+		TOCA.FrameSeg[totemCat]:Hide()
+	end
+	TOCA.Button.DropdownMain:Show()
+	TOCA.FrameMainGridVertical:Hide()
+	TOCA.FrameMainGridHorizontal:Hide()
+	TOCA.FrameMain.ReincFrame.text:SetPoint("CENTER", TOCA.FrameMain.ReincFrame, "CENTER", 0, -18)
 end
 
 function TOCA.FrameStyleSet(style)
-  if (style == TOCA.locale.UI.FRAMESTYLES[1]) then --classic
-    TOCA.FrameStyleDefault()
-		TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
-    TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -44)
-    TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", -28, -14)
-    TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 61)
-    TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 61)
-    for totemCat,v in pairsByKeys(TOCA.totems) do
-      TOCA.Slot[totemCat]:Show()
-			TOCA.FrameSeg[totemCat]:Hide()
-    end
-		TOCA.Button.DropdownMain:Show()
-		TOCA.FrameMainGridVertical:Hide()
-		TOCA.FrameMainGridHorizontal:Hide()
-	elseif (style == TOCA.locale.UI.FRAMESTYLES[2]) then --segmented
-	    TOCA.FrameStyleDefault()
+	TOCA.FrameStyleDefault()
+  if (style == TOCA.locale.UI.FRAMESTYLES[2]) then --segmented
+			TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", 10, -30)
+	    TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", 40, -30)
+	    TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", 70, -30)
 			for totemCat,v in pairsByKeys(TOCA.totems) do
+				TOCA.Slot[totemCat]:Hide()
 	      TOCA.FrameSeg[totemCat]:Show()
 			end
+			TOCA.FrameMain:SetHeight(TOCA.Global.height-20)
+			TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 30)
+			TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 51)
+			TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 51)
+			TOCA.Button.DropdownMain:Hide()
+			TOCA.FrameMain.ReincFrame.text:SetPoint("CENTER", TOCA.FrameMain.ReincFrame, "CENTER", 0, 18)
   elseif (style == TOCA.locale.UI.FRAMESTYLES[3]) then --vert
-    TOCA.FrameStyleDefault()
 		TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
     TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -44)
     TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -74)
     TOCA.FrameMain:SetHeight(TOCA.Global.height+240)
-    TOCA.FrameMain.Background:SetHeight(TOCA.Global.height+240)
     TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 160)
     TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 181)
     TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 181)
@@ -517,14 +510,11 @@ function TOCA.FrameStyleSet(style)
 		TOCA.FrameMainGridVertical:Show()
 		TOCA.FrameMainGridHorizontal:Hide()
   elseif (style == TOCA.locale.UI.FRAMESTYLES[4]) then --horz
-    TOCA.FrameStyleDefault()
 		TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA.Global.width+171, -22)
     TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width+171, -52)
     TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", TOCA.Global.width+171, -82)
     TOCA.FrameMain:SetHeight(TOCA.Global.height+84)
-    TOCA.FrameMain.Background:SetHeight(TOCA.Global.height+84)
-    TOCA.FrameMain:SetWidth(TOCA.Global.height+240)
-    TOCA.FrameMain.Background:SetWidth(TOCA.Global.height+240)
+		TOCA.FrameMain:SetWidth(TOCA.Global.height+240)
     TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 84)
     TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 103)
     TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 103)
@@ -536,6 +526,8 @@ function TOCA.FrameStyleSet(style)
 		TOCA.FrameMainGridVertical:Hide()
 		TOCA.FrameMainGridHorizontal:Show()
   end
+	TOCA.FrameMain.Background:SetHeight(TOCA.FrameMain:GetHeight())
+	TOCA.FrameMain.Background:SetWidth(TOCA.FrameMain:GetWidth())
   TOCA.Notification("Frame Style: " .. style, true)
 end
 

@@ -38,6 +38,12 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 	  local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.FrameSeg[totemCat]:GetPoint()
 	  TOCADB[TOCA.player.combine]["CONFIG"]["SEG_POS_" .. totemCat] = point .. "," .. xOfs .. "," .. yOfs
 	end)
+	TOCA.FrameSeg[totemCat]:SetScript("OnEnter", function()
+		--print("good " .. totemCat)
+	end)
+	TOCA.FrameSeg[totemCat]:SetScript("OnLeave", function()
+		--print("good")
+	end)
 	TOCA.FrameSeg[totemCat]:Hide()
 
 	TOCA.FrameSeg[totemCat].Background = CreateFrame("Frame", nil, TOCA.FrameSeg[totemCat], "BackdropTemplate", -6)
@@ -74,5 +80,37 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 		TOCA.FrameSeg.Button[totemCat][i].action:SetAttribute("type", "spell")
 		TOCA.FrameSeg.Button[totemCat][i].action:SetAttribute("spell", totemSpell[1])
 	end
+
+	TOCA.FrameSeg.Button[totemCat].close= CreateFrame("Button", nil, TOCA.FrameSeg[totemCat], "BackdropTemplate")
+	TOCA.FrameSeg.Button[totemCat].close:SetSize(16, 16)
+	TOCA.FrameSeg.Button[totemCat].close:SetPoint("TOPRIGHT", -1, 0)
+	TOCA.FrameSeg.Button[totemCat].close:SetBackdrop(TOCA.Backdrop.Button)
+	TOCA.FrameSeg.Button[totemCat].close:SetBackdropColor(0.6, 0, 0, 1)
+	TOCA.FrameSeg.Button[totemCat].close:SetBackdropBorderColor(1, 1, 1, 0.6)
+	TOCA.FrameSeg.Button[totemCat].close:Hide()
+	TOCA.FrameSeg.Button[totemCat].close.icon = TOCA.FrameSeg.Button[totemCat].close:CreateTexture(nil, "ARTWORK")
+	TOCA.FrameSeg.Button[totemCat].close.icon:SetSize(12, 12)
+	TOCA.FrameSeg.Button[totemCat].close.icon:SetPoint("CENTER", 0, 0)
+	TOCA.FrameSeg.Button[totemCat].close.icon:SetTexture("Interface/Buttons/UI-StopButton")
+	TOCA.FrameSeg.Button[totemCat].close:SetScript("OnEnter", function(self)
+	  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
+	    self:SetBackdropBorderColor(1, 1, 1, 0)
+	  else
+	    self:SetBackdropBorderColor(1, 1, 1, 1)
+	  end
+	end)
+	TOCA.FrameSeg.Button[totemCat].close:SetScript("OnLeave", function(self)
+	  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
+	    self:SetBackdropBorderColor(1, 1, 1, 0)
+	  else
+	    self:SetBackdropBorderColor(1, 1, 1, 0.6)
+	  end
+	end)
+	TOCA.FrameSeg.Button[totemCat].close:SetScript("OnClick", function()
+	  TOCA.CloseAllMenus()
+	  TOCA.FrameMain:Hide()
+	  TOCADB[TOCA.player.combine]["DISABLED"] = "YES"
+	  TOCA.Notification("closed. Type '"..TCCMD.." show' to reopen.")
+	end)
 
 end
