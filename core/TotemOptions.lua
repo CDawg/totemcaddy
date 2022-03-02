@@ -781,7 +781,7 @@ TOCA.SlotSets_x = -60
 TOCA.SlotOrderTitle = TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[2]]:CreateFontString(nil, "ARTWORK")
 TOCA.SlotOrderTitle:SetFont(TOCA.Global.font, 12)
 TOCA.SlotOrderTitle:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -190)
-TOCA.SlotOrderTitle:SetText(TOCA.locale.UI.TOTEMSET[3])
+TOCA.SlotOrderTitle:SetText(TOCA.locale.UI.TOTEMSET[3][1])
 TOCA.SlotOrderTitle:SetTextColor(1, 1, 0.5, 1)
 
 TOCA.SlotOrderIcon={}
