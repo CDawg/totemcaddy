@@ -384,7 +384,7 @@ function TOCA.EnableTotems(enable)
       for i,totemSpell in pairs(TOCA.totems[totemCat]) do
         TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:Hide()
         TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:Hide()
-				--TOCA.FrameSeg.Button[totemCat][i]:Hide()
+				TOCA.FrameSeg.Button[totemCat][i].disable:Hide()
       end
     end
     TOCA.Notification("TOCA.EnableTotems()", true)
@@ -395,7 +395,7 @@ function TOCA.EnableTotems(enable)
       for i,totemSpell in pairs(TOCA.totems[totemCat]) do
         TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:Show()
         TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:Show()
-				--TOCA.FrameSeg.Button[totemCat][i]:Show()
+				TOCA.FrameSeg.Button[totemCat][i].disable:Show()
       end
     end
   end
@@ -436,7 +436,7 @@ function TOCA.SizeSegmentedBars(totemCat) --and adjust orientation
 				TOCA.FrameSeg.Button[totemCat].orientation:SetPoint("TOPLEFT", 2, -18)
 				TOCA.FrameSeg[totemCat].Header:SetWidth(33)
 				TOCA.FrameSeg[totemCat].Header:SetHeight(14)
-				TOCA.FrameSeg[totemCat].Header:SetPoint("TOPLEFT", 3, -3)
+				TOCA.FrameSeg[totemCat].Header:SetPoint("TOPLEFT", 4, -3)
 			end
 		end
 		TOCA.FrameSeg[totemCat].Background:SetWidth(TOCA.FrameSeg[totemCat]:GetWidth())
@@ -1190,15 +1190,41 @@ function TOCA.TimerFrame(i)
       TOCA.Slot.Timer[i]:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
       TOCA.SlotGrid.VerticalTimer[i]:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
       TOCA.SlotGrid.HorizontalTimer[i]:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
-    else
+			for totemCat,v in pairsByKeys(TOCA.totems) do
+			  for index,totemSpell in pairs(TOCA.totems[totemCat]) do
+					if (string.find(TOCA.TotemName[i], TOCA.FrameSeg.Button[totemCat][index].ID:GetText())) then
+						--print(TOCA.TotemName[i])
+						TOCA.FrameSeg.Button[totemCat][index].timer:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
+					end
+				end
+		  end
+    else --seconds
       TOCA.Slot.Timer[i]:SetText(TOCA.TotemTimer[i])
       TOCA.SlotGrid.VerticalTimer[i]:SetText(TOCA.TotemTimer[i])
       TOCA.SlotGrid.HorizontalTimer[i]:SetText(TOCA.TotemTimer[i])
+			for totemCat,v in pairsByKeys(TOCA.totems) do
+			  for index,totemSpell in pairs(TOCA.totems[totemCat]) do
+					if (string.find(TOCA.TotemName[i], TOCA.FrameSeg.Button[totemCat][index].ID:GetText())) then
+						--print(TOCA.TotemName[i])
+						TOCA.FrameSeg.Button[totemCat][index].timer:SetText(TOCA.TotemTimer[i])
+					end
+				end
+		  end
     end
   else
     TOCA.Slot.Timer[i]:SetText("")
     TOCA.SlotGrid.VerticalTimer[i]:SetText("")
     TOCA.SlotGrid.HorizontalTimer[i]:SetText("")
+		local totemCat = nil
+		if (i == 1) then totemCat = "FIRE" end
+		if (i == 2) then totemCat = "EARTH" end
+		if (i == 3) then totemCat = "WATER" end
+		if (i == 4) then totemCat = "AIR" end
+		if (totemCat) then
+			for index,totemSpell in pairs(TOCA.totems[totemCat]) do
+				TOCA.FrameSeg.Button[totemCat][index].timer:SetText("")
+			end
+		end
   end
 
 	if (TOCADB[TOCA.player.combine]["CONFIG"]["NOTIFYCOMBAT"] == "OFF") then
@@ -1215,6 +1241,11 @@ function TOCA.TimerFrame(i)
       TOCA.SlotGrid.VerticalTimer[i]:Hide()
       TOCA.SlotGrid.HorizontalTimer[i]:Hide()
     end
+		for totemCat,v in pairsByKeys(TOCA.totems) do
+			for index,totemSpell in pairs(TOCA.totems[totemCat]) do
+				TOCA.FrameSeg.Button[totemCat][index].timer:Hide()
+			end
+		end
     return
   end
 
@@ -1281,24 +1312,28 @@ function TOCA.ExtendedTotemCooldowns(totemCat, spell, countDown)
 	for i,totemSpell in pairs(TOCA.totems[totemCat]) do
 		TOCA.SlotGrid.VerticalTotemButton[totemCat][i].recharge:SetCooldown(GetTime(), countDown)
 		TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].recharge:SetCooldown(GetTime(), countDown)
+		TOCA.FrameSeg.Button[totemCat][i].recharge:SetCooldown(GetTime(), countDown)
 	end
 	if (totemCat == "EARTH") then
 	  if (spell == 2484) then
 			TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), 15) --earthbind
+			TOCA.FrameSeg.Button[totemCat][1].recharge:SetCooldown(GetTime(), 15)
 	  elseif ((spell == 5730) or (spell == 6390) or (spell == 6391) or (spell == 10428) or (spell == 25525)) then
 			TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), 30) --stoneclaws
+			TOCA.FrameSeg.Button[totemCat][2].recharge:SetCooldown(GetTime(), 30)
 		end
 	elseif (totemCat == "FIRE") then
 		--TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
 	elseif (totemCat == "WATER") then
-		--TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
 		if (spell == 16190) then
 			TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), 300) --mana tide
+			TOCA.FrameSeg.Button[totemCat][5].recharge:SetCooldown(GetTime(), 300)
 		end
 	elseif (totemCat == "AIR") then
 		--TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
 		if (spell == 8177) then
 			TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), 15) --grounding
+			TOCA.FrameSeg.Button[totemCat][2].recharge:SetCooldown(GetTime(), 15)
 		end
 	end
 end
@@ -1436,6 +1471,7 @@ end
 TOCA.SlotGrid.VerticalTimer={}
 TOCA.SlotGrid.HorizontalTimer={}
 function TOCA.TotemTimerReset(i)
+	--print(i)
   if (i == "all") then
     for i=1, 4 do
       TOCA.TotemFunc[i]:Cancel()
@@ -1444,12 +1480,27 @@ function TOCA.TotemTimerReset(i)
       TOCA.SlotGrid.VerticalTimer[i]:SetText("")
       TOCA.SlotGrid.HorizontalTimer[i]:SetText("")
     end
+		for totemCat,v in pairsByKeys(TOCA.totems) do --place vert and horz here?
+			for index,totemSpell in pairs(TOCA.totems[totemCat]) do
+				TOCA.FrameSeg.Button[totemCat][index].timer:SetText("")
+			end
+		end
   else
     TOCA.TotemFunc[i]:Cancel()
     TOCA.TotemTimer[i] = 0
     TOCA.Slot.Timer[i]:SetText("")
     TOCA.SlotGrid.VerticalTimer[i]:SetText("")
     TOCA.SlotGrid.HorizontalTimer[i]:SetText("")
+		local totemCat = nil
+		if (i == 1) then totemCat = "FIRE" end
+		if (i == 2) then totemCat = "EARTH" end
+		if (i == 3) then totemCat = "WATER" end
+		if (i == 4) then totemCat = "AIR" end
+		if (totemCat) then
+			for index,totemSpell in pairs(TOCA.totems[totemCat]) do
+				TOCA.FrameSeg.Button[totemCat][index].timer:SetText("")
+			end
+		end
   end
   TOCA.Notification("TOCA.TotemTimerReset("..i..")", true)
 end
