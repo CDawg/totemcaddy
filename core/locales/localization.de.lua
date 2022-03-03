@@ -29,7 +29,7 @@ TOCA.locale = {
 	},
 
   UI = {
-		FRAMESTYLES = {"Klassisch", "Segmented", "Raster vertikal", "Gitter horizontal"},
+		FRAMESTYLES = {"Klassisch", "Segmentiert", "Raster vertikal", "Gitter horizontal"},
 		BUTTON = {"Nah dran", "Speichern", "Löschen", "ja", "Nein"},
 
 		TABS = {
@@ -63,7 +63,7 @@ TOCA.locale = {
 			{"Display Totem Timers In Minutes",       "Toggle the totem timer display in total seconds|nor minutes and seconds.|nBoth are default."},
 			{"Display Reincarnation Timer (Cooldown)","Display the Reincarnation timer at the right top|nof the frame when you have activated Reincarnation.|nThe cooldown timer is live and also displayed."},
 			{"Display Shield Details On Frame",       "Display your current shield on the Frame."},
-			{"Display Ankh Inventory Count Reminder", "Display a reminder when the Ankh reagent is low in|ncurrent your inventory.|nThis will display when you have less than " .. TOCA.AnkhReminder .. " Ankhs."},
+			{"Display Ankh Inventory Count Reminder", "Display a reminder when the Ankh reagent is low in|nyour current inventory.|nThis will display when you have less than " .. TOCA.AnkhReminder .. " Ankhs."},
 		},
 		TOOLTIP = {
 			TITLE = "Tooltip",

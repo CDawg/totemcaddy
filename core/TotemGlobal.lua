@@ -105,7 +105,6 @@ TOCA.icons = {
 	}
 }
 
---TOCA.IdentifySpellName(15107) --fire nova totem
 TOCA.totems.ID = {}
 TOCA.totems.ID.FIRE = {
 	1535, --fire nova
@@ -603,6 +602,11 @@ function TOCA.BorderFrame(enable)
       TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
       TOCA.SlotSelect[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
       TOCA.SlotSelectMenu[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
+			TOCA.FrameSeg[totemCat].Background:SetBackdropBorderColor(
+			TOCA.colors.totems[totemCat][1],
+			TOCA.colors.totems[totemCat][2],
+			TOCA.colors.totems[totemCat][3],
+			TOCA.colors.totems[totemCat][4])
       for i,totemSpell in pairs(TOCA.totems[totemCat]) do
         if (TOCA.SlotSelectTotem[totemCat][i]) then
           TOCA.SlotSelectTotem[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
@@ -613,6 +617,7 @@ function TOCA.BorderFrame(enable)
         if (TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]) then
           TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
         end
+				TOCA.FrameSeg.Button[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
       end
     end
   else
@@ -628,6 +633,7 @@ function TOCA.BorderFrame(enable)
       TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)
       TOCA.SlotSelect[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)
       TOCA.SlotSelectMenu[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)
+			TOCA.FrameSeg[totemCat].Background:SetBackdropBorderColor(0,0,0,0)
       for i,totemSpell in pairs(TOCA.totems[totemCat]) do
         if (TOCA.SlotSelectTotem[totemCat][i]) then
           TOCA.SlotSelectTotem[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0)
@@ -638,6 +644,7 @@ function TOCA.BorderFrame(enable)
         if (TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]) then
           TOCA.SlotGrid.HorizontalTotemButton[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0)
         end
+				TOCA.FrameSeg.Button[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0)
       end
     end
   end
@@ -1105,6 +1112,9 @@ function TOCA.TotemAuraRadius(event)
 	for k,v in pairs(TOCA.totems) do
 		TOCA.Slot.Radius[k]:Hide()
 		TOCA.Slot.Radius.Border[k]:Hide()
+			for i,totemSpell in pairs(TOCA.totems[k]) do
+				TOCA.FrameSeg.Button[k][i].radius:Hide()
+			end
 	end
 	for v,k in pairs(TOCA.GameOrder) do
 		totemCat[k] = v
@@ -1158,8 +1168,25 @@ function TOCA.TotemAuraRadius(event)
 				--print("In Range : " .. TOCA.TotemInRange[i])
 				TOCA.Slot.Radius[TOCA.TotemInRange[i]]:Hide()
 				TOCA.Slot.Radius.Border[TOCA.TotemInRange[i]]:Hide()
+				for index,totemSpell in pairs(TOCA.totems[TOCA.TotemInRange[i]]) do
+					TOCA.FrameSeg.Button[TOCA.TotemInRange[i]][index].radius:Hide()
+				end
 			else --Not in range of an aura but the totem is present
-				--print("Out of Range : " ..  i)
+				--if (TOCA.TotemName[i]) then
+					--print("Out of Range : " .. i)
+					--print(TOCA.TotemName[i])
+				--end
+				if (TOCA.TotemName[i]) then
+					for totemCat,v in pairsByKeys(TOCA.totems) do
+						for index,totemSpell in pairs(TOCA.totems[totemCat]) do
+							if (string.find(TOCA.TotemName[i], TOCA.FrameSeg.Button[totemCat][index].ID:GetText())) then
+								--print(TOCA.TotemName[i])
+								TOCA.FrameSeg.Button[totemCat][index].radius:Show()
+							end
+						end
+					end
+				end
+
 				for v,k in pairs(TOCA.GameOrder) do
 					if (i == k) then
 						TOCA.Slot.Radius[v]:Show()
@@ -1174,6 +1201,9 @@ function TOCA.TotemAuraRadius(event)
 						--print(totemID .. " is exempt " .. totemCat)
 						TOCA.Slot.Radius[totemCat]:Hide()
 						TOCA.Slot.Radius.Border[totemCat]:Hide()
+						for index,totemSpell in pairs(TOCA.totems[totemCat]) do
+							TOCA.FrameSeg.Button[totemCat][index].radius:Hide() --just clear everything in that category
+						end
 					end
 				end
 			end
