@@ -51,7 +51,8 @@ TOCA.Button.FrameSetsSave:SetScript("OnClick", function()
     TOCA.Notification(TOCA.locale.UI.TOTEMSET[8][1] .. ": |cffffff00" .. TOCA.Dropdown.Sets.text:GetText())
     TOCADB[TOCA.player.combine]["PROFILES"][TOCA.Dropdown.Sets.text:GetText()] = {TOCA_AIR=TOCA.cache[1], TOCA_EARTH=TOCA.cache[2], TOCA_FIRE=TOCA.cache[3], TOCA_WATER=TOCA.cache[4]}
   else
-    if (profileSaveText:match("[^%w%s]")) then
+    --if (profileSaveText:match("[^%w%s]")) then
+		if (profileSaveText:match("%b''")) then
       TOCA.FrameSetsProfile.border:SetBackdropBorderColor(1, 0.2, 0.2, 1)
       TOCA.Notification("|cffff0000 Unable to save profile with non alphanumeric characters!")
     else

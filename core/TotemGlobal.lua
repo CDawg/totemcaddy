@@ -927,6 +927,7 @@ function TOCA.CloseAllMenus()
   for k,v in pairs(TOCA.totems) do
     TOCA.SlotSelectMenu[k]:Hide()
     TOCA.FrameSetsSlotSelectMenu[k]:Hide()
+		TOCA.FrameSeg[k].Menu:Hide()
   end
   GameTooltip:ClearLines()
   GameTooltip:Hide()
@@ -1187,7 +1188,15 @@ function TOCA.TimerFrame(i)
     end
   end
 
-  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.locale.UI.FRAMESTYLES[2]) then --vert
+	if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.locale.UI.FRAMESTYLES[2]) then --segmented
+		for i=1, 4 do
+			TOCA.Slot.Timer[i]:Hide()
+			TOCA.SlotGrid.VerticalTimer[i]:Hide()
+			TOCA.SlotGrid.HorizontalTimer[i]:Hide()
+		end
+	end
+
+  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.locale.UI.FRAMESTYLES[3]) then --vert
     for i=1, 4 do
       TOCA.Slot.Timer[i]:Hide()
       TOCA.SlotGrid.VerticalTimer[i]:Show()
@@ -1195,7 +1204,7 @@ function TOCA.TimerFrame(i)
     end
   end
 
-  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.locale.UI.FRAMESTYLES[3]) then --horz
+  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.locale.UI.FRAMESTYLES[4]) then --horz
     for i=1, 4 do
       TOCA.Slot.Timer[i]:Hide()
       TOCA.SlotGrid.VerticalTimer[i]:Hide()
@@ -1230,23 +1239,24 @@ do
 end
 
 function TOCA.ExtendedTotemCooldowns(totemCat, spell, countDown)
-	--print(TOCA.cache[1])
+	TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
+	--TOCA.SlotGrid.VerticalTotemButton[totemCat][i].recharge:SetCooldown(GetTime(), countDown)
+	--TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].recharge:SetCooldown(GetTime(), countDown)
 	if (totemCat == "EARTH") then
-		TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
 	  if (spell == 2484) then
 			TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), 15) --earthbind
 	  elseif ((spell == 5730) or (spell == 6390) or (spell == 6391) or (spell == 10428) or (spell == 25525)) then
 			TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), 30) --stoneclaws
 		end
 	elseif (totemCat == "FIRE") then
-		TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
+		--TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
 	elseif (totemCat == "WATER") then
-		TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
+		--TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
 		if (spell == 16190) then
 			TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), 300) --mana tide
 		end
 	elseif (totemCat == "AIR") then
-		TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
+		--TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
 		if (spell == 8177) then
 			TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), 15) --grounding
 		end

@@ -215,6 +215,9 @@ getglobal(TOCA.Slider.Scale:GetName() .. 'High'):SetText('2')
 --getglobal(TOCA.Slider.Scale:GetName() .. 'Text'):SetText("Scale")
 TOCA.Slider.Scale:SetScript("OnValueChanged", function()
   TOCA.FrameMain:SetScale(TOCA.Round(TOCA.Slider.Scale:GetValue(), 2))
+	for totemCat,v in pairsByKeys(TOCA.totems) do
+		TOCA.FrameSeg[totemCat]:SetScale(TOCA.Round(TOCA.Slider.Scale:GetValue(), 2))
+	end
   TOCA.Slider.Scale.Val:SetText(TOCA.Round(TOCA.Slider.Scale:GetValue(), 2))
 end)
 TOCA.Slider.Scale:SetScript("OnEnter", function(self)
@@ -266,6 +269,12 @@ TOCA.Button.ResetPosition:SetScript("OnClick", function()
   TOCA.CloseAllMenus()
   TOCA.FrameMain:ClearAllPoints()
   TOCA.FrameMain:SetPoint("CENTER", 0, -140)
+	local totemCount = 0
+	for totemCat,v in pairsByKeys(TOCA.totems) do
+		totemCount = totemCount+1
+		local defaultPointSet = totemCount*50
+		--TOCA.FrameSeg[totemCat]:SetPoint("CENTER", 100-defaultPointSet, -200) --this is a bug because Blizzard developers are a bag of dicks
+	end
 end)
 
 TOCA.Button.ResetPositionText = TOCA.Button.ResetPosition:CreateFontString(nil, "ARTWORK")
@@ -301,6 +310,9 @@ TOCA.Slider.OpacityBG:SetScript("OnValueChanged", function()
   TOCA.Button.TotemicCall.ECL:SetAlpha(TOCA.Round(TOCA.Slider.OpacityBG:GetValue(), 2))
   TOCA.Button.TotemicCall.ECR:SetAlpha(TOCA.Round(TOCA.Slider.OpacityBG:GetValue(), 2))
   TOCA.Slider.OpacityBG.Val:SetText(TOCA.Round(TOCA.Slider.OpacityBG:GetValue(), 2))
+	for totemCat,v in pairsByKeys(TOCA.totems) do
+		TOCA.FrameSeg[totemCat].Background:SetAlpha(TOCA.Round(TOCA.Slider.OpacityBG:GetValue(), 2))
+	end
 end)
 TOCA.Slider.OpacityBG:SetScript("OnEnter", function(self)
   TOCA.TooltipDisplay(self, TOCA.FrameOptions.Title.OpacityBG:GetText(), TOCA.locale.UI.OPTIONS[6][2])

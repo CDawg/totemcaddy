@@ -17,11 +17,19 @@ local totemButtonPos_X={}
 local totemButtonPos_Y={}
 TOCA.SegBarSize={}
 TOCA.TotemNum["SEG"] = 0
+
+function TOCA.SegmentedButtonMenu(totemCat, show)
+	TOCA.CloseAllMenus()
+	if (show) then
+		TOCA.FrameSeg[totemCat].Menu:Show()
+	end
+end
+
 for totemCat,v in pairsByKeys(TOCA.totems) do
 	TOCA.TotemNum["SEG"] = TOCA.TotemNum["SEG"] +1
 	totemButtonPos_X[totemCat] = 0
 	totemButtonPos_Y[totemCat] = 0
-	TOCA.FrameSeg[totemCat] = CreateFrame("Frame", "TOCA.FrameSeg", UIParent, "BackdropTemplate") --independent
+	TOCA.FrameSeg[totemCat] = CreateFrame("Frame", "TOCA.FrameSeg"..totemCat, UIParent, "BackdropTemplate") --independent
 	TOCA.FrameSeg[totemCat]:SetWidth(41)
 	TOCA.FrameSeg[totemCat]:SetHeight(40)
 	--local _defaultPointSet = (TOCA.FrameSeg[totemCat]:GetWidth()/2)-(TOCA.TotemNum["SEG"]*TOCA.FrameSeg[totemCat]:GetWidth())
@@ -39,12 +47,58 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 	  TOCADB[TOCA.player.combine]["CONFIG"]["SEG_POS_" .. totemCat] = point .. "," .. xOfs .. "," .. yOfs
 	end)
 	TOCA.FrameSeg[totemCat]:SetScript("OnEnter", function()
-		--print("good " .. totemCat)
+		TOCA.SegmentedButtonMenu(totemCat, true)
 	end)
 	TOCA.FrameSeg[totemCat]:SetScript("OnLeave", function()
-		--print("good")
+		TOCA.SegmentedButtonMenu(totemCat, false)
 	end)
 	TOCA.FrameSeg[totemCat]:Hide()
+
+	--button menu options
+	TOCA.FrameSeg[totemCat].Header = CreateFrame("Frame", nil, TOCA.FrameSeg[totemCat], "BackdropTemplate", 1)
+	TOCA.FrameSeg[totemCat].Header:SetWidth(TOCA.FrameSeg[totemCat]:GetWidth()-4)
+	TOCA.FrameSeg[totemCat].Header:SetHeight(14)
+	TOCA.FrameSeg[totemCat].Header:SetPoint("TOPLEFT", 2, -3)
+	TOCA.FrameSeg[totemCat].Header:SetBackdrop({
+	  bgFile  = "Interface/Tooltips/UI-Tooltip-Background",
+	  edgeFile= "",
+	  edgeSize= 12,
+	  insets  = {left=2, right=2, top=2, bottom=2}})
+	TOCA.FrameSeg[totemCat].Header:SetBackdropColor(
+		TOCA.colors.totems[totemCat][1],
+		TOCA.colors.totems[totemCat][2],
+		TOCA.colors.totems[totemCat][3],
+		TOCA.colors.totems[totemCat][4])
+	TOCA.FrameSeg[totemCat].Header:EnableMouse(true)
+	TOCA.FrameSeg[totemCat].Header:RegisterForDrag("LeftButton")
+	TOCA.FrameSeg[totemCat].Header:SetScript("OnEnter", function()
+	  TOCA.SegmentedButtonMenu(totemCat, true)
+	end)
+	TOCA.FrameSeg[totemCat].Header:SetScript("OnLeave", function()
+		TOCA.SegmentedButtonMenu(totemCat, false)
+	end)
+	TOCA.FrameSeg[totemCat].Header:SetScript("OnDragStart", function()
+		TOCA.FrameSeg[totemCat]:StartMoving()
+	end)
+	TOCA.FrameSeg[totemCat].Header:SetScript("OnDragStop", function()
+		TOCA.FrameSeg[totemCat]:StopMovingOrSizing()
+		local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.FrameSeg[totemCat]:GetPoint()
+		TOCADB[TOCA.player.combine]["CONFIG"]["SEG_POS_" .. totemCat] = point .. "," .. xOfs .. "," .. yOfs
+	end)
+
+	--button menu options
+	TOCA.FrameSeg[totemCat].Menu = CreateFrame("Frame", nil, TOCA.FrameSeg[totemCat], "BackdropTemplate", 1)
+	TOCA.FrameSeg[totemCat].Menu:SetWidth(22)
+	TOCA.FrameSeg[totemCat].Menu:SetHeight(40)
+	TOCA.FrameSeg[totemCat].Menu:SetPoint("TOPLEFT", TOCA.FrameSeg[totemCat]:GetWidth(), -4)
+	TOCA.FrameSeg[totemCat].Menu:SetBackdrop(TOCA.Backdrop.General)
+	TOCA.FrameSeg[totemCat].Menu:Hide()
+	TOCA.FrameSeg[totemCat].Menu:SetScript("OnEnter", function()
+		TOCA.SegmentedButtonMenu(totemCat, true)
+	end)
+	TOCA.FrameSeg[totemCat].Menu:SetScript("OnLeave", function()
+		TOCA.SegmentedButtonMenu(totemCat, false)
+	end)
 
 	TOCA.FrameSeg[totemCat].Background = CreateFrame("Frame", nil, TOCA.FrameSeg[totemCat], "BackdropTemplate", -6)
 	TOCA.FrameSeg[totemCat].Background:SetWidth(TOCA.FrameSeg[totemCat]:GetWidth())
@@ -75,29 +129,47 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 		TOCA.FrameSeg.Button[totemCat][i]:SetAttribute("type", "spell")
 		TOCA.FrameSeg.Button[totemCat][i]:SetAttribute("spell", totemSpell[1])
 		TOCA.FrameSeg.Button[totemCat][i].action = CreateFrame("Button", nil, TOCA.FrameSeg.Button[totemCat][i], "SecureActionButtonTemplate")
-		TOCA.FrameSeg.Button[totemCat][i].action:SetSize(TOCA.Slot_w, TOCA.Slot_h)
+		TOCA.FrameSeg.Button[totemCat][i].action:SetSize(TOCA.FrameSeg.Button[totemCat][i]:GetWidth(), TOCA.FrameSeg.Button[totemCat][i]:GetHeight())
 		TOCA.FrameSeg.Button[totemCat][i].action:SetPoint("CENTER", 0, 0)
 		TOCA.FrameSeg.Button[totemCat][i].action:SetAttribute("type", "spell")
 		TOCA.FrameSeg.Button[totemCat][i].action:SetAttribute("spell", totemSpell[1])
+		TOCA.FrameSeg.Button[totemCat][i].highlight = TOCA.FrameSeg.Button[totemCat][i]:CreateTexture(nil, "ARTWORK", TOCA.FrameSeg.Button[totemCat][i], 0)
+		TOCA.FrameSeg.Button[totemCat][i].highlight:SetSize(TOCA.FrameSeg.Button[totemCat][i]:GetWidth(), TOCA.FrameSeg.Button[totemCat][i]:GetHeight())
+		TOCA.FrameSeg.Button[totemCat][i].highlight:SetPoint("CENTER", 0, 0)
+		TOCA.FrameSeg.Button[totemCat][i].highlight:SetTexture("Interface/Buttons/ButtonHilight-Square")
+		TOCA.FrameSeg.Button[totemCat][i].highlight:SetBlendMode("ADD")
+		TOCA.FrameSeg.Button[totemCat][i].highlight:Hide()
+		TOCA.FrameSeg.Button[totemCat][i].action:SetScript("OnEnter", function(self)
+			TOCA.FrameSeg.Button[totemCat][i].highlight:Show()
+		end)
+		TOCA.FrameSeg.Button[totemCat][i].action:SetScript("OnLeave", function(self)
+			TOCA.FrameSeg.Button[totemCat][i].highlight:Hide()
+		end)
 	end
 
-	TOCA.FrameSeg.Button[totemCat].close= CreateFrame("Button", nil, TOCA.FrameSeg[totemCat], "BackdropTemplate")
-	TOCA.FrameSeg.Button[totemCat].close:SetSize(16, 16)
-	TOCA.FrameSeg.Button[totemCat].close:SetPoint("TOPRIGHT", -1, 0)
+	TOCA.FrameSeg.Button[totemCat].close = CreateFrame("Button", nil, TOCA.FrameSeg[totemCat].Menu, "BackdropTemplate")
+	TOCA.FrameSeg.Button[totemCat].close:SetSize(18, 18)
+	TOCA.FrameSeg.Button[totemCat].close:SetPoint("TOPLEFT", 2, -2)
+	TOCA.FrameSeg.Button[totemCat].close:SetFrameLevel(TOCA.Framelevel.Buttons)
 	TOCA.FrameSeg.Button[totemCat].close:SetBackdrop(TOCA.Backdrop.Button)
 	TOCA.FrameSeg.Button[totemCat].close:SetBackdropColor(0.6, 0, 0, 1)
 	TOCA.FrameSeg.Button[totemCat].close:SetBackdropBorderColor(1, 1, 1, 0.6)
-	TOCA.FrameSeg.Button[totemCat].close:Hide()
 	TOCA.FrameSeg.Button[totemCat].close.icon = TOCA.FrameSeg.Button[totemCat].close:CreateTexture(nil, "ARTWORK")
 	TOCA.FrameSeg.Button[totemCat].close.icon:SetSize(12, 12)
 	TOCA.FrameSeg.Button[totemCat].close.icon:SetPoint("CENTER", 0, 0)
 	TOCA.FrameSeg.Button[totemCat].close.icon:SetTexture("Interface/Buttons/UI-StopButton")
+	TOCA.FrameSeg.Button[totemCat].close:SetScript("OnClick", function(self)
+		TOCA.CloseAllMenus()
+		TOCA.FrameSeg[totemCat]:Hide()
+		TOCA.Notification(string.lower(totemCat) .. " bar closed. Type '" .. TCCMD .. " show' to reopen.")
+	end)
 	TOCA.FrameSeg.Button[totemCat].close:SetScript("OnEnter", function(self)
 	  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
 	    self:SetBackdropBorderColor(1, 1, 1, 0)
 	  else
 	    self:SetBackdropBorderColor(1, 1, 1, 1)
 	  end
+		--TOCA.SegmentedButtonMenu(totemCat, true)
 	end)
 	TOCA.FrameSeg.Button[totemCat].close:SetScript("OnLeave", function(self)
 	  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
@@ -106,11 +178,35 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 	    self:SetBackdropBorderColor(1, 1, 1, 0.6)
 	  end
 	end)
-	TOCA.FrameSeg.Button[totemCat].close:SetScript("OnClick", function()
-	  TOCA.CloseAllMenus()
-	  TOCA.FrameMain:Hide()
-	  TOCADB[TOCA.player.combine]["DISABLED"] = "YES"
-	  TOCA.Notification("closed. Type '"..TCCMD.." show' to reopen.")
+
+	TOCA.FrameSeg.Button[totemCat].orientation = CreateFrame("Button", nil, TOCA.FrameSeg[totemCat].Menu, "BackdropTemplate")
+	TOCA.FrameSeg.Button[totemCat].orientation:SetSize(18, 18)
+	TOCA.FrameSeg.Button[totemCat].orientation:SetPoint("TOPLEFT", 2, -18)
+	TOCA.FrameSeg.Button[totemCat].orientation:SetFrameLevel(TOCA.Framelevel.Buttons)
+	TOCA.FrameSeg.Button[totemCat].orientation:SetBackdrop(TOCA.Backdrop.Button)
+	TOCA.FrameSeg.Button[totemCat].orientation:SetBackdropColor(0.6, 0, 0, 1)
+	TOCA.FrameSeg.Button[totemCat].orientation:SetBackdropBorderColor(1, 1, 1, 0.6)
+	TOCA.FrameSeg.Button[totemCat].orientation.icon = TOCA.FrameSeg.Button[totemCat].orientation:CreateTexture(nil, "ARTWORK")
+	TOCA.FrameSeg.Button[totemCat].orientation.icon:SetSize(11, 11)
+	TOCA.FrameSeg.Button[totemCat].orientation.icon:SetPoint("CENTER", 0, 0)
+	TOCA.FrameSeg.Button[totemCat].orientation.icon:SetTexture("Interface/AddOns/".. TOCA.Global.prefix .."/images/btn_orientation.tga")
+	TOCA.FrameSeg.Button[totemCat].orientation:SetScript("OnClick", function()
+		print("test")
+	end)
+	TOCA.FrameSeg.Button[totemCat].orientation:SetScript("OnEnter", function(self)
+	  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
+	    self:SetBackdropBorderColor(1, 1, 1, 0)
+	  else
+	    self:SetBackdropBorderColor(1, 1, 1, 1)
+	  end
+		--TOCA.SegmentedButtonMenu(totemCat, true)
+	end)
+	TOCA.FrameSeg.Button[totemCat].orientation:SetScript("OnLeave", function(self)
+	  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
+	    self:SetBackdropBorderColor(1, 1, 1, 0)
+	  else
+	    self:SetBackdropBorderColor(1, 1, 1, 0.6)
+	  end
 	end)
 
 end
