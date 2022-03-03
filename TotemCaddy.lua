@@ -533,7 +533,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:SetBackdropBorderColor(1, 1, 1, 0)
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:SetFrameStrata("TOOLTIP")
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:Hide()
-		TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].recharge = CreateFrame("Cooldown", nil, TOCA.SlotGrid.VerticalTotemButton[totemCat][i], "CooldownFrameTemplate")
+		TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].recharge = CreateFrame("Cooldown", nil, TOCA.SlotGrid.HorizontalTotemButton[totemCat][i], "CooldownFrameTemplate")
 		TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].recharge:SetSize(TOCA.Slot_w, TOCA.Slot_h)
 		TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].recharge:SetPoint("CENTER", 0, 0)
 		TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].recharge:SetAllPoints()

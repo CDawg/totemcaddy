@@ -1240,8 +1240,10 @@ end
 
 function TOCA.ExtendedTotemCooldowns(totemCat, spell, countDown)
 	TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), countDown)
-	--TOCA.SlotGrid.VerticalTotemButton[totemCat][i].recharge:SetCooldown(GetTime(), countDown)
-	--TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].recharge:SetCooldown(GetTime(), countDown)
+	for i,totemSpell in pairs(TOCA.totems[totemCat]) do
+		TOCA.SlotGrid.VerticalTotemButton[totemCat][i].recharge:SetCooldown(GetTime(), countDown)
+		TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].recharge:SetCooldown(GetTime(), countDown)
+	end
 	if (totemCat == "EARTH") then
 	  if (spell == 2484) then
 			TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), 15) --earthbind
