@@ -29,7 +29,7 @@ TOCA.locale = {
 	},
 
   UI = {
-		FRAMESTYLES = {"Clássico", "Grade Vertical", "Grade Horizontal"},
+		FRAMESTYLES = {"Clássico", "Segmented", "Grade Vertical", "Grade Horizontal"},
 		BUTTON = {"Fechar", "Salve", "Excluir", "sim", "Não"},
 
 		TABS = {

@@ -254,8 +254,8 @@ TOCA.player.combine = TOCA.player.name .. "-" .. TOCA.player.realm
 TOCA.colors={}
 TOCA.colors.totems = {
 	FIRE = {1, 0.2, 0, 1},
-	EARTH= {0, 1, 0.3, 1},
-	WATER= {0, 0.2, 0.8, 1},
+	EARTH= {0.5, 1, 0.2, 1},
+	WATER= {0.2, 0.5, 0.9, 1},
 	AIR  = {0.7, 0.7, 0.8, 1}
 }
 

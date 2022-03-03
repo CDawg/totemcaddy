@@ -18,9 +18,14 @@ local totemButtonPos_Y={}
 TOCA.SegBarSize={}
 TOCA.TotemNum["SEG"] = 0
 
+local totemPalette={}
+for totemCat,v in pairsByKeys(TOCA.totems) do
+	totemPalette[totemCat] = {TOCA.colors.totems[totemCat][1], TOCA.colors.totems[totemCat][2], TOCA.colors.totems[totemCat][3], TOCA.colors.totems[totemCat][4]}
+end
+
 function TOCA.SegmentedButtonMenu(totemCat, show)
 	TOCA.CloseAllMenus()
-	if (show) then
+	if ((show) and (not TOCA.isInCombat)) then
 		TOCA.FrameSeg[totemCat].Menu:Show()
 	end
 end
@@ -34,7 +39,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 	TOCA.FrameSeg[totemCat]:SetHeight(40)
 	--local _defaultPointSet = (TOCA.FrameSeg[totemCat]:GetWidth()/2)-(TOCA.TotemNum["SEG"]*TOCA.FrameSeg[totemCat]:GetWidth())
 	local _defaultPointSet = TOCA.TotemNum["SEG"]*TOCA.FrameSeg[totemCat]:GetWidth()
-	TOCA.FrameSeg[totemCat]:SetPoint("TOPLEFT", 200+_defaultPointSet, -200)
+	TOCA.FrameSeg[totemCat]:SetPoint("CENTER", -100+_defaultPointSet, -20)
 	TOCA.FrameSeg[totemCat]:SetMovable(true)
 	TOCA.FrameSeg[totemCat]:EnableMouse(true)
 	TOCA.FrameSeg[totemCat]:RegisterForDrag("LeftButton")
@@ -64,11 +69,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 	  edgeFile= "",
 	  edgeSize= 12,
 	  insets  = {left=2, right=2, top=2, bottom=2}})
-	TOCA.FrameSeg[totemCat].Header:SetBackdropColor(
-		TOCA.colors.totems[totemCat][1],
-		TOCA.colors.totems[totemCat][2],
-		TOCA.colors.totems[totemCat][3],
-		TOCA.colors.totems[totemCat][4])
+	TOCA.FrameSeg[totemCat].Header:SetBackdropColor(0, 0, 0, 1)
 	TOCA.FrameSeg[totemCat].Header:EnableMouse(true)
 	TOCA.FrameSeg[totemCat].Header:RegisterForDrag("LeftButton")
 	TOCA.FrameSeg[totemCat].Header:SetScript("OnEnter", function()
@@ -90,7 +91,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 	TOCA.FrameSeg[totemCat].Menu = CreateFrame("Frame", nil, TOCA.FrameSeg[totemCat], "BackdropTemplate", 1)
 	TOCA.FrameSeg[totemCat].Menu:SetWidth(22)
 	TOCA.FrameSeg[totemCat].Menu:SetHeight(40)
-	TOCA.FrameSeg[totemCat].Menu:SetPoint("TOPLEFT", TOCA.FrameSeg[totemCat]:GetWidth(), -4)
+	TOCA.FrameSeg[totemCat].Menu:SetPoint("TOPLEFT", TOCA.FrameSeg[totemCat]:GetWidth()-1, -4)
 	TOCA.FrameSeg[totemCat].Menu:SetBackdrop(TOCA.Backdrop.General)
 	TOCA.FrameSeg[totemCat].Menu:Hide()
 	TOCA.FrameSeg[totemCat].Menu:SetScript("OnEnter", function()
@@ -191,7 +192,12 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 	TOCA.FrameSeg.Button[totemCat].orientation.icon:SetPoint("CENTER", 0, 0)
 	TOCA.FrameSeg.Button[totemCat].orientation.icon:SetTexture("Interface/AddOns/".. TOCA.Global.prefix .."/images/btn_orientation.tga")
 	TOCA.FrameSeg.Button[totemCat].orientation:SetScript("OnClick", function()
-		print("test")
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["SEG_OR_"..totemCat] == "H") then
+			TOCADB[TOCA.player.combine]["CONFIG"]["SEG_OR_"..totemCat] = "V"
+		else
+			TOCADB[TOCA.player.combine]["CONFIG"]["SEG_OR_"..totemCat] = "H"
+		end
+		TOCA.EnableKnownTotems() --size the bars to the number of totems we know
 	end)
 	TOCA.FrameSeg.Button[totemCat].orientation:SetScript("OnEnter", function(self)
 	  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then

@@ -401,14 +401,46 @@ function TOCA.EnableTotems(enable)
   end
 end
 
-function TOCA.SizeSegmentedBars()
+local totemButtonPos_X={}
+local totemButtonPos_Y={}
+function TOCA.SizeSegmentedBars(totemCat) --and adjust orientation
+	totemButtonPos_X[totemCat] = 0
+	totemButtonPos_Y[totemCat] = 0
 	if (TOCA.player.classID == 7) then --shaman
-		for totemCat,v in pairsByKeys(TOCA.totems) do
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["SEG_OR_"..totemCat] == "H") then
+			TOCA.FrameSeg[totemCat]:SetWidth(38.8*TOCA.KnownTotems[totemCat])
+			TOCA.FrameSeg[totemCat]:SetHeight(41)
+			for i,totemSpell in pairs(TOCA.totems[totemCat]) do
+				totemButtonPos_X[totemCat] = totemButtonPos_X[totemCat]+TOCA.Slot_w
+				totemButtonPos_Y[totemCat] = totemButtonPos_Y[totemCat]+TOCA.Slot_h
+				--TOCA.FrameSeg.Button[totemCat][i]:SetPoint("TOPLEFT", 15.1-totemButtonPos_Y[totemCat]+TOCA.Slot_w, -3)
+				TOCA.FrameSeg.Button[totemCat][i]:SetPoint("TOPLEFT", -TOCA.Slot_w+totemButtonPos_Y[totemCat]+16.1, -3)
+				TOCA.FrameSeg[totemCat].Menu:SetWidth(40)
+				TOCA.FrameSeg[totemCat].Menu:SetHeight(22)
+				TOCA.FrameSeg[totemCat].Menu:SetPoint("TOPLEFT", 0, 20)
+				TOCA.FrameSeg.Button[totemCat].orientation:SetPoint("TOPLEFT", 18, -2)
+				TOCA.FrameSeg[totemCat].Header:SetWidth(14)
+				TOCA.FrameSeg[totemCat].Header:SetHeight(33)
+				TOCA.FrameSeg[totemCat].Header:SetPoint("TOPLEFT", 3, -4)
+			end
+		else
+			TOCA.FrameSeg[totemCat]:SetWidth(41)
 			TOCA.FrameSeg[totemCat]:SetHeight(38.8*TOCA.KnownTotems[totemCat])
-			--print(totemCat .. " = " .. 38.8*TOCA.KnownTotems[totemCat])
-			TOCA.FrameSeg[totemCat].Background:SetWidth(TOCA.FrameSeg[totemCat]:GetWidth())
-			TOCA.FrameSeg[totemCat].Background:SetHeight(TOCA.FrameSeg[totemCat]:GetHeight())
-	  end
+			for i,totemSpell in pairs(TOCA.totems[totemCat]) do
+				totemButtonPos_X[totemCat] = totemButtonPos_X[totemCat]+TOCA.Slot_w
+				totemButtonPos_Y[totemCat] = totemButtonPos_Y[totemCat]+TOCA.Slot_h
+				TOCA.FrameSeg.Button[totemCat][i]:SetPoint("TOPLEFT", 3, -15.1-totemButtonPos_Y[totemCat]+TOCA.Slot_h)
+				TOCA.FrameSeg[totemCat].Menu:SetWidth(22)
+				TOCA.FrameSeg[totemCat].Menu:SetHeight(40)
+				TOCA.FrameSeg[totemCat].Menu:SetPoint("TOPLEFT", TOCA.FrameSeg[totemCat]:GetWidth()-1, 0)
+				TOCA.FrameSeg.Button[totemCat].orientation:SetPoint("TOPLEFT", 2, -18)
+				TOCA.FrameSeg[totemCat].Header:SetWidth(33)
+				TOCA.FrameSeg[totemCat].Header:SetHeight(14)
+				TOCA.FrameSeg[totemCat].Header:SetPoint("TOPLEFT", 3, -3)
+			end
+		end
+		TOCA.FrameSeg[totemCat].Background:SetWidth(TOCA.FrameSeg[totemCat]:GetWidth())
+		TOCA.FrameSeg[totemCat].Background:SetHeight(TOCA.FrameSeg[totemCat]:GetHeight())
 	end
 end
 
@@ -421,6 +453,10 @@ function TOCA.EnableKnownTotems()
 
     if (TOCA.isInCombat) then
       TOCA.Notification("In Combat, do nothing! TOCA.EnableKnownTotems()", true)
+			for totemCat,v in pairsByKeys(TOCA.totems) do
+				TOCA.FrameSeg[totemCat].Menu:Hide()
+			end
+			return
     else
       for totemCat,v in pairsByKeys(TOCA.totems) do
         for i,totemSpell in pairs(TOCA.totems[totemCat]) do
@@ -440,10 +476,12 @@ function TOCA.EnableKnownTotems()
           end
         end
       end
-      TOCA.Notification("TOCA.EnableKnownTotems()", true)
     end
   end
-	TOCA.SizeSegmentedBars()
+	for totemCat,v in pairsByKeys(TOCA.totems) do
+		TOCA.SizeSegmentedBars(totemCat)
+	end
+	TOCA.Notification("TOCA.EnableKnownTotems()", true)
 end
 
 function TOCA.HasEarthShield()
@@ -1665,6 +1703,11 @@ function SlashCmdList.TOCA(cmd)
 	  TOCA.FrameOptions:Show()
   elseif (cmd == TOCA.locale.COMMANDS[2][1]) then
 		TOCA.FrameMain:Show()
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.locale.UI.FRAMESTYLES[2]) then --segmented
+			for totemCat,v in pairsByKeys(TOCA.totems) do
+				TOCA.FrameSeg[totemCat]:Show()
+			end
+		end
 		TOCADB[TOCA.player.combine]["DISABLED"] = "NO"
 	elseif (cmd == TOCA.locale.COMMANDS[3][1]) then
 		TOCA.FrameMain:Hide()

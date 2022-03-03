@@ -29,7 +29,7 @@ TOCA.locale = {
 	},
 
   UI = {
-		FRAMESTYLES = {"권위 있는", "그리드 수직", "그리드 수평"},
+		FRAMESTYLES = {"권위 있는", "Segmented", "그리드 수직", "그리드 수평"},
 		BUTTON = {"닫다", "구하다", "삭제", "네", "아니"},
 
 		TABS = {
