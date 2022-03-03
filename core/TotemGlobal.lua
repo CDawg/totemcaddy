@@ -405,6 +405,10 @@ local totemButtonPos_Y={}
 function TOCA.SizeSegmentedBars(totemCat) --and adjust orientation
 	totemButtonPos_X[totemCat] = 0
 	totemButtonPos_Y[totemCat] = 0
+	if ((TOCA.KnownTotems[totemCat] <= 3) or (TOCA.KnownTotems[totemCat] >= 20)) then --bugfix for leveling shamans without totems
+		TOCA.KnownTotems[totemCat] = 4 --min 4
+	end
+
 	if (TOCA.player.classID == 7) then --shaman
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["SEG_OR_"..totemCat] == "H") then
 			TOCA.FrameSeg[totemCat]:SetWidth(38.8*TOCA.KnownTotems[totemCat])
