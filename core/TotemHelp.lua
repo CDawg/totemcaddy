@@ -19,7 +19,7 @@ TOCA.HELP = {
 		"",
 		"Type |cffffdf96/toca options|r for all available options and settings.",
 		"",
-		"|cffffdf96New Feature:|r Segmented Framestyle. Now you can have customizable category bars.",
+		"|cffffdf96New Feature:|r Segmented Framestyle. Now you can have customizable category bars. Type /toca options",
 		"|cffffdf96Upcoming Feature:|r Totem Radius and location on the minimap. (does not work in instances).",
 		"",
 	  "|cffffdf96First time using Totem Caddy?|r",
