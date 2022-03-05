@@ -22,6 +22,7 @@ TOCA.Global = {
   command= "toca",
   width  = 150,
   height = 85,
+	--font   = "Interface/Addons/TotemCaddy/Fonts/Emblem.TTF",
   font   = "Fonts/FRIZQT__.TTF",
   dir    = "Interface/Addons/TotemCaddy/",
   prefix = "TotemCaddy",
@@ -31,8 +32,6 @@ TOCA.Global = {
 }
 --local _LName, _LTitle = GetAddOnInfo(TOCA.Global.prefix)
 --TOCA.Global.version = tonumber(string.sub(_LTitle, 26, 29))
-
-MAX_RAID_SLOTS = 40
 
 TOCA.Game={}
 TOCA.Game.version = tonumber(string.sub(__Gversion, 1, 1))

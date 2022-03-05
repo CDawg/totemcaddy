@@ -71,107 +71,8 @@ TOCA.Main:RegisterEvent("NEW_WMO_CHUNK")
 TOCA.Main:RegisterEvent("ZONE_CHANGED")
 TOCA.Main:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 TOCA.Main:RegisterEvent("GROUP_ROSTER_UPDATE")
-TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted, _spellID)
-  if ((event == "ADDON_LOADED") and (prefix == TOCA.Global.prefix)) then
-    TOCA.Notification("v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " (" .. GetLocale() .. ") " .. TOCA.locale.INIT[6] .. ". Type /" .. TOCA.Global.command .. " for commands.")
-    TOCA.Init()
-  end
-
-  if ((event == "UNIT_SPELLCAST_START") or
-  (event == "UNIT_SPELLCAST_STOP") or
-  (event == "UNIT_POWER_FREQUENT")) then
-    TOCA.TotemBarUpdate(event)
-  end
-
-	if (event == "UNIT_SPELLCAST_START") then
-		if ((prefix == "player") and (_casted)) then
-			TOCA.TimerRechargeStart(_casted, false)
-		end
-	end
-
-  --technically, this needs to be handled on a different event
-  if (event == "UNIT_SPELLCAST_SENT") then
-    TOCA.TotemBarUpdate(event)
-    if ((prefix == "player") and (_spellID)) then
-      if(_spellID == TOCA.spell.TOTEMIC_CALL) then
-        TOCA.TotemTimerReset("all")
-      end
-      if(_spellID) then
-        --print("debug spell: " .. _spellID)
-        TOCA.TotemTimerResetBySpell(_spellID)
-      end
-    end
-  end
-	if (event == "UNIT_SPELLCAST_SUCCEEDED") then
-		if ((prefix == "player") and (_casted)) then --spell came from self
-			--print("debug spell: " .. _casted)
-			TOCA.TimerRechargeStart(_casted, true)
-		end
-	end
-
-  if (event == "UNIT_MAXPOWER") then
-    TOCA.TotemBarUpdate(event)
-  end
-  if (event == "UNIT_AURA") then --more accurate on usable spells
-    TOCA.TotemBarUpdate(event)
-  end
-  if (event == "PLAYER_TOTEM_UPDATE") then
-    TOCA.TotemBarUpdate(event)
-    TOCA.TotemBarTimerStart()
-		--[==[
-		local inInstance, instanceType = IsInInstance()
-		if (not inInstance) then
-		  TOCA.TotemStampPos(prefix)
-	  end
-		]==]--
-  end
-
-	if ((event == "PLAYER_TOTEM_UPDATE") or
-	(event == "PLAYER_STARTED_MOVING") or
-	(event == "PLAYER_STOPPED_MOVING")) then
-	  TOCA.TotemBarUpdate(event)
-	end
-
-  if (event == "PLAYER_DEAD") then
-    TOCA.TotemTimerReset("all")
-  end
-
-  if (event == "PLAYER_LOGIN") then
-    TOCA.SendPacket(TOCA.Net.version .. TOCA.Global.version, "GUILD")
-    if (TOCA.KeyBindsSetOnLoad == 1) then
-      TOCA.SetKeyBindOnLoad()
-      TOCA.KeyBindsSetOnLoad = 2
-    end
-    TOCA.EnableKnownTotems()
-  end
-
-  if (event == "BAG_UPDATE") then
-    TOCA.TotemBarUpdate(event) --fire off when enable/disable
-  end
-
-  if (event == "PLAYER_CONTROL_GAINED") then
-    TOCA.EnableTotems(true)
-    TOCA.Button.TotemicCall.disable:Hide()
-    TOCA.Notification("PLAYER_CONTROL_GAINED", true)
-  end
-
-  if (event == "PLAYER_CONTROL_LOST") then
-    TOCA.EnableTotems(false)
-    TOCA.Button.TotemicCall.disable:Show()
-    TOCA.Notification("PLAYER_CONTROL_LOST", true)
-  end
-
-  TOCA.Combat(event)
-
-	if ((event == "GROUP_ROSTER_UPDATE") or (event == "PLAYER_ROLES_ASSIGNED")) then
-		--TOCA.AssignmentESRaidSend() --send my resto data
-	end
-
-	--Load event last
-  if (event == "CHAT_MSG_ADDON") then
-		TOCA.VersionControl(prefix, netpacket) --get version from guild
-		--TOCA.AssignmentESRaidGet()
-  end
+TOCA.Main:SetScript("OnEvent", function(_self, event, prefix, netpacket, _casted, _spellID)
+  TOCA.EventManager(_self, event, prefix, netpacket, _casted, _spellID)
 end)
 
 TOCA.Button.TotemicCall_w=40
@@ -491,6 +392,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:SetSize(TOCA.Slot_w, TOCA.Slot_h)
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:SetPoint("CENTER", 0, 0)
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:SetBackdrop(TOCA.Backdrop.General)
+		TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:SetBackdropColor(0, 0, 0, 1)
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:SetBackdropBorderColor(1, 1, 1, 0)
     TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:Hide()
 		TOCA.SlotGrid.VerticalTotemButton[totemCat][i].recharge = CreateFrame("Cooldown", nil, TOCA.SlotGrid.VerticalTotemButton[totemCat][i], "CooldownFrameTemplate")
@@ -530,6 +432,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:SetSize(TOCA.Slot_w, TOCA.Slot_h)
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:SetPoint("CENTER", 0, 0)
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:SetBackdrop(TOCA.Backdrop.General)
+		TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:SetBackdropColor(0, 0, 0, 1)
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:SetBackdropBorderColor(1, 1, 1, 0)
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:SetFrameStrata("TOOLTIP")
     TOCA.SlotGrid.HorizontalTotemButton[totemCat][i].disable:Hide()

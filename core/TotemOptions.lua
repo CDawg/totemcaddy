@@ -58,7 +58,7 @@ for i=1, getn(TOCA.locale.UI.TABS.OPTIONS) do
     edgeSize= 12,
     insets  = {left=4, right=4, top=4, bottom=2},
   })
-  TOCA.Button.TabOptionsBack[i]:SetBackdropColor(0, 0, 0, 0.8)
+  TOCA.Button.TabOptionsBack[i]:SetBackdropColor(0, 0, 0, 1)
 
   TOCA.Button.TabOptions[i]= CreateFrame("Button", nil, TOCA.Button.TabOptionsBack[i], "BackdropTemplate")
   TOCA.Button.TabOptions[i]:SetSize(TOCA.TabWidth.Options, 32)
