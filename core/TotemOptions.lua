@@ -860,6 +860,7 @@ end)
 TOCA.Button.OptionsClose:SetScript("OnClick", function()
   TOCA.CloseAllMenus()
   TOCA.FrameOptions:Hide()
+	TOCA.OptionMenuOpen = 0
 end)
 TOCA.Button.OptionsCloseText = TOCA.Button.OptionsClose:CreateFontString(nil, "ARTWORK")
 TOCA.Button.OptionsCloseText:SetFont(TOCA.Global.font, 11)

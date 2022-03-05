@@ -30,20 +30,21 @@ for i=1, 4 do
 	TOCA.TotemRadius[i]:SetPoint("CENTER", 0, 0)
 	TOCA.TotemRadius[i]:SetFrameStrata("FULLSCREEN")
 	TOCA.TotemRadius[i]:Hide()
+	TOCA.TotemRadius[i]:SetAlpha(1)
 	TOCA.TotemRadius[i].radius = TOCA.TotemRadius[i]:CreateTexture(nil, "ARTWORK")
 	TOCA.TotemRadius[i].radius:SetSize(TOCA.TotemRadius[i]:GetWidth(), TOCA.TotemRadius[i]:GetHeight())
 	TOCA.TotemRadius[i].radius:SetPoint("CENTER", 0, 0)
 	TOCA.TotemRadius[i].radius:SetTexture(TOCA.Global.dir .. "images/radius.tga")
 	TOCA.TotemRadius[i].radius:SetBlendMode("BLEND")
-	TOCA.TotemRadius[i].radius:SetVertexColor(0, 1, 0, TotemRadiusAlpha) --default a green just in case
+	TOCA.TotemRadius[i].radius:SetVertexColor(0, 1, 0, TOCA.TotemRadiusAlpha) --default a green just in case
 	if (i == 1) then --FIRE
-		TOCA.TotemRadius[i].radius:SetVertexColor(0.8, 0.4, 0, TOCA.TotemRadiusAlpha)
+		TOCA.TotemRadius[i].radius:SetVertexColor(TOCA.colors.totems.FIRE[1], TOCA.colors.totems.FIRE[2], TOCA.colors.totems.FIRE[3], TOCA.TotemRadiusAlpha)
 	elseif (i == 2) then --EARTH
-		TOCA.TotemRadius[i].radius:SetVertexColor(0.5, 0.5, 0, TOCA.TotemRadiusAlpha)
+		TOCA.TotemRadius[i].radius:SetVertexColor(TOCA.colors.totems.EARTH[1], TOCA.colors.totems.EARTH[2], TOCA.colors.totems.EARTH[3], TOCA.TotemRadiusAlpha)
 	elseif (i == 3) then --WATER
-		TOCA.TotemRadius[i].radius:SetVertexColor(0, 0.8, 1, TOCA.TotemRadiusAlpha)
+		TOCA.TotemRadius[i].radius:SetVertexColor(TOCA.colors.totems.WATER[1], TOCA.colors.totems.WATER[2], TOCA.colors.totems.WATER[3], TOCA.TotemRadiusAlpha)
 	elseif (i == 4) then --AIR
-		TOCA.TotemRadius[i].radius:SetVertexColor(0.5, 0.9, 1, TOCA.TotemRadiusAlpha)
+		TOCA.TotemRadius[i].radius:SetVertexColor(TOCA.colors.totems.AIR[1], TOCA.colors.totems.AIR[2], TOCA.colors.totems.AIR[3], TOCA.TotemRadiusAlpha)
 	end
 	--TOCA.TotemRadius[i].radius:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 end
@@ -69,8 +70,8 @@ do
 				local map = C_Map.GetBestMapForUnit("player")
 				local position = C_Map.GetPlayerMapPosition(map, "player")
 				local playerX, playerY = position:GetXY()
-				local playerD = GetPlayerFacing()
-				local mapSize = 4 --the outside world needs to calc above 3
+				--local playerD = GetPlayerFacing()
+				local mapSize = 4 --the outside world needs to calc above 3 (Pi)
 				--local x, y, z, instanceID = UnitPosition("player")
 				--print(playerX)
 				--print(x)
@@ -111,9 +112,20 @@ do
 				xOfs = self.oX -- + 5
 				yOfs = self.oY -- + 5
 				self:ClearAllPoints()
-				--print("TX " .. totemX)
+				--local distanceTotal = totemX - totemY
+				--print("totemX " .. totemX)
+				--print("totemY " .. totemY)
+				--print("total " .. distanceTotal)
+				if (totem) then
+					--print("totemX " .. totemX)
+					--print("totemY " .. totemY)
+					totem:SetAlpha(1)
+					if ((totemX < -38) or (totemX > 38) or (totemY < -38) or (totemY > 38)) then --calc the edge of the map
+						totem:SetAlpha(0)
+					end
+				end
 				--print("PX " .. playerX)
-				--print("DX " .. distX)
+				--print(totemCat)
 				--print(totemY)
 				self:SetPoint(point, relativeTo, relativePoint, -totemX, totemY)
 			end)
@@ -129,10 +141,10 @@ function TOCA.TotemStampPos(totemCat) --stamp the last pos for the specific tote
 	if (totemCat) then --just in case a conflict with a bogus spell
 		local map = C_Map.GetBestMapForUnit("player")
 		local position = C_Map.GetPlayerMapPosition(map, "player")
-		local playerD = GetPlayerFacing()
+		local playerYaw = GetPlayerFacing()
 		local posX, posY = position:GetXY()
 
-		WorldMapFrame:Hide()
+		--WorldMapFrame:Hide()
 
 		TOCA.TotemPresent[totemCat], TOCA.TotemName[totemCat], TOCA.TotemStartTime[totemCat], TOCA.TotemDuration[totemCat] = GetTotemInfo(totemCat)
 		if (TOCA.TotemPresent[totemCat]) then
@@ -154,8 +166,60 @@ function TOCA.TotemStampPos(totemCat) --stamp the last pos for the specific tote
 			--PlayerFrame:SetUserPlaced(true)
 		end
 
-		--print(playerD)
-		TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]], TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]])
+		--print("playerYaw " .. playerYaw/360)
+		local facingAIR = playerYaw/360 - 0.012
+
+		if ((TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]) and (TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]])) then
+			print(TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]])
+			print(TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]+facingAIR)
+			TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]+facingAIR, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]-facingAIR)
+		end
 
 	end
 end
+
+--handle the icon down here
+TOCA.Button.Minimap = CreateFrame("Button", nil, Minimap)
+TOCA.Button.Minimap:SetFrameLevel(499)
+TOCA.Button.Minimap:SetFrameStrata("TOOLTIP")
+TOCA.Button.Minimap:SetSize(26, 26)
+TOCA.Button.Minimap:SetMovable(true)
+local MMIcon = TOCA.Global.dir .. "images/totem_icon_minimap.tga"
+TOCA.Button.Minimap:SetNormalTexture(MMIcon)
+TOCA.Button.Minimap:SetPushedTexture(MMIcon)
+TOCA.Button.Minimap:SetHighlightTexture(MMIcon)
+
+local thisIconPos = 0
+local function UpdateMapButton()
+  local Xpoa, Ypoa = GetCursorPosition()
+  local Xmin, Ymin = Minimap:GetLeft(), Minimap:GetBottom()
+  Xpoa = Xmin - Xpoa / Minimap:GetEffectiveScale() + 70
+  Ypoa = Ypoa / Minimap:GetEffectiveScale() - Ymin - 70
+  thisIconPos = math.deg(math.atan2(Ypoa, Xpoa))
+  TOCA.Button.Minimap:ClearAllPoints()
+  TOCA.Button.Minimap:SetPoint("TOPLEFT", Minimap, "TOPLEFT", 60 - (80 * cos(thisIconPos)), (80 * sin(thisIconPos)) - 56)
+end
+TOCA.Button.Minimap:RegisterForDrag("LeftButton")
+TOCA.Button.Minimap:SetScript("OnDragStart", function()
+    TOCA.Button.Minimap:StartMoving()
+    TOCA.Button.Minimap:SetScript("OnUpdate", UpdateMapButton)
+end)
+TOCA.Button.Minimap:SetScript("OnDragStop", function()
+    TOCA.Button.Minimap:StopMovingOrSizing()
+    TOCA.Button.Minimap:SetScript("OnUpdate", nil)
+    local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.Button.Minimap:GetPoint()
+		TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_ICON_POS"] = math.ceil(xOfs) .. "," .. math.ceil(yOfs)
+    UpdateMapButton()
+end)
+TOCA.Button.Minimap:ClearAllPoints()
+TOCA.Button.Minimap:SetPoint("TOPLEFT", Minimap, "TOPLEFT", 60 - (80 * cos(thisIconPos)),(80 * sin(thisIconPos)) - 56)
+TOCA.Button.Minimap:SetScript("OnClick", function()
+	TOCA.CloseAllMenus()
+	if (TOCA.OptionMenuOpen == 1) then
+		TOCA.FrameOptions:Hide()
+		TOCA.OptionMenuOpen = 0
+	else
+		TOCA.OptionMenuOpen = 1
+	  TOCA.FrameOptions:Show()
+	end
+end)

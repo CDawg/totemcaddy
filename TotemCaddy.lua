@@ -637,6 +637,7 @@ TOCA.Button.Options:SetScript("OnClick", function(self)
   TOCA.CloseAllMenus()
   TOCA.FrameOptions:Show()
 end)
+TOCA.Button.Options:Hide()
 
 TOCA.Button.CloseMain= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTemplate")
 TOCA.Button.CloseMain:SetSize(16, 16)

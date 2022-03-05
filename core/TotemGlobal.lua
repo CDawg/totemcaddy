@@ -139,7 +139,7 @@ TOCA.totems.ID.AIR = {
 	3738, --wrath of air
 }
 
-
+TOCA.OptionMenuOpen = 0
 TOCA.ShamanShieldDuration = 10 --10 minutes on ALL shields
 TOCA.NotificationAlertShield = 0
 TOCA.NotificationAlertRadius = {}
@@ -671,8 +671,10 @@ function TOCA.Init()
   TOCA.FrameMain:Hide()
   if (TOCA.player.classID == 7) then --shaman
     TOCA.FrameMain:Show()
+		TOCA.Button.Minimap:Show()
   else
     TOCA.FrameHelp:Hide()
+		TOCA.Button.Minimap:Hide()
   end
   if (TOCADB == nil) then
     TOCADB = {}
@@ -854,6 +856,12 @@ function TOCA.Init()
       TOCA.Tooltip:ClearAllPoints()
       TOCA.Tooltip:SetPoint(TOCAFrameToolPos[1], tonumber(TOCAFrameToolPos[2]), tonumber(TOCAFrameToolPos[3]))
     end
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_ICON_POS"]) then
+	    local minimapIconPos = split(TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_ICON_POS"], ",")
+	    if ((minimapIconPos[1]) and (minimapIconPos[2])) then
+	      TOCA.Button.Minimap:SetPoint("TOPLEFT", Minimap, "TOPLEFT", minimapIconPos[1]+130, minimapIconPos[2]+22)
+	    end
+	  end
     TOCA.UpdateTotemSet()
     TOCA.UpdateDDMenu(TOCA.Dropdown.Main)
     TOCA.UpdateDDMenu(TOCA.Dropdown.Sets)
