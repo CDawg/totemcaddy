@@ -60,11 +60,12 @@ do
 	function TOCA.UpdateTotemPosition(totem, totemCat, stampX, stampY)
 		local _GMMapW = Minimap:GetWidth()
 		local _GMMapH = Minimap:GetHeight()
+		local _GMMRotate = tonumber(GetCVar("rotateMinimap"))
+		local _GMMZoom = Minimap:GetZoom()
 		local point, relativeTo, relativePoint, xOfs, yOfs = totem:GetPoint()
 		local mapSize = 4 --the outside world needs to calc above 3 (Pi)
-		local mapEdgeRing = 38
-		--GetCVar("rotateMinimap")
-		--if(Minimap:GetZoom()
+		local mapEdgeClip = _GMMapW -102 --this is assuming a box/round shaped map of a default 140x140
+
 		if ((xOfs ~= 0) or (yOfs ~= 0)) then
 			--totem.oX = xOfs
 			--totem.oY = yOfs
@@ -73,6 +74,8 @@ do
 				local map = C_Map.GetBestMapForUnit("player")
 				local position = C_Map.GetPlayerMapPosition(map, "player")
 				local playerX, playerY = position:GetXY()
+				local playerFC = math.cos(GetPlayerFacing())
+				local playerFS = math.sin(GetPlayerFacing())
 				--local playerD = GetPlayerFacing()
 				--local x, y, z, instanceID = UnitPosition("player")
 				--print(playerX)
@@ -82,7 +85,7 @@ do
 				distY = stampY - playerY
 				--totemX = stampX - distX *(_GMMapW+_GMMapH)*math.pi --*playerX * 20	/ (_GMMapW+_GMMapH) --factor = (mapRadius - iconDiameter) / dist;
 				--totemY = stampY - distY *(_GMMapW+_GMMapH)*math.pi --*playerY * 20 / (_GMMapW+_GMMapH)
-				if (IsResting()) then
+				if ((IsIndoors()) or (IsResting())) then --in a city, underground or contained map
 					mapSize = 1
 				end
 				--print(mapSize)
@@ -111,8 +114,8 @@ do
 					yOfs = self.oY + 5
 				end
 				]==]--
-				xOfs = self.oX -- + 5
-				yOfs = self.oY -- + 5
+				--xOfs = self.oX -- + 5
+				--yOfs = self.oY -- + 5
 				self:ClearAllPoints()
 				--local distanceTotal = totemX - totemY
 				--print("totemX " .. totemX)
@@ -122,19 +125,34 @@ do
 					--print("totemX " .. totemX)
 					--print("totemY " .. totemY)
 					totem:SetAlpha(1)
-					if ((totemX < -mapEdgeRing) or (totemX > mapEdgeRing) or (totemY < -mapEdgeRing) or (totemY > mapEdgeRing)) then --calc the edge of the map
+					if ((totemX < -mapEdgeClip) or (totemX > mapEdgeClip) or (totemY < -mapEdgeClip) or (totemY > mapEdgeClip)) then --calc the edge of the map
 						totem:SetAlpha(0)
 					end
 				end
 				--print("PX " .. playerX)
 				--print(totemCat)
 				--print(totemY)
+
 				self:SetPoint(point, relativeTo, relativePoint, -totemX, totemY)
+
+				if (_GMMRotate == 1) then
+					print(_GMMRotate)
+					local dx, dy = totemX, totemY
+					local xDist = dx*playerFC - dy*playerFS
+					local yDist = dx*playerFS + dy*playerFC
+					--print(playerFC)
+					--print(xDist)
+					self:SetPoint("CENTER", relativeTo, "CENTER", -xDist, yDist)
+					--print("rotate is on")
+				end
 			end)
 		end
 
 	end
 end
+
+--print(Minimap:GetTexture())
+print(Minimap:GetFrameLevel())
 
 TOCA.RadiusTotem={}
 TOCA.RadiusTotem.X={}
@@ -143,7 +161,8 @@ function TOCA.TotemStampPos(totemCat) --stamp the last pos for the specific tote
 	if (totemCat) then --just in case a conflict with a bogus spell
 		local map = C_Map.GetBestMapForUnit("player")
 		local position = C_Map.GetPlayerMapPosition(map, "player")
-		local playerYaw = GetPlayerFacing()
+		local playerFC = math.cos(GetPlayerFacing())
+		local playerFS = math.sin(GetPlayerFacing())
 		local posX, posY = position:GetXY()
 
 		--WorldMapFrame:Hide()
@@ -168,24 +187,35 @@ function TOCA.TotemStampPos(totemCat) --stamp the last pos for the specific tote
 			--PlayerFrame:SetUserPlaced(true)
 		end
 
-		print("playerYaw " .. playerYaw)
+		--print("playerFC " .. playerFC)
+		--print("playerFC " .. playerFS)
+		local getPlayerFC = 0
+		local getPlayerFS = 0
+		--[==[
+		if (playerFC) then
+			getPlayerFC = playerFC --must always have a value to prevent LUA errors
+		end
+		if (playerFS) then
+			getPlayerFS = playerFS
+		end
+		]==]--
 
 		if ((TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]) and (TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]])) then
-			if (totemCat == 1) then --fire
+			if (totemCat == 1) then
 				print("fire")
-				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]-0.004, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]-0.004)
+				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]-0.004*getPlayerFC, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]-0.004*getPlayerFS)
 			end
-			if (totemCat == 2) then --earth
+			if (totemCat == 2) then
 				print("earth")
-				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]+0.004, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]-0.004)
+				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]+0.004*getPlayerFC, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]-0.004*getPlayerFS)
 			end
-			if (totemCat == 3) then --fire
+			if (totemCat == 3) then
 				print("water")
-				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]+0.004, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]+0.004)
+				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]+0.004*getPlayerFC, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]+0.004*getPlayerFS)
 			end
-			if (totemCat == 4) then --air
+			if (totemCat == 4) then
 				print("air")
-				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]-0.004, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]+0.004)
+				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]-0.004*getPlayerFC, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]+0.004*getPlayerFS)
 			end
 		end
 
