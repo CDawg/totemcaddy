@@ -61,12 +61,10 @@ function TOCA.EventManager(_self, event, prefix, netpacket, _casted, _spellID)
 	  if (event == "PLAYER_TOTEM_UPDATE") then
 	    TOCA.TotemBarUpdate(event)
 	    TOCA.TotemBarTimerStart()
-			--[==[
 			local inInstance, instanceType = IsInInstance()
 			if (not inInstance) then
 			  TOCA.TotemStampPos(prefix)
 		  end
-			]==]--
 	  end
 
 		if ((event == "PLAYER_TOTEM_UPDATE") or

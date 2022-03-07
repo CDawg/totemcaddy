@@ -28,7 +28,8 @@ for i=1, 4 do
 	TOCA.TotemRadius[i]:SetWidth(42)
 	TOCA.TotemRadius[i]:SetHeight(42)
 	TOCA.TotemRadius[i]:SetPoint("CENTER", 0, 0)
-	TOCA.TotemRadius[i]:SetFrameStrata("FULLSCREEN")
+	TOCA.TotemRadius[i]:SetFrameStrata(Minimap:GetFrameStrata())
+	TOCA.TotemRadius[i]:SetFrameLevel(Minimap:GetFrameLevel())
 	TOCA.TotemRadius[i]:Hide()
 	TOCA.TotemRadius[i]:SetAlpha(1)
 	TOCA.TotemRadius[i].radius = TOCA.TotemRadius[i]:CreateTexture(nil, "ARTWORK")
@@ -60,6 +61,8 @@ do
 		local _GMMapW = Minimap:GetWidth()
 		local _GMMapH = Minimap:GetHeight()
 		local point, relativeTo, relativePoint, xOfs, yOfs = totem:GetPoint()
+		local mapSize = 4 --the outside world needs to calc above 3 (Pi)
+		local mapEdgeRing = 38
 		--GetCVar("rotateMinimap")
 		--if(Minimap:GetZoom()
 		if ((xOfs ~= 0) or (yOfs ~= 0)) then
@@ -71,7 +74,6 @@ do
 				local position = C_Map.GetPlayerMapPosition(map, "player")
 				local playerX, playerY = position:GetXY()
 				--local playerD = GetPlayerFacing()
-				local mapSize = 4 --the outside world needs to calc above 3 (Pi)
 				--local x, y, z, instanceID = UnitPosition("player")
 				--print(playerX)
 				--print(x)
@@ -120,7 +122,7 @@ do
 					--print("totemX " .. totemX)
 					--print("totemY " .. totemY)
 					totem:SetAlpha(1)
-					if ((totemX < -38) or (totemX > 38) or (totemY < -38) or (totemY > 38)) then --calc the edge of the map
+					if ((totemX < -mapEdgeRing) or (totemX > mapEdgeRing) or (totemY < -mapEdgeRing) or (totemY > mapEdgeRing)) then --calc the edge of the map
 						totem:SetAlpha(0)
 					end
 				end
@@ -166,13 +168,25 @@ function TOCA.TotemStampPos(totemCat) --stamp the last pos for the specific tote
 			--PlayerFrame:SetUserPlaced(true)
 		end
 
-		--print("playerYaw " .. playerYaw/360)
-		local facingAIR = playerYaw/360 - 0.012
+		print("playerYaw " .. playerYaw)
 
 		if ((TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]) and (TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]])) then
-			print(TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]])
-			print(TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]+facingAIR)
-			TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]+facingAIR, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]-facingAIR)
+			if (totemCat == 1) then --fire
+				print("fire")
+				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]-0.004, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]-0.004)
+			end
+			if (totemCat == 2) then --earth
+				print("earth")
+				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]+0.004, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]-0.004)
+			end
+			if (totemCat == 3) then --fire
+				print("water")
+				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]+0.004, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]+0.004)
+			end
+			if (totemCat == 4) then --air
+				print("air")
+				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]-0.004, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]+0.004)
+			end
 		end
 
 	end
