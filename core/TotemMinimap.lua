@@ -80,69 +80,77 @@ do
 			totem.frame = 0
 			totem:SetScript("OnUpdate", function(self, lapse)
 				local inInstance, instanceType = IsInInstance()
+				local position = {}
+				local playerX, playerY = 0.1
 				if (totem) then
-					totem:SetAlpha(0) --just in case someone left a totem outside instance
-				end
-				if (not inInstance) then
-					local map = C_Map.GetBestMapForUnit("player")
-					local position = C_Map.GetPlayerMapPosition(map, "player")
-					local _GMMZoom = Minimap:GetZoom()
-					local playerX, playerY = position:GetXY()
-					local playerFC = math.cos(GetPlayerFacing())
-					local playerFS = math.sin(GetPlayerFacing())
-					local iconMinSize = 6
-					local iconMaxSize = iconMinSize*_GMMZoom/2
-					if (iconMaxSize < 6) then
-						iconMaxSize = iconMinSize
-					end
-
-					self.icon:SetSize(iconMaxSize, iconMaxSize)
-
-					self.radius:SetSize(totemRadius, totemRadius)
-
-					if (_GMMZoom >= 1) then
-						self.radius:SetSize((_GMMZoom*2)+totemRadius, (_GMMZoom*2)+totemRadius)
-						self.icon:SetSize(iconMaxSize, iconMaxSize)
-					end
-					--print("icms " .. iconMaxSize)
-
-					if (TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEM_ICON"] ~= "OFF") then
-						if (totemID) then
-						  self.icon:SetTexture(totemID)
-					  end
-					end
-
-					distX = stampX - playerX
-					distY = stampY - playerY
-
-					if ((IsIndoors()) or (IsResting())) then --in a city, underground or contained map
-						mapSize = 1
-					end
-
-					totemX = stampX - distX *(_GMMapW+_GMMapH)*math.pi *mapSize
-					totemY = stampY - distY *(_GMMapW+_GMMapH)*math.pi *mapSize
-
-	        self.frame = self.frame + lapse
-					if (self.frame >= 7500) then --roughly 2mins
-						return --no reason to continue if a totem mismatches after expiring
-					end
-					self:ClearAllPoints()
-					if (totem) then
-						totem:SetAlpha(1)
-						if ((totemX < -mapEdgeClip) or (totemX > mapEdgeClip) or (totemY < -mapEdgeClip) or (totemY > mapEdgeClip)) then --calc the edge of the map
-							totem:SetAlpha(0)
+					totem:SetAlpha(0) --just in case someone left a totem outside
+					if (not inInstance) then
+						local mapData = C_Map.GetBestMapForUnit("player")
+						if (mapData) then
+							position = C_Map.GetPlayerMapPosition(mapData, "player")
+							playerX, playerY = position:GetXY()
+							local playerFC = math.cos(GetPlayerFacing())
+							local playerFS = math.sin(GetPlayerFacing())
 						end
-					end
+						local _GMMZoom = Minimap:GetZoom()
+						local iconMinSize = 6
+						local iconMaxSize = iconMinSize*_GMMZoom/2
+						if (iconMaxSize < 6) then
+							iconMaxSize = iconMinSize
+						end
 
-					self:SetPoint(point, relativeTo, relativePoint, -totemX, totemY)
+						self.icon:SetSize(iconMaxSize, iconMaxSize)
 
-					if (_GMMRotate == 1) then
-						--local dx, dy = totemX, totemY
-						local RDistX = totemX*playerFC - totemY*playerFS
-						local RDistY = totemX*playerFS + totemY*playerFC
-						self:SetPoint("CENTER", relativeTo, "CENTER", -RDistX, RDistY)
-					end
-				end --does not work in instances
+						self.radius:SetSize(totemRadius, totemRadius)
+
+						if (_GMMZoom >= 1) then
+							self.radius:SetSize((_GMMZoom*2)+totemRadius, (_GMMZoom*2)+totemRadius)
+							self.icon:SetSize(iconMaxSize, iconMaxSize)
+						end
+						--print("icms " .. iconMaxSize)
+
+						if (TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEM_ICON"] ~= "OFF") then
+							if (totemID) then
+							  self.icon:SetTexture(totemID)
+						  end
+						end
+
+						if ((playerY) and (playerX)) then
+							distX = stampX - playerX
+							distY = stampY - playerY
+						else
+							return --something went wrong, abort
+						end
+
+						if ((IsIndoors()) or (IsResting())) then --in a city, underground or contained map
+							mapSize = 1
+						end
+
+						totemX = stampX - distX *(_GMMapW+_GMMapH)*math.pi *mapSize
+						totemY = stampY - distY *(_GMMapW+_GMMapH)*math.pi *mapSize
+
+		        self.frame = self.frame + lapse
+						if (self.frame >= 7500) then --roughly 2mins
+							return --no reason to continue if a totem mismatches after expiring
+						end
+						self:ClearAllPoints()
+						if (totem) then
+							totem:SetAlpha(1)
+							if ((totemX < -mapEdgeClip) or (totemX > mapEdgeClip) or (totemY < -mapEdgeClip) or (totemY > mapEdgeClip)) then --calc the edge of the map
+								totem:SetAlpha(0)
+							end
+						end
+
+						self:SetPoint(point, relativeTo, relativePoint, -totemX, totemY)
+
+						if (_GMMRotate == 1) then
+							--local dx, dy = totemX, totemY
+							local RDistX = totemX*playerFC - totemY*playerFS
+							local RDistY = totemX*playerFS + totemY*playerFC
+							self:SetPoint("CENTER", relativeTo, "CENTER", -RDistX, RDistY)
+						end
+					end --does not work in instances
+				end
 			end)
 		end
 
