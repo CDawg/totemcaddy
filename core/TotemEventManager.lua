@@ -63,7 +63,9 @@ function TOCA.EventManager(_self, event, prefix, netpacket, _casted, _spellID)
 	    TOCA.TotemBarTimerStart()
 			local inInstance, instanceType = IsInInstance()
 			if (not inInstance) then
-			  TOCA.TotemStampPos(prefix)
+				if (prefix) then
+				  TOCA.TotemStampPos(prefix) --totemCat
+				end
 		  end
 	  end
 

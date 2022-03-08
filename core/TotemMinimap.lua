@@ -13,9 +13,9 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
---MiniMapTrackingIcon:SetTexCoord(.08, .92, .08, .92) --function round icon
+--(.08, .92, .08, .92) --borderless texture
 
--- this only works outside of instances, so will have to improvise on aura raidus
+-- this only works outside of instances, so will have to improvise on aura radius
 -- https://worldofwarcraft.com/en-us/news/20335228/patch-notes-world-of-warcraft-71-return-to-karazhan
 
 TOCA.TotemRadiusAlpha = 0.8
@@ -111,10 +111,10 @@ do
 				self:SetPoint(point, relativeTo, relativePoint, -totemX, totemY)
 
 				if (_GMMRotate == 1) then
-					local dx, dy = totemX, totemY
-					local xDist = dx*playerFC - dy*playerFS
-					local yDist = dx*playerFS + dy*playerFC
-					self:SetPoint("CENTER", relativeTo, "CENTER", -xDist, yDist)
+					--local dx, dy = totemX, totemY
+					local RDistX = totemX*playerFC - totemY*playerFS
+					local RDistY = totemX*playerFS + totemY*playerFC
+					self:SetPoint("CENTER", relativeTo, "CENTER", -RDistX, RDistY)
 				end
 			end)
 		end
