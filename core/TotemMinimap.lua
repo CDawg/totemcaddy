@@ -77,67 +77,72 @@ do
 		end
 
 		if ((xOfs ~= 0) or (yOfs ~= 0)) then
-
 			totem.frame = 0
 			totem:SetScript("OnUpdate", function(self, lapse)
-				local map = C_Map.GetBestMapForUnit("player")
-				local position = C_Map.GetPlayerMapPosition(map, "player")
-				local _GMMZoom = Minimap:GetZoom()
-				local playerX, playerY = position:GetXY()
-				local playerFC = math.cos(GetPlayerFacing())
-				local playerFS = math.sin(GetPlayerFacing())
-				local iconMinSize = 6
-				local iconMaxSize = iconMinSize*_GMMZoom/2
-				if (iconMaxSize < 6) then
-					iconMaxSize = iconMinSize
-				end
-
-				self.icon:SetSize(iconMaxSize, iconMaxSize)
-
-				self.radius:SetSize(totemRadius, totemRadius)
-
-				if (_GMMZoom >= 1) then
-					self.radius:SetSize((_GMMZoom*2)+totemRadius, (_GMMZoom*2)+totemRadius)
-					self.icon:SetSize(iconMaxSize, iconMaxSize)
-				end
-				--print("icms " .. iconMaxSize)
-
-				if (TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEM_ICON"] ~= "OFF") then
-					if (totemID) then
-					  self.icon:SetTexture(totemID)
-				  end
-				end
-
-				distX = stampX - playerX
-				distY = stampY - playerY
-
-				if ((IsIndoors()) or (IsResting())) then --in a city, underground or contained map
-					mapSize = 1
-				end
-
-				totemX = stampX - distX *(_GMMapW+_GMMapH)*math.pi *mapSize
-				totemY = stampY - distY *(_GMMapW+_GMMapH)*math.pi *mapSize
-
-        self.frame = self.frame + lapse
-				if (self.frame >= 7500) then --roughly 2mins
-					return --no reason to continue if a totem mismatches after expiring
-				end
-				self:ClearAllPoints()
+				local inInstance, instanceType = IsInInstance()
 				if (totem) then
-					totem:SetAlpha(1)
-					if ((totemX < -mapEdgeClip) or (totemX > mapEdgeClip) or (totemY < -mapEdgeClip) or (totemY > mapEdgeClip)) then --calc the edge of the map
-						totem:SetAlpha(0)
+					totem:SetAlpha(0) --just in case someone left a totem outside instance
+				end
+				if (not inInstance) then
+					local map = C_Map.GetBestMapForUnit("player")
+					local position = C_Map.GetPlayerMapPosition(map, "player")
+					local _GMMZoom = Minimap:GetZoom()
+					local playerX, playerY = position:GetXY()
+					local playerFC = math.cos(GetPlayerFacing())
+					local playerFS = math.sin(GetPlayerFacing())
+					local iconMinSize = 6
+					local iconMaxSize = iconMinSize*_GMMZoom/2
+					if (iconMaxSize < 6) then
+						iconMaxSize = iconMinSize
 					end
-				end
 
-				self:SetPoint(point, relativeTo, relativePoint, -totemX, totemY)
+					self.icon:SetSize(iconMaxSize, iconMaxSize)
 
-				if (_GMMRotate == 1) then
-					--local dx, dy = totemX, totemY
-					local RDistX = totemX*playerFC - totemY*playerFS
-					local RDistY = totemX*playerFS + totemY*playerFC
-					self:SetPoint("CENTER", relativeTo, "CENTER", -RDistX, RDistY)
-				end
+					self.radius:SetSize(totemRadius, totemRadius)
+
+					if (_GMMZoom >= 1) then
+						self.radius:SetSize((_GMMZoom*2)+totemRadius, (_GMMZoom*2)+totemRadius)
+						self.icon:SetSize(iconMaxSize, iconMaxSize)
+					end
+					--print("icms " .. iconMaxSize)
+
+					if (TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEM_ICON"] ~= "OFF") then
+						if (totemID) then
+						  self.icon:SetTexture(totemID)
+					  end
+					end
+
+					distX = stampX - playerX
+					distY = stampY - playerY
+
+					if ((IsIndoors()) or (IsResting())) then --in a city, underground or contained map
+						mapSize = 1
+					end
+
+					totemX = stampX - distX *(_GMMapW+_GMMapH)*math.pi *mapSize
+					totemY = stampY - distY *(_GMMapW+_GMMapH)*math.pi *mapSize
+
+	        self.frame = self.frame + lapse
+					if (self.frame >= 7500) then --roughly 2mins
+						return --no reason to continue if a totem mismatches after expiring
+					end
+					self:ClearAllPoints()
+					if (totem) then
+						totem:SetAlpha(1)
+						if ((totemX < -mapEdgeClip) or (totemX > mapEdgeClip) or (totemY < -mapEdgeClip) or (totemY > mapEdgeClip)) then --calc the edge of the map
+							totem:SetAlpha(0)
+						end
+					end
+
+					self:SetPoint(point, relativeTo, relativePoint, -totemX, totemY)
+
+					if (_GMMRotate == 1) then
+						--local dx, dy = totemX, totemY
+						local RDistX = totemX*playerFC - totemY*playerFS
+						local RDistY = totemX*playerFS + totemY*playerFC
+						self:SetPoint("CENTER", relativeTo, "CENTER", -RDistX, RDistY)
+					end
+				end --does not work in instances
 			end)
 		end
 
@@ -299,7 +304,7 @@ end)
 TOCA.Button.MinimapReset= CreateFrame("Button", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[4]], "BackdropTemplate")
 TOCA.Button.MinimapReset:SetSize(100, 25)
 --TOCA.Button.MinimapReset:SetPoint("CENTER", 0, -180)
-TOCA.Button.MinimapReset:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"]+200, TOCA.OptionsPosition_y["FRAMEMENU"]-40)
+TOCA.Button.MinimapReset:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"]+250, TOCA.OptionsPosition_y["FRAMEMENU"]-40)
 TOCA.Button.MinimapReset:SetBackdrop(TOCA.Backdrop.Button)
 TOCA.Button.MinimapReset:SetBackdropColor(0.6, 0, 0, 1)
 TOCA.Button.MinimapReset:SetBackdropBorderColor(1, 1, 1, 0.6)
@@ -318,28 +323,24 @@ TOCA.Button.MinimapResetText:SetPoint("CENTER", 0, 0)
 TOCA.Button.MinimapResetText:SetText(TOCA.locale.UI.OPTIONS[5][1])
 TOCA.Button.MinimapReset:SetFrameStrata("TOOLTIP")
 
---[==[
-TOCA.Checkbox.MinimapButton={}
-TOCA.Checkbox.MinimapButton = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[4]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.MinimapButton:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], TOCA.OptionsPosition_y["FRAMEMENU"]-40)
-TOCA.Checkbox.MinimapButton:SetChecked(1)
-TOCA.Checkbox.MinimapButton.text = TOCA.Checkbox.MinimapButton:CreateFontString(nil, "ARTWORK")
-TOCA.Checkbox.MinimapButton.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
-TOCA.Checkbox.MinimapButton.text:SetPoint("TOPLEFT", 25, -6)
-TOCA.Checkbox.MinimapButton.text:SetText(TOCA.locale.UI.MINIMAP[1][1])
-TOCA.Checkbox.MinimapButton:SetScript("OnEnter", function(self)
-  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA.locale.UI.MINIMAP[1][2])
+TOCA.Checkbox.MinimapTotems={}
+TOCA.Checkbox.MinimapTotems = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[4]], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.MinimapTotems:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], TOCA.OptionsPosition_y["FRAMEMENU"]-80)
+TOCA.Checkbox.MinimapTotems:SetChecked(1)
+TOCA.Checkbox.MinimapTotems.text = TOCA.Checkbox.MinimapTotems:CreateFontString(nil, "ARTWORK")
+TOCA.Checkbox.MinimapTotems.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
+TOCA.Checkbox.MinimapTotems.text:SetPoint("TOPLEFT", 25, -6)
+TOCA.Checkbox.MinimapTotems.text:SetText(TOCA.locale.UI.MINIMAP[2][1])
+TOCA.Checkbox.MinimapTotems:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA.locale.UI.MINIMAP[2][2])
 end)
-TOCA.Checkbox.MinimapButton:SetScript("OnLeave", function(self)
+TOCA.Checkbox.MinimapTotems:SetScript("OnLeave", function(self)
   TOCA.CloseAllMenus()
 end)
-TOCA.Checkbox.MinimapButton:SetScript("OnClick", function(self)
+TOCA.Checkbox.MinimapTotems:SetScript("OnClick", function(self)
   if (self:GetChecked()) then
-    TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_ICON"] = "ON"
-		TOCA.Button.Minimap:Show()
+    TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEMS"] = "ON"
   else
-    TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_ICON"] = "OFF"
-		TOCA.Button.Minimap:Hide()
+    TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEMS"] = "OFF"
   end
 end)
-]==]--
