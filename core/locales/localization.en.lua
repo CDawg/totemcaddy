@@ -33,7 +33,7 @@ TOCA.locale = {
 		BUTTON = {"Close", "Save", "Delete", "Yes", "No"},
 
 		TABS = {
-		  OPTIONS= {"Frame", "Totem Set Builder", "Notifications", "Mini Map", "Key Bindings"},
+		  OPTIONS= {"Frame", "Totem Set Builder", "Notifications", "Minimap", "Key Bindings"},
 		  HELP   = {"Updates", "Contact", "Credit"}
 		},
 
@@ -93,7 +93,10 @@ TOCA.locale = {
 		},
 
 		MINIMAP = {
-			{"Enable the Minimap Button", "Hide or Display the Minimap Options Button"},
+			{"Display Minimap Options Button",    "Hide or display the Minimap Options Button"},
+			{"Display Minimap Totems",            "Hide or display the Minimap Radius Minimap Rings. (Only works outside of instances)"},
+			{"Display Minimap Totem Radius Rings","Hide or display the totem icons on the Minimap"},
+			{"Display Minimap Totem Icons",       "Hide or display the totem icons on the Minimap"},
 		}
 	},
 

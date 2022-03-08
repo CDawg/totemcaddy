@@ -33,7 +33,7 @@ TOCA.locale = {
 		BUTTON = {"닫다", "구하다", "삭제", "네", "아니"},
 
 		TABS = {
-		  OPTIONS= {"액자", "토템 세트", "알림", "건반"},
+		  OPTIONS= {"액자", "토템 세트", "알림", "Minimap", "건반"},
 		  HELP   = {"업데이트", "연락하다", "신용 거래"}
 		},
 
@@ -90,6 +90,13 @@ TOCA.locale = {
 			{"Notify Me When A Shield Is Expiring Or Low",      "A personal notification in the chat window will alert when your shield is running low or expiring."},
 			{"Play A Sound When A Shield Is Expiring Or Low",   "A chime will sound off when your shield is low or expiring."},
 			{"Show a Visual Alert When A Totem Is Out Of Range","A visual red border will display when you are out of range of a totem.|n Only totems that benefit an aura."},
+		},
+
+		MINIMAP = {
+			{"Display Minimap Options Button",    "Hide or display the Minimap Options Button"},
+			{"Display Minimap Totems",            "Hide or display the Minimap Radius Minimap Rings. (Only works outside of instances)"},
+			{"Display Minimap Totem Radius Rings","Hide or display the totem icons on the Minimap"},
+			{"Display Minimap Totem Icons",       "Hide or display the totem icons on the Minimap"},
 		}
 	},
 

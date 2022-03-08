@@ -8,7 +8,7 @@ TOCA.locale = {
 	},
 
 	KEYBINDS = {
-		TOTEM_RECALL    = "Totemic Call",
+		TOTEM_RECALL    = "Chiamata totemica",
 		TOTEM_AIR       = "Slot Totem: Aria",
 		TOTEM_EARTH     = "Totem Slot: Terra",
 		TOTEM_FIRE      = "Slot totem: fuoco",
@@ -33,7 +33,7 @@ TOCA.locale = {
 		BUTTON = {"Vicino", "Salva", "Eliminare", "sì", "No"},
 
 		TABS = {
-		  OPTIONS= {"Portafoto", "Set di totem", "Notifiche", "Legature chiave"},
+		  OPTIONS= {"Portafoto", "Set di totem", "Notifiche", "Minimap", "Legature chiave"},
 		  HELP   = {"Aggiornamenti", "Contatto", "Credito"}
 		},
 
@@ -90,6 +90,13 @@ TOCA.locale = {
 			{"Notify Me When A Shield Is Expiring Or Low",      "A personal notification in the chat window will alert when your shield is running low or expiring."},
 			{"Play A Sound When A Shield Is Expiring Or Low",   "A chime will sound off when your shield is low or expiring."},
 			{"Show a Visual Alert When A Totem Is Out Of Range","A visual red border will display when you are out of range of a totem.|n Only totems that benefit an aura."},
+		},
+
+		MINIMAP = {
+			{"Display Minimap Options Button",    "Hide or display the Minimap Options Button"},
+			{"Display Minimap Totems",            "Hide or display the Minimap Radius Minimap Rings. (Only works outside of instances)"},
+			{"Display Minimap Totem Radius Rings","Hide or display the totem icons on the Minimap"},
+			{"Display Minimap Totem Icons",       "Hide or display the totem icons on the Minimap"},
 		}
 	},
 
