@@ -68,7 +68,7 @@ do
 		local _GMMRotate = tonumber(GetCVar("rotateMinimap"))
 		--local _GMMZoom = Minimap:GetZoom()
 		local point, relativeTo, relativePoint, xOfs, yOfs = totem:GetPoint()
-		local mapSize = 4 --the outside world needs to calc above 3 (Pi)
+		local mapSize = 2 --the outside world is much larger, some areas are by 3
 		local mapEdgeClip = _GMMapW -102 --this is assuming a box/round shaped map of a default 140x140
 		local TOTEMIC_MASTERY_TALENT = TOCA.GetOwnerSpell(TOCA.spell.TOTEMIC_MASTERY) --resto shamans with totemic mastery have an increase of 40 yards
 		local totemRadius = TOCA.TotemRadiusSize
@@ -100,11 +100,10 @@ do
 						end
 
 						self.icon:SetSize(iconMaxSize, iconMaxSize)
-
 						self.radius:SetSize(totemRadius, totemRadius)
 
 						if (_GMMZoom >= 1) then
-							self.radius:SetSize((_GMMZoom*2)+totemRadius, (_GMMZoom*2)+totemRadius)
+							self.radius:SetSize((_GMMZoom*math.pi)+totemRadius, (_GMMZoom*math.pi)+totemRadius)
 							self.icon:SetSize(iconMaxSize, iconMaxSize)
 						end
 						--print("icms " .. iconMaxSize)
@@ -122,9 +121,18 @@ do
 							return --something went wrong, abort
 						end
 
+						mapSize = math.ceil(_GMMZoom)
+						if (mapSize <= 1) then
+							mapSize = 2
+						end
+						if (mapSize > 4) then
+							mapSize = 4
+						end
 						if ((IsIndoors()) or (IsResting())) then --in a city, underground or contained map
 							mapSize = 1
 						end
+
+						print(mapSize)
 
 						totemX = stampX - distX *(_GMMapW+_GMMapH)*math.pi *mapSize
 						totemY = stampY - distY *(_GMMapW+_GMMapH)*math.pi *mapSize
@@ -205,16 +213,16 @@ function TOCA.TotemStampPos(totemCat) --stamp the last pos for the specific tote
 
 		if ((TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]) and (TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]])) then
 			if (totemCat == 1) then
-				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]-0.004*getPlayerFS, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]-0.004*getPlayerFC, TOCA.TotemID[totemCat])
+				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]-0.002*getPlayerFS, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]-0.002*getPlayerFC, TOCA.TotemID[totemCat])
 			end
 			if (totemCat == 2) then
-			TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]+0.004*getPlayerFC, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]-0.004*getPlayerFS, TOCA.TotemID[totemCat])
+			TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]+0.002*getPlayerFC, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]-0.002*getPlayerFS, TOCA.TotemID[totemCat])
 			end
 			if (totemCat == 3) then
-				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]+0.004*getPlayerFS, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]+0.004*getPlayerFC, TOCA.TotemID[totemCat])
+				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]+0.002*getPlayerFS, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]+0.002*getPlayerFC, TOCA.TotemID[totemCat])
 			end
 			if (totemCat == 4) then
-				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]-0.004*getPlayerFC, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]+0.004*getPlayerFS, TOCA.TotemID[totemCat])
+				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]-0.002*getPlayerFC, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]+0.002*getPlayerFS, TOCA.TotemID[totemCat])
 			end
 		end
 
