@@ -68,7 +68,7 @@ do
 		local _GMMRotate = tonumber(GetCVar("rotateMinimap"))
 		--local _GMMZoom = Minimap:GetZoom()
 		local point, relativeTo, relativePoint, xOfs, yOfs = totem:GetPoint()
-		local mapSize = 2 --the outside world is much larger, some areas are by 3
+		local mapSize = 2 --default. the outside world is much larger, some areas are by 3
 		local mapEdgeClip = _GMMapW -102 --this is assuming a box/round shaped map of a default 140x140
 		local TOTEMIC_MASTERY_TALENT = TOCA.GetOwnerSpell(TOCA.spell.TOTEMIC_MASTERY) --resto shamans with totemic mastery have an increase of 40 yards
 		local totemRadius = TOCA.TotemRadiusSize
@@ -83,7 +83,10 @@ do
 				local position = {}
 				local playerX, playerY = 0.1
 				if (totem) then
-					totem:SetAlpha(0) --just in case someone left a totem outside
+					totem:SetAlpha(0) --just in case someone left a totem outside or disabled the minimap totems on the fly
+					if (TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEMS"] == "OFF") then
+						return
+					end
 					if (not inInstance) then
 						local mapData = C_Map.GetBestMapForUnit("player")
 						if (mapData) then
@@ -132,7 +135,7 @@ do
 							mapSize = 1
 						end
 
-						print(mapSize)
+						--print(mapSize)
 
 						totemX = stampX - distX *(_GMMapW+_GMMapH)*math.pi *mapSize
 						totemY = stampY - distY *(_GMMapW+_GMMapH)*math.pi *mapSize
