@@ -595,7 +595,6 @@ function TOCA.BorderFrame(enable)
   if (enable) then
     TOCA.FrameMain.Background:SetBackdropBorderColor(1, 1, 1, 0.6)
     TOCA.Button.TotemicCall:SetBackdropBorderColor(1, 1, 1, 0.6)
-    TOCA.Button.Options:SetBackdropBorderColor(1, 1, 1, 0.8)
     TOCA.Button.CloseMain:SetBackdropBorderColor(1, 1, 1, 0.8)
     TOCA.Button.DropdownMain:SetBackdropBorderColor(1, 1, 1, 0.6)
 		TOCA.FrameMain.ShieldFrame:SetBackdropBorderColor(1, 1, 1, 0.6)
@@ -626,7 +625,6 @@ function TOCA.BorderFrame(enable)
   else
     TOCA.FrameMain.Background:SetBackdropBorderColor(1, 1, 1, 0)
     TOCA.Button.TotemicCall:SetBackdropBorderColor(1, 1, 1, 0)
-    TOCA.Button.Options:SetBackdropBorderColor(1, 1, 1, 0)
     TOCA.Button.CloseMain:SetBackdropBorderColor(1, 1, 1, 0)
     TOCA.Button.DropdownMain:SetBackdropBorderColor(1, 1, 1, 0)
 		TOCA.FrameMain.ShieldFrame:SetBackdropBorderColor(1, 1, 1, 0)
@@ -712,7 +710,6 @@ function TOCA.Init()
     if (TOCADB[TOCA.player.combine]["CONFIG"]["MAINMENU"] == "OFF") then
       --TOCA.FrameMain.Background:SetBackdrop(TOCA.Backdrop.General)
       TOCA.Button.CloseMain:Hide()
-      TOCA.Button.Options:Hide()
       TOCA.Checkbox.MainMenu:SetChecked(nil)
       TOCA.FrameMain.Background:SetPoint("CENTER", 0, 0)
     end
@@ -1621,7 +1618,6 @@ function TOCA.Combat(event)
       TOCA.isInCombat = true
       TOCA.SlotSelect[totemCat]:Hide()
       TOCA.Button.DropdownMain:Hide()
-      TOCA.Button.Options:Hide()
       TOCA.Button.CloseMain:Hide()
       if (TOCADB[TOCA.player.combine]["CONFIG"]["COMBATLOCK"] == "OFF") then
         TOCA.FrameMain:SetMovable(true)
@@ -1643,9 +1639,7 @@ function TOCA.Combat(event)
       TOCA.FrameMain:EnableMouse(true)
       if (TOCADB[TOCA.player.combine]["CONFIG"]["MAINMENU"] == "OFF") then
         TOCA.Button.CloseMain:Hide()
-        TOCA.Button.Options:Hide()
       else
-        TOCA.Button.Options:Show()
         TOCA.Button.CloseMain:Show()
       end
       TOCA.Notification("Combat Ended", true)

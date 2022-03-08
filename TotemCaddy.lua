@@ -607,6 +607,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   end
 end
 
+--[==[
 TOCA.Button.Options= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTemplate")
 TOCA.Button.Options:SetSize(16, 16)
 TOCA.Button.Options:SetPoint("TOPRIGHT", -14, 0)
@@ -638,6 +639,7 @@ TOCA.Button.Options:SetScript("OnClick", function(self)
   TOCA.FrameOptions:Show()
 end)
 TOCA.Button.Options:Hide()
+]==]--
 
 TOCA.Button.CloseMain= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTemplate")
 TOCA.Button.CloseMain:SetSize(16, 16)

@@ -381,7 +381,7 @@ TOCA.Slider.OpacityFG:SetScript("OnValueChanged", function()
 		TOCA.FrameMain.AnkhFrame:SetAlpha(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))
   end
   TOCA.Button.CloseMain:SetAlpha(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))
-  TOCA.Button.Options:SetAlpha(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))
+  --TOCA.Button.Options:SetAlpha(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))
   TOCA.Button.TotemicCall:SetAlpha(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))
   TOCA.Slider.OpacityFG.Val:SetText(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))
 end)
@@ -456,13 +456,13 @@ TOCA.Checkbox.MainMenu:SetScript("OnClick", function(self)
   if (self:GetChecked()) then
     TOCADB[TOCA.player.combine]["CONFIG"]["MAINMENU"] = "ON"
     TOCA.Button.CloseMain:Show()
-    TOCA.Button.Options:Show()
+    --TOCA.Button.Options:Show()
     --TOCA.FrameMain.Background:SetPoint("CENTER", -1, 0)
   else
     --TOCA.FrameMain.Background:SetBackdrop(TOCA.Backdrop.General)
     TOCADB[TOCA.player.combine]["CONFIG"]["MAINMENU"] = "OFF"
     TOCA.Button.CloseMain:Hide()
-    TOCA.Button.Options:Hide()
+    --TOCA.Button.Options:Hide()
     --TOCA.FrameMain.Background:SetPoint("CENTER", 0, 0)
     TOCA.Notification(TOCA.locale.UI.FRAME[2][3])
   end
@@ -867,7 +867,6 @@ TOCA.Button.OptionsCloseText:SetFont(TOCA.Global.font, 11)
 TOCA.Button.OptionsCloseText:SetPoint("CENTER", 0, 0)
 TOCA.Button.OptionsCloseText:SetText(TOCA.locale.UI.BUTTON[1])
 TOCA.Button.OptionsClose:SetFrameStrata("TOOLTIP")
---TOCA.Button.OptionsClose:Hide()
 
 TOCA.FrameOptionsMain = CreateFrame("Frame", "TOCA.FrameOptionsMain", UIParent, "BackdropTemplate")
 TOCA.FrameOptionsMain.Options= CreateFrame("Button", nil, TOCA.FrameOptionsMain, "BackdropTemplate")
