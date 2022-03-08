@@ -33,7 +33,7 @@ TOCA.locale = {
 		BUTTON = {"Close", "Save", "Delete", "Yes", "No"},
 
 		TABS = {
-		  OPTIONS= {"Frame", "Totem Set Builder", "Notifications", "Key Bindings"},
+		  OPTIONS= {"Frame", "Totem Set Builder", "Notifications", "Mini Map", "Key Bindings"},
 		  HELP   = {"Updates", "Contact", "Credit"}
 		},
 
@@ -90,6 +90,10 @@ TOCA.locale = {
 			{"Notify Me When A Shield Is Expiring Or Low",      "A personal notification in the chat window will alert when your shield is running low or expiring."},
 			{"Play A Sound When A Shield Is Expiring Or Low",   "A chime will sound off when your shield is low or expiring."},
 			{"Show a Visual Alert When A Totem Is Out Of Range","A visual red border will display when you are out of range of a totem.|n Only totems that benefit an aura."},
+		},
+
+		MINIMAP = {
+			{"Enable the Minimap Button", "Hide or Display the Minimap Options Button"},
 		}
 	},
 

@@ -856,6 +856,10 @@ function TOCA.Init()
       TOCA.Tooltip:ClearAllPoints()
       TOCA.Tooltip:SetPoint(TOCAFrameToolPos[1], tonumber(TOCAFrameToolPos[2]), tonumber(TOCAFrameToolPos[3]))
     end
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_ICON"] == "OFF") then
+			TOCA.Checkbox.MinimapButton:SetChecked(nil)
+			TOCA.Button.Minimap:Hide()
+		end
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_ICON_POS"]) then
 	    local minimapIconPos = split(TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_ICON_POS"], ",")
 	    if ((minimapIconPos[1]) and (minimapIconPos[2])) then
