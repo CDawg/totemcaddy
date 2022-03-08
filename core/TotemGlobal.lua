@@ -836,9 +836,6 @@ function TOCA.Init()
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLON"] == "OFF") then
       TOCA.Checkbox.Tooltip:SetChecked(nil)
     end
-    if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLMOUSE"] == "OFF") then
-      TOCA.Checkbox.TooltipMouse:SetChecked(nil)
-    end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["COMBATLOCK"] == "OFF") then
       TOCA.Checkbox.MainLock:SetChecked(nil)
     end
@@ -863,6 +860,15 @@ function TOCA.Init()
 	      TOCA.Button.Minimap:SetPoint("TOPLEFT", Minimap, "TOPLEFT", minimapIconPos[1]+130, minimapIconPos[2]+22)
 	    end
 	  end
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEMS"] == "OFF") then
+			TOCA.Checkbox.MinimapTotems:SetChecked(nil)
+		end
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEM_RINGS"] == "OFF") then
+			TOCA.Checkbox.MinimapTotemRings:SetChecked(nil)
+		end
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEM_ICONS"] == "OFF") then
+			TOCA.Checkbox.MinimapTotemIcons:SetChecked(nil)
+		end
     TOCA.UpdateTotemSet()
     TOCA.UpdateDDMenu(TOCA.Dropdown.Main)
     TOCA.UpdateDDMenu(TOCA.Dropdown.Sets)
@@ -1007,22 +1013,19 @@ function TOCA.GetOwnerSpell(bookSpell)
 end
 
 function TOCA.TooltipDisplay(owner, title, msg, anchor)
-  if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLON"] == "OFF") then
-    return
-  end
   local spellName, spellRank, spellID = GetSpellBookItemName(title)
   if (spellID) then --assure that there is a valid spell
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLON"] == "OFF") then
+			return
+		end
     local knownSpell = TOCA.GetOwnerSpell(spellName)
     if (knownSpell) then
-      if (anchor) then
-        GameTooltip:SetOwner(owner, anchor)
-      else
-        if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLMOUSE"] == "OFF") then
-          GameTooltip:SetOwner(owner, "ANCHOR_PRESERVE")
-        else
-          GameTooltip:SetOwner(owner, "ANCHOR_TOPLEFT")
-        end
-      end
+			local point, relativeTo, relativePoint, xOfs, yOfs = GameTooltip:GetPoint()
+			if ((xOfs == 0) or (yOfs == 0)) then
+				GameTooltip:ClearAllPoints()
+				GameTooltip:SetPoint("BOTTOMRIGHT", WorldFrame, "BOTTOMRIGHT", -90, 90)
+			end
+			GameTooltip:SetOwner(owner, "ANCHOR_PRESERVE") --spells go to the right
       GameTooltip:ClearLines()
       GameTooltip:SetSpellBookItem(knownSpell, BOOKTYPE_SPELL)
       GameTooltip:Show()
@@ -1031,11 +1034,7 @@ function TOCA.TooltipDisplay(owner, title, msg, anchor)
     if (anchor) then
       GameTooltip:SetOwner(owner, anchor)
     else
-      if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLMOUSE"] == "OFF") then
-        GameTooltip:SetOwner(owner, "ANCHOR_PRESERVE")
-      else
-        GameTooltip:SetOwner(owner, "ANCHOR_TOPLEFT")
-      end
+			GameTooltip:SetOwner(owner, "ANCHOR_TOPLEFT")
     end
     GameTooltip:ClearLines()
     if (title) then

@@ -526,9 +526,9 @@ TOCA.Checkbox.Totemic:SetScript("OnClick", function(self)
     TOCA.Button.TotemicCall:Hide()
     TOCA.Button.TotemicCall.ECL:Hide()
     TOCA.Button.TotemicCall.ECR:Hide()
-    TOCA.Checkbox.EndCaps:SetAlpha(0.5)
+    TOCA.Checkbox.EndCaps:SetAlpha(0.4)
     --TOCA.Checkbox.EndCaps:SetChecked(nil)
-    TOCA.Dropdown.FrameGryphons:SetAlpha(0.5)
+    TOCA.Dropdown.FrameGryphons:SetAlpha(0.4)
   end
 end)
 TOCA.Checkbox.Totemic:SetScript("OnEnter", function(self)
@@ -766,6 +766,7 @@ end)
 TOCA.Checkbox.Tooltip:SetScript("OnLeave", function()
   TOCA.CloseAllMenus()
 end)
+--[==[
 TOCA.Checkbox.TooltipMouse={}
 TOCA.Checkbox.TooltipMouse = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]], "ChatConfigCheckButtonTemplate")
 TOCA.Checkbox.TooltipMouse:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["TOOLTIP"]-40)
@@ -787,6 +788,7 @@ end)
 TOCA.Checkbox.TooltipMouse:SetScript("OnLeave", function()
   TOCA.CloseAllMenus()
 end)
+]==]--
 
 movingTotem= "nil"
 overTotem = "nil"

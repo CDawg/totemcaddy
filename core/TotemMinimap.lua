@@ -340,7 +340,7 @@ TOCA.Button.MinimapResetText = TOCA.Button.MinimapReset:CreateFontString(nil, "A
 TOCA.Button.MinimapResetText:SetFont(TOCA.Global.font, 11)
 TOCA.Button.MinimapResetText:SetPoint("CENTER", 0, 0)
 TOCA.Button.MinimapResetText:SetText(TOCA.locale.UI.OPTIONS[5][1])
-TOCA.Button.MinimapReset:SetFrameStrata("TOOLTIP")
+--TOCA.Button.MinimapReset:SetFrameStrata("TOOLTIP")
 
 TOCA.Checkbox.MinimapTotems={}
 TOCA.Checkbox.MinimapTotems = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[4]], "ChatConfigCheckButtonTemplate")
@@ -359,7 +359,55 @@ end)
 TOCA.Checkbox.MinimapTotems:SetScript("OnClick", function(self)
   if (self:GetChecked()) then
     TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEMS"] = "ON"
+		TOCA.Checkbox.MinimapTotemRings:SetAlpha(1)
+		TOCA.Checkbox.MinimapTotemIcons:SetAlpha(1)
   else
     TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEMS"] = "OFF"
+		TOCA.Checkbox.MinimapTotemRings:SetAlpha(0.4)
+		TOCA.Checkbox.MinimapTotemIcons:SetAlpha(0.4)
+  end
+end)
+
+TOCA.Checkbox.MinimapTotemRings={}
+TOCA.Checkbox.MinimapTotemRings = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[4]], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.MinimapTotemRings:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], TOCA.OptionsPosition_y["FRAMEMENU"]-100)
+TOCA.Checkbox.MinimapTotemRings:SetChecked(1)
+TOCA.Checkbox.MinimapTotemRings.text = TOCA.Checkbox.MinimapTotemRings:CreateFontString(nil, "ARTWORK")
+TOCA.Checkbox.MinimapTotemRings.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
+TOCA.Checkbox.MinimapTotemRings.text:SetPoint("TOPLEFT", 25, -6)
+TOCA.Checkbox.MinimapTotemRings.text:SetText(TOCA.locale.UI.MINIMAP[3][1])
+TOCA.Checkbox.MinimapTotemRings:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA.locale.UI.MINIMAP[3][2])
+end)
+TOCA.Checkbox.MinimapTotemRings:SetScript("OnLeave", function(self)
+  TOCA.CloseAllMenus()
+end)
+TOCA.Checkbox.MinimapTotemRings:SetScript("OnClick", function(self)
+  if (self:GetChecked()) then
+    TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEM_RINGS"] = "ON"
+  else
+    TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEM_RINGS"] = "OFF"
+  end
+end)
+
+TOCA.Checkbox.MinimapTotemIcons={}
+TOCA.Checkbox.MinimapTotemIcons = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[4]], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.MinimapTotemIcons:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], TOCA.OptionsPosition_y["FRAMEMENU"]-120)
+TOCA.Checkbox.MinimapTotemIcons:SetChecked(1)
+TOCA.Checkbox.MinimapTotemIcons.text = TOCA.Checkbox.MinimapTotemIcons:CreateFontString(nil, "ARTWORK")
+TOCA.Checkbox.MinimapTotemIcons.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
+TOCA.Checkbox.MinimapTotemIcons.text:SetPoint("TOPLEFT", 25, -6)
+TOCA.Checkbox.MinimapTotemIcons.text:SetText(TOCA.locale.UI.MINIMAP[4][1])
+TOCA.Checkbox.MinimapTotemIcons:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA.locale.UI.MINIMAP[4][2])
+end)
+TOCA.Checkbox.MinimapTotemIcons:SetScript("OnLeave", function(self)
+  TOCA.CloseAllMenus()
+end)
+TOCA.Checkbox.MinimapTotemIcons:SetScript("OnClick", function(self)
+  if (self:GetChecked()) then
+    TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEM_ICONS"] = "ON"
+  else
+    TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEM_ICONS"] = "OFF"
   end
 end)
