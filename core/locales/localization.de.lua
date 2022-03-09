@@ -33,7 +33,7 @@ TOCA.locale = {
 		BUTTON = {"Nah dran", "Speichern", "Löschen", "ja", "Nein"},
 
 		TABS = {
-		  OPTIONS= {"Rahmen", "Sets", "Warnungen", "Minimap", "Klaviatur"},
+		  OPTIONS= {"Rahmen", "Sets", "Warnungen", "Minikarte", "Klaviatur"},
 		  HELP   = {"Aktualisierung", "Kontakt", "Kredit"}
 		},
 

@@ -33,7 +33,7 @@ TOCA.locale = {
 		BUTTON = {"Vicino", "Salva", "Eliminare", "sì", "No"},
 
 		TABS = {
-		  OPTIONS= {"Portafoto", "Set di totem", "Notifiche", "Minimap", "Legature chiave"},
+		  OPTIONS= {"Portafoto", "Set di totem", "Notifiche", "Minimappa", "Legature chiave"},
 		  HELP   = {"Aggiornamenti", "Contatto", "Credito"}
 		},
 
