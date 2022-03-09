@@ -13,6 +13,41 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
+TOCA.Main = CreateFrame("Frame")
+TOCA.Main:RegisterEvent("ADDON_LOADED")
+TOCA.Main:RegisterEvent("PLAYER_LOGIN")
+TOCA.Main:RegisterEvent("PLAYER_TOTEM_UPDATE")
+TOCA.Main:RegisterEvent("PLAYER_FLAGS_CHANGED") --resting
+TOCA.Main:RegisterEvent("PLAYER_CONTROL_GAINED")
+TOCA.Main:RegisterEvent("PLAYER_CONTROL_LOST")
+TOCA.Main:RegisterEvent("PLAYER_STARTED_MOVING")
+TOCA.Main:RegisterEvent("PLAYER_STOPPED_MOVING")
+TOCA.Main:RegisterEvent("PLAYER_REGEN_ENABLED")
+TOCA.Main:RegisterEvent("PLAYER_REGEN_DISABLED")
+TOCA.Main:RegisterEvent("PLAYER_ROLES_ASSIGNED")
+TOCA.Main:RegisterEvent("PLAYER_DEAD")
+TOCA.Main:RegisterEvent("UNIT_SPELLCAST_START")
+TOCA.Main:RegisterEvent("UNIT_SPELLCAST_STOP")
+TOCA.Main:RegisterEvent("UNIT_SPELLCAST_SENT")
+TOCA.Main:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+TOCA.Main:RegisterEvent("UNIT_AURA")
+TOCA.Main:RegisterEvent("UNIT_MAXPOWER")
+TOCA.Main:RegisterEvent("UNIT_POWER_FREQUENT")
+TOCA.Main:RegisterEvent("UNIT_INVENTORY_CHANGED")
+TOCA.Main:RegisterEvent("UNIT_ENTERED_VEHICLE")
+TOCA.Main:RegisterEvent("UNIT_EXITED_VEHICLE")
+TOCA.Main:RegisterEvent("BAG_UPDATE")
+TOCA.Main:RegisterEvent("CHAT_MSG_ADDON")
+TOCA.Main:RegisterEvent("MINIMAP_UPDATE_ZOOM")
+TOCA.Main:RegisterEvent("PLAYER_ENTERING_WORLD")
+TOCA.Main:RegisterEvent("NEW_WMO_CHUNK")
+TOCA.Main:RegisterEvent("ZONE_CHANGED")
+TOCA.Main:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+TOCA.Main:RegisterEvent("GROUP_ROSTER_UPDATE")
+TOCA.Main:SetScript("OnEvent", function(_self, event, prefix, netpacket, _casted, _spellID)
+  TOCA.EventManager(_self, event, prefix, netpacket, _casted, _spellID)
+end)
+
 function TOCA.EventManager(_self, event, prefix, netpacket, _casted, _spellID)
 	if (event) then
 		if ((event == "ADDON_LOADED") and (prefix == TOCA.Global.prefix)) then
@@ -107,13 +142,13 @@ function TOCA.EventManager(_self, event, prefix, netpacket, _casted, _spellID)
 	  TOCA.Combat(event)
 
 		if ((event == "GROUP_ROSTER_UPDATE") or (event == "PLAYER_ROLES_ASSIGNED")) then
-			--TOCA.AssignmentESRaidSend() --send my resto data
+			TOCA.AssignmentESRaidSend() --send my resto data
 		end
 
 		--Load event last
 	  if (event == "CHAT_MSG_ADDON") then
 			TOCA.VersionControl(prefix, netpacket) --get version from guild
-			--TOCA.AssignmentESRaidGet()
+			TOCA.AssignmentESRaidGet()
 	  end
 	end
 end
