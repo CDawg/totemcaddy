@@ -15,14 +15,15 @@ the copyright holders.
 
 TOCA.HELP = {
 	UPDATES = {
-	  "|cffffdf96Please note:|r Totem Caddy is still evolving. Improvements will be made as time continues. There is an |cff7eabd5issue tracker|r now available on |cffff9f69Curseforge|r. Enjoy!",
+	  "|cfffab734Please note:|r Totem Caddy is still evolving. Improvements will be made as time continues. There is an |cff7eabd5issue tracker|r now available on |cffff9f69Curseforge|r. Enjoy!",
 		"",
-		"Type |cffffdf96/toca options|r for all available options and settings.",
+		--"|cfffab734Totem Caddy Devs are looking for language translators! Please click the contact tab to get more details if you would like to contribute to Totem Caddy!|r",
+		--"",
+		"|cfffab734New Feature:|r Totem Radius & Icons on the Minimap, this feature does not work within instances. Type /toca options",
 		"",
-		"|cffffdf96New Feature:|r Segmented Framestyle. Now you can have customizable category bars. Type /toca options",
-		"|cffffdf96Upcoming Feature:|r Totem Radius and location on the minimap. (does not work in instances).",
+		"Type |cfffab734/toca options|r for all available options and settings.",
 		"",
-	  "|cffffdf96First time using Totem Caddy?|r",
+	  "|cfffab734First time using Totem Caddy?|r",
 	  "Let's get started by dragging the Totem Caddy anywhere on your screen saving the position.",
 	  "You can select totems in a category order (air, earth, fire, or water) by selecting the top arrows above the current totem icons.",
 	  "The set of totems are by default, and the order is currently alphabetical. The totem order can changed under the Totem Sets in the options window.",

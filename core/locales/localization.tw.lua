@@ -93,10 +93,11 @@ TOCA.locale = {
 		},
 
 		MINIMAP = {
-			{"Display Minimap Options Button",    "Hide or display the Minimap Options Button"},
-			{"Display Minimap Totems",            "Hide or display the Minimap Radius Minimap Rings. (Only works outside of instances)"},
-			{"Display Minimap Totem Radius Rings","Hide or display the totem icons on the Minimap"},
-			{"Display Minimap Totem Icons",       "Hide or display the totem icons on the Minimap"},
+			{"Display Minimap Options Button",     "Hide or display the Minimap Options Button"},
+			{"Display Minimap Totems",             "Hide or display the Minimap Totem Radius circles. (Only works outside of instances)"},
+			{"Display Minimap Totem Radius Solid", "Hide or display the totem radius solid on the Minimap"},
+			{"Display Minimap Totem Radius Rings", "Hide or display the totem radius rings on the Minimap"},
+			{"Display Minimap Totem Icons",        "Hide or display the totem icons on the Minimap"},
 		}
 	},
 

@@ -866,6 +866,9 @@ function TOCA.Init()
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEM_RINGS"] == "OFF") then
 			TOCA.Checkbox.MinimapTotemRings:SetChecked(nil)
 		end
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEM_SOLID"] == "OFF") then
+			TOCA.Checkbox.MinimapTotemSolid:SetChecked(nil)
+		end
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEM_ICONS"] == "OFF") then
 			TOCA.Checkbox.MinimapTotemIcons:SetChecked(nil)
 		end
