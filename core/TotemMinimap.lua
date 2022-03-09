@@ -306,6 +306,7 @@ TOCA.Button.Minimap:SetScript("OnClick", function()
 	  TOCA.FrameOptions:Show()
 	end
 	TOCA.FrameMain:Show()
+	TOCADB[TOCA.player.combine]["DISABLED"] = "NO"
 end)
 
 TOCA.FrameOptions.Title.Minimap={}
@@ -391,7 +392,7 @@ end)
 
 TOCA.Checkbox.MinimapTotemSolid={}
 TOCA.Checkbox.MinimapTotemSolid = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[4]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.MinimapTotemSolid:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], TOCA.OptionsPosition_y["FRAMEMENU"]-100)
+TOCA.Checkbox.MinimapTotemSolid:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"]+25, TOCA.OptionsPosition_y["FRAMEMENU"]-100)
 TOCA.Checkbox.MinimapTotemSolid:SetChecked(1)
 TOCA.Checkbox.MinimapTotemSolid.text = TOCA.Checkbox.MinimapTotemSolid:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.MinimapTotemSolid.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
@@ -413,7 +414,7 @@ end)
 
 TOCA.Checkbox.MinimapTotemRings={}
 TOCA.Checkbox.MinimapTotemRings = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[4]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.MinimapTotemRings:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], TOCA.OptionsPosition_y["FRAMEMENU"]-120)
+TOCA.Checkbox.MinimapTotemRings:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"]+25, TOCA.OptionsPosition_y["FRAMEMENU"]-120)
 TOCA.Checkbox.MinimapTotemRings:SetChecked(1)
 TOCA.Checkbox.MinimapTotemRings.text = TOCA.Checkbox.MinimapTotemRings:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.MinimapTotemRings.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
@@ -435,7 +436,7 @@ end)
 
 TOCA.Checkbox.MinimapTotemIcons={}
 TOCA.Checkbox.MinimapTotemIcons = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[4]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.MinimapTotemIcons:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], TOCA.OptionsPosition_y["FRAMEMENU"]-140)
+TOCA.Checkbox.MinimapTotemIcons:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"]+25, TOCA.OptionsPosition_y["FRAMEMENU"]-140)
 TOCA.Checkbox.MinimapTotemIcons:SetChecked(1)
 TOCA.Checkbox.MinimapTotemIcons.text = TOCA.Checkbox.MinimapTotemIcons:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.MinimapTotemIcons.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
