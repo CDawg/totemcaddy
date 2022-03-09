@@ -55,7 +55,7 @@ TOCA.locale = {
 		  {"Display Main Menu/Options Buttons","Toggle the Options and Close menu buttons from the frame.|nType |cffffffff/toca show|r if the frame is closed.", "Menu header disabled. Type '/toca options' to reopen."},
 			{"Display Frame/Button Borders",     "Toggle borders around the frames/buttons.|n|nBorder enabled is default."},
 			{"Display Totemic Call Button",      "Toggle the Totemic Call button to display.|n|nDisplaying the Totemic Call button is by default."},
-			{"Display Gryphons",                 "Toggle the cosmetic end caps on the main frame.|n|nEnabled (Gryphons) by Default"},
+			{"Display End Caps",                 "Toggle the cosmetic end caps on the main frame.|n|nEnabled (Gryphons) by Default"},
 		},
 		TIMERS = {
 			TITLE = "Timers",
