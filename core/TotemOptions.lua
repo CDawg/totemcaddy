@@ -51,7 +51,7 @@ for i=1, getn(TOCA.locale.UI.TABS.OPTIONS) do
 
   TOCA.Button.TabOptionsBack[i]= CreateFrame("Button", nil, TOCA.FrameOptions, "BackdropTemplate")
   TOCA.Button.TabOptionsBack[i]:SetSize(TOCA.TabWidth.Options-20, 29)
-  TOCA.Button.TabOptionsBack[i]:SetPoint("TOPLEFT", -110+i*120, 25)
+  TOCA.Button.TabOptionsBack[i]:SetPoint("TOPLEFT", -116+i*120, 25)
   TOCA.Button.TabOptionsBack[i]:SetBackdrop({
     bgFile  = "Interface/ToolTips/UI-Tooltip-Background",
     edgeFile= "",
@@ -459,7 +459,6 @@ TOCA.Checkbox.MainMenu:SetScript("OnClick", function(self)
     --TOCA.Button.Options:Show()
     --TOCA.FrameMain.Background:SetPoint("CENTER", -1, 0)
   else
-    --TOCA.FrameMain.Background:SetBackdrop(TOCA.Backdrop.General)
     TOCADB[TOCA.player.combine]["CONFIG"]["MAINMENU"] = "OFF"
     TOCA.Button.CloseMain:Hide()
     --TOCA.Button.Options:Hide()
@@ -540,7 +539,7 @@ end)
 
 TOCA.Checkbox.EndCaps={}
 TOCA.Checkbox.EndCaps = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.EndCaps:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["FRAMEMENU"]-120)
+TOCA.Checkbox.EndCaps:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"]+25, TOCA.OptionsPosition_y["FRAMEMENU"]-120)
 TOCA.Checkbox.EndCaps:SetChecked(1)
 TOCA.Checkbox.EndCaps:SetAlpha(1)
 TOCA.Checkbox.EndCaps.text = TOCA.Checkbox.EndCaps:CreateFontString(nil, "ARTWORK")
@@ -555,10 +554,12 @@ TOCA.Checkbox.EndCaps:SetScript("OnClick", function(self)
     TOCA.Button.TotemicCall.ECL:Show()
     TOCA.Button.TotemicCall.ECR:Show()
     TOCADB[TOCA.player.combine]["CONFIG"]["ENDCAPS"] = "ON"
+		TOCA.Dropdown.FrameGryphons:SetAlpha(1)
   else
     TOCA.Button.TotemicCall.ECL:Hide()
     TOCA.Button.TotemicCall.ECR:Hide()
     TOCADB[TOCA.player.combine]["CONFIG"]["ENDCAPS"] = "OFF"
+		TOCA.Dropdown.FrameGryphons:SetAlpha(0.4)
   end
 end)
 TOCA.Checkbox.EndCaps:SetScript("OnEnter", function(self)
@@ -627,7 +628,7 @@ TOCA.Checkbox.Timers:SetScript("OnClick", function(self)
     end
   else
     TOCADB[TOCA.player.combine]["CONFIG"]["TIMERS"] = "OFF"
-    TOCA.Checkbox.TimersInMinutes:SetAlpha(0.5)
+    TOCA.Checkbox.TimersInMinutes:SetAlpha(0.4)
     --TOCA.Checkbox.TimersInMinutes:SetChecked(nil)
     for i=1, 4 do
       TOCA.Slot.Timer[i]:Hide()
@@ -643,7 +644,7 @@ end)
 
 TOCA.Checkbox.TimersInMinutes={}
 TOCA.Checkbox.TimersInMinutes = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.locale.UI.TABS.OPTIONS[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.TimersInMinutes:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["TIMERS"]-40)
+TOCA.Checkbox.TimersInMinutes:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"]+25, TOCA.OptionsPosition_y["TIMERS"]-40)
 TOCA.Checkbox.TimersInMinutes:SetChecked(1)
 TOCA.Checkbox.TimersInMinutes:SetAlpha(1)
 TOCA.Checkbox.TimersInMinutes.text = TOCA.Checkbox.TimersInMinutes:CreateFontString(nil, "ARTWORK")

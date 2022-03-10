@@ -115,12 +115,18 @@ function TOCA.EventManager(_self, event, prefix, netpacket, _casted, _spellID)
 	  end
 
 	  if (event == "PLAYER_LOGIN") then
-	    TOCA.SendPacket(TOCA.Net.version .. TOCA.Global.version, "GUILD")
+			TOCA.SendPacket(TOCA.Net.version .. TOCA.Global.version, "GUILD")
+			if (IsInRaid()) then
+				TOCA.SendPacket(TOCA.Net.version .. TOCA.Global.version, "RAID")
+			end
 	    if (TOCA.KeyBindsSetOnLoad == 1) then
 	      TOCA.SetKeyBindOnLoad()
 	      TOCA.KeyBindsSetOnLoad = 2
 	    end
 	    TOCA.EnableKnownTotems()
+			TOCA.RaidGatherShamans()
+			--print("after a reload?")
+			--TOCA.AssignmentESRaidSend() --send my resto data
 	  end
 
 	  if (event == "BAG_UPDATE") then
@@ -142,13 +148,16 @@ function TOCA.EventManager(_self, event, prefix, netpacket, _casted, _spellID)
 	  TOCA.Combat(event)
 
 		if ((event == "GROUP_ROSTER_UPDATE") or (event == "PLAYER_ROLES_ASSIGNED")) then
-			TOCA.AssignmentESRaidSend() --send my resto data
+			--print("GROUP_ROSTER_UPDATE")
+			--TOCA.AssignmentESRaidSend() --send my resto data
 		end
 
 		--Load event last
 	  if (event == "CHAT_MSG_ADDON") then
-			TOCA.VersionControl(prefix, netpacket) --get version from guild
-			TOCA.AssignmentESRaidGet()
+			if (prefix) then
+				TOCA.VersionControl(prefix, netpacket) --get version from guild/raid
+				--TOCA.AssignmentESRaidGet(prefix, netpacket)
+			end
 	  end
 	end
 end

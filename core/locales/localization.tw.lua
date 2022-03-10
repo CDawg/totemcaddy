@@ -48,6 +48,7 @@ TOCA.locale = {
 			{"Reset Background Opacity", "Reset the background opacity to the default value."},
 		  {"Foreground Opacity",       "Increase/Decrease the foreground buttons/dropdown|ntransparency levels."},
 			{"Reset Foreground Opacity", "Reset the foreground opacity to the default value."},
+			{"Earth Shield Assignments", "Toggle Earth Shield Assignments|n Only displays for raid and Restoration Shamans"},
 		},
 		FRAME = {
 			TITLE = "Frame Menu",

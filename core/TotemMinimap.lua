@@ -76,8 +76,8 @@ do
 		local point, relativeTo, relativePoint, xOfs, yOfs = totem:GetPoint()
 		local mapSize = 2 --default. the outside world is much larger, some areas are by 3
 		local mapEdgeClip = _GMMapW -102 --this is assuming a box/round shaped map of a default 140x140
-		local TOTEMIC_MASTERY_TALENT = TOCA.GetOwnerSpell(TOCA.spell.TOTEMIC_MASTERY) --resto shamans with totemic mastery have an increase of 40 yards
 		local totemRadius = TOCA.TotemRadiusSize
+		local TOTEMIC_MASTERY_TALENT = TOCA.GetOwnerSpell(TOCA.spell.TOTEMIC_MASTERY) --resto shamans with totemic mastery have an increase of ~11 yards
 		if (TOTEMIC_MASTERY_TALENT) then
 			totemRadius = totemRadius+10
 		end
