@@ -72,8 +72,6 @@ TOCA = {
 		}
 	},
 
-	help={},
-
 	--all icons must be in order to sync with totemspells[locales] by category
 	icons = {
 		 FIRE = {
@@ -158,7 +156,7 @@ TOCA = {
 		EARTH_SHIELD    = 974,
 		TOTEMIC_MASTERY = 16189, --talent
 
-		ShieldRanks = {
+		SHIELD = {
 		  WATER_SHIELD = {
 				24398, --rank 1
 				33736, --rank 2

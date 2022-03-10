@@ -19,7 +19,7 @@ TOCA._G = {
   title  = TOCA.colors.class[7][4] .. TOCA._L.TITLE .."|r",
   author = "Porthias of Myzrael",
   version= 2.54,
-  command= "toca",
+  CMD    = "/toca",
   width  = 150,
   height = 85,
 	--font   = "Interface/Addons/TotemCaddy/Fonts/Emblem.TTF",
@@ -32,8 +32,6 @@ TOCA._G = {
 }
 --local _LName, _LTitle = GetAddOnInfo(TOCA._G.prefix)
 --TOCA._G.version = tonumber(string.sub(_LTitle, 26, 29))
-
-TCCMD = "/"..TOCA._G.command
 
 TOCA.Game={}
 TOCA.Game.version = tonumber(string.sub(__Gversion, 1, 1))
@@ -1408,8 +1406,8 @@ function TOCA.GetShieldTimer()
 			if (string.find(name, v)) then
 				TOCA.FrameMain.ShieldFrame:Show()
 				local current_shield = nil
-				for shieldCat,shieldIndex in pairs(TOCA.spell.ShieldRanks) do
-					for k,shieldID in pairs(TOCA.spell.ShieldRanks[shieldCat]) do
+				for shieldCat,shieldIndex in pairs(TOCA.spell.SHIELD) do
+					for k,shieldID in pairs(TOCA.spell.SHIELD[shieldCat]) do
 						if (spellId == shieldID) then
 							current_shield = shieldCat
 						end
@@ -1709,7 +1707,7 @@ function TOCA.BuildTotemOrder()
   TOCA.SetTotemOrder()
 end
 
-SLASH_TOCA1 = TCCMD
+SLASH_TOCA1 = TOCA._G.CMD
 function SlashCmdList.TOCA(cmd)
   if ((cmd == nil) or (cmd == "")) then
     TOCA.Notification("v" .. TOCA._G.version .. "-" .. TOCA._G.suffix .. " ("..GetLocale()..")")

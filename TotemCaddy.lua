@@ -634,7 +634,7 @@ TOCA.Button.CloseMain:SetScript("OnClick", function()
   TOCA.CloseAllMenus()
   TOCA.FrameMain:Hide()
   TOCADB[TOCA.player.combine]["DISABLED"] = "YES"
-  TOCA.Notification("closed. Type '" .. TCCMD .. " show' to reopen.")
+  TOCA.Notification("closed. Type '" .. TOCA._G.CMD .. " show' to reopen.")
 end)
 
 TOCA.FrameMain.ShieldFrame = CreateFrame("Frame", nil, TOCA.FrameMain, "BackdropTemplate", 6)

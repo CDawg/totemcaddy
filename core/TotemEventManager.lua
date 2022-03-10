@@ -51,7 +51,7 @@ end)
 function TOCA.EventManager(_self, event, prefix, netpacket, _casted, _spellID)
 	if (event) then
 		if ((event == "ADDON_LOADED") and (prefix == TOCA._G.prefix)) then
-	    TOCA.Notification("v" .. TOCA._G.version .. "-" .. TOCA._G.suffix .. " (" .. GetLocale() .. ") " .. TOCA._L.INIT[6] .. ". Type /" .. TOCA._G.command .. " for commands.")
+	    TOCA.Notification("v" .. TOCA._G.version .. "-" .. TOCA._G.suffix .. " (" .. GetLocale() .. ") " .. TOCA._L.INIT[6] .. ". Type " .. TOCA._G.CMD .. " for commands.")
 	    TOCA.Init()
 	  end
 

@@ -193,7 +193,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 	TOCA.FrameSeg.Button[totemCat].close:SetScript("OnClick", function(self)
 		TOCA.CloseAllMenus()
 		TOCA.FrameSeg[totemCat]:Hide()
-		TOCA.Notification(string.lower(totemCat) .. " bar closed. Type '" .. TCCMD .. " show' to reopen.")
+		TOCA.Notification(string.lower(totemCat) .. " bar closed. Type '" .. TOCA._G.CMD .. " show' to reopen.")
 	end)
 	TOCA.FrameSeg.Button[totemCat].close:SetScript("OnEnter", function(self)
 	  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
