@@ -905,8 +905,8 @@ function TOCA.Init()
     TOCA.Button.TotemicCall.ECR:Hide()
   end
 
-  --TOCA.AssignmentESRaidSendInit()
-	TOCA.AssignmentESRaidSend()
+	--TOCA.AssignmentESRaidSend()
+	TOCA.UpdateMapButton()
 
   TOCA.Notification("TOCA.Init()", true)
 end
