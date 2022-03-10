@@ -1,7 +1,7 @@
 ## Interface: 11402
-## Title: |cff006aa6Totem Caddy|r v2.53
+## Title: |cff006aa6Totem Caddy|r v2.54
 ## Notes: Totem Caddy
-## Version: 2.53
+## Version: 2.54
 ## Author: Porthias of Myzrael (aka Porthios)
 ## SavedVariables:TOCADB
 ## OptionalDeps: Blizzard_RaidUI, Blizzard_CompactRaidFrames, Blizzard_BindingUI
