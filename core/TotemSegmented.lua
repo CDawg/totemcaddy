@@ -154,13 +154,13 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 		TOCA.FrameSeg.Button[totemCat][i].radius:SetBlendMode("BLEND")
 		TOCA.FrameSeg.Button[totemCat][i].radius:Hide()
 		TOCA.FrameSeg.Button[totemCat][i].ID = TOCA.FrameSeg.Button[totemCat][i]:CreateFontString(nil, "ARTWORK")
-		TOCA.FrameSeg.Button[totemCat][i].ID:SetFont(TOCA.Global.font, 12, "OUTLINE")
+		TOCA.FrameSeg.Button[totemCat][i].ID:SetFont(TOCA._G.font, 12, "OUTLINE")
 		TOCA.FrameSeg.Button[totemCat][i].ID:SetPoint("CENTER", 0, 0)
 		TOCA.FrameSeg.Button[totemCat][i].ID:SetText(totemSpell[1])
 		TOCA.FrameSeg.Button[totemCat][i].ID:Hide()
 		--print(totemSpell[1] .. " = " .. i) --pull IDs
 		TOCA.FrameSeg.Button[totemCat][i].timer = TOCA.FrameSeg.Button[totemCat][i]:CreateFontString(nil, "ARTWORK")
-		TOCA.FrameSeg.Button[totemCat][i].timer:SetFont(TOCA.Global.font, 12, "OUTLINE")
+		TOCA.FrameSeg.Button[totemCat][i].timer:SetFont(TOCA._G.font, 12, "OUTLINE")
 		TOCA.FrameSeg.Button[totemCat][i].timer:SetPoint("CENTER", 0, -8)
 		TOCA.FrameSeg.Button[totemCat][i].timer:SetText("")
 		TOCA.FrameSeg.Button[totemCat][i].disable = CreateFrame("Frame", nil, TOCA.FrameSeg.Button[totemCat][i], "BackdropTemplate")
@@ -222,7 +222,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 	TOCA.FrameSeg.Button[totemCat].orientation.icon = TOCA.FrameSeg.Button[totemCat].orientation:CreateTexture(nil, "ARTWORK")
 	TOCA.FrameSeg.Button[totemCat].orientation.icon:SetSize(11, 11)
 	TOCA.FrameSeg.Button[totemCat].orientation.icon:SetPoint("CENTER", 0, 0)
-	TOCA.FrameSeg.Button[totemCat].orientation.icon:SetTexture("Interface/AddOns/".. TOCA.Global.prefix .."/images/btn_orientation.tga")
+	TOCA.FrameSeg.Button[totemCat].orientation.icon:SetTexture("Interface/AddOns/".. TOCA._G.prefix .."/images/btn_orientation.tga")
 	TOCA.FrameSeg.Button[totemCat].orientation:SetScript("OnClick", function()
     if (TOCADB[TOCA.player.combine]["CONFIG"]["SEG_OR_"..totemCat] == "H") then
 			TOCADB[TOCA.player.combine]["CONFIG"]["SEG_OR_"..totemCat] = "V"

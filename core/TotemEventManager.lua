@@ -50,8 +50,8 @@ end)
 
 function TOCA.EventManager(_self, event, prefix, netpacket, _casted, _spellID)
 	if (event) then
-		if ((event == "ADDON_LOADED") and (prefix == TOCA.Global.prefix)) then
-	    TOCA.Notification("v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " (" .. GetLocale() .. ") " .. TOCA.locale.INIT[6] .. ". Type /" .. TOCA.Global.command .. " for commands.")
+		if ((event == "ADDON_LOADED") and (prefix == TOCA._G.prefix)) then
+	    TOCA.Notification("v" .. TOCA._G.version .. "-" .. TOCA._G.suffix .. " (" .. GetLocale() .. ") " .. TOCA._L.INIT[6] .. ". Type /" .. TOCA._G.command .. " for commands.")
 	    TOCA.Init()
 	  end
 
@@ -115,9 +115,9 @@ function TOCA.EventManager(_self, event, prefix, netpacket, _casted, _spellID)
 	  end
 
 	  if (event == "PLAYER_LOGIN") then
-			TOCA.SendPacket(TOCA.Net.version .. TOCA.Global.version, "GUILD")
+			TOCA.SendPacket(TOCA.Net.version .. TOCA._G.version, "GUILD")
 			if (IsInRaid()) then
-				TOCA.SendPacket(TOCA.Net.version .. TOCA.Global.version, "RAID")
+				TOCA.SendPacket(TOCA.Net.version .. TOCA._G.version, "RAID")
 			end
 	    if (TOCA.KeyBindsSetOnLoad == 1) then
 	      TOCA.SetKeyBindOnLoad()

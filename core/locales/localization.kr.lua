@@ -1,6 +1,6 @@
 if GetLocale() ~= "koKR" then return end
 
-TOCA.locale = {
+TOCA._L = {
   TITLE = "토템 캐디",
 
 	SPELLS = {
@@ -115,6 +115,6 @@ TOCA.locale = {
 	}
 }
 
-function TOCA.locale.Ankh()
+function TOCA._L.Ankh()
 	return "Ankhs: |cffffffff".. TOCA.InventoryCountItem(TOCA.item.ANKH) .."|r|n|nAnkh Inventory Count Reminder.|nThis will display when you have less than " .. TOCA.AnkhReminder .. " Ankhs"
 end

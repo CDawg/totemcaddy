@@ -70,13 +70,13 @@ TOCA.Button.Tab={}
 TOCA.Button.TabBack={}
 TOCA.FrameHelpPage={}
 
-local HelpIntro = TOCA.locale.INIT[5].. " " .. TOCA.Global.title .. " v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " (" .. GetLocale() .. ")|n|n"
+local HelpIntro = TOCA._L.INIT[5].. " " .. TOCA._G.title .. " v" .. TOCA._G.version .. "-" .. TOCA._G.suffix .. " (" .. GetLocale() .. ")|n|n"
 
-for i=1, getn(TOCA.locale.UI.TABS.HELP) do
-  TOCA.FrameHelpPage[TOCA.locale.UI.TABS.HELP[i]] = CreateFrame("Frame", "TOCA.FrameHelp", TOCA.FrameHelp, "BackdropTemplate")
-  TOCA.FrameHelpPage[TOCA.locale.UI.TABS.HELP[i]]:SetWidth(TOCA.FrameHelp:GetWidth())
-  TOCA.FrameHelpPage[TOCA.locale.UI.TABS.HELP[i]]:SetHeight(TOCA.FrameHelp:GetHeight())
-  TOCA.FrameHelpPage[TOCA.locale.UI.TABS.HELP[i]]:SetPoint("CENTER", 0, 0)
+for i=1, getn(TOCA._L.UI.TABS.HELP) do
+  TOCA.FrameHelpPage[TOCA._L.UI.TABS.HELP[i]] = CreateFrame("Frame", "TOCA.FrameHelp", TOCA.FrameHelp, "BackdropTemplate")
+  TOCA.FrameHelpPage[TOCA._L.UI.TABS.HELP[i]]:SetWidth(TOCA.FrameHelp:GetWidth())
+  TOCA.FrameHelpPage[TOCA._L.UI.TABS.HELP[i]]:SetHeight(TOCA.FrameHelp:GetHeight())
+  TOCA.FrameHelpPage[TOCA._L.UI.TABS.HELP[i]]:SetPoint("CENTER", 0, 0)
 
   TOCA.Button.TabBack[i]= CreateFrame("Button", nil, TOCA.FrameHelp, "BackdropTemplate")
   TOCA.Button.TabBack[i]:SetSize(TOCA.TabWidth.Help-20, 29)
@@ -100,17 +100,17 @@ for i=1, getn(TOCA.locale.UI.TABS.HELP) do
   --TOCA.Button.Tab[i]:SetBackdropColor(0.7, 0, 0, 1)
   --TOCA.Button.Tab[i]:SetBackdropBorderColor(1, 1, 1, 0.6)
   TOCA.Button.Tab[i].text = TOCA.Button.Tab[i]:CreateFontString(nil, "ARTWORK")
-  TOCA.Button.Tab[i].text:SetFont(TOCA.Global.font, 12, "OUTLINE")
+  TOCA.Button.Tab[i].text:SetFont(TOCA._G.font, 12, "OUTLINE")
   TOCA.Button.Tab[i].text:SetPoint("CENTER", 0, 0)
-  TOCA.Button.Tab[i].text:SetText(TOCA.locale.UI.TABS.HELP[i])
+  TOCA.Button.Tab[i].text:SetText(TOCA._L.UI.TABS.HELP[i])
   TOCA.Button.Tab[i]:SetScript("OnClick", function()
-    for i=1, getn(TOCA.locale.UI.TABS.HELP) do
+    for i=1, getn(TOCA._L.UI.TABS.HELP) do
       TOCA.Button.TabBack[i]:SetSize(TOCA.TabWidth.Help-20, 29)
     end
     TOCA.Button.TabBack[i]:SetSize(TOCA.TabWidth.Help-20, 31)
-    if (TOCA.locale.UI.TABS.HELP[i] == TOCA.locale.UI.TABS.HELP[3]) then
+    if (TOCA._L.UI.TABS.HELP[i] == TOCA._L.UI.TABS.HELP[3]) then
       TOCA.TextFrame.text:SetText(arrayToString(TOCA.HELP.CREDIT))
-    elseif (TOCA.locale.UI.TABS.HELP[i] == TOCA.locale.UI.TABS.HELP[2]) then
+    elseif (TOCA._L.UI.TABS.HELP[i] == TOCA._L.UI.TABS.HELP[2]) then
       TOCA.TextFrame.text:SetText(arrayToString(TOCA.HELP.CONTACT))
     else
       TOCA.TextFrame.text:SetText(HelpIntro .. arrayToString(TOCA.HELP.UPDATES))
@@ -121,7 +121,7 @@ TOCA.Button.TabBack[1]:SetSize(TOCA.TabWidth.Help-20, 30) --first tab
 
 TOCA.TextFrame_w = TOCA.FrameHelp_w-20
 TOCA.TextFrame_h = TOCA.FrameHelp_h-50
---TOCA.TextFrame = CreateFrame("Frame", nil, TOCA.FrameHelpPage[TOCA.locale.UI.TABS.HELP[1]])
+--TOCA.TextFrame = CreateFrame("Frame", nil, TOCA.FrameHelpPage[TOCA._L.UI.TABS.HELP[1]])
 TOCA.TextFrame = CreateFrame("Frame", nil, TOCA.FrameHelp)
 TOCA.TextFrame:SetWidth(TOCA.TextFrame_w)
 TOCA.TextFrame:SetHeight(TOCA.TextFrame_h)
@@ -162,9 +162,9 @@ TOCA.Button.CloseFrameHelp:SetBackdrop(TOCA.Backdrop.Button)
 TOCA.Button.CloseFrameHelp:SetBackdropColor(0.7, 0, 0, 1)
 TOCA.Button.CloseFrameHelp:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.Button.CloseFrameHelp.text = TOCA.Button.CloseFrameHelp:CreateFontString(nil, "ARTWORK")
-TOCA.Button.CloseFrameHelp.text:SetFont(TOCA.Global.font, 12, "OUTLINE")
+TOCA.Button.CloseFrameHelp.text:SetFont(TOCA._G.font, 12, "OUTLINE")
 TOCA.Button.CloseFrameHelp.text:SetPoint("CENTER", 0, 0)
-TOCA.Button.CloseFrameHelp.text:SetText(TOCA.locale.UI.BUTTON[1])
+TOCA.Button.CloseFrameHelp.text:SetText(TOCA._L.UI.BUTTON[1])
 TOCA.Button.CloseFrameHelp:SetScript("OnEnter", function(self)
   self:SetBackdropBorderColor(1, 1, 1, 1)
 end)
@@ -173,17 +173,17 @@ TOCA.Button.CloseFrameHelp:SetScript("OnLeave", function(self)
 end)
 TOCA.Button.CloseFrameHelp:SetScript("OnClick", function()
   TOCA.FrameHelp:Hide()
-  TOCADB[TOCA.player.combine]["HELP"] = TOCA.Global.version
+  TOCADB[TOCA.player.combine]["HELP"] = TOCA._G.version
 end)
 
 TOCA.ShowAgain={}
 TOCA.ShowAgain[1] = TOCA.FrameHelp:CreateFontString(nil, "ARTWORK")
-TOCA.ShowAgain[1]:SetFont(TOCA.Global.font, 10, "OUTLINE")
+TOCA.ShowAgain[1]:SetFont(TOCA._G.font, 10, "OUTLINE")
 TOCA.ShowAgain[1]:SetPoint("CENTER", 0, -TOCA.FrameHelp_h/2+50)
 TOCA.ShowAgain[1]:SetText(TOCA.HELP.FOOTER[1])
 TOCA.ShowAgain[1]:SetTextColor(0.7, 0.7, 0.6, 1)
 TOCA.ShowAgain[2] = TOCA.FrameHelp:CreateFontString(nil, "ARTWORK")
-TOCA.ShowAgain[2]:SetFont(TOCA.Global.font, 10, "OUTLINE")
+TOCA.ShowAgain[2]:SetFont(TOCA._G.font, 10, "OUTLINE")
 TOCA.ShowAgain[2]:SetPoint("CENTER", 0, -TOCA.FrameHelp_h/2+60)
 TOCA.ShowAgain[2]:SetText(TOCA.HELP.FOOTER[2])
 TOCA.ShowAgain[2]:SetTextColor(0.7, 0.7, 0.6, 1)

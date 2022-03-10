@@ -19,7 +19,7 @@ TOCA.Button.Assignments:SetSize(21, 21)
 TOCA.Button.Assignments:SetPoint("TOPLEFT", 2, -2)
 TOCA.Button.Assignments:SetBackdrop(TOCA.SetIcon("spell_nature_skinofearth"))
 TOCA.Button.Assignments:SetScript("OnEnter", function(self)
-  TOCA.TooltipDisplay(self, TOCA.locale.UI.OPTIONS[10][1], TOCA.locale.UI.OPTIONS[10][2])
+  TOCA.TooltipDisplay(self, TOCA._L.UI.OPTIONS[10][1], TOCA._L.UI.OPTIONS[10][2])
 end)
 TOCA.Button.Assignments:SetScript("OnLeave", function(self)
   TOCA.CloseAllMenus()
@@ -56,9 +56,9 @@ TOCA.FrameAssignments:SetScript("OnDragStop", function()
   TOCADB[TOCA.player.combine]["CONFIG"]["ESPOS"] = point .. "," .. xOfs .. "," .. yOfs
 end)
 TOCA.FrameAssignments.title = TOCA.FrameAssignments:CreateFontString(nil, "ARTWORK")
-TOCA.FrameAssignments.title:SetFont(TOCA.Global.font, 11)
+TOCA.FrameAssignments.title:SetFont(TOCA._G.font, 11)
 TOCA.FrameAssignments.title:SetPoint("TOPLEFT", TOCA.FrameAssignments, "TOPLEFT", 15, -8)
-TOCA.FrameAssignments.title:SetText(TOCA.Global.title .. " : " .. TOCA.locale.UI.OPTIONS[10][1])
+TOCA.FrameAssignments.title:SetText(TOCA._G.title .. " : " .. TOCA._L.UI.OPTIONS[10][1])
 
 TOCA.FrameAssignments:Hide()
 TOCA.Dropdown.FrameAssignments={}
@@ -70,21 +70,21 @@ TOCA.Dropdown.FrameAssignmentMenu={""}
 for i=1, MAX_RAID_MEMBERS do
 	--columnHeight = columnHeight +1
 	TOCA.FrameAssignments.text = TOCA.FrameAssignments:CreateFontString(nil, "ARTWORK")
-	TOCA.FrameAssignments.text:SetFont(TOCA.Global.font, 11)
+	TOCA.FrameAssignments.text:SetFont(TOCA._G.font, 11)
 	TOCA.FrameAssignments.text:SetPoint("TOPLEFT", 10, -i*14)
 	TOCA.FrameAssignments.text:SetText("")
 
   --[==[
 	TOCA.FrameAssignments.MTClass[i]={}
 	TOCA.FrameAssignments.MTClass[i] = TOCA.FrameAssignments:CreateFontString(nil, "ARTWORK")
-	TOCA.FrameAssignments.MTClass[i]:SetFont(TOCA.Global.font, 11)
+	TOCA.FrameAssignments.MTClass[i]:SetFont(TOCA._G.font, 11)
 	TOCA.FrameAssignments.MTClass[i]:SetPoint("TOPLEFT", 10, -i*32+12)
 	TOCA.FrameAssignments.MTClass[i]:SetText("")
 	TOCA.FrameAssignments.MTClass[i]:Hide()
 	]==]--
 	TOCA.FrameAssignments.MTName[i]={}
 	TOCA.FrameAssignments.MTName[i] = TOCA.FrameAssignments:CreateFontString(nil, "ARTWORK")
-	TOCA.FrameAssignments.MTName[i]:SetFont(TOCA.Global.font, 11)
+	TOCA.FrameAssignments.MTName[i]:SetFont(TOCA._G.font, 11)
 	TOCA.FrameAssignments.MTName[i]:SetPoint("TOPLEFT", 20, -i*32-12)
 	TOCA.FrameAssignments.MTName[i]:SetText("")
 	TOCA.FrameAssignments.MTName[i]:Hide()
@@ -95,7 +95,7 @@ for i=1, MAX_RAID_MEMBERS do
 	TOCA.Dropdown.FrameAssignments[i]:SetPoint("TOPLEFT", 100, -i*32-4)
 	TOCA.Dropdown.FrameAssignments[i].displayMode = "MENU"
 	TOCA.Dropdown.FrameAssignments[i].text = TOCA.Dropdown.FrameAssignments[i]:CreateFontString(nil, "ARTWORK")
-	TOCA.Dropdown.FrameAssignments[i].text:SetFont(TOCA.Global.font, 11)
+	TOCA.Dropdown.FrameAssignments[i].text:SetFont(TOCA._G.font, 11)
 	TOCA.Dropdown.FrameAssignments[i].text:SetPoint("TOPLEFT", TOCA.Dropdown.FrameAssignments[i], "TOPLEFT", 25, -8)
 	TOCA.Dropdown.FrameAssignments[i].text:SetText("")
 	TOCA.Dropdown.FrameAssignments[i].onClick = function(self, checked)
@@ -158,7 +158,7 @@ end
 
 function TOCA.AssignmentESRaidGet(prefix, netpacket)
 	TOCA.NumRestoShams = 0 --reset
-	if (prefix == TOCA.Global.prefix) then
+	if (prefix == TOCA._G.prefix) then
 		--print("getting data " .. netpacket)
 		local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.assign_es)
 		if (getPacket) then

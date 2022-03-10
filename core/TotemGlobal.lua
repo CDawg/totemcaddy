@@ -15,8 +15,8 @@ the copyright holders.
 
 TOCA.DEBUG = false
 
-TOCA.Global = {
-  title  = TOCA.colors.class[7][4] .. TOCA.locale.TITLE .."|r",
+TOCA._G = {
+  title  = TOCA.colors.class[7][4] .. TOCA._L.TITLE .."|r",
   author = "Porthias of Myzrael",
   version= 2.54,
   command= "toca",
@@ -30,120 +30,21 @@ TOCA.Global = {
 	date   = date("%Y%m%d"),
 	update = 20220321,
 }
---local _LName, _LTitle = GetAddOnInfo(TOCA.Global.prefix)
---TOCA.Global.version = tonumber(string.sub(_LTitle, 26, 29))
+--local _LName, _LTitle = GetAddOnInfo(TOCA._G.prefix)
+--TOCA._G.version = tonumber(string.sub(_LTitle, 26, 29))
+
+TCCMD = "/"..TOCA._G.command
 
 TOCA.Game={}
 TOCA.Game.version = tonumber(string.sub(__Gversion, 1, 1))
 if (TOCA.Game.version == 1) then
-  TOCA.Global.suffix = "Classic"
+  TOCA._G.suffix = "Classic"
 end
 
 TOCA.Net = {
-	Success = C_ChatInfo.RegisterAddonMessagePrefix(TOCA.Global.prefix),
+	Success = C_ChatInfo.RegisterAddonMessagePrefix(TOCA._G.prefix),
   version   = "0xEFVe", --version
 	assign_es = "0xEFES", --earthshield assign
-}
-
-TCCMD = "/"..TOCA.Global.command
-
-TOCA.Raid={}
-TOCA.Raid.Name={}
-TOCA.Raid.Class={}
-TOCA.Raid.Role={}
-
-TOCA.Backdrop={}
-TOCA.Backdrop.General = {
-  bgFile  = "Interface/Tooltips/UI-Tooltip-Background",
-  edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
-  edgeSize= 12,
-  insets  = {left=2, right=2, top=2, bottom=2},
-}
-
-TOCA.Backdrop.Button = {
-  bgFile  = "Interface/Buttons/GoldGradiant",
-  edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
-  edgeSize= 12,
-  insets  = {left=2, right=2, top=2, bottom=2},
-}
-
-TOCA.ID = {
-	FIRE =1,
-	EARTH=2,
-	WATER=3,
-  AIR = 4,
-}
-
---all icons must be in order to sync with totemspells[locales] by category
-TOCA.icons = {
-	 FIRE = {
-	  "spell_fire_sealoffire",
-	  "spell_nature_guardianward",
-	  "spell_frostresistancetotem_01",
-	  "spell_fire_selfdestruct",
-	  "spell_fire_searingtotem",
-	  "spell_fire_totemofwrath",
-  },
-	EARTH = {
-	  "spell_nature_strengthofearthtotem02",
-	  "spell_nature_stoneclawtotem",
-	  "spell_nature_stoneskintotem",
-	  "spell_nature_earthbindtotem",
-	  "spell_nature_tremortotem",
-	},
-  WATER = {
-	  "spell_nature_diseasecleansingtotem",
-	  "spell_fireresistancetotem_01",
-	  "inv_spear_04",
-	  "spell_nature_manaregentotem",
-	  "spell_frost_summonwaterelemental",
-	  "spell_nature_poisoncleansingtotem",
-	},
-	AIR = {
-	  "spell_nature_invisibilitytotem",
-	  "spell_nature_groundingtotem",
-	  "spell_nature_natureresistancetotem",
-	  "spell_nature_removecurse",
-	  "spell_nature_brilliance",
-	  "spell_nature_windfury",
-	  "spell_nature_earthbind",
-	  "spell_nature_slowingtotem",
-	}
-}
-
-TOCA.totems.ID = {}
-TOCA.totems.ID.FIRE = {
-	1535, --fire nova
-	8227, --flametongue
-	8181, --frost resist
-	8190, --magma
-	3599, --searing
-	30706, --totem of wrath
-}
-TOCA.totems.ID.EARTH = {
-  2484, --eathbind
-	5730, --stoneclaw
-  8071, --stoneskin
-	8075, --strength of earth
-	8143, --tremor
-}
-TOCA.totems.ID.WATER = {
-	8170, --disease cleanse
-	8184, --fire resist
-	5394, --healing stream
-  5675, --mana spring
-	16190, --mana tide
-	38306, --poison cleansing
-}
-TOCA.totems.ID.AIR = {
-	8835, --grace
-	8177, --grounding
-	10595, --nature resist
-	6495, --sentry
-	25908, --tranquil air
-	8512, --windfury
-	15107, --windwall
-	3738, --wrath of air
 }
 
 TOCA.OptionMenuOpen = 0
@@ -160,16 +61,16 @@ function TOCA.IdentifySpell(spellID) --used for different languages
 end
 
 --build all totems for the respective language (rank 1)
-TOCA.locale.TOTEMS = {FIRE={}, EARTH={}, WATER={}, AIR={}}
+TOCA._L.TOTEMS = {FIRE={}, EARTH={}, WATER={}, AIR={}}
 for totemCat,v in pairsByKeys(TOCA.totems.ID) do
 	for k,v in pairsByKeys(TOCA.totems.ID[totemCat]) do
-		TOCA.locale.TOTEMS[totemCat][k] = TOCA.IdentifySpell(TOCA.totems.ID[totemCat][k])
+		TOCA._L.TOTEMS[totemCat][k] = TOCA.IdentifySpell(TOCA.totems.ID[totemCat][k])
 	end
 end
 
-TOCA.locale.SPELLS.Reincarnation = TOCA.IdentifySpell(TOCA.spell.REINCARNATION)
-TOCA.locale.SPELLS.TotemicCall = TOCA.IdentifySpell(TOCA.spell.TOTEMIC_CALL)
-TOCA.locale.SPELLS.SHIELDS = {
+TOCA._L.SPELLS.Reincarnation = TOCA.IdentifySpell(TOCA.spell.REINCARNATION)
+TOCA._L.SPELLS.TotemicCall = TOCA.IdentifySpell(TOCA.spell.TOTEMIC_CALL)
+TOCA._L.SPELLS.SHIELDS = {
 	TOCA.IdentifySpell(TOCA.spell.WATER_SHIELD),
 	TOCA.IdentifySpell(TOCA.spell.LIGHTNING_SHIELD),
 	TOCA.IdentifySpell(TOCA.spell.EARTH_SHIELD),
@@ -178,9 +79,9 @@ TOCA.locale.SPELLS.SHIELDS = {
 --match the totems spells to their respective icons
 TOCA.totems = {FIRE={}, EARTH={}, WATER={}, AIR={}} --cached order
 for totemCat,v in pairsByKeys(TOCA.totems) do
-	for k,v in pairsByKeys(TOCA.locale.TOTEMS[totemCat]) do
+	for k,v in pairsByKeys(TOCA._L.TOTEMS[totemCat]) do
 		TOCA.totems[totemCat][k] = {}
-		TOCA.totems[totemCat][k][1] = TOCA.locale.TOTEMS[totemCat][k]
+		TOCA.totems[totemCat][k][1] = TOCA._L.TOTEMS[totemCat][k]
 		TOCA.totems[totemCat][k][2] = TOCA.icons[totemCat][k]
 	end
 end
@@ -188,19 +89,19 @@ end
 TOCA.version_alerted = 0
 function TOCA.VersionControl(netprefix, netpacket)
 	if (TOCA.version_alerted == 0) then
-	  if (netprefix == TOCA.Global.prefix) then
+	  if (netprefix == TOCA._G.prefix) then
 	    local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.version)
 	    if (getPacket) then
 	      local latest_version = tonumber(getPacket)
-	      local my_version = tonumber(TOCA.Global.version)
+	      local my_version = tonumber(TOCA._G.version)
 	      if (latest_version > my_version) then --2 minor
-	        TOCA.Notification("|cfffc2121" .. TOCA.locale.INIT[7] .. " Latest version:|cffffedad " .. latest_version)
+	        TOCA.Notification("|cfffc2121" .. TOCA._L.INIT[7] .. " Latest version:|cffffedad " .. latest_version)
 	        TOCA.version_alerted = tonumber(latest_version)
 	      end
 	    end
 	  end
-		if (tonumber(TOCA.Global.date) >= tonumber(TOCA.Global.update)) then
-	    TOCA.Notification("|cfffc2121" .. TOCA.locale.INIT[7])
+		if (tonumber(TOCA._G.date) >= tonumber(TOCA._G.update)) then
+	    TOCA.Notification("|cfffc2121" .. TOCA._L.INIT[7])
 			TOCA.version_alerted = 1
 		end
 	end
@@ -216,7 +117,7 @@ TOCA.Dropdown.Menu = {"Default"}
 TOCA.MenuIsOpenMain = 0
 TOCA.MenuIsOpenSets = 0
 TOCA.ReincTimer = 0
-TOCA.globalTimerInMinutes = true --default
+TOCA._GTimerInMinutes = true --default
 TOCA.Tab={}
 TOCA.TabWidth={}
 TOCA.isInCombat = false
@@ -245,16 +146,16 @@ end
 
 function TOCA.Notification(msg, debug)
   if ((debug) and (TOCA.DEBUG)) then
-    print(TOCA.Global.title .. " DEBUG: " .. msg)
+    print(TOCA._G.title .. " DEBUG: " .. msg)
   end
   if (not debug) then
-    print(TOCA.Global.title .. " " .. msg)
+    print(TOCA._G.title .. " " .. msg)
   end
 end
 
 function TOCA.BuildKeyBindsInit()
-  BINDING_HEADER_TOTEMCADDY = TOCA.Global.title
-  for KeyBK,KeyBV in pairsByKeys(TOCA.locale.KEYBINDS) do
+  BINDING_HEADER_TOTEMCADDY = TOCA._G.title
+  for KeyBK,KeyBV in pairsByKeys(TOCA._L.KEYBINDS) do
     _G["BINDING_NAME_"..KeyBK] = KeyBV
   end
   TOCA.Notification("TOCA.BuildKeyBindsInit()", true)
@@ -268,14 +169,14 @@ TOCA.BuildKeyBindsInit()
 
 function TOCA.SetIcon(icon)
 	local array = {
-		bgFile="Interface/AddOns/".. TOCA.Global.prefix .."/images/" .. icon,
+		bgFile="Interface/AddOns/".. TOCA._G.prefix .."/images/" .. icon,
 		edgeFile="Interface/ToolTips/UI-Tooltip-Border",
 		edgeSize=12,
 		insets={left=2, right=2, top=2, bottom=2},
 	}
 	if (TOCA.BorderFrames <= 0) then
 		array = {
-	    bgFile="Interface/AddOns/".. TOCA.Global.prefix .."/images/" .. icon,
+	    bgFile="Interface/AddOns/".. TOCA._G.prefix .."/images/" .. icon,
 	    edgeFile="",
 	    edgeSize=12,
 	    insets={left=2, right=2, top=2, bottom=2},
@@ -302,7 +203,7 @@ function TOCA.SetKeyBindOnLoad()
   else
 		if (TOCA.Game.version > 1) then
 			local title = "TOTEM_RECALL"
-	    TOCA.SetKeyBindReset(title, TOCA.locale.SPELLS.TotemicCall)
+	    TOCA.SetKeyBindReset(title, TOCA._L.SPELLS.TotemicCall)
 		end
 
 		if (TOCA.cache[1]) then
@@ -455,7 +356,7 @@ end
 
 function TOCA.EnableKnownTotems()
   if (TOCA.TotemsEnabled) then
-		local TotemicCall = GetSpellInfo(TOCA.locale.SPELLS.TotemicCall)
+		local TotemicCall = GetSpellInfo(TOCA._L.SPELLS.TotemicCall)
 		if (not TotemicCall) then
 			TOCA.HideUnknownSpells(true)
 		end
@@ -501,17 +402,17 @@ function TOCA.HasEarthShield()
 end
 
 TOCA.FrameStyleIndex={} --build an index for localization
-for k,v in pairs(TOCA.locale.UI.FRAMESTYLES) do
+for k,v in pairs(TOCA._L.UI.FRAMESTYLES) do
   TOCA.FrameStyleIndex[v]=k
 end
 
 function TOCA.FrameStyleDefault() --used for emergency recovery
-  TOCA.FrameMain:SetHeight(TOCA.Global.height)
-  TOCA.FrameMain:SetWidth(TOCA.Global.width)
+  TOCA.FrameMain:SetHeight(TOCA._G.height)
+  TOCA.FrameMain:SetWidth(TOCA._G.width)
   TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 40)
 	TOCA.Button.DropdownMain:Show()
-	TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
-	TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -44)
+	TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA._G.width-4, -14)
+	TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA._G.width-4, -44)
 	TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", -28, -14)
 	TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 61)
 	TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 61)
@@ -527,7 +428,7 @@ end
 
 function TOCA.FrameStyleSet(style)
 	TOCA.FrameStyleDefault()
-  if (style == TOCA.locale.UI.FRAMESTYLES[2]) then --segmented
+  if (style == TOCA._L.UI.FRAMESTYLES[2]) then --segmented
 			TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", 10, -30)
 	    TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", 40, -30)
 	    TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", 70, -30)
@@ -535,17 +436,17 @@ function TOCA.FrameStyleSet(style)
 				TOCA.Slot[totemCat]:Hide()
 	      TOCA.FrameSeg[totemCat]:Show()
 			end
-			TOCA.FrameMain:SetHeight(TOCA.Global.height-20)
+			TOCA.FrameMain:SetHeight(TOCA._G.height-20)
 			TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 30)
 			TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 51)
 			TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 51)
 			TOCA.Button.DropdownMain:Hide()
 			TOCA.FrameMain.ReincFrame.text:SetPoint("CENTER", TOCA.FrameMain.ReincFrame, "CENTER", 0, 18)
-  elseif (style == TOCA.locale.UI.FRAMESTYLES[3]) then --vert
-		TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -14)
-    TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -44)
-    TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", TOCA.Global.width-4, -74)
-    TOCA.FrameMain:SetHeight(TOCA.Global.height+240)
+  elseif (style == TOCA._L.UI.FRAMESTYLES[3]) then --vert
+		TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA._G.width-4, -14)
+    TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA._G.width-4, -44)
+    TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", TOCA._G.width-4, -74)
+    TOCA.FrameMain:SetHeight(TOCA._G.height+240)
     TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 160)
     TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 181)
     TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 181)
@@ -556,12 +457,12 @@ function TOCA.FrameStyleSet(style)
 		TOCA.Button.DropdownMain:Hide()
 		TOCA.FrameMainGridVertical:Show()
 		TOCA.FrameMainGridHorizontal:Hide()
-  elseif (style == TOCA.locale.UI.FRAMESTYLES[4]) then --horz
-		TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA.Global.width+171, -22)
-    TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA.Global.width+171, -52)
-    TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", TOCA.Global.width+171, -82)
-    TOCA.FrameMain:SetHeight(TOCA.Global.height+84)
-		TOCA.FrameMain:SetWidth(TOCA.Global.height+240)
+  elseif (style == TOCA._L.UI.FRAMESTYLES[4]) then --horz
+		TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", TOCA._G.width+171, -22)
+    TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", TOCA._G.width+171, -52)
+    TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", TOCA._G.width+171, -82)
+    TOCA.FrameMain:SetHeight(TOCA._G.height+84)
+		TOCA.FrameMain:SetWidth(TOCA._G.height+240)
     TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 84)
     TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 103)
     TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 103)
@@ -705,7 +606,7 @@ function TOCA.Init()
 		if (TOCADB[TOCA.player.combine]["RAID"] == nil) then
 			TOCADB[TOCA.player.combine]["RAID"] = {}
 		end
-    TOCA.Notification(TOCA.locale.INIT[1] .. ": " .. TOCA.player.combine)
+    TOCA.Notification(TOCA._L.INIT[1] .. ": " .. TOCA.player.combine)
     TOCADB[TOCA.player.combine]["PROFILES"][TOCA.Dropdown.Menu[1]] = {TOCA_AIR=TOCA.cache[1], TOCA_EARTH=TOCA.cache[2], TOCA_FIRE=TOCA.cache[3], TOCA_WATER=TOCA.cache[4]}
     TOCA.UpdateTotemSet()
 		TOCA.UpdateMapButton()
@@ -714,7 +615,7 @@ function TOCA.Init()
 			TOCADB[TOCA.player.combine]["RAID"] = {}
 		end
 
-    TOCA.Notification(TOCA.locale.INIT[2] .. ": " .. TOCA.player.combine)
+    TOCA.Notification(TOCA._L.INIT[2] .. ": " .. TOCA.player.combine)
     if (TOCADB[TOCA.player.combine]["DISABLED"] == "YES") then
       TOCA.FrameMain:Hide()
     end
@@ -757,7 +658,7 @@ function TOCA.Init()
       --TOCA.Checkbox.TimersInMinutes:SetChecked(nil)
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TIMERSMINUTES"] == "OFF") then
-      TOCA.globalTimerInMinutes = false
+      TOCA._GTimerInMinutes = false
       TOCA.Checkbox.TimersInMinutes:SetChecked(nil)
     end
 
@@ -817,7 +718,7 @@ function TOCA.Init()
       TOCA.FrameStyleSet(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"])
       TOCA.Dropdown.FrameStyle.text:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"])
     else
-      TOCA.FrameStyleSet(TOCA.locale.UI.FRAMESTYLES[1]) --default
+      TOCA.FrameStyleSet(TOCA._L.UI.FRAMESTYLES[1]) --default
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMELEVEL"]) then
       TOCA.FrameMain:SetFrameStrata(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMELEVEL"])
@@ -827,7 +728,7 @@ function TOCA.Init()
       TOCA.SetDDMenu(TOCA.Dropdown.Main, TOCADB[TOCA.player.combine]["LASTSAVED"])
       TOCA.FrameSetsProfile:SetText(TOCADB[TOCA.player.combine]["LASTSAVED"])
     end
-    if (TOCADB[TOCA.player.combine]["HELP"] == TOCA.Global.version) then
+    if (TOCADB[TOCA.player.combine]["HELP"] == TOCA._G.version) then
       TOCA.FrameHelp:Hide()
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["MAINPOS"]) then
@@ -904,7 +805,7 @@ function TOCA.Init()
     TOCA.UpdateDDMenu(TOCA.Dropdown.Sets)
   end
 
-  TOCA.FrameOptionsMain.name = TOCA.Global.title
+  TOCA.FrameOptionsMain.name = TOCA._G.title
   InterfaceOptions_AddCategory(TOCA.FrameOptionsMain)
 
   TOCA.HideUnknownSpells(false) --check game version first
@@ -1072,7 +973,7 @@ function TOCA.TooltipDisplay(owner, title, msg, anchor)
       if (msg) then
         GameTooltip:AddDoubleLine(msg, "", 1, 0.8, 0, 0,0,1)
       else
-        GameTooltip:AddDoubleLine(TOCA.locale.SPELLS.Unknown, "", 1, 0, 0, 0,0,1)
+        GameTooltip:AddDoubleLine(TOCA._L.SPELLS.Unknown, "", 1, 0, 0, 0,0,1)
       end
     end
     GameTooltip:Show()
@@ -1097,13 +998,13 @@ function TOCA.ExpireNotificationsTotems(totemname, totemtimer)
 	if (totemtimer == 10) then
 		if ((totemname ~= nil) or (totemname ~= "")) then
 			if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGE"] ~= "OFF") then
-				TOCA.Notification("|cfff6d526" .. totemname .. "|r ".. TOCA.locale.INIT[4])
+				TOCA.Notification("|cfff6d526" .. totemname .. "|r ".. TOCA._L.INIT[4])
 			end
 			if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESOUND"] ~= "OFF") then
 				if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"]) then
-					PlaySoundFile(TOCA.Global.dir .. "sounds/" .. TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"] .. ".ogg")
+					PlaySoundFile(TOCA._G.dir .. "sounds/" .. TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"] .. ".ogg")
 				else
-					PlaySoundFile(TOCA.Global.dir .. "sounds/totemexpire_1.ogg")
+					PlaySoundFile(TOCA._G.dir .. "sounds/totemexpire_1.ogg")
 				end
 			end
 		end
@@ -1115,7 +1016,7 @@ function TOCA.ExpireNotificationsShield()
 	local _Uindex = 1
 	while UnitAura("player", _Uindex) do
 		local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura("player", _Uindex)
-		for k,v in pairs(TOCA.locale.SPELLS.SHIELDS) do
+		for k,v in pairs(TOCA._L.SPELLS.SHIELDS) do
 			if (string.find(name, v)) then
 				local timeDuration = duration + expirationTime - GetTime()
 				timeDuration = timeDuration / 120
@@ -1127,13 +1028,13 @@ function TOCA.ExpireNotificationsShield()
 						if (TOCA.NotificationAlertShield <= 0) then
 							TOCA.NotificationAlertShield = 1
 							if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGESHIELD"] ~= "OFF") then
-								TOCA.Notification("|cfff6d526" .. name .. "|r ".. TOCA.locale.INIT[4])
+								TOCA.Notification("|cfff6d526" .. name .. "|r ".. TOCA._L.INIT[4])
 							end
 							if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESHIELD"] ~= "OFF") then
 								if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"]) then
-									PlaySoundFile(TOCA.Global.dir .. "sounds/" .. TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"] .. ".ogg")
+									PlaySoundFile(TOCA._G.dir .. "sounds/" .. TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"] .. ".ogg")
 								else
-									PlaySoundFile(TOCA.Global.dir .. "sounds/shieldexpire_1.ogg")
+									PlaySoundFile(TOCA._G.dir .. "sounds/shieldexpire_1.ogg")
 								end
 							end
 						end
@@ -1257,7 +1158,7 @@ function TOCA.TimerFrame(i)
   TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
   if (TOCA.TotemPresent[i]) then
     TOCA.TotemTimer[i] = TOCA.TotemTimer[i] -1
-    if (TOCA.globalTimerInMinutes) then
+    if (TOCA._GTimerInMinutes) then
       TOCA.Slot.Timer[i]:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
       TOCA.SlotGrid.VerticalTimer[i]:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
       TOCA.SlotGrid.HorizontalTimer[i]:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
@@ -1320,7 +1221,7 @@ function TOCA.TimerFrame(i)
     return
   end
 
-  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.locale.UI.FRAMESTYLES[1]) then --classic
+  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA._L.UI.FRAMESTYLES[1]) then --classic
     for i=1, 4 do
       TOCA.Slot.Timer[i]:Show()
       TOCA.SlotGrid.VerticalTimer[i]:Hide()
@@ -1328,7 +1229,7 @@ function TOCA.TimerFrame(i)
     end
   end
 
-	if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.locale.UI.FRAMESTYLES[2]) then --segmented
+	if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA._L.UI.FRAMESTYLES[2]) then --segmented
 		for i=1, 4 do
 			TOCA.Slot.Timer[i]:Hide()
 			TOCA.SlotGrid.VerticalTimer[i]:Hide()
@@ -1336,7 +1237,7 @@ function TOCA.TimerFrame(i)
 		end
 	end
 
-  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.locale.UI.FRAMESTYLES[3]) then --vert
+  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA._L.UI.FRAMESTYLES[3]) then --vert
     for i=1, 4 do
       TOCA.Slot.Timer[i]:Hide()
       TOCA.SlotGrid.VerticalTimer[i]:Show()
@@ -1344,7 +1245,7 @@ function TOCA.TimerFrame(i)
     end
   end
 
-  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.locale.UI.FRAMESTYLES[4]) then --horz
+  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA._L.UI.FRAMESTYLES[4]) then --horz
     for i=1, 4 do
       TOCA.Slot.Timer[i]:Hide()
       TOCA.SlotGrid.VerticalTimer[i]:Hide()
@@ -1430,13 +1331,13 @@ function TOCA.TimerRechargeStart(spell, instant)
 						end
 					end
 				end
-				if (name == TOCA.locale.SPELLS.TotemicCall) then
+				if (name == TOCA._L.SPELLS.TotemicCall) then
 					TOCA.Button.TotemicCall.recharge:SetCooldown(GetTime(), countDown)
 					for totemCat,k in pairs(TOCA.totems) do
 						TOCA.ExtendedTotemCooldowns(totemCat, spell, countDown)
 					end
 				end
-				for spellCat,v in pairs(TOCA.locale.SPELLS.SHIELDS) do
+				for spellCat,v in pairs(TOCA._L.SPELLS.SHIELDS) do
 					if (v == name) then
 						TOCA.Button.TotemicCall.recharge:SetCooldown(GetTime(), countDown)
 						for totemCat,k in pairs(TOCA.totems) do
@@ -1470,7 +1371,7 @@ end
 
 function TOCA.GetReincTimer() --always checking
   --local numTabs = GetNumTalentTabs()
-  local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(TOCA.locale.SPELLS.Reincarnation)
+  local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(TOCA._L.SPELLS.Reincarnation)
   if (name) then
     local start, duration, enabled = GetSpellCooldown(name)
     if (duration) then
@@ -1503,7 +1404,7 @@ function TOCA.GetShieldTimer()
 	TOCA.FrameMain.ShieldFrame:Hide()
   while UnitAura("player", _Uindex) do
 	  local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura("player", _Uindex)
-		for k,v in pairs(TOCA.locale.SPELLS.SHIELDS) do --it's a shield spell, ignore everything else
+		for k,v in pairs(TOCA._L.SPELLS.SHIELDS) do --it's a shield spell, ignore everything else
 			if (string.find(name, v)) then
 				TOCA.FrameMain.ShieldFrame:Show()
 				local current_shield = nil
@@ -1697,7 +1598,7 @@ function TOCA.SendPacket(packet, channel, compress)
 	if (channel == "GUILD") then
 		if (not IsInGuild()) then return end
 	end
-  C_ChatInfo.SendAddonMessage(TOCA.Global.prefix, compressPacket, channel)
+  C_ChatInfo.SendAddonMessage(TOCA._G.prefix, compressPacket, channel)
   TOCA.Notification("sending packet " .. compressPacket, true)
 end
 
@@ -1811,36 +1712,36 @@ end
 SLASH_TOCA1 = TCCMD
 function SlashCmdList.TOCA(cmd)
   if ((cmd == nil) or (cmd == "")) then
-    TOCA.Notification("v" .. TOCA.Global.version .. "-" .. TOCA.Global.suffix .. " ("..GetLocale()..")")
-		for int,list in pairs(TOCA.locale.COMMANDS) do
+    TOCA.Notification("v" .. TOCA._G.version .. "-" .. TOCA._G.suffix .. " ("..GetLocale()..")")
+		for int,list in pairs(TOCA._L.COMMANDS) do
 			print("|cffffff00".. list[1] .. "|r : " .. list[2] .. "|n")
 		end
 	end
-	if (cmd == TOCA.locale.COMMANDS[1][1]) then
+	if (cmd == TOCA._L.COMMANDS[1][1]) then
 	  TOCA.FrameOptions:Show()
-  elseif (cmd == TOCA.locale.COMMANDS[2][1]) then
+  elseif (cmd == TOCA._L.COMMANDS[2][1]) then
 		TOCA.FrameMain:Show()
-		if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA.locale.UI.FRAMESTYLES[2]) then --segmented
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA._L.UI.FRAMESTYLES[2]) then --segmented
 			for totemCat,v in pairsByKeys(TOCA.totems) do
 				TOCA.FrameSeg[totemCat]:Show()
 			end
 		end
 		TOCADB[TOCA.player.combine]["DISABLED"] = "NO"
-	elseif (cmd == TOCA.locale.COMMANDS[3][1]) then
+	elseif (cmd == TOCA._L.COMMANDS[3][1]) then
 		TOCA.FrameMain:Hide()
-	elseif (cmd == TOCA.locale.COMMANDS[4][1]) then
+	elseif (cmd == TOCA._L.COMMANDS[4][1]) then
 		TOCA.Notification("|r : " .. TOCA.player.combine)
-	elseif (cmd == TOCA.locale.COMMANDS[5][1]) then
+	elseif (cmd == TOCA._L.COMMANDS[5][1]) then
 		TOCA.FrameAssignments:Show()
-	elseif (cmd == TOCA.locale.COMMANDS[6][1]) then
+	elseif (cmd == TOCA._L.COMMANDS[6][1]) then
 		TOCA.FrameHelp:Show()
-	elseif (cmd == TOCA.locale.COMMANDS[7][1]) then
+	elseif (cmd == TOCA._L.COMMANDS[7][1]) then
 		TOCA.DEBUG = true
 		TOCA.Notification("DEBUG ON")
-	elseif (cmd == TOCA.locale.COMMANDS[8][1]) then
+	elseif (cmd == TOCA._L.COMMANDS[8][1]) then
 		TOCA.DEBUG = false
 		TOCA.Notification("DEBUG OFF")
-	elseif (cmd == TOCA.locale.COMMANDS[9][1]) then
+	elseif (cmd == TOCA._L.COMMANDS[9][1]) then
 		print(string.format("version = %s, build = %s, date = '%s', tocversion = %s.", __Gversion, __Gbuild, __Gdate, __Gtoc))
 	end
 end
