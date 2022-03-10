@@ -40,23 +40,25 @@ TOCA.Main:RegisterEvent("BAG_UPDATE")
 TOCA.Main:RegisterEvent("CHAT_MSG_ADDON")
 TOCA.Main:RegisterEvent("MINIMAP_UPDATE_ZOOM")
 TOCA.Main:RegisterEvent("PLAYER_ENTERING_WORLD")
-TOCA.Main:RegisterEvent("NEW_WMO_CHUNK")
+TOCA.Main:RegisterEvent("NEW_WMO_CHUNK") --new worldmap data - one time only (event doesnt fire if the map data is already cached)
 TOCA.Main:RegisterEvent("ZONE_CHANGED")
 TOCA.Main:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 TOCA.Main:RegisterEvent("GROUP_ROSTER_UPDATE")
-TOCA.Main:SetScript("OnEvent", function(_self, event, prefix, netpacket, _casted, _spellID)
-  TOCA.EventManager(_self, event, prefix, netpacket, _casted, _spellID)
+--TOCA.Main:SetScript("OnUpdate", function(self, lapse)
+--end)
+TOCA.Main:SetScript("OnEvent", function(self, event, prefix, netpacket, _casted, _spellID)
+  TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 end)
 
-function TOCA.EventManager(_self, event, prefix, netpacket, _casted, _spellID)
+function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 	if (event) then
 		if ((event == "ADDON_LOADED") and (prefix == TOCA._G.prefix)) then
 	    TOCA.Notification("v" .. TOCA._G.version .. "-" .. TOCA._G.suffix .. " (" .. GetLocale() .. ") " .. TOCA._L.INIT[6] .. ". Type " .. TOCA._G.CMD .. " for commands.")
 	    TOCA.Init()
 	  end
 
-	  if ((event == "UNIT_SPELLCAST_START") or
-	  (event == "UNIT_SPELLCAST_STOP") or
+		if ((event == "UNIT_SPELLCAST_START") or
+		(event == "UNIT_SPELLCAST_STOP") or
 	  (event == "UNIT_POWER_FREQUENT")) then
 	    TOCA.TotemBarUpdate(event)
 	  end
