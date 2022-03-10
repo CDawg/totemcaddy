@@ -28,7 +28,7 @@ TOCA.Global = {
   prefix = "TotemCaddy",
   suffix = "BCC",
 	date   = date("%Y%m%d"),
-	update = 20220316,
+	update = 20220321,
 }
 --local _LName, _LTitle = GetAddOnInfo(TOCA.Global.prefix)
 --TOCA.Global.version = tonumber(string.sub(_LTitle, 26, 29))
@@ -55,6 +55,7 @@ TOCA.Raid.Role={}
 TOCA.Backdrop={}
 TOCA.Backdrop.General = {
   bgFile  = "Interface/Tooltips/UI-Tooltip-Background",
+	--bgFile  = "Interface/TALENTFRAME/ShamanElementalCombat-TopLeft",
   edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
   edgeSize= 12,
   insets  = {left=2, right=2, top=2, bottom=2},
@@ -187,7 +188,7 @@ function TOCA.VersionControl(netprefix, netpacket)
 	      local latest_version = tonumber(getPacket)
 	      local my_version = tonumber(TOCA.Global.version)
 	      if (latest_version > my_version) then --2 minor
-	        TOCA.Notification("|cfffc2121" .. TOCA.locale.INIT[7] .. ". Latest version:|cffffedad " .. latest_version)
+	        TOCA.Notification("|cfffc2121" .. TOCA.locale.INIT[7] .. " Latest version:|cffffedad " .. latest_version)
 	        TOCA.version_alerted = tonumber(latest_version)
 	      end
 	    end
@@ -695,10 +696,17 @@ function TOCA.Init()
     if (TOCADB[TOCA.player.combine]["HELP"] == nil) then
       TOCADB[TOCA.player.combine]["HELP"] = "YES"
     end
+		if (TOCADB[TOCA.player.combine]["RAID"] == nil) then
+			TOCADB[TOCA.player.combine]["RAID"] = {}
+		end
     TOCA.Notification(TOCA.locale.INIT[1] .. ": " .. TOCA.player.combine)
     TOCADB[TOCA.player.combine]["PROFILES"][TOCA.Dropdown.Menu[1]] = {TOCA_AIR=TOCA.cache[1], TOCA_EARTH=TOCA.cache[2], TOCA_FIRE=TOCA.cache[3], TOCA_WATER=TOCA.cache[4]}
     TOCA.UpdateTotemSet()
   else
+		if (TOCADB[TOCA.player.combine]["RAID"] == nil) then
+			TOCADB[TOCA.player.combine]["RAID"] = {}
+		end
+
     TOCA.Notification(TOCA.locale.INIT[2] .. ": " .. TOCA.player.combine)
     if (TOCADB[TOCA.player.combine]["DISABLED"] == "YES") then
       TOCA.FrameMain:Hide()
@@ -738,7 +746,7 @@ function TOCA.Init()
         TOCA.SlotGrid.HorizontalTimer[i]:Hide()
       end
       TOCA.Checkbox.Timers:SetChecked(nil)
-      TOCA.Checkbox.TimersInMinutes:SetAlpha(0.5)
+      TOCA.Checkbox.TimersInMinutes:SetAlpha(0.4)
       --TOCA.Checkbox.TimersInMinutes:SetChecked(nil)
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TIMERSMINUTES"] == "OFF") then
@@ -833,6 +841,12 @@ function TOCA.Init()
       TOCA.FrameExplode:ClearAllPoints()
       TOCA.FrameExplode:SetPoint(TOCAFrameExplodePos[1], tonumber(TOCAFrameExplodePos[2]), tonumber(TOCAFrameExplodePos[3]))
     end
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["ESPOS"]) then
+			local TOCAFrameESPos = {}
+			TOCAFrameESPos = split(TOCADB[TOCA.player.combine]["CONFIG"]["ESPOS"], ",")
+			TOCA.FrameAssignments:ClearAllPoints()
+			TOCA.FrameAssignments:SetPoint(TOCAFrameESPos[1], tonumber(TOCAFrameESPos[2]), tonumber(TOCAFrameESPos[3]))
+		end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLON"] == "OFF") then
       TOCA.Checkbox.Tooltip:SetChecked(nil)
     end
@@ -862,6 +876,9 @@ function TOCA.Init()
 	  end
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEMS"] == "OFF") then
 			TOCA.Checkbox.MinimapTotems:SetChecked(nil)
+			TOCA.Checkbox.MinimapTotemSolid:SetAlpha(0.4)
+			TOCA.Checkbox.MinimapTotemRings:SetAlpha(0.4)
+			TOCA.Checkbox.MinimapTotemIcons:SetAlpha(0.4)
 		end
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_TOTEM_RINGS"] == "OFF") then
 			TOCA.Checkbox.MinimapTotemRings:SetChecked(nil)
@@ -888,7 +905,8 @@ function TOCA.Init()
     TOCA.Button.TotemicCall.ECR:Hide()
   end
 
-  --TOCA.AssignmentESRaidSend()
+  --TOCA.AssignmentESRaidSendInit()
+	TOCA.AssignmentESRaidSend()
 
   TOCA.Notification("TOCA.Init()", true)
 end
@@ -1661,19 +1679,17 @@ function TOCA.InventoryCountItem(itemID)
   return i
 end
 
-function TOCA.SendPacket(packet, filtered, channel)
-  filteredPacket = nil
-  if (filtered) then
-    filteredPacket = packet:gsub("%s+", "") --filter spaces
-  else
-    filteredPacket = packet
+function TOCA.SendPacket(packet, channel, compress)
+  compressPacket = packet
+  if (compress) then
+    compressPacket = packet:gsub("%s+", "") --filter spaces
   end
-	TOCA.Notification("sending packet " .. filteredPacket, true)
+	TOCA.Notification("sending packet " .. compressPacket, true)
 	if (channel == "GUILD") then
 		if (not IsInGuild()) then return end
 	end
-  C_ChatInfo.SendAddonMessage(TOCA.Global.prefix, filteredPacket, channel)
-  TOCA.Notification("sending packet " .. filteredPacket, true)
+  C_ChatInfo.SendAddonMessage(TOCA.Global.prefix, compressPacket, channel)
+  TOCA.Notification("sending packet " .. compressPacket, true)
 end
 
 function TOCA.ParsePacket(netpacket, code)
