@@ -256,8 +256,8 @@ TOCA.colors={}
 TOCA.colors.totems = {
 	FIRE = {1, 0.2, 0, 1},
 	EARTH= {0.5, 1, 0.2, 1},
-	WATER= {0.2, 0.5, 0.9, 1},
-	AIR  = {0.7, 0.7, 0.8, 1}
+	WATER= {0.3, 0.8, 0.9, 1},--52, 204, 235
+	AIR  = {0.7, 0.7, 0.9, 1}
 }
 
 TOCA.colors.class = {

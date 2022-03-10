@@ -55,7 +55,6 @@ TOCA.Raid.Role={}
 TOCA.Backdrop={}
 TOCA.Backdrop.General = {
   bgFile  = "Interface/Tooltips/UI-Tooltip-Background",
-	--bgFile  = "Interface/TALENTFRAME/ShamanElementalCombat-TopLeft",
   edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
   edgeSize= 12,
   insets  = {left=2, right=2, top=2, bottom=2},
@@ -66,6 +65,13 @@ TOCA.Backdrop.Button = {
   edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
   edgeSize= 12,
   insets  = {left=2, right=2, top=2, bottom=2},
+}
+
+TOCA.ID = {
+	FIRE =1,
+	EARTH=2,
+	WATER=3,
+  AIR = 4,
 }
 
 --all icons must be in order to sync with totemspells[locales] by category
@@ -702,6 +708,7 @@ function TOCA.Init()
     TOCA.Notification(TOCA.locale.INIT[1] .. ": " .. TOCA.player.combine)
     TOCADB[TOCA.player.combine]["PROFILES"][TOCA.Dropdown.Menu[1]] = {TOCA_AIR=TOCA.cache[1], TOCA_EARTH=TOCA.cache[2], TOCA_FIRE=TOCA.cache[3], TOCA_WATER=TOCA.cache[4]}
     TOCA.UpdateTotemSet()
+		TOCA.UpdateMapButton()
   else
 		if (TOCADB[TOCA.player.combine]["RAID"] == nil) then
 			TOCADB[TOCA.player.combine]["RAID"] = {}
@@ -775,6 +782,7 @@ function TOCA.Init()
 		end
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESOUND"] == "OFF") then
 			TOCA.Checkbox.ExpireSound:SetChecked(nil)
+			TOCA.Dropdown.Sound.TotemExpire:SetAlpha(0.4)
 		end
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"]) then
 			TOCA.Dropdown.Sound.TotemExpire.text:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"])
@@ -784,6 +792,7 @@ function TOCA.Init()
 		end
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESHIELD"] == "OFF") then
 			TOCA.Checkbox.ShieldExpire:SetChecked(nil)
+			TOCA.Dropdown.Sound.ShieldExpire:SetAlpha(0.4)
 		end
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"]) then
 			TOCA.Dropdown.Sound.ShieldExpire.text:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"])
@@ -868,6 +877,7 @@ function TOCA.Init()
 			TOCA.Checkbox.MinimapButton:SetChecked(nil)
 			TOCA.Button.Minimap:Hide()
 		end
+		TOCA.UpdateMapButton()
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_ICON_POS"]) then
 	    local minimapIconPos = split(TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_ICON_POS"], ",")
 	    if ((minimapIconPos[1]) and (minimapIconPos[2])) then
@@ -906,7 +916,6 @@ function TOCA.Init()
   end
 
 	--TOCA.AssignmentESRaidSend()
-	TOCA.UpdateMapButton()
 
   TOCA.Notification("TOCA.Init()", true)
 end

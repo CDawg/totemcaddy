@@ -160,7 +160,10 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.Slot[totemCat]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[TOCA.TotemNum["MAIN"]], -TOCA.Slot_h)
   TOCA.Slot[totemCat]:SetBackdrop(TOCA.Backdrop.General)
 	TOCA.Slot[totemCat]:SetBackdropColor(0, 0, 0, 1)
-  TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
+	TOCA.Slot[totemCat]:SetBackdropBorderColor(
+	TOCA.colors.totems[totemCat][1],
+	TOCA.colors.totems[totemCat][2],
+	TOCA.colors.totems[totemCat][3], 0.6)
   TOCA.Slot.highlight[totemCat]= TOCA.Slot[totemCat]:CreateTexture(nil, "ARTWORK", TOCA.Slot[totemCat], 0)
   TOCA.Slot.highlight[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
   TOCA.Slot.highlight[totemCat]:SetPoint("CENTER", 0, 0)
@@ -292,7 +295,9 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
       TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)
     else
-      TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 1)
+      TOCA.Slot[totemCat]:SetBackdropBorderColor(TOCA.colors.totems[totemCat][1],
+			TOCA.colors.totems[totemCat][2],
+			TOCA.colors.totems[totemCat][3], 1)
     end
     TOCA.Slot.highlight[totemCat]:Show()
     if (totemCat == "AIR") then
@@ -313,7 +318,10 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
       TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)
     else
-      TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
+      TOCA.Slot[totemCat]:SetBackdropBorderColor(
+			TOCA.colors.totems[totemCat][1],
+			TOCA.colors.totems[totemCat][2],
+			TOCA.colors.totems[totemCat][3], 0.6)
     end
     TOCA.Slot.highlight[totemCat]:Hide()
   end)
@@ -438,8 +446,8 @@ TOCA.SlotSelect_x = 0
 for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.SlotSelect[totemCat]= CreateFrame("Button", nil, TOCA.Slot[totemCat], "BackdropTemplate")
   TOCA.SlotSelect[totemCat]:SetSize(TOCA.Slot_w, 15)
-  TOCA.SlotSelect[totemCat]:SetPoint("CENTER", 0, 20)
-  TOCA.SlotSelect[totemCat]:SetBackdrop(TOCA.Backdrop.General)
+  TOCA.SlotSelect[totemCat]:SetPoint("CENTER", 0, 21)
+  TOCA.SlotSelect[totemCat]:SetBackdrop(TOCA.Backdrop.Button)
 	TOCA.SlotSelect[totemCat]:SetBackdropColor(0, 0, 0, 1)
   TOCA.SlotSelect[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
   TOCA.SlotSelect[totemCat]:SetFrameLevel(TOCA.Framelevel.Buttons)
@@ -477,17 +485,9 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.SlotSelectMenu[totemCat]:SetSize(40, (totemCategoryCount*36.2))
 	TOCA.SlotSelectMenu[totemCat]:SetPoint("BOTTOMLEFT", -3, 15)
   TOCA.SlotSelectMenu[totemCat]:SetBackdrop(TOCA.Backdrop.General)
-	TOCA.SlotSelectMenu[totemCat]:SetBackdropColor(0, 0, 0, 1)
-	if (totemCat == "FIRE") then
-	  TOCA.SlotSelectMenu[totemCat]:SetBackdropColor(1, 0.3, 0, 1)
-  elseif (totemCat == "EARTH") then
-	  TOCA.SlotSelectMenu[totemCat]:SetBackdropColor(0, 1, 0.3, 1)
-	elseif (totemCat == "WATER") then
-	  TOCA.SlotSelectMenu[totemCat]:SetBackdropColor(0, 0.3, 1, 1)
-	elseif (totemCat == "AIR") then
-		TOCA.SlotSelectMenu[totemCat]:SetBackdropColor(0.4, 0.4, 0.7, 1)
-	end
-  TOCA.SlotSelectMenu[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
+	TOCA.SlotSelectMenu[totemCat]:SetBackdropColor(TOCA.colors.totems[totemCat][1], TOCA.colors.totems[totemCat][2], TOCA.colors.totems[totemCat][3], 1)
+	TOCA.SlotSelectMenu[totemCat]:SetBackdropBorderColor(TOCA.colors.totems[totemCat][1], TOCA.colors.totems[totemCat][2], TOCA.colors.totems[totemCat][3], 0.6)
+  --TOCA.SlotSelectMenu[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
   TOCA.SlotSelectMenu[totemCat]:SetFrameLevel(TOCA.Framelevel.Menu)
   TOCA.SlotSelectMenu[totemCat]:Hide()
 

@@ -78,8 +78,10 @@ TOCA.Checkbox.ExpireSound.text:SetText(TOCA.locale.UI.NOTIFICATIONS[3][1])
 TOCA.Checkbox.ExpireSound:SetScript("OnClick", function(self)
   if (self:GetChecked()) then
     TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESOUND"] = "ON"
+		TOCA.Dropdown.Sound.TotemExpire:SetAlpha(1)
   else
     TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESOUND"] = "OFF"
+		TOCA.Dropdown.Sound.TotemExpire:SetAlpha(0.4)
   end
 end)
 TOCA.Checkbox.ExpireSound:SetScript("OnEnter", function(self)
@@ -164,8 +166,10 @@ TOCA.Checkbox.ShieldExpire.text:SetText(TOCA.locale.UI.NOTIFICATIONS[5][1])
 TOCA.Checkbox.ShieldExpire:SetScript("OnClick", function(self)
   if (self:GetChecked()) then
     TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESHIELD"] = "ON"
+		TOCA.Dropdown.Sound.ShieldExpire:SetAlpha(1)
   else
     TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESHIELD"] = "OFF"
+		TOCA.Dropdown.Sound.ShieldExpire:SetAlpha(0.4)
   end
 end)
 TOCA.Checkbox.ShieldExpire:SetScript("OnEnter", function(self)

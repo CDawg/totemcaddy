@@ -197,7 +197,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 	TOCA.FrameSetsSlot[totemCat]:SetBackdropColor(0, 0, 0, 1)
   TOCA.FrameSetsSlotSelect[totemCat]= CreateFrame("Button", nil, TOCA.FrameSetsSlot[totemCat], "BackdropTemplate")
   TOCA.FrameSetsSlotSelect[totemCat]:SetSize(TOCA.Slot_w, 15)
-  TOCA.FrameSetsSlotSelect[totemCat]:SetPoint("CENTER", 0, -20)
+  TOCA.FrameSetsSlotSelect[totemCat]:SetPoint("CENTER", 0, -21)
   TOCA.FrameSetsSlotSelect[totemCat]:SetBackdrop(TOCA.Backdrop.General)
 	TOCA.FrameSetsSlotSelect[totemCat]:SetBackdropColor(0, 0, 0, 1)
   TOCA.FrameSetsSlotSelect[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
