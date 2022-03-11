@@ -33,7 +33,7 @@ TOCA._L = {
 		BUTTON = {"Close", "Save", "Delete", "Yes", "No"},
 
 		TABS = {
-		  OPTIONS= {"Frame", "Totem Set Builder", "Notifications", "Minimap", "Key Bindings"},
+		  OPTIONS= {"Frame", "Totem Sets", "Notifications", "Minimap", "Key Bindings"},
 		  HELP   = {"Updates", "Contact", "Credit"}
 		},
 

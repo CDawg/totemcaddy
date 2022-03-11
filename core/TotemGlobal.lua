@@ -43,6 +43,7 @@ TOCA.Net = {
 	Success = C_ChatInfo.RegisterAddonMessagePrefix(TOCA._G.prefix),
   version   = "0xEFVe", --version
 	assign_es = "0xEFES", --earthshield assign
+	assign_au = "0xEFAU", --earthshield author
 }
 
 TOCA.OptionMenuOpen = 0
