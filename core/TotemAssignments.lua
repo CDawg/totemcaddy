@@ -15,6 +15,7 @@ the copyright holders.
 
 TOCA.AssignmentsOpen = 0
 TOCA.FrameAssignmentsHeight = 120
+TOCA.NumTanks = 0
 
 TOCA.Button.Assignments= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTemplate")
 TOCA.Button.Assignments:SetSize(21, 21)
@@ -133,9 +134,21 @@ for i=1, MAX_RAID_MEMBERS do
 	TOCA.Dropdown.FrameAssignments[i].text:SetText("")
 	TOCA.Dropdown.FrameAssignments[i].onClick = function(self, checked)
 		TOCA.Dropdown.FrameAssignments[i].text:SetText(self.value)
-	  print("net sent packet here!")
+		local thisSelection = nil
+		local tankSelection = nil
+	  --print("net sent packet here!")
 		--TOCA.SendPacket(TOCA.Net.assign_es .. TOCA.player.name, "RAID") --send packet only if im a resto sham
 		TOCA.SendPacket(TOCA.Net.assign_au .. TOCA.player.name, "RAID") --send author
+
+		TOCA.BuildRaid() --get raid details first, num tanks/shams
+		if (TOCA.NumTanks >= 1) then --sengle selection update
+			local thisSelection = TOCA.Dropdown.FrameAssignments[i].text:GetText()
+			local tankSelection = TOCA.FrameAssignments.MTName[i]:GetText()
+			if ((thisSelection) and (tankSelection)) then
+				TOCA.SendPacket(TOCA.Net.assign_es .. i .. ",".. tankSelection .. "," .. thisSelection, "RAID") --send author
+			end
+		end
+
 	end
 	UIDropDownMenu_SetWidth(TOCA.Dropdown.FrameAssignments[i], 120)
 	TOCA.Dropdown.FrameAssignments[i]:Hide()
@@ -148,7 +161,6 @@ TOCA.FrameAssignments.author:SetText("Last Update:")
 TOCA.FrameAssignments.author:SetTextColor(1, 1, 1, 0.6)
 --TOCA.FrameAssignments.author:Hide()
 
-TOCA.NumTanks = 0
 local listSortNameTanks = {}
 local listSortNameShamans = {}
 
@@ -209,6 +221,22 @@ function TOCA.BuildRaid()
 end
 
 --[==[
+function TOCA.AssignmentESRaidGet(prefix, netpacket)
+	TOCA.NumRestoShams = 0 --reset
+	if (prefix == TOCA._G.prefix) then
+		--print("getting data " .. netpacket)
+		local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.assign_es)
+		if (getPacket) then
+			print(getPacket)
+			TOCA.Raid.Name[getPacket] = 1 --build raid array without dupes
+		end
+
+		--print("getting ES packet!")
+	end
+end
+]==]--
+
+--[==[
 function TOCA.AssignmentESRaidSend()
 	TOCA.NumTanks = 0 --reset
 	if (IsInRaid()) then
@@ -252,17 +280,3 @@ function TOCA.AssignmentESRaidSend()
 	end
 end
 ]==]--
-
-function TOCA.AssignmentESRaidGet(prefix, netpacket)
-	TOCA.NumRestoShams = 0 --reset
-	if (prefix == TOCA._G.prefix) then
-		--print("getting data " .. netpacket)
-		local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.assign_es)
-		if (getPacket) then
-			print(getPacket)
-			TOCA.Raid.Name[getPacket] = 1 --build raid array without dupes
-		end
-
-		--print("getting ES packet!")
-	end
-end

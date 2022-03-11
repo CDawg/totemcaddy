@@ -149,8 +149,6 @@ function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 	  TOCA.Combat(event)
 
 		if ((event == "GROUP_ROSTER_UPDATE") or (event == "PLAYER_ROLES_ASSIGNED")) then
-			--print("GROUP_ROSTER_UPDATE")
-			--TOCA.AssignmentESRaidSend() --send my resto data
 			TOCA.BuildRaid()
 		end
 
@@ -163,10 +161,17 @@ function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 				--get the author of es assignments
 				local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.assign_au)
 				if (getPacket) then
-					print(getPacket)
+					--print(getPacket)
 					TOCA.FrameAssignments.author:SetText("Last Update: " .. getPacket)
+				end
+
+				--get the es assignments
+				local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.assign_es)
+				if (getPacket) then
+					print(getPacket)
 				end
 			end
 	  end
+
 	end
 end
