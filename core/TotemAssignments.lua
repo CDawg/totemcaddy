@@ -34,7 +34,7 @@ TOCA.Button.Assignments:SetScript("OnClick", function(self)
  		TOCA.AssignmentsOpen = 0
 		TOCA.FrameAssignments:Hide()
 	else
-		TOCA.BuildRaid()
+		TOCA.BuildRaidAssignments(true)
 		TOCA.AssignmentsOpen = 1
 		TOCA.FrameAssignments:Show()
 	end
@@ -43,7 +43,7 @@ TOCA.Button.Assignments:Hide()
 
 TOCA.FrameAssignments={}
 TOCA.FrameAssignments = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
-TOCA.FrameAssignments:SetWidth(300)
+TOCA.FrameAssignments:SetWidth(350)
 TOCA.FrameAssignments:SetHeight(TOCA.FrameAssignmentsHeight)
 TOCA.FrameAssignments:SetPoint("CENTER", 0, 60)
 TOCA.FrameAssignments:SetBackdrop(TOCA.Backdrop.General)
@@ -61,8 +61,12 @@ TOCA.FrameAssignments:SetScript("OnDragStop", function()
 end)
 TOCA.FrameAssignments.title = TOCA.FrameAssignments:CreateFontString(nil, "ARTWORK")
 TOCA.FrameAssignments.title:SetFont(TOCA._G.font, 11)
-TOCA.FrameAssignments.title:SetPoint("TOPLEFT", TOCA.FrameAssignments, "TOPLEFT", 15, -8)
-TOCA.FrameAssignments.title:SetText(TOCA._G.title .. " : " .. TOCA._L.UI.OPTIONS[10][1])
+TOCA.FrameAssignments.title:SetPoint("TOPLEFT", TOCA.FrameAssignments, "TOPLEFT", 25, -8)
+TOCA.FrameAssignments.title:SetText(TOCA._G.title .. " " .. TOCA._L.UI.OPTIONS[10][1])
+TOCA.FrameAssignments.icon = TOCA.FrameAssignments:CreateTexture(nil, "ARTWORK")
+TOCA.FrameAssignments.icon:SetSize(18, 18)
+TOCA.FrameAssignments.icon:SetPoint("TOPLEFT", 4, -4)
+TOCA.FrameAssignments.icon:SetTexture("Interface/ICONS/spell_nature_skinofearth")
 TOCA.FrameAssignments:Hide()
 
 TOCA.Button.FrameAssignmentsClose={}
@@ -100,59 +104,57 @@ end)
 TOCA.Dropdown.FrameAssignments={}
 TOCA.FrameAssignments.MTName={}
 TOCA.FrameAssignments.MTClass={}
+TOCA.FrameAssignments.divider={}
 TOCA.Dropdown.FrameAssignmentMenu={""}
---local columHeight = 0
+
+local rowHeight = 40
 for i=1, MAX_RAID_MEMBERS do
-	--columnHeight = columnHeight +1
-	TOCA.FrameAssignments.text = TOCA.FrameAssignments:CreateFontString(nil, "ARTWORK")
-	TOCA.FrameAssignments.text:SetFont(TOCA._G.font, 11)
-	TOCA.FrameAssignments.text:SetPoint("TOPLEFT", 10, -i*14)
-	TOCA.FrameAssignments.text:SetText("")
-  --[==[
-	TOCA.FrameAssignments.MTClass[i]={}
-	TOCA.FrameAssignments.MTClass[i] = TOCA.FrameAssignments:CreateFontString(nil, "ARTWORK")
-	TOCA.FrameAssignments.MTClass[i]:SetFont(TOCA._G.font, 11)
-	TOCA.FrameAssignments.MTClass[i]:SetPoint("TOPLEFT", 10, -i*32+12)
-	TOCA.FrameAssignments.MTClass[i]:SetText("")
-	TOCA.FrameAssignments.MTClass[i]:Hide()
-	]==]--
-	TOCA.FrameAssignments.MTName[i]={}
+	TOCA.FrameAssignments.MTName[i] = {}
 	TOCA.FrameAssignments.MTName[i] = TOCA.FrameAssignments:CreateFontString(nil, "ARTWORK")
 	TOCA.FrameAssignments.MTName[i]:SetFont(TOCA._G.font, 11)
-	TOCA.FrameAssignments.MTName[i]:SetPoint("TOPLEFT", 20, -i*32-12)
-	TOCA.FrameAssignments.MTName[i]:SetText("")
+	TOCA.FrameAssignments.MTName[i]:SetPoint("TOPLEFT", 30, -i*rowHeight-12)
+	TOCA.FrameAssignments.MTName[i]:SetText("No Tanks Assigned")
 	TOCA.FrameAssignments.MTName[i]:Hide()
+
+  TOCA.FrameAssignments.MTClass[i] = {}
+	TOCA.FrameAssignments.MTClass[i] = TOCA.FrameAssignments:CreateTexture(nil, "ARTWORK")
+	TOCA.FrameAssignments.MTClass[i]:SetSize(14, 14)
+	TOCA.FrameAssignments.MTClass[i]:SetPoint("TOPLEFT", 10, -i*rowHeight-12)
+	TOCA.FrameAssignments.MTClass[i]:SetTexture("")
 
 	--build blank dropdowns
 	TOCA.Dropdown.FrameAssignments[i] = {}
 	TOCA.Dropdown.FrameAssignments[i] = CreateFrame("Frame", nil, TOCA.FrameAssignments, "UIDropDownMenuTemplate")
-	TOCA.Dropdown.FrameAssignments[i]:SetPoint("TOPLEFT", 100, -i*32-4)
+	TOCA.Dropdown.FrameAssignments[i]:SetPoint("TOPLEFT", 115, -i*rowHeight-2)
 	TOCA.Dropdown.FrameAssignments[i].displayMode = "MENU"
 	TOCA.Dropdown.FrameAssignments[i].text = TOCA.Dropdown.FrameAssignments[i]:CreateFontString(nil, "ARTWORK")
 	TOCA.Dropdown.FrameAssignments[i].text:SetFont(TOCA._G.font, 11)
-	TOCA.Dropdown.FrameAssignments[i].text:SetPoint("TOPLEFT", TOCA.Dropdown.FrameAssignments[i], "TOPLEFT", 25, -8)
+	TOCA.Dropdown.FrameAssignments[i].text:SetPoint("TOPLEFT", TOCA.Dropdown.FrameAssignments[i], "TOPLEFT", 30, -8)
 	TOCA.Dropdown.FrameAssignments[i].text:SetText("")
 	TOCA.Dropdown.FrameAssignments[i].onClick = function(self, checked)
 		TOCA.Dropdown.FrameAssignments[i].text:SetText(self.value)
 		local thisSelection = nil
 		local tankSelection = nil
-	  --print("net sent packet here!")
-		--TOCA.SendPacket(TOCA.Net.assign_es .. TOCA.player.name, "RAID") --send packet only if im a resto sham
-		TOCA.SendPacket(TOCA.Net.assign_au .. TOCA.player.name, "RAID") --send author
-
-		TOCA.BuildRaid() --get raid details first, num tanks/shams
-		if (TOCA.NumTanks >= 1) then --sengle selection update
+		TOCA.BuildRaidAssignments(false) --get raid details first, num tanks/shams
+		TOCA.SendPacket(TOCA.Net.assign_au .. TOCA.player.name .. " [" .. date("%Y-%m-%d %H:%M:%S") .. "]", "RAID") --send author
+		if (TOCA.NumTanks >= 1) then --single selection update
 			local thisSelection = TOCA.Dropdown.FrameAssignments[i].text:GetText()
 			local tankSelection = TOCA.FrameAssignments.MTName[i]:GetText()
 			if ((thisSelection) and (tankSelection)) then
 				TOCA.SendPacket(TOCA.Net.assign_es .. i .. ",".. tankSelection .. "," .. thisSelection, "RAID") --send author
 			end
 		end
-
 	end
 	UIDropDownMenu_SetWidth(TOCA.Dropdown.FrameAssignments[i], 120)
 	TOCA.Dropdown.FrameAssignments[i]:Hide()
+
+	TOCA.FrameAssignments.divider[i] = {}
+	TOCA.FrameAssignments.divider[i] = TOCA.FrameAssignments:CreateTexture(nil, "ARTWORK")
+	TOCA.FrameAssignments.divider[i]:SetSize(TOCA.FrameAssignments:GetWidth()-8, 8)
+	TOCA.FrameAssignments.divider[i]:SetPoint("TOPLEFT", 4, -i*rowHeight-32)
+	TOCA.FrameAssignments.divider[i]:SetTexture("Interface/DialogFrame/DialogFrame-TOP")
 end
+
 TOCA.FrameAssignments.author={}
 TOCA.FrameAssignments.author = TOCA.FrameAssignments:CreateFontString(nil, "ARTWORK")
 TOCA.FrameAssignments.author:SetFont(TOCA._G.font, 11)
@@ -164,10 +166,10 @@ TOCA.FrameAssignments.author:SetTextColor(1, 1, 1, 0.6)
 local listSortNameTanks = {}
 local listSortNameShamans = {}
 
-function TOCA.BuildRaid()
+function TOCA.BuildRaidAssignments(loadSaved) --get saved variables
 	if (IsInRaid()) then
 		listSortNameTanks = {}
-		listSortNameShamans = {}
+		listSortNameShamans = {"- empty -"}
 		TOCA.NumTanks = 0
 
 		--local isKnown = IsSpellKnown(TOCA.spell.EARTH_SHIELD, false)
@@ -179,7 +181,11 @@ function TOCA.BuildRaid()
 		--build the tanks and shamans and order in alpha
 		for i=1, MAX_RAID_MEMBERS do
 			TOCA.FrameAssignments.MTName[i]:Hide()
+			TOCA.FrameAssignments.MTClass[i]:Hide()
+			TOCA.FrameAssignments.divider[i]:Hide()
 			TOCA.Dropdown.FrameAssignments[i]:Hide()
+			TOCA.FrameAssignments.MTName[1]:SetText("No Tanks Assigned")
+			TOCA.FrameAssignments.MTName[1]:Show() -- show first line for empty tank message
 			local name, rank, subgroup, level, class, fileName, zone, online, isDead, role = GetRaidRosterInfo(i)
 			if (name) then
 				if (role == "MAINTANK") then
@@ -198,12 +204,15 @@ function TOCA.BuildRaid()
 		for k,v in pairsByKeys(listSortNameTanks) do
 			TOCA.NumTanks = TOCA.NumTanks +1
 			TOCA.FrameAssignments.MTName[k]:Show()
+			TOCA.FrameAssignments.MTClass[k]:Show()
+			TOCA.FrameAssignments.divider[k]:Show()
 			local classIndex = select(3, UnitClass(v))
 			TOCA.FrameAssignments.MTName[k]:SetText(v)
 			TOCA.FrameAssignments.MTName[k]:SetTextColor(
 			TOCA.colors.class[classIndex][1],
 			TOCA.colors.class[classIndex][2],
 			TOCA.colors.class[classIndex][3], 1)
+			TOCA.FrameAssignments.MTClass[k]:SetTexture(TOCA.colors.class[classIndex][5])
 		end
 
 		table.sort(listSortNameShamans) --alpha order shams
@@ -216,67 +225,92 @@ function TOCA.BuildRaid()
 			end
 		end
 
-		TOCA.FrameAssignments:SetHeight(TOCA.FrameAssignmentsHeight+TOCA.NumTanks*20)
-	end --isinraid
-end
-
---[==[
-function TOCA.AssignmentESRaidGet(prefix, netpacket)
-	TOCA.NumRestoShams = 0 --reset
-	if (prefix == TOCA._G.prefix) then
-		--print("getting data " .. netpacket)
-		local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.assign_es)
-		if (getPacket) then
-			print(getPacket)
-			TOCA.Raid.Name[getPacket] = 1 --build raid array without dupes
-		end
-
-		--print("getting ES packet!")
-	end
-end
-]==]--
-
---[==[
-function TOCA.AssignmentESRaidSend()
-	TOCA.NumTanks = 0 --reset
-	if (IsInRaid()) then
-		local isKnown = IsSpellKnown(TOCA.spell.EARTH_SHIELD, false)
-		local classIndex = select(3, UnitClass("player")) --users that use TC and not a shaman
-		if (classIndex == 7) then --is a sham
-		   --if (isKnown) then
-			--print("I have ES")
-			--TOCA.SendPacket(TOCA.Net.assign_es .. TOCA.player.name, "RAID") --send packet only if im a resto sham
-			TOCA.Button.Assignments:Show()
-		end
-
-		--build the assignments for other raid members that have TC
-		local tankListSortName = {}
-		--local tankListSortClass = {}
-		for i=1, MAX_RAID_MEMBERS do
-			--TOCA.FrameAssignments.MTClass[i]:Hide()
-			TOCA.FrameAssignments.MTName[i]:Hide()
-			local name, rank, subgroup, level, class, fileName, zone, online, isDead, role = GetRaidRosterInfo(i)
-			if (name) then
-				if (role == "MAINTANK") then
-					table.insert(tankListSortName, name)
+		if (loadSaved) then --login or reload
+			for i=1, MAX_RAID_MEMBERS do
+				if (TOCADB[TOCA.player.combine]["RAID"][TOCA.FrameAssignments.MTName[i]:GetText()]) then
+					TOCA.Dropdown.FrameAssignments[i].text:SetText(TOCADB[TOCA.player.combine]["RAID"][TOCA.FrameAssignments.MTName[i]:GetText()])
+					print("loading " .. i .. " "  .. TOCADB[TOCA.player.combine]["RAID"][TOCA.FrameAssignments.MTName[i]:GetText()])
 				end
 			end
 		end
-		table.sort(tankListSortName)
-		for k,v in pairsByKeys(tankListSortName) do
-			TOCA.NumTanks = TOCA.NumTanks +1
-			if (TOCADB[TOCA.player.combine]["RAID"][v] == nil) then
-			  TOCADB[TOCA.player.combine]["RAID"][v] = ""
+
+		if (TOCA.NumTanks >= 1) then --count the active tanks once again then assign
+			for i=1, TOCA.NumTanks do --go by the first tanks, just in case a personal assignment was from a previous raid and number 4-5 down the list.
+				if (TOCA.Dropdown.FrameAssignments[i].text:GetText() == TOCA.player.name) then
+					print("you are assigned " .. TOCA.FrameAssignments.MTName[i]:GetText())
+				end
+				--[==[
+				if (TOCA.Dropdown.FrameAssignments[i].text:GetText() == "- empty -") then
+					TOCA.Dropdown.FrameAssignments[i].text:SetText("")
+				end
+				]==]--
 			end
-			--TOCA.FrameAssignments.MTClass[k]:Show()
-			TOCA.FrameAssignments.MTName[k]:Show()
-			local classIndex = select(3, UnitClass(v))
-			--TOCA.FrameAssignments.MTClass[k]:SetText(classIndex)
-			TOCA.FrameAssignments.MTName[k]:SetText(v)
-			TOCA.FrameAssignments.MTName[k]:SetTextColor(TOCA.colors.class[classIndex][1], TOCA.colors.class[classIndex][2], TOCA.colors.class[classIndex][3], 1)
 		end
-		print("num tanks " .. TOCA.NumTanks)
-		print("sending packet!")
+
+		--print("build raid assignments")
+		TOCA.FrameAssignments:SetHeight(TOCA.FrameAssignmentsHeight+TOCA.NumTanks*rowHeight)
+		end --isinraid
+end
+
+function TOCA.AssignmentESRaidGet(prefix, netpacket)
+	 	--get the author of es assignments
+	local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.assign_au)
+	if (getPacket) then
+		TOCA.FrameAssignments.author:SetText("Last Update: " .. getPacket)
+	end
+
+	--get the es assignments
+	local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.assign_es)
+	if (getPacket) then
+		print("getting " .. getPacket)
+		local assign = split(getPacket, ",")
+		local ddID = tonumber(assign[1])
+		local tank = assign[2]
+		local shaman=assign[3]
+		for i=1, MAX_RAID_MEMBERS do
+			if (TOCA.FrameAssignments.MTName[i]:GetText() == tank) then
+				TOCA.Dropdown.FrameAssignments[ddID].text:SetText(shaman)
+				--TOCA.Dropdown.FrameAssignments[i].text:SetText(assign[3])
+				TOCADB[TOCA.player.combine]["RAID"][tank] = shaman
+				print ("save " .. tank .. " " .. shaman)
+			end
+		end
+	end
+	TOCA.BuildRaidAssignments(false)
+end
+
+--[==[
+function TOCA.GetShieldFromTank(tank)
+	local _Uindex = 1
+	while UnitAura(tank, _Uindex) do
+		local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura("player", _Uindex)
+		for k,v in pairs(TOCA._L.SPELLS.SHIELDS) do
+			if (string.find(name, v)) then
+				local timeDuration = duration + expirationTime - GetTime()
+				timeDuration = timeDuration / 120
+				if ((timeDuration >= TOCA.ShamanShieldDuration) and (count >= 2)) then
+				  TOCA.NotificationAlertShield = 0 --reset / refreshed the aura
+					TOCA.HasShield = 1
+			  else
+					if ((timeDuration < 1.0) or (count <= 1)) then
+						if (TOCA.NotificationAlertShield <= 0) then
+							TOCA.NotificationAlertShield = 1
+							if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGESHIELD"] ~= "OFF") then
+								TOCA.Notification("|cfff6d526" .. name .. "|r ".. TOCA._L.INIT[4])
+							end
+							if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESHIELD"] ~= "OFF") then
+								if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"]) then
+									PlaySoundFile(TOCA._G.dir .. "sounds/" .. TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"] .. ".ogg")
+								else
+									PlaySoundFile(TOCA._G.dir .. "sounds/shieldexpire_1.ogg")
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+		_Uindex = _Uindex + 1
 	end
 end
 ]==]--

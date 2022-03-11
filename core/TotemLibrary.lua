@@ -57,18 +57,18 @@ TOCA = {
 		},
 
 		class = {
-			{0.78, 0.61, 0.43, "|CFFC69B6D"}, --Warrior
-			{0.96, 0.55, 0.73, "|CFFF48CBA"}, --Paladin
-			{0.67, 0.83, 0.45, "|CFFAAD372"}, --Hunter
-			{1.00, 0.96, 0.41, "|CFFFFF468"}, --Rogue
-			{1.00, 1.00, 1.00, "|CFFFFFFFF"}, --Priest
-			{0.77, 0.12, 0.23, "|CFFC41E3A"}, --Death Knight
-			{0.00, 0.44, 0.87, "|CFF0070DD"}, --Shaman
-			{0.25, 0.78, 0.92, "|CFF3FC7EB"}, --Mage
-			{0.53, 0.53, 0.93, "|CFF8788EE"}, --Warlock
-			{0.00, 1.00, 0.60, "|CFF00FF98"}, --Monk
-			{1.00, 0.49, 0.04, "|CFFFF7C0A"}, --Druid
-			{0.64, 0.19, 0.79, "|CFFA330C9"}, --Demon Hunter
+			{0.78, 0.61, 0.43, "|CFFC69B6D", "Interface/ICONS/ClassIcon_Warrior"}, --Warrior
+			{0.96, 0.55, 0.73, "|CFFF48CBA", "Interface/ICONS/ClassIcon_Paladin"}, --Paladin
+			{0.67, 0.83, 0.45, "|CFFAAD372", "Interface/ICONS/ClassIcon_Hunter"}, --Hunter
+			{1.00, 0.96, 0.41, "|CFFFFF468", "Interface/ICONS/ClassIcon_Rogue"}, --Rogue
+			{1.00, 1.00, 1.00, "|CFFFFFFFF", "Interface/ICONS/ClassIcon_Priest"}, --Priest
+			{0.77, 0.12, 0.23, "|CFFC41E3A", "Interface/ICONS/ClassIcon_DeathKnight"},--Death Knight
+			{0.00, 0.44, 0.87, "|CFF0070DD", "Interface/ICONS/ClassIcon_Shaman"}, --Shaman
+			{0.25, 0.78, 0.92, "|CFF3FC7EB", "Interface/ICONS/ClassIcon_Mage"}, --Mage
+			{0.53, 0.53, 0.93, "|CFF8788EE", "Interface/ICONS/ClassIcon_Warlock"}, --Warlock
+			{0.00, 1.00, 0.60, "|CFF00FF98", "Interface/ICONS/ClassIcon_Monk"}, --Monk
+			{1.00, 0.49, 0.04, "|CFFFF7C0A", "Interface/ICONS/ClassIcon_Druid"}, --Druid
+			{0.64, 0.19, 0.79, "|CFFA330C9", "Interface/ICONS/ClassIcon_DemonHunter"},--Demon Hunter
 		}
 	},
 

@@ -18,7 +18,7 @@ TOCA.DEBUG = false
 TOCA._G = {
   title  = TOCA.colors.class[7][4] .. TOCA._L.TITLE .."|r",
   author = "Porthias of Myzrael",
-  version= 2.54,
+  version= 2.53,
   CMD    = "/toca",
   width  = 150,
   height = 85,
@@ -88,7 +88,7 @@ end
 TOCA.version_alerted = 0
 function TOCA.VersionControl(netprefix, netpacket)
 	if (TOCA.version_alerted == 0) then
-	  if (netprefix == TOCA._G.prefix) then
+	  --if (netprefix == TOCA._G.prefix) then
 	    local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.version)
 	    if (getPacket) then
 	      local latest_version = tonumber(getPacket)
@@ -103,7 +103,7 @@ function TOCA.VersionControl(netprefix, netpacket)
 	    TOCA.Notification("|cfffc2121" .. TOCA._L.INIT[7])
 			TOCA.version_alerted = 1
 		end
-	end
+	--end
 end
 
 --menu & frame system default structures

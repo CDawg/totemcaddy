@@ -126,8 +126,7 @@ function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 	      TOCA.KeyBindsSetOnLoad = 2
 	    end
 	    TOCA.EnableKnownTotems()
-			TOCA.BuildRaid()
-			--TOCA.AssignmentESRaidSend() --send my resto data
+			TOCA.BuildRaidAssignments(true)
 	  end
 
 	  if (event == "BAG_UPDATE") then
@@ -149,27 +148,14 @@ function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 	  TOCA.Combat(event)
 
 		if ((event == "GROUP_ROSTER_UPDATE") or (event == "PLAYER_ROLES_ASSIGNED")) then
-			TOCA.BuildRaid()
+			TOCA.BuildRaidAssignments(true)
 		end
 
 		--Load event last
 	  if (event == "CHAT_MSG_ADDON") then
-			if (prefix) then
+			if (prefix == TOCA._G.prefix) then
 				TOCA.VersionControl(prefix, netpacket) --get version from guild/raid
-				--TOCA.AssignmentESRaidGet(prefix, netpacket)
-
-				--get the author of es assignments
-				local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.assign_au)
-				if (getPacket) then
-					--print(getPacket)
-					TOCA.FrameAssignments.author:SetText("Last Update: " .. getPacket)
-				end
-
-				--get the es assignments
-				local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.assign_es)
-				if (getPacket) then
-					print(getPacket)
-				end
+				TOCA.AssignmentESRaidGet(prefix, netpacket)
 			end
 	  end
 
