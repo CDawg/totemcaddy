@@ -33,7 +33,7 @@ TOCA._L = {
 		BUTTON = {"Fermer", "Sauvegarder", "Supprimer", "Oui", "Non"},
 
 		TABS = {
-		  OPTIONS = {"Cadre", "Ensembles", "Avis", "Minicarte", "Shortcuts"},
+		  OPTIONS = {"Cadre", "Ensembles", "Avis", "Minicarte", "Assignments", "Shortcuts"},
 		  HELP = {"Mises à jour", "Contact", "Crédit"}
 		},
 

@@ -91,9 +91,11 @@ function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 
 	  if (event == "UNIT_MAXPOWER") then
 	    TOCA.TotemBarUpdate(event)
+			TOCA.GetShieldFromTanks()
 	  end
 	  if (event == "UNIT_AURA") then --more accurate on usable spells
 	    TOCA.TotemBarUpdate(event)
+			TOCA.GetShieldFromTanks()
 	  end
 	  if (event == "PLAYER_TOTEM_UPDATE") then
 	    TOCA.TotemBarUpdate(event)
@@ -110,6 +112,7 @@ function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 		(event == "PLAYER_STARTED_MOVING") or
 		(event == "PLAYER_STOPPED_MOVING")) then
 		  TOCA.TotemBarUpdate(event)
+			TOCA.GetShieldFromTanks()
 		end
 
 	  if (event == "PLAYER_DEAD") then

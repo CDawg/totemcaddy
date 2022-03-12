@@ -13,12 +13,12 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
-TOCA.FrameOptions_w = 700
+TOCA.FrameOptions_w = 750
 TOCA.FrameOptions_h = 480
 
 TOCA.OptionsPosition_x={}
 TOCA.OptionsPosition_x["LEFT"]=20
-TOCA.OptionsPosition_x["RIGHT"]=400
+TOCA.OptionsPosition_x["RIGHT"]=450
 TOCA.OptionsPosition_y={}
 TOCA.OptionsPosition_y["FRAMEMENU"] = 0
 TOCA.OptionsPosition_y["TIMERS"] = -190
@@ -78,7 +78,7 @@ for i=1, getn(TOCA._L.UI.TABS.OPTIONS) do
       TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[i]]:Hide()
       TOCA.Button.TabOptionsBack[i]:SetSize(TOCA.TabWidth.Options-20, 29)
     end
-		if (i == 5) then --key bindings tab, open the UIParent keybindings
+		if (i == 6) then --key bindings tab, open the UIParent keybindings
 			TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]]:Show() --hacky - show the first page
 	    TOCA.Button.TabOptionsBack[1]:SetSize(TOCA.TabWidth.Options-20, 30)
 			TOCA.FrameOptions:Hide()
