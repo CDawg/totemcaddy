@@ -756,6 +756,12 @@ function TOCA.Init()
 			TOCA.FrameAssignments:ClearAllPoints()
 			TOCA.FrameAssignments:SetPoint(TOCAFrameESPos[1], tonumber(TOCAFrameESPos[2]), tonumber(TOCAFrameESPos[3]))
 		end
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["ESPERSPOS"]) then
+			local TOCAFrameESPos = {}
+			TOCAFrameESPos = split(TOCADB[TOCA.player.combine]["CONFIG"]["ESPERSPOS"], ",")
+			TOCA.FrameAssignmentPersonal:ClearAllPoints()
+			TOCA.FrameAssignmentPersonal:SetPoint(TOCAFrameESPos[1], tonumber(TOCAFrameESPos[2]), tonumber(TOCAFrameESPos[3]))
+		end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLON"] == "OFF") then
       TOCA.Checkbox.Tooltip:SetChecked(nil)
     end

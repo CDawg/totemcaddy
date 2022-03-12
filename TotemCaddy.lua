@@ -608,7 +608,7 @@ TOCA.Button.Options:Hide()
 
 TOCA.Button.CloseMain= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTemplate")
 TOCA.Button.CloseMain:SetSize(16, 16)
-TOCA.Button.CloseMain:SetPoint("TOPRIGHT", -1, 0)
+TOCA.Button.CloseMain:SetPoint("TOPRIGHT", -2, -2)
 TOCA.Button.CloseMain:SetBackdrop(TOCA.Backdrop.Button)
 TOCA.Button.CloseMain:SetBackdropColor(0.6, 0, 0, 1)
 TOCA.Button.CloseMain:SetBackdropBorderColor(1, 1, 1, 0.6)

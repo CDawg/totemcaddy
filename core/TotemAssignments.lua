@@ -175,7 +175,7 @@ TOCA.FrameAssignments.author:SetTextColor(1, 1, 1, 0.6)
 TOCA.FrameAssignmentPersonal={}
 TOCA.FrameAssignmentPersonal = CreateFrame("Button", nil, UIParent, "BackdropTemplate")
 TOCA.FrameAssignmentPersonal:SetWidth(100)
-TOCA.FrameAssignmentPersonal:SetHeight(30)
+TOCA.FrameAssignmentPersonal:SetHeight(28)
 TOCA.FrameAssignmentPersonal:SetPoint("TOPLEFT", GetScreenWidth()/2 -TOCA.FrameAssignmentPersonal:GetWidth(), -TOCA.FrameAssignmentPersonal:GetHeight()+20)
 TOCA.FrameAssignmentPersonal:SetBackdrop({
 	bgFile  = "Interface/RAIDFRAME/Raid-Bar-Hp-Fill",
@@ -193,15 +193,24 @@ end)
 TOCA.FrameAssignmentPersonal:SetScript("OnDragStop", function()
   TOCA.FrameAssignmentPersonal:StopMovingOrSizing()
   local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.FrameAssignmentPersonal:GetPoint()
-  --TOCADB[TOCA.player.combine]["CONFIG"]["ESPOS"] = point .. "," .. xOfs .. "," .. yOfs
+  TOCADB[TOCA.player.combine]["CONFIG"]["ESPERSPOS"] = point .. "," .. xOfs .. "," .. yOfs
 end)
+TOCA.FrameAssignmentPersonal.icon = TOCA.FrameAssignmentPersonal:CreateTexture(nil, "ARTWORK")
+TOCA.FrameAssignmentPersonal.icon:SetSize(20, 20)
+TOCA.FrameAssignmentPersonal.icon:SetPoint("TOPLEFT", 4, -4)
+TOCA.FrameAssignmentPersonal.icon:SetTexture("")
 TOCA.FrameAssignmentPersonal.text = TOCA.FrameAssignmentPersonal:CreateFontString(nil, "ARTWORK")
 TOCA.FrameAssignmentPersonal.text:SetFont(TOCA._G.font, 10)
-TOCA.FrameAssignmentPersonal.text:SetPoint("BOTTOMLEFT", 2, 2)
-TOCA.FrameAssignmentPersonal.text:SetText("Asslesschaps")
+TOCA.FrameAssignmentPersonal.text:SetPoint("TOPLEFT", 26, -10)
+TOCA.FrameAssignmentPersonal.text:SetText("")
 TOCA.FrameAssignmentPersonal:SetScript("OnClick", function()
-	TOCA.AssignmentsOpen = 1
-	TOCA.FrameAssignments:Show()
+	--TOCA.AssignmentsOpen = 1
+	--TOCA.FrameAssignments:Show()
+	if (TOCA.FrameAssignmentPersonal.text:GetText()) then
+		--TargetUnit(TOCA.FrameAssignmentPersonal.text:GetText())
+		--TargetUnit()
+		--"*type1" --protected
+	end
 end)
 
 local listSortNameTanks = {}
@@ -275,13 +284,19 @@ function TOCA.BuildRaidAssignments(loadSaved) --get saved variables
 			end
 		end
 
+		TOCA.FrameAssignmentPersonal:Hide()
+		TOCA.HasAssignment = 0
 		if (TOCA.NumTanks >= 1) then --count the active tanks once again then assign
 			for i=1, TOCA.NumTanks do --go by the first tanks, just in case a personal assignment was from a previous raid and number 4-5 down the list.
-
-				--TODO clear all first, then proceed
-
 				if (TOCA.Dropdown.FrameAssignments[i].text:GetText() == TOCA.player.name) then
-					print("you are assigned " .. TOCA.FrameAssignments.MTName[i]:GetText())
+					TOCA.HasAssignment = TOCA.HasAssignment +1
+					if (TOCA.HasAssignment == 1) then --assign the first tank, not others
+						print("you are assigned " .. TOCA.FrameAssignments.MTName[i]:GetText())
+						TOCA.FrameAssignmentPersonal.text:SetText(TOCA.FrameAssignments.MTName[i]:GetText())
+						local classIndex = select(3, UnitClass(TOCA.FrameAssignments.MTName[i]:GetText()))
+						TOCA.FrameAssignmentPersonal.icon:SetTexture(TOCA.colors.class[classIndex][5])
+						TOCA.FrameAssignmentPersonal:Show()
+					end
 				end
 				--[==[
 				if (TOCA.Dropdown.FrameAssignments[i].text:GetText() == "- empty -") then
