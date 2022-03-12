@@ -130,6 +130,7 @@ function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 	    end
 	    TOCA.EnableKnownTotems()
 			TOCA.BuildRaidAssignments(true)
+			TOCA.GetShieldFromTanks()
 	  end
 
 	  if (event == "BAG_UPDATE") then

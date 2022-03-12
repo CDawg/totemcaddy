@@ -18,11 +18,12 @@ TOCA.FrameAssignmentsHeight = 120
 TOCA.NumTanks = 0
 TOCA.NoTanks = "No Tanks Assigned!"
 TOCA.ClearESQueue = "- empty -"
+TOCA.EarthShieldIcon = "spell_nature_skinofearth"
 
 TOCA.Button.Assignments= CreateFrame("Button", nil, TOCA.FrameMain, "BackdropTemplate")
 TOCA.Button.Assignments:SetSize(21, 21)
 TOCA.Button.Assignments:SetPoint("TOPLEFT", 2, -2)
-TOCA.Button.Assignments:SetBackdrop(TOCA.SetIcon("spell_nature_skinofearth"))
+TOCA.Button.Assignments:SetBackdrop(TOCA.SetIcon(TOCA.EarthShieldIcon))
 TOCA.Button.Assignments:SetScript("OnEnter", function(self)
 	if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
 		self:SetBackdropBorderColor(1, 1, 1, 0)
@@ -78,7 +79,7 @@ TOCA.FrameAssignments.title:SetText(TOCA._G.title .. " " .. TOCA._L.UI.OPTIONS[1
 TOCA.FrameAssignments.icon = TOCA.FrameAssignments:CreateTexture(nil, "ARTWORK")
 TOCA.FrameAssignments.icon:SetSize(18, 18)
 TOCA.FrameAssignments.icon:SetPoint("TOPLEFT", 4, -4)
-TOCA.FrameAssignments.icon:SetTexture("Interface/ICONS/spell_nature_skinofearth")
+TOCA.FrameAssignments.icon:SetTexture("Interface/ICONS/" .. TOCA.EarthShieldIcon)
 TOCA.FrameAssignments:Hide()
 
 TOCA.Button.FrameAssignmentsClose={}
@@ -144,15 +145,15 @@ for i=1, MAX_RAID_MEMBERS do
 	TOCA.Dropdown.FrameAssignments[i].text:SetText("")
 	TOCA.Dropdown.FrameAssignments[i].onClick = function(self, checked)
 		TOCA.Dropdown.FrameAssignments[i].text:SetText(self.value)
-		local thisSelection = nil
+		local shamanSelection = nil
 		local tankSelection = nil
 		TOCA.BuildRaidAssignments(false) --get raid details first, num tanks/shams
 		TOCA.SendAuthorAssignment()
 		if (TOCA.NumTanks >= 1) then --single selection update
-			local thisSelection = TOCA.Dropdown.FrameAssignments[i].text:GetText()
+			local shamanSelection = TOCA.Dropdown.FrameAssignments[i].text:GetText()
 			local tankSelection = TOCA.FrameAssignments.MTName[i]:GetText()
-			if ((thisSelection) and (tankSelection)) then
-				TOCA.SendPacket(TOCA.Net.assign_es .. i .. ",".. tankSelection .. "," .. thisSelection, "RAID") --send author
+			if ((shamanSelection) and (tankSelection)) then
+				TOCA.SendPacket(TOCA.Net.assign_es .. i .. ",".. tankSelection .. "," .. shamanSelection, "RAID") --send author
 			end
 		end
 	end
@@ -203,16 +204,25 @@ TOCA.FrameAssignmentPersonal.icon = TOCA.FrameAssignmentPersonal:CreateTexture(n
 TOCA.FrameAssignmentPersonal.icon:SetSize(20, 20)
 TOCA.FrameAssignmentPersonal.icon:SetPoint("TOPLEFT", 4, -4)
 TOCA.FrameAssignmentPersonal.icon:SetTexture("")
-TOCA.FrameAssignmentPersonal.text = TOCA.FrameAssignmentPersonal:CreateFontString(nil, "ARTWORK")
-TOCA.FrameAssignmentPersonal.text:SetFont(TOCA._G.font, 10)
-TOCA.FrameAssignmentPersonal.text:SetPoint("TOPLEFT", 26, -10)
-TOCA.FrameAssignmentPersonal.text:SetText("")
+TOCA.FrameAssignmentPersonal.ESIcon = TOCA.FrameAssignmentPersonal:CreateTexture(nil, "ARTWORK")
+TOCA.FrameAssignmentPersonal.ESIcon:SetSize(18, 18)
+TOCA.FrameAssignmentPersonal.ESIcon:SetPoint("TOPRIGHT", -5, -4)
+TOCA.FrameAssignmentPersonal.ESIcon:SetTexture("Interface/ICONS/" .. TOCA.EarthShieldIcon)
+TOCA.FrameAssignmentPersonal.ESIcon:Hide()
+TOCA.FrameAssignmentPersonal.ESCount = TOCA.FrameAssignmentPersonal:CreateFontString(nil, "ARTWORK")
+TOCA.FrameAssignmentPersonal.ESCount:SetFont(TOCA._G.font, 12, "OUTLINE")
+TOCA.FrameAssignmentPersonal.ESCount:SetPoint("TOPRIGHT", -2, -10)
+TOCA.FrameAssignmentPersonal.ESCount:SetText("")
+TOCA.FrameAssignmentPersonal.tank = TOCA.FrameAssignmentPersonal:CreateFontString(nil, "ARTWORK")
+TOCA.FrameAssignmentPersonal.tank:SetFont(TOCA._G.font, 10)
+TOCA.FrameAssignmentPersonal.tank:SetPoint("TOPLEFT", 26, -10)
+TOCA.FrameAssignmentPersonal.tank:SetText("")
 TOCA.FrameAssignmentPersonal:SetScript("OnClick", function(self, button)
 	if (button == "RightButton") then
 		TOCA.AssignmentsOpen = 1
 		TOCA.FrameAssignments:Show()
-		if (TOCA.FrameAssignmentPersonal.text:GetText()) then
-			--TargetUnit(TOCA.FrameAssignmentPersonal.text:GetText())
+		if (TOCA.FrameAssignmentPersonal.tank:GetText()) then
+			--TargetUnit(TOCA.FrameAssignmentPersonal.tank:GetText())
 			--TargetUnit()
 			--"*type1" --protected
 		end
@@ -225,8 +235,8 @@ TOCA.FrameAssignmentPersonal:SetScript("OnEnter", function(self)
   else
     self:SetBackdropBorderColor(1, 1, 1, 1)
   end
-	if (TOCA.FrameAssignmentPersonal.text:GetText()) then
-		TOCA.TooltipDisplay(self, "Earth Shield Assignments |cfff7cb45["..TOCA.FrameAssignmentPersonal.text:GetText().."]", "|cffffffffDrag and drag anywhere to save position.|nRight Click - To open the Earth Shield Assignments", 1)
+	if (TOCA.FrameAssignmentPersonal.tank:GetText()) then
+		TOCA.TooltipDisplay(self, "Earth Shield Assignments |cfff7cb45["..TOCA.FrameAssignmentPersonal.tank:GetText().."]", "|cffffffffDrag and drag anywhere to save position.|nRight Click - To open the Earth Shield Assignments", 1)
 	end
 end)
 TOCA.FrameAssignmentPersonal:SetScript("OnLeave", function(self)
@@ -239,17 +249,17 @@ TOCA.FrameAssignmentPersonal:SetScript("OnLeave", function(self)
 end)
 TOCA.FrameAssignmentPersonal:Hide()
 
-TOCA.Button.FrameAssignmentsSendAll={}
+TOCA.Button.FrameAssignmentsSendAll = {}
 TOCA.Button.FrameAssignmentsSendAll = CreateFrame("Button", nil, TOCA.FrameAssignments, "BackdropTemplate")
-TOCA.Button.FrameAssignmentsSendAll:SetSize(18, 18)
-TOCA.Button.FrameAssignmentsSendAll:SetPoint("TOPRIGHT", -2, -2)
+TOCA.Button.FrameAssignmentsSendAll:SetSize(80, 24)
+TOCA.Button.FrameAssignmentsSendAll:SetPoint("BOTTOMRIGHT", -4, 4)
 TOCA.Button.FrameAssignmentsSendAll:SetBackdrop(TOCA.Backdrop.Button)
 TOCA.Button.FrameAssignmentsSendAll:SetBackdropColor(0.6, 0, 0, 1)
 TOCA.Button.FrameAssignmentsSendAll:SetBackdropBorderColor(1, 1, 1, 0.6)
-TOCA.Button.FrameAssignmentsSendAll.icon = TOCA.Button.FrameAssignmentsSendAll:CreateTexture(nil, "ARTWORK")
-TOCA.Button.FrameAssignmentsSendAll.icon:SetSize(12, 12)
-TOCA.Button.FrameAssignmentsSendAll.icon:SetPoint("CENTER", 0, 0)
-TOCA.Button.FrameAssignmentsSendAll.icon:SetTexture("Interface/Buttons/UI-StopButton")
+TOCA.Button.FrameAssignmentsSendAll.text = TOCA.Button.FrameAssignmentsSendAll:CreateFontString(nil, "ARTWORK")
+TOCA.Button.FrameAssignmentsSendAll.text:SetFont(TOCA._G.font, 11)
+TOCA.Button.FrameAssignmentsSendAll.text:SetPoint("CENTER", 0, 0)
+TOCA.Button.FrameAssignmentsSendAll.text:SetText("Assign")
 TOCA.Button.FrameAssignmentsSendAll:SetScript("OnEnter", function(self)
   if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
     self:SetBackdropBorderColor(1, 1, 1, 0)
@@ -265,9 +275,9 @@ TOCA.Button.FrameAssignmentsSendAll:SetScript("OnLeave", function(self)
   end
 end)
 TOCA.Button.FrameAssignmentsSendAll:SetScript("OnClick", function()
-
+	TOCA.SendAllAssignments()
 end)
-
+TOCA.Button.FrameAssignmentsSendAll:Hide()
 
 local listSortNameTanks = {}
 local listSortNameShamans = {}
@@ -284,13 +294,19 @@ end
 function TOCA.SendAllAssignments()
 	if (TOCA.NumTanks >= 1) then --single selection update
 		for i=1, TOCA.NumTanks do
-			local thisSelection = TOCA.Dropdown.FrameAssignments[i].text:GetText()
+			local shamanSelection = TOCA.Dropdown.FrameAssignments[i].text:GetText()
 			local tankSelection = TOCA.FrameAssignments.MTName[i]:GetText()
-			if ((thisSelection) and (tankSelection)) then
-				TOCA.SendPacket(TOCA.Net.assign_es .. i .. ",".. tankSelection .. "," .. thisSelection, "RAID") --send author
+			if ((shamanSelection) and (tankSelection)) then
+				TOCA.SendPacket(TOCA.Net.assign_es .. i .. ",".. tankSelection .. "," .. shamanSelection, "RAID") --send author
+				if (shamanSelection ~= TOCA.player.name) then
+					if ((tankSelection) and (UnitInRaid(shamanSelection))) then
+						SendChatMessage("<".. TOCA._L.TITLE .."> " .. TOCA.player.name .. " has assigned you " .. tankSelection .. " for Earth Shield", "WHISPER", nil, shamanSelection)
+					end
+				end
 			end
 		end
 	end
+	--TOCA.Notification("Sending Earth Shield Assignments")
 	TOCA.SendAuthorAssignment()
 end
 
@@ -305,9 +321,11 @@ function TOCA.BuildRaidAssignments(loadSaved) --get saved variables
 		listSortNameShamans = {TOCA.ClearESQueue}
 		TOCA.NumTanks = 0
 
-		--local isKnown = IsSpellKnown(TOCA.spell.EARTH_SHIELD, false) --we know earth shield, show the assignments button
 		if (classIndex == 7) then --is a sham
-			TOCA.Button.Assignments:Show()
+			local isKnown = IsSpellKnown(TOCA.spell.EARTH_SHIELD, false) --we know earth shield, show the assignments button
+			--if (isKnown) then
+				TOCA.Button.Assignments:Show()
+			--end
 		end
 
 		--build the tanks and shamans and order in alpha
@@ -350,8 +368,10 @@ function TOCA.BuildRaidAssignments(loadSaved) --get saved variables
 			TOCA.FrameAssignments.MTClass[k]:SetTexture(TOCA.colors.class[classIndex][5])
 		end
 
+		TOCA.Button.FrameAssignmentsSendAll:Hide()
 		table.sort(listSortNameShamans) --alpha order shams
 		if (TOCA.NumTanks >= 1) then --go by the number of tanks for dropdowns
+			TOCA.Button.FrameAssignmentsSendAll:Show()
 			for i=1, TOCA.NumTanks do
 				TOCA.Dropdown.FrameAssignments[i]:Show()
 				if (listSortNameShamans[1]) then --make sure we have at least one sham in the raid
@@ -364,7 +384,7 @@ function TOCA.BuildRaidAssignments(loadSaved) --get saved variables
 			for i=1, MAX_RAID_MEMBERS do
 				if (TOCADB[TOCA.player.combine]["RAID"][TOCA.FrameAssignments.MTName[i]:GetText()]) then
 					TOCA.Dropdown.FrameAssignments[i].text:SetText(TOCADB[TOCA.player.combine]["RAID"][TOCA.FrameAssignments.MTName[i]:GetText()])
-					print("loading " .. i .. " "  .. TOCADB[TOCA.player.combine]["RAID"][TOCA.FrameAssignments.MTName[i]:GetText()])
+					--print("loading " .. i .. " "  .. TOCADB[TOCA.player.combine]["RAID"][TOCA.FrameAssignments.MTName[i]:GetText()])
 				end
 			end
 		end
@@ -377,7 +397,7 @@ function TOCA.BuildRaidAssignments(loadSaved) --get saved variables
 					TOCA.HasAssignment = TOCA.HasAssignment +1
 					--if (TOCA.HasAssignment == 1) then --assign the first tank, not others
 						--print("you are assigned " .. TOCA.FrameAssignments.MTName[i]:GetText())
-						TOCA.FrameAssignmentPersonal.text:SetText(TOCA.FrameAssignments.MTName[i]:GetText())
+						TOCA.FrameAssignmentPersonal.tank:SetText(TOCA.FrameAssignments.MTName[i]:GetText())
 						local classIndex = select(3, UnitClass(TOCA.FrameAssignments.MTName[i]:GetText()))
 						TOCA.FrameAssignmentPersonal.icon:SetTexture(TOCA.colors.class[classIndex][5])
 						TOCA.FrameAssignmentPersonal:Show()
@@ -424,7 +444,7 @@ function TOCA.AssignmentESRaidGet(prefix, netpacket)
 				TOCA.Dropdown.FrameAssignments[ddID].text:SetText(shaman)
 				--TOCA.Dropdown.FrameAssignments[i].text:SetText(assign[3])
 				TOCADB[TOCA.player.combine]["RAID"][tank] = shaman
-				print("save " .. tank .. " " .. shaman)
+				--print("saved " .. tank .. " " .. shaman)
 			end
 		end
 	end
@@ -433,6 +453,10 @@ end
 
 function TOCA.GetShieldFromTanks()
 	local tankToShaman = nil
+	--go red
+	TOCA.FrameAssignmentPersonal:SetBackdropColor(1, 0, 0, 0.6)
+	TOCA.FrameAssignmentPersonal.ESIcon:Hide()
+	TOCA.FrameAssignmentPersonal.ESCount:SetText("")
 	if (IsInRaid()) then
 		for i=1, MAX_RAID_MEMBERS do
 			if (TOCA.Dropdown.FrameAssignments[i].text:GetText() == TOCA.player.name) then
@@ -443,16 +467,20 @@ function TOCA.GetShieldFromTanks()
 			end
 		end
 
-		if (tankToShaman) then --shaman specific
+		if (tankToShaman) then --shaman specific tank
 			local _Uindex = 1
 			while UnitAura(tankToShaman, _Uindex) do
 				local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura(tankToShaman, _Uindex)
-				--go red?
 				for k,v in pairs(TOCA._L.SPELLS.SHIELDS) do
 					if (string.find(name, v)) then
 						--local timeDuration = duration + expirationTime - GetTime()
 						--timeDuration = timeDuration / 120
 						--print(name) --found a shield
+						TOCA.FrameAssignmentPersonal.ESIcon:Show()
+						if (count) then
+							TOCA.FrameAssignmentPersonal.ESCount:SetText(count)
+						end
+						TOCA.FrameAssignmentPersonal:SetBackdropColor(0, 1, 0, 0.6)
 					end
 				end
 				_Uindex = _Uindex + 1
