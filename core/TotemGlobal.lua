@@ -170,14 +170,14 @@ function TOCA.SetIcon(icon)
 	local array = {
 		bgFile="Interface/AddOns/".. TOCA._G.prefix .."/images/" .. icon,
 		edgeFile="Interface/ToolTips/UI-Tooltip-Border",
-		edgeSize=12,
+		edgeSize=10,
 		insets={left=2, right=2, top=2, bottom=2},
 	}
 	if (TOCA.BorderFrames <= 0) then
 		array = {
 	    bgFile="Interface/AddOns/".. TOCA._G.prefix .."/images/" .. icon,
 	    edgeFile="",
-	    edgeSize=12,
+	    edgeSize=10,
 	    insets={left=2, right=2, top=2, bottom=2},
 	  }
 	end

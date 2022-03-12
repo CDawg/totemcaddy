@@ -22,9 +22,19 @@ TOCA.Button.Assignments:SetSize(21, 21)
 TOCA.Button.Assignments:SetPoint("TOPLEFT", 2, -2)
 TOCA.Button.Assignments:SetBackdrop(TOCA.SetIcon("spell_nature_skinofearth"))
 TOCA.Button.Assignments:SetScript("OnEnter", function(self)
-  TOCA.TooltipDisplay(self, TOCA._L.UI.OPTIONS[10][1], TOCA._L.UI.OPTIONS[10][2])
+	if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
+		self:SetBackdropBorderColor(1, 1, 1, 0)
+	else
+		self:SetBackdropBorderColor(0.7, 0.7, 1, 1)
+	end
+	TOCA.TooltipDisplay(self, TOCA._L.UI.OPTIONS[10][1], TOCA._L.UI.OPTIONS[10][2])
 end)
 TOCA.Button.Assignments:SetScript("OnLeave", function(self)
+	if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
+		self:SetBackdropBorderColor(1, 1, 1, 0)
+	else
+		self:SetBackdropBorderColor(1, 1, 1, 0.6)
+	end
   TOCA.CloseAllMenus()
 end)
 TOCA.Button.Assignments:SetScript("OnClick", function(self)
@@ -96,7 +106,6 @@ TOCA.Button.FrameAssignmentsClose:SetScript("OnLeave", function(self)
 end)
 TOCA.Button.FrameAssignmentsClose:SetScript("OnClick", function()
   TOCA.CloseAllMenus()
-	TOCA.FrameAssignments:Hide()
 	TOCA.AssignmentsOpen = 0
 	TOCA.FrameAssignments:Hide()
 end)
@@ -162,6 +171,38 @@ TOCA.FrameAssignments.author:SetPoint("BOTTOMLEFT", 6, 6)
 TOCA.FrameAssignments.author:SetText("Last Update:")
 TOCA.FrameAssignments.author:SetTextColor(1, 1, 1, 0.6)
 --TOCA.FrameAssignments.author:Hide()
+
+TOCA.FrameAssignmentPersonal={}
+TOCA.FrameAssignmentPersonal = CreateFrame("Button", nil, UIParent, "BackdropTemplate")
+TOCA.FrameAssignmentPersonal:SetWidth(100)
+TOCA.FrameAssignmentPersonal:SetHeight(30)
+TOCA.FrameAssignmentPersonal:SetPoint("TOPLEFT", GetScreenWidth()/2 -TOCA.FrameAssignmentPersonal:GetWidth(), -TOCA.FrameAssignmentPersonal:GetHeight()+20)
+TOCA.FrameAssignmentPersonal:SetBackdrop({
+	bgFile  = "Interface/RAIDFRAME/Raid-Bar-Hp-Fill",
+	edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
+	edgeSize= 8,
+	insets  = {left=2, right=2, top=2, bottom=2},
+})
+TOCA.FrameAssignmentPersonal:SetBackdropColor(1, 0, 0, 0.6)
+TOCA.FrameAssignmentPersonal:SetMovable(true)
+TOCA.FrameAssignmentPersonal:EnableMouse(true)
+TOCA.FrameAssignmentPersonal:RegisterForDrag("LeftButton")
+TOCA.FrameAssignmentPersonal:SetScript("OnDragStart", function()
+  TOCA.FrameAssignmentPersonal:StartMoving()
+end)
+TOCA.FrameAssignmentPersonal:SetScript("OnDragStop", function()
+  TOCA.FrameAssignmentPersonal:StopMovingOrSizing()
+  local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.FrameAssignmentPersonal:GetPoint()
+  --TOCADB[TOCA.player.combine]["CONFIG"]["ESPOS"] = point .. "," .. xOfs .. "," .. yOfs
+end)
+TOCA.FrameAssignmentPersonal.text = TOCA.FrameAssignmentPersonal:CreateFontString(nil, "ARTWORK")
+TOCA.FrameAssignmentPersonal.text:SetFont(TOCA._G.font, 10)
+TOCA.FrameAssignmentPersonal.text:SetPoint("BOTTOMLEFT", 2, 2)
+TOCA.FrameAssignmentPersonal.text:SetText("Asslesschaps")
+TOCA.FrameAssignmentPersonal:SetScript("OnClick", function()
+	TOCA.AssignmentsOpen = 1
+	TOCA.FrameAssignments:Show()
+end)
 
 local listSortNameTanks = {}
 local listSortNameShamans = {}
@@ -236,6 +277,9 @@ function TOCA.BuildRaidAssignments(loadSaved) --get saved variables
 
 		if (TOCA.NumTanks >= 1) then --count the active tanks once again then assign
 			for i=1, TOCA.NumTanks do --go by the first tanks, just in case a personal assignment was from a previous raid and number 4-5 down the list.
+
+				--TODO clear all first, then proceed
+
 				if (TOCA.Dropdown.FrameAssignments[i].text:GetText() == TOCA.player.name) then
 					print("you are assigned " .. TOCA.FrameAssignments.MTName[i]:GetText())
 				end
