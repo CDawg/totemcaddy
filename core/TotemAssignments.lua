@@ -162,6 +162,7 @@ for i=1, MAX_RAID_MEMBERS do
 	TOCA.FrameAssignments.divider[i]:SetSize(TOCA.FrameAssignments:GetWidth()-8, 8)
 	TOCA.FrameAssignments.divider[i]:SetPoint("TOPLEFT", 4, -i*rowHeight-32)
 	TOCA.FrameAssignments.divider[i]:SetTexture("Interface/DialogFrame/DialogFrame-TOP")
+	TOCA.FrameAssignments.divider[i]:Hide()
 end
 
 TOCA.FrameAssignments.author={}
@@ -212,18 +213,23 @@ TOCA.FrameAssignmentPersonal:SetScript("OnClick", function()
 		--"*type1" --protected
 	end
 end)
+TOCA.FrameAssignmentPersonal:Hide()
 
 local listSortNameTanks = {}
 local listSortNameShamans = {}
 
 function TOCA.BuildRaidAssignments(loadSaved) --get saved variables
+	local classIndex = select(3, UnitClass("player")) --users that use TC and not a shaman
+	--if (classIndex ~= 7) then --is a sham
+		--return
+	--end
+
 	if (IsInRaid()) then
 		listSortNameTanks = {}
 		listSortNameShamans = {"- empty -"}
 		TOCA.NumTanks = 0
 
 		--local isKnown = IsSpellKnown(TOCA.spell.EARTH_SHIELD, false)
-		local classIndex = select(3, UnitClass("player")) --users that use TC and not a shaman
 		if (classIndex == 7) then --is a sham
 			TOCA.Button.Assignments:Show() --we know earth shield, show the assignments button
 		end
@@ -234,6 +240,9 @@ function TOCA.BuildRaidAssignments(loadSaved) --get saved variables
 			TOCA.FrameAssignments.MTClass[i]:Hide()
 			TOCA.FrameAssignments.divider[i]:Hide()
 			TOCA.Dropdown.FrameAssignments[i]:Hide()
+			--if (TOCA.Dropdown.FrameAssignments[i].text:GetText() == "- empty -") then
+				--TOCA.Dropdown.FrameAssignments[i].text:SetText("")
+			--end
 			TOCA.FrameAssignments.MTName[1]:SetText("No Tanks Assigned")
 			TOCA.FrameAssignments.MTName[1]:Show() -- show first line for empty tank message
 			local name, rank, subgroup, level, class, fileName, zone, online, isDead, role = GetRaidRosterInfo(i)
@@ -290,23 +299,17 @@ function TOCA.BuildRaidAssignments(loadSaved) --get saved variables
 			for i=1, TOCA.NumTanks do --go by the first tanks, just in case a personal assignment was from a previous raid and number 4-5 down the list.
 				if (TOCA.Dropdown.FrameAssignments[i].text:GetText() == TOCA.player.name) then
 					TOCA.HasAssignment = TOCA.HasAssignment +1
-					if (TOCA.HasAssignment == 1) then --assign the first tank, not others
+					--if (TOCA.HasAssignment == 1) then --assign the first tank, not others
 						print("you are assigned " .. TOCA.FrameAssignments.MTName[i]:GetText())
 						TOCA.FrameAssignmentPersonal.text:SetText(TOCA.FrameAssignments.MTName[i]:GetText())
 						local classIndex = select(3, UnitClass(TOCA.FrameAssignments.MTName[i]:GetText()))
 						TOCA.FrameAssignmentPersonal.icon:SetTexture(TOCA.colors.class[classIndex][5])
 						TOCA.FrameAssignmentPersonal:Show()
-					end
+					--end
 				end
-				--[==[
-				if (TOCA.Dropdown.FrameAssignments[i].text:GetText() == "- empty -") then
-					TOCA.Dropdown.FrameAssignments[i].text:SetText("")
-				end
-				]==]--
 			end
 		end
 
-		--print("build raid assignments")
 		TOCA.FrameAssignments:SetHeight(TOCA.FrameAssignmentsHeight+TOCA.NumTanks*rowHeight)
 		end --isinraid
 end
