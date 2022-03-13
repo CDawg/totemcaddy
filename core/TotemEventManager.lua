@@ -60,7 +60,7 @@ function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 		if ((event == "UNIT_SPELLCAST_START") or
 		(event == "UNIT_SPELLCAST_STOP") or
 	  (event == "UNIT_POWER_FREQUENT")) then
-	    TOCA.TotemBarUpdate(event)
+	    TOCA.OnUpdateEvent(event)
 	  end
 
 		if (event == "UNIT_SPELLCAST_START") then
@@ -71,7 +71,7 @@ function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 
 	  --technically, this needs to be handled on a different event
 	  if (event == "UNIT_SPELLCAST_SENT") then
-	    TOCA.TotemBarUpdate(event)
+	    TOCA.OnUpdateEvent(event)
 	    if ((prefix == "player") and (_spellID)) then
 	      if(_spellID == TOCA.spell.TOTEMIC_CALL) then
 	        TOCA.TotemTimerReset("all")
@@ -90,15 +90,13 @@ function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 		end
 
 	  if (event == "UNIT_MAXPOWER") then
-	    TOCA.TotemBarUpdate(event)
-			TOCA.GetShieldFromTanks()
+	    TOCA.OnUpdateEvent(event)
 	  end
 	  if (event == "UNIT_AURA") then --more accurate on usable spells
-	    TOCA.TotemBarUpdate(event)
-			TOCA.GetShieldFromTanks()
+	    TOCA.OnUpdateEvent(event)
 	  end
 	  if (event == "PLAYER_TOTEM_UPDATE") then
-	    TOCA.TotemBarUpdate(event)
+	    TOCA.OnUpdateEvent(event)
 	    TOCA.TotemBarTimerStart()
 			local inInstance, instanceType = IsInInstance()
 			if (not inInstance) then
@@ -111,8 +109,7 @@ function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 		if ((event == "PLAYER_TOTEM_UPDATE") or
 		(event == "PLAYER_STARTED_MOVING") or
 		(event == "PLAYER_STOPPED_MOVING")) then
-		  TOCA.TotemBarUpdate(event)
-			TOCA.GetShieldFromTanks()
+		  TOCA.OnUpdateEvent(event)
 		end
 
 	  if (event == "PLAYER_DEAD") then
@@ -130,11 +127,10 @@ function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 	    end
 	    TOCA.EnableKnownTotems()
 			TOCA.BuildRaidAssignments(true)
-			TOCA.GetShieldFromTanks()
 	  end
 
 	  if (event == "BAG_UPDATE") then
-	    TOCA.TotemBarUpdate(event) --fire off when enable/disable
+	    TOCA.OnUpdateEvent(event) --fire off when enable/disable
 	  end
 
 	  if (event == "PLAYER_CONTROL_GAINED") then

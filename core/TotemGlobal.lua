@@ -1515,7 +1515,7 @@ function TOCA.HandleShieldAlert()
 	end
 end
 
-function TOCA.TotemBarUpdate(event)
+function TOCA.OnUpdateEvent(event)
 	if (TOCA.player.classID == 7) then --shaman
 	  local percMana = (UnitPower("player")/UnitPowerMax("player"))*100
 	  local percMana = floor(percMana+0.5)
@@ -1544,6 +1544,7 @@ function TOCA.TotemBarUpdate(event)
 		TOCA.GetShieldTimer()
 	  TOCA.DisplayAnkhFrame()
 		TOCA.HandleShieldAlert()
+		TOCA.GetShieldFromTanks()
 	end
 end
 
