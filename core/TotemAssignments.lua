@@ -453,53 +453,41 @@ end
 
 function TOCA.GetShieldFromTanks()
 	local tankToShaman = nil
+	local classIndex = select(3, UnitClass(TOCA.player.name))
 	--go red
 	TOCA.FrameAssignmentPersonal:SetBackdropColor(1, 0, 0, 0.6)
 	TOCA.FrameAssignmentPersonal.ESIcon:Hide()
 	TOCA.FrameAssignmentPersonal.ESCount:SetText("")
-	if (IsInRaid()) then
-		for i=1, MAX_RAID_MEMBERS do
-			if (TOCA.Dropdown.FrameAssignments[i].text:GetText() == TOCA.player.name) then
-				tankToShaman = TOCA.FrameAssignments.MTName[i]:GetText()
-				if (tankToShaman) then
-					--print("i have " .. tankToShaman)
+	if (classIndex == 7) then --dont even bother if it's not a shaman
+		if (IsInRaid()) then
+			for i=1, MAX_RAID_MEMBERS do
+				if (TOCA.Dropdown.FrameAssignments[i].text:GetText() == TOCA.player.name) then
+					tankToShaman = TOCA.FrameAssignments.MTName[i]:GetText()
 				end
 			end
-		end
+			--print(tankToShaman) --debug
 
-		if (tankToShaman) then --shaman specific tank
-			local _Uindex = 1
-			while UnitAura(tankToShaman, _Uindex) do
-				local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura(tankToShaman, _Uindex)
-				for k,v in pairs(TOCA._L.SPELLS.SHIELDS) do
-					if (string.find(name, v)) then
-						--local timeDuration = duration + expirationTime - GetTime()
-						--timeDuration = timeDuration / 120
-						--print(name) --found a shield
-						TOCA.FrameAssignmentPersonal.ESIcon:Show()
-						if (count) then
-							TOCA.FrameAssignmentPersonal.ESCount:SetText(count)
+			if (tankToShaman) then --shaman specific tank
+				if (UnitIsConnected(tankToShaman)) then --is the tank in raid but not logged on
+					local _Uindex = 1
+					while UnitAura(tankToShaman, _Uindex) do
+						local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura(tankToShaman, _Uindex)
+						for k,v in pairs(TOCA._L.SPELLS.SHIELDS) do
+							if (string.find(name, v)) then
+								--local timeDuration = duration + expirationTime - GetTime()
+								--timeDuration = timeDuration / 120
+								--print(name) --found a shield
+								TOCA.FrameAssignmentPersonal.ESIcon:Show()
+								if (count) then
+									TOCA.FrameAssignmentPersonal.ESCount:SetText(count)
+								end
+								TOCA.FrameAssignmentPersonal:SetBackdropColor(0, 1, 0, 0.6)
+							end
 						end
-						TOCA.FrameAssignmentPersonal:SetBackdropColor(0, 1, 0, 0.6)
+						_Uindex = _Uindex + 1
 					end
-				end
-				_Uindex = _Uindex + 1
-			end
-	  end
-
-		--[==[
-		local _Uindex = 1
-		while UnitAura(tank, _Uindex) do
-			local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura("player", _Uindex)
-			for k,v in pairs(TOCA._L.SPELLS.SHIELDS) do
-				if (string.find(name, v)) then
-					--local timeDuration = duration + expirationTime - GetTime()
-					--timeDuration = timeDuration / 120
-					print(name)
-				end
-			end
-			_Uindex = _Uindex + 1
-		end
-	  ]==]--
-  end --isinraid
+			  end
+			end --tank connected
+	  end --isinraid
+	end
 end
