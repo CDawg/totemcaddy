@@ -99,7 +99,12 @@ TOCA._L = {
 			{"Display Minimap Totem Radius Solid", "Hide or display the totem radius solid on the Minimap"},
 			{"Display Minimap Totem Radius Rings", "Hide or display the totem radius rings on the Minimap"},
 			{"Display Minimap Totem Icons",        "Hide or display the totem icons on the Minimap"},
-		}
+		},
+
+		ASSIGNMENTS = {
+			{"Enable Earth Shield Assignments Scale", "Hide/Display the Tank Earth Shield Assignments"},
+			{"Earth Shield Assignments Scale",        "Increase/Decrease the size of the Earth Shield Assignments frame."},
+		},
 	},
 
 	COMMANDS = {

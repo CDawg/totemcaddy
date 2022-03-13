@@ -33,7 +33,7 @@ TOCA._L = {
 		BUTTON = {"关闭", "保存", "删除", "是的", "不"},
 
 		TABS = {
-		  OPTIONS= {"框架", "图腾集", "通知", "小地图", "Assignments", "键盘"},
+		  OPTIONS= {"框架", "图腾集", "通知", "小地图", "作业", "键盘"},
 		  HELP   = {"更新", "接触", "信用"}
 		},
 
@@ -99,7 +99,12 @@ TOCA._L = {
 			{"Display Minimap Totem Radius Solid", "Hide or display the totem radius solid on the Minimap"},
 			{"Display Minimap Totem Radius Rings", "Hide or display the totem radius rings on the Minimap"},
 			{"Display Minimap Totem Icons",        "Hide or display the totem icons on the Minimap"},
-		}
+		},
+
+		ASSIGNMENTS = {
+			{"Enable Earth Shield Assignments Scale", "Hide/Display the Tank Earth Shield Assignments"},
+			{"Earth Shield Assignments Scale",        "Increase/Decrease the size of the Earth Shield Assignments frame."},
+		},
 	},
 
 	COMMANDS = {

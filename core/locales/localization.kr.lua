@@ -33,7 +33,7 @@ TOCA._L = {
 		BUTTON = {"닫다", "구하다", "삭제", "네", "아니"},
 
 		TABS = {
-		  OPTIONS= {"액자", "토템 세트", "알림", "미니맵", "Assignments", "건반"},
+		  OPTIONS= {"액자", "토템 세트", "알림", "미니맵", "과제", "건반"},
 		  HELP   = {"업데이트", "연락하다", "신용 거래"}
 		},
 
@@ -99,7 +99,12 @@ TOCA._L = {
 			{"Display Minimap Totem Radius Solid", "Hide or display the totem radius solid on the Minimap"},
 			{"Display Minimap Totem Radius Rings", "Hide or display the totem radius rings on the Minimap"},
 			{"Display Minimap Totem Icons",        "Hide or display the totem icons on the Minimap"},
-		}
+		},
+
+		ASSIGNMENTS = {
+			{"Enable Earth Shield Assignments Scale", "Hide/Display the Tank Earth Shield Assignments"},
+			{"Earth Shield Assignments Scale",        "Increase/Decrease the size of the Earth Shield Assignments frame."},
+		},
 	},
 
 	COMMANDS = {
