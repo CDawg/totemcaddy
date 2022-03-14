@@ -273,8 +273,11 @@ TOCA.Button.ResetPosition:SetScript("OnClick", function()
 	for totemCat,v in pairsByKeys(TOCA.totems) do
 		totemCount = totemCount+1
 		local defaultPointSet = totemCount*50
-		--TOCA.FrameSeg[totemCat]:SetPoint("CENTER", 100-defaultPointSet, -200) --this is a bug because Blizzard developers are a bag of dicks
+		TOCA.FrameSeg[totemCat]:ClearAllPoints()
+		TOCA.FrameSeg[totemCat]:SetPoint("CENTER", 100-defaultPointSet, -200)
 	end
+	TOCA.FrameAssignmentPersonal:ClearAllPoints()
+	TOCA.FrameAssignmentPersonal:SetPoint("TOPLEFT", GetScreenWidth()/2 -TOCA.FrameAssignmentPersonal:GetWidth(), -TOCA.FrameAssignmentPersonal:GetHeight()+20)
 end)
 
 TOCA.Button.ResetPositionText = TOCA.Button.ResetPosition:CreateFontString(nil, "ARTWORK")
@@ -571,7 +574,7 @@ end)
 TOCA.Dropdown.FrameGryphons={}
 TOCA.Dropdown.FrameGryphonsSel={"Gryphons", "Lions"}
 TOCA.Dropdown.FrameGryphons = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]], "UIDropDownMenuTemplate")
-TOCA.Dropdown.FrameGryphons:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"]+12, TOCA.OptionsPosition_y["FRAMEMENU"]-140)
+TOCA.Dropdown.FrameGryphons:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"]+10, TOCA.OptionsPosition_y["FRAMEMENU"]-140)
 TOCA.Dropdown.FrameGryphons.displayMode = "MENU"
 TOCA.Dropdown.FrameGryphons:SetAlpha(1)
 TOCA.Dropdown.FrameGryphons.text = TOCA.Dropdown.FrameGryphons:CreateFontString(nil, "ARTWORK")

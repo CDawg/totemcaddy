@@ -203,7 +203,7 @@ end)
 TOCA.FrameAssignmentPersonal.TankIcon = TOCA.FrameAssignmentPersonal:CreateTexture(nil, "ARTWORK")
 TOCA.FrameAssignmentPersonal.TankIcon:SetSize(20, 20)
 TOCA.FrameAssignmentPersonal.TankIcon:SetPoint("TOPLEFT", 4, -4)
-TOCA.FrameAssignmentPersonal.TankIcon:SetTexture("")
+TOCA.FrameAssignmentPersonal.TankIcon:SetTexture(TOCA.colors.class[1][5]) --default
 TOCA.FrameAssignmentPersonal.ESIcon = TOCA.FrameAssignmentPersonal:CreateTexture(nil, "ARTWORK")
 TOCA.FrameAssignmentPersonal.ESIcon:SetSize(18, 18)
 TOCA.FrameAssignmentPersonal.ESIcon:SetPoint("TOPRIGHT", -5, -4)
@@ -298,11 +298,27 @@ function TOCA.SendAllAssignments()
 			local tankSelection = TOCA.FrameAssignments.MTName[i]:GetText()
 			if ((shamanSelection) and (tankSelection)) then
 				TOCA.SendPacket(TOCA.Net.assign_es .. i .. ",".. tankSelection .. "," .. shamanSelection, "RAID") --send author
-				if (shamanSelection ~= TOCA.player.name) then
+				--if (shamanSelection ~= TOCA.player.name) then
 					if ((tankSelection) and (UnitInRaid(shamanSelection))) then
-						SendChatMessage("<".. TOCA._L.TITLE .."> " .. TOCA.player.name .. " has assigned you " .. tankSelection .. " for Earth Shield", "WHISPER", nil, shamanSelection)
+						if (TOCADB[TOCA.player.combine]["CONFIG"]["ESASSIGNMSG"] == "Custom") then
+							if (TOCADB[TOCA.player.combine]["CONFIG"]["ESASSIGNCHANNEL"]) then
+								local channelID = GetChannelName(TOCADB[TOCA.player.combine]["CONFIG"]["ESASSIGNCHANNEL"])
+								if (channelID) then
+									--print(channelID)
+							    SendChatMessage("<".. TOCA._L.TITLE .."> " .. TOCA.player.name .. " has assigned " .. shamanSelection .. " [" .. tankSelection .. "] for Earth Shield", "CHANNEL", nil, channelID)
+							  else
+									SendChatMessage("<".. TOCA._L.TITLE .."> " .. TOCA.player.name .. " has assigned " .. shamanSelection .. " [" .. tankSelection .. "] for Earth Shield", "RAID", nil, shamanSelection)
+								end
+							else --if all else fails, go to the raid
+								SendChatMessage("<".. TOCA._L.TITLE .."> " .. TOCA.player.name .. " has assigned " .. shamanSelection .. " [" .. tankSelection .. "] for Earth Shield", "RAID", nil, shamanSelection)
+							end
+						elseif (TOCADB[TOCA.player.combine]["CONFIG"]["ESASSIGNMSG"] == "Whisper") then
+							SendChatMessage("<".. TOCA._L.TITLE .."> " .. TOCA.player.name .. " has assigned you [" .. tankSelection .. "] for Earth Shield", "WHISPER", nil, shamanSelection)
+					  else
+							SendChatMessage("<".. TOCA._L.TITLE .."> " .. TOCA.player.name .. " has assigned " .. shamanSelection .. " [" .. tankSelection .. "] for Earth Shield", "RAID", nil, shamanSelection)
+						end
 					end
-				end
+				--end
 			end
 		end
 	end
@@ -497,7 +513,7 @@ end
 TOCA.FrameAssignmentPersonalOptionsTitle = TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]]:CreateFontString(nil, "ARTWORK")
 TOCA.FrameAssignmentPersonalOptionsTitle:SetFont(TOCA._G.font, 12)
 TOCA.FrameAssignmentPersonalOptionsTitle:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -20)
-TOCA.FrameAssignmentPersonalOptionsTitle:SetText(TOCA._L.UI.TABS.OPTIONS[5])
+TOCA.FrameAssignmentPersonalOptionsTitle:SetText(TOCA._L.UI.ASSIGNMENTS.TITLE)
 TOCA.FrameAssignmentPersonalOptionsTitle:SetTextColor(1, 1, 0.5, 1)
 
 TOCA.Button.FrameAssignmentPersonalTest={}
@@ -607,28 +623,36 @@ TOCA.Dropdown.FrameAssignmentPostTitle={}
 TOCA.Dropdown.FrameAssignmentPostTitle = TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]]:CreateFontString(nil, "ARTWORK")
 TOCA.Dropdown.FrameAssignmentPostTitle:SetFont(TOCA._G.font, 12)
 TOCA.Dropdown.FrameAssignmentPostTitle:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -200)
-TOCA.Dropdown.FrameAssignmentPostTitle:SetText(TOCA._L.UI.OPTIONS[3][1])
+TOCA.Dropdown.FrameAssignmentPostTitle:SetText(TOCA._L.UI.ASSIGNMENTS[4][1])
+TOCA.Dropdown.FrameAssignmentPostTitle:SetTextColor(1, 1, 0.5, 1)
 --TOCA.FrameAssignmentPersonalOptions.Scale.Title:SetTextColor(1, 1, 0.5, 1)
 TOCA.Dropdown.FrameAssignmentPost={}
-TOCA.Dropdown.FrameAssignmentPostSel={"WHISPER", "RAID", "BOTH"}
+
+TOCA.Channels={"Raid", "Whisper", "Custom"}
 TOCA.Dropdown.FrameAssignmentPost = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]], "UIDropDownMenuTemplate")
-TOCA.Dropdown.FrameAssignmentPost:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -220)
+TOCA.Dropdown.FrameAssignmentPost:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"]-20, -220)
 TOCA.Dropdown.FrameAssignmentPost.displayMode = "MENU"
 TOCA.Dropdown.FrameAssignmentPost:SetAlpha(1)
 TOCA.Dropdown.FrameAssignmentPost.text = TOCA.Dropdown.FrameAssignmentPost:CreateFontString(nil, "ARTWORK")
 TOCA.Dropdown.FrameAssignmentPost.text:SetFont(TOCA._G.font, 11)
 TOCA.Dropdown.FrameAssignmentPost.text:SetPoint("TOPLEFT", TOCA.Dropdown.FrameAssignmentPost, "TOPLEFT", 25, -8)
-TOCA.Dropdown.FrameAssignmentPost.text:SetText(TOCA.Dropdown.FrameAssignmentPostSel[1])
+TOCA.Dropdown.FrameAssignmentPost.text:SetText(TOCA.Channels[1])
 TOCA.Dropdown.FrameAssignmentPost.onClick = function(self, checked)
   TOCA.Dropdown.FrameAssignmentPost.text:SetText(self.value)
   TOCADB[TOCA.player.combine]["CONFIG"]["ESASSIGNMSG"] = self.value
-  --if (self.value == "BOTH") then
-  --end
+	--local channelID = GetChannelName("redheals")
+	--print(channelID)
+	TOCA.FrameAssignmentPostChannelTitle:Hide()
+	TOCA.FrameAssignmentPostChannel:Hide()
+	if (self.value == "Custom") then
+		TOCA.FrameAssignmentPostChannelTitle:Show()
+		TOCA.FrameAssignmentPostChannel:Show()
+	end
 end
 TOCA.Dropdown.FrameAssignmentPost.initialize = function(self, level)
   local info = UIDropDownMenu_CreateInfo()
   local i = 0
-  for k,v in pairs(TOCA.Dropdown.FrameAssignmentPostSel) do
+  for k,v in pairs(TOCA.Channels) do
     info.notCheckable = 1
     info.padding = 2
     info.text = v
@@ -641,3 +665,43 @@ TOCA.Dropdown.FrameAssignmentPost.initialize = function(self, level)
   end
 end
 UIDropDownMenu_SetWidth(TOCA.Dropdown.FrameAssignmentPost, 125)
+
+--TOCA.FrameAssignmentPostChannelTitle={}
+TOCA.FrameAssignmentPostChannelTitle = TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]]:CreateFontString(nil, "ARTWORK")
+TOCA.FrameAssignmentPostChannelTitle:SetFont(TOCA._G.font, 12)
+TOCA.FrameAssignmentPostChannelTitle:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"]+4, -260)
+TOCA.FrameAssignmentPostChannelTitle:SetText(TOCA._L.UI.ASSIGNMENTS[5][1])
+TOCA.FrameAssignmentPostChannelTitle:SetTextColor(1, 1, 0.5, 1)
+TOCA.FrameAssignmentPostChannelTitle:Hide()
+
+TOCA.FrameAssignmentPostChannel = CreateFrame("EditBox", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]], "BackdropTemplate")
+TOCA.FrameAssignmentPostChannel:SetWidth(150)
+TOCA.FrameAssignmentPostChannel:SetHeight(24)
+TOCA.FrameAssignmentPostChannel:SetFontObject(GameFontWhite)
+TOCA.FrameAssignmentPostChannel:SetBackdrop({
+  bgFile  = "Interface/ToolTips/CHATBUBBLE-BACKGROUND",
+  insets  = {left=-2, right=6, top=2, bottom=2},
+})
+--TOCA.FrameAssignmentPostChannel:SetAlpha(0.5)
+TOCA.FrameAssignmentPostChannel:SetBackdropColor(0, 0, 0, 1)
+TOCA.FrameAssignmentPostChannel:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"]+4, -275)
+TOCA.FrameAssignmentPostChannel:ClearFocus(self)
+TOCA.FrameAssignmentPostChannel:SetAutoFocus(false)
+TOCA.FrameAssignmentPostChannel:SetMaxLetters(25)
+TOCA.FrameAssignmentPostChannel:SetText("")
+TOCA.FrameAssignmentPostChannel.border = CreateFrame("Frame", nil, TOCA.FrameAssignmentPostChannel, "BackdropTemplate")
+TOCA.FrameAssignmentPostChannel.border:SetWidth(150)
+TOCA.FrameAssignmentPostChannel.border:SetHeight(24)
+TOCA.FrameAssignmentPostChannel.border:SetPoint("TOPLEFT", -4, 0)
+TOCA.FrameAssignmentPostChannel.border:SetBackdrop({
+  edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
+  edgeSize= 12,
+  insets  = {left=2, right=2, top=2, bottom=2},
+})
+TOCA.FrameAssignmentPostChannel:SetScript("OnKeyUp", function(self)
+	if (self:GetText()) then
+		TOCADB[TOCA.player.combine]["CONFIG"]["ESASSIGNCHANNEL"] = self:GetText()
+	end
+  TOCA.CloseAllMenus()
+end)
+TOCA.FrameAssignmentPostChannel:Hide()

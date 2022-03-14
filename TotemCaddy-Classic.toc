@@ -18,6 +18,7 @@ core/locales/localization.kr.lua
 core/locales/localization.ru.lua
 core/locales/localization.tw.lua
 core/TotemGlobal.lua
+core/TotemInit.lua
 core/TotemEventManager.lua
 TotemCaddy.lua
 core/TotemHelp.lua
