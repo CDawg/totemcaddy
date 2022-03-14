@@ -44,6 +44,8 @@ TOCA.Net = {
   version   = "0xEFVe", --version
 	assign_es = "0xEFES", --earthshield assign
 	assign_au = "0xEFAU", --earthshield author
+	report_s  = "0xEuRS",--report send signal
+	report_g  = "0xEuRG",--report get signal
 }
 
 TOCA.OptionMenuOpen = 0
@@ -1719,6 +1721,33 @@ function TOCA.BuildTotemOrder()
   TOCA.SetTotemOrder()
 end
 
+function TOCA.ReportFeedSend()
+	local handshake = "GUILD"
+	if (IsInRaid()) then
+		handshake = "RAID"
+	end
+	TOCA.SendPacket(TOCA.Net.report_s .. TOCA.player.name .. "," .. handshake, handshake)
+end
+function TOCA.ReportFeedGet(prefix, netpacket)
+	local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.report_s)
+	if (getPacket) then
+		--print("received signal... sending ...")
+		local packet = split(getPacket, ",")
+		if (packet[1] ~= TOCA.player.name) then
+			TOCA.SendPacket(TOCA.Net.report_g .. packet[1] .. "," .. TOCA.player.name .. "," .. TOCA._G.version, packet[2])
+		end
+	end
+end
+function TOCA.ReportFeedResult(prefix, netpacket)
+	local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.report_g)
+	if (getPacket) then
+		local packet = split(getPacket, ",")
+		if (packet[1] == TOCA.player.name) then --give to requester only
+			TOCA.Notification(packet[2] .. " = " .. packet[3])
+		end
+	end
+end
+
 SLASH_TOCA1 = TOCA._G.CMD
 function SlashCmdList.TOCA(cmd)
   if ((cmd == nil) or (cmd == "")) then
@@ -1753,5 +1782,7 @@ function SlashCmdList.TOCA(cmd)
 		TOCA.Notification("DEBUG OFF")
 	elseif (cmd == TOCA._L.COMMANDS[9][1]) then
 		print(string.format("version = %s, build = %s, date = '%s', tocversion = %s.", __Gversion, __Gbuild, __Gdate, __Gtoc))
+	elseif (cmd == "report") then
+		TOCA.ReportFeedSend()
 	end
 end
