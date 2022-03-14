@@ -28,7 +28,7 @@ TOCA._G = {
   prefix = "TotemCaddy",
   suffix = "BCC",
 	date   = date("%Y%m%d"),
-	update = 20220321,
+	update = 20220404,
 }
 --local _LName, _LTitle = GetAddOnInfo(TOCA._G.prefix)
 --TOCA._G.version = tonumber(string.sub(_LTitle, 26, 29))
@@ -621,6 +621,10 @@ function TOCA.Init()
     if (TOCADB[TOCA.player.combine]["CONFIG"]["SCALE"]) then
       TOCA.Slider.Scale:SetValue(TOCADB[TOCA.player.combine]["CONFIG"]["SCALE"])
       TOCA.Slider.Scale.Val:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["SCALE"])
+    end
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["SCALEPERS"]) then
+      TOCA.FrameAssignmentPersonalOptions.Scale:SetValue(TOCADB[TOCA.player.combine]["CONFIG"]["SCALEPERS"])
+      TOCA.FrameAssignmentPersonalOptions.Scale.Val:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["SCALEPERS"])
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["MAINMENU"] == "OFF") then
       --TOCA.FrameMain.Background:SetBackdrop(TOCA.Backdrop.General)

@@ -102,8 +102,10 @@ TOCA._L = {
 		},
 
 		ASSIGNMENTS = {
-			{"Enable Earth Shield Assignments Scale", "Hide/Display the Tank Earth Shield Assignments"},
-			{"Earth Shield Assignments Scale",        "Increase/Decrease the size of the Earth Shield Assignments frame."},
+			{"Test Assignments",                     "Test the Earth Shield Assignments out of raid"},
+			{"Enable Raid Earth Shield Assignments", "Hide/Display the Tank Earth Shield Assignments"},
+			{"Earth Shield Assignments Scale",       "Increase/Decrease the size of the Earth Shield Assignments frame."},
+			{"Earth Shield Assign Message",          "How to notify the shamans with Earth Shield Assignments"},
 		},
 	},
 

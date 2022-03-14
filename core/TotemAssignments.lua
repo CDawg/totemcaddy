@@ -200,10 +200,10 @@ TOCA.FrameAssignmentPersonal:SetScript("OnDragStop", function()
   local point, relativeTo, relativePoint, xOfs, yOfs = TOCA.FrameAssignmentPersonal:GetPoint()
   TOCADB[TOCA.player.combine]["CONFIG"]["ESPERSPOS"] = point .. "," .. xOfs .. "," .. yOfs
 end)
-TOCA.FrameAssignmentPersonal.icon = TOCA.FrameAssignmentPersonal:CreateTexture(nil, "ARTWORK")
-TOCA.FrameAssignmentPersonal.icon:SetSize(20, 20)
-TOCA.FrameAssignmentPersonal.icon:SetPoint("TOPLEFT", 4, -4)
-TOCA.FrameAssignmentPersonal.icon:SetTexture("")
+TOCA.FrameAssignmentPersonal.TankIcon = TOCA.FrameAssignmentPersonal:CreateTexture(nil, "ARTWORK")
+TOCA.FrameAssignmentPersonal.TankIcon:SetSize(20, 20)
+TOCA.FrameAssignmentPersonal.TankIcon:SetPoint("TOPLEFT", 4, -4)
+TOCA.FrameAssignmentPersonal.TankIcon:SetTexture("")
 TOCA.FrameAssignmentPersonal.ESIcon = TOCA.FrameAssignmentPersonal:CreateTexture(nil, "ARTWORK")
 TOCA.FrameAssignmentPersonal.ESIcon:SetSize(18, 18)
 TOCA.FrameAssignmentPersonal.ESIcon:SetPoint("TOPRIGHT", -5, -4)
@@ -216,7 +216,7 @@ TOCA.FrameAssignmentPersonal.ESCount:SetText("")
 TOCA.FrameAssignmentPersonal.tank = TOCA.FrameAssignmentPersonal:CreateFontString(nil, "ARTWORK")
 TOCA.FrameAssignmentPersonal.tank:SetFont(TOCA._G.font, 10)
 TOCA.FrameAssignmentPersonal.tank:SetPoint("TOPLEFT", 26, -10)
-TOCA.FrameAssignmentPersonal.tank:SetText("")
+TOCA.FrameAssignmentPersonal.tank:SetText("Tank 1")
 TOCA.FrameAssignmentPersonal:SetScript("OnClick", function(self, button)
 	if (button == "RightButton") then
 		TOCA.AssignmentsOpen = 1
@@ -323,9 +323,9 @@ function TOCA.BuildRaidAssignments(loadSaved) --get saved variables
 
 		if (classIndex == 7) then --is a sham
 			local isKnown = IsSpellKnown(TOCA.spell.EARTH_SHIELD, false) --we know earth shield, show the assignments button
-			--if (isKnown) then
+			if (isKnown) then
 				TOCA.Button.Assignments:Show()
-			--end
+			end
 		end
 
 		--build the tanks and shamans and order in alpha
@@ -399,7 +399,7 @@ function TOCA.BuildRaidAssignments(loadSaved) --get saved variables
 						--print("you are assigned " .. TOCA.FrameAssignments.MTName[i]:GetText())
 						TOCA.FrameAssignmentPersonal.tank:SetText(TOCA.FrameAssignments.MTName[i]:GetText())
 						local classIndex = select(3, UnitClass(TOCA.FrameAssignments.MTName[i]:GetText()))
-						TOCA.FrameAssignmentPersonal.icon:SetTexture(TOCA.colors.class[classIndex][5])
+						TOCA.FrameAssignmentPersonal.TankIcon:SetTexture(TOCA.colors.class[classIndex][5])
 						TOCA.FrameAssignmentPersonal:Show()
 					--end
 				end
@@ -486,8 +486,158 @@ function TOCA.GetShieldFromTanks()
 						end
 						_Uindex = _Uindex + 1
 					end
-			  end
-			end --tank connected
+				else
+					TOCA.FrameAssignmentPersonal:Hide()
+			  end --tank connected
+			end
 	  end --isinraid
 	end
 end
+
+TOCA.FrameAssignmentPersonalOptionsTitle = TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]]:CreateFontString(nil, "ARTWORK")
+TOCA.FrameAssignmentPersonalOptionsTitle:SetFont(TOCA._G.font, 12)
+TOCA.FrameAssignmentPersonalOptionsTitle:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -20)
+TOCA.FrameAssignmentPersonalOptionsTitle:SetText(TOCA._L.UI.TABS.OPTIONS[5])
+TOCA.FrameAssignmentPersonalOptionsTitle:SetTextColor(1, 1, 0.5, 1)
+
+TOCA.Button.FrameAssignmentPersonalTest={}
+TOCA.Button.FrameAssignmentPersonalTest= CreateFrame("Button", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]], "BackdropTemplate")
+TOCA.Button.FrameAssignmentPersonalTest:SetSize(120, 25)
+TOCA.Button.FrameAssignmentPersonalTest:SetPoint("TOPLEFT", 20, -50)
+TOCA.Button.FrameAssignmentPersonalTest:SetBackdrop(TOCA.Backdrop.Button)
+TOCA.Button.FrameAssignmentPersonalTest:SetBackdropColor(0.6, 0, 0, 1)
+TOCA.Button.FrameAssignmentPersonalTest:SetBackdropBorderColor(1, 1, 1, 0.6)
+TOCA.Button.FrameAssignmentPersonalTest.text = TOCA.Button.FrameAssignmentPersonalTest:CreateFontString(nil, "ARTWORK")
+TOCA.Button.FrameAssignmentPersonalTest.text:SetFont(TOCA._G.font, 12)
+TOCA.Button.FrameAssignmentPersonalTest.text:SetPoint("CENTER", 0, 0)
+TOCA.Button.FrameAssignmentPersonalTest.text:SetText(TOCA._L.UI.ASSIGNMENTS[1][1])
+TOCA.Button.FrameAssignmentPersonalTest:SetScript("OnEnter", function(self)
+  self:SetBackdropBorderColor(1, 1, 0.8, 1)
+  TOCA.TooltipDisplay(self, TOCA._L.UI.ASSIGNMENTS[1][1], TOCA._L.UI.ASSIGNMENTS[1][2])
+end)
+TOCA.Button.FrameAssignmentPersonalTest:SetScript("OnLeave", function(self)
+  self:SetBackdropBorderColor(1, 1, 1, 0.6)
+  TOCA.CloseAllMenus()
+end)
+TOCA.Button.FrameAssignmentPersonalTest:SetScript("OnClick", function()
+  TOCA.CloseAllMenus()
+	--TOCA.FrameAssignments:Show()
+	TOCA.FrameAssignmentPersonal:Show()
+end)
+TOCA.Checkbox.FrameAssignments={}
+TOCA.Checkbox.FrameAssignments = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.FrameAssignments:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -90)
+TOCA.Checkbox.FrameAssignments:SetChecked(1)
+TOCA.Checkbox.FrameAssignments.text = TOCA.Checkbox.FrameAssignments:CreateFontString(nil, "ARTWORK")
+TOCA.Checkbox.FrameAssignments.text:SetFont(TOCA._G.font, 12, "OUTLINE")
+TOCA.Checkbox.FrameAssignments.text:SetPoint("TOPLEFT", 25, -6)
+TOCA.Checkbox.FrameAssignments.text:SetText(TOCA._L.UI.ASSIGNMENTS[2][1])
+TOCA.Checkbox.FrameAssignments:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA._L.UI.ASSIGNMENTS[2][2])
+end)
+TOCA.Checkbox.FrameAssignments:SetScript("OnLeave", function(self)
+  TOCA.CloseAllMenus()
+end)
+TOCA.Checkbox.FrameAssignments:SetScript("OnClick", function(self)
+  if (self:GetChecked()) then
+    TOCADB[TOCA.player.combine]["CONFIG"]["ESASSIGNMENTS"] = "ON"
+  else
+    TOCADB[TOCA.player.combine]["CONFIG"]["ESASSIGNMENTS"] = "OFF"
+  end
+end)
+
+TOCA.FrameAssignmentPersonalOptions={}
+TOCA.FrameAssignmentPersonalOptions.Scale={}
+TOCA.FrameAssignmentPersonalOptions.Scale = CreateFrame("Slider", "TOCA.FrameAssignmentPersonalOptions.Scale", TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]], "OptionsSliderTemplate")
+TOCA.FrameAssignmentPersonalOptions.Scale:SetWidth(140)
+TOCA.FrameAssignmentPersonalOptions.Scale:SetHeight(14)
+TOCA.FrameAssignmentPersonalOptions.Scale:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -150)
+TOCA.FrameAssignmentPersonalOptions.Scale:SetOrientation('HORIZONTAL')
+TOCA.FrameAssignmentPersonalOptions.Scale:EnableMouse(true)
+TOCA.FrameAssignmentPersonalOptions.Scale:SetMinMaxValues(0.50, 2.00)
+TOCA.FrameAssignmentPersonalOptions.ScaleMin, TOCA.FrameAssignmentPersonalOptions.ScaleMax = TOCA.FrameAssignmentPersonalOptions.Scale:GetMinMaxValues()
+TOCA.FrameAssignmentPersonalOptions.Scale:SetValue(1.0)
+TOCA.FrameAssignmentPersonalOptions.Scale.Val = TOCA.FrameAssignmentPersonalOptions.Scale:CreateFontString(nil, "ARTWORK")
+TOCA.FrameAssignmentPersonalOptions.Scale.Val:SetFont(TOCA._G.font, 11, "OUTLINE")
+TOCA.FrameAssignmentPersonalOptions.Scale.Val:SetPoint("CENTER", 0, -14)
+TOCA.FrameAssignmentPersonalOptions.Scale.Val:SetText("")
+TOCA.FrameAssignmentPersonalOptions.Scale.Title = TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]]:CreateFontString(nil, "ARTWORK")
+TOCA.FrameAssignmentPersonalOptions.Scale.Title:SetFont(TOCA._G.font, 12)
+TOCA.FrameAssignmentPersonalOptions.Scale.Title:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -130)
+TOCA.FrameAssignmentPersonalOptions.Scale.Title:SetText(TOCA._L.UI.OPTIONS[3][1])
+TOCA.FrameAssignmentPersonalOptions.Scale.Title:SetTextColor(1, 1, 0.5, 1)
+getglobal(TOCA.FrameAssignmentPersonalOptions.Scale:GetName() .. 'Low'):SetText('0.50')
+getglobal(TOCA.FrameAssignmentPersonalOptions.Scale:GetName() .. 'High'):SetText('2')
+TOCA.FrameAssignmentPersonalOptions.Scale:SetScript("OnValueChanged", function()
+  TOCA.FrameAssignmentPersonal:SetScale(TOCA.Round(TOCA.FrameAssignmentPersonalOptions.Scale:GetValue(), 2))
+  TOCA.FrameAssignmentPersonalOptions.Scale.Val:SetText(TOCA.Round(TOCA.FrameAssignmentPersonalOptions.Scale:GetValue(), 2))
+end)
+TOCA.FrameAssignmentPersonalOptions.Scale:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, TOCA.FrameAssignmentPersonalOptions.Scale.Title:GetText(), TOCA._L.UI.ASSIGNMENTS[3][2])
+end)
+TOCA.FrameAssignmentPersonalOptions.Scale:SetScript("OnLeave", function()
+  TOCADB[TOCA.player.combine]["CONFIG"]["SCALEPERS"] = TOCA.Round(TOCA.FrameAssignmentPersonalOptions.Scale:GetValue(), 2)
+  TOCA.CloseAllMenus()
+end)
+TOCA.Button.FrameAssignmentPersonalOptionsReset= CreateFrame("Button", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]], "BackdropTemplate")
+TOCA.Button.FrameAssignmentPersonalOptionsReset:SetSize(25, 25)
+TOCA.Button.FrameAssignmentPersonalOptionsReset:SetPoint("TOPLEFT", 180, -140)
+TOCA.Button.FrameAssignmentPersonalOptionsReset:SetBackdrop(TOCA.Backdrop.Button)
+TOCA.Button.FrameAssignmentPersonalOptionsReset:SetBackdropColor(0.6, 0, 0, 1)
+TOCA.Button.FrameAssignmentPersonalOptionsReset:SetBackdropBorderColor(1, 1, 1, 0.6)
+TOCA.Button.FrameAssignmentPersonalOptionsReset:SetScript("OnEnter", function(self)
+  self:SetBackdropBorderColor(1, 1, 0.8, 1)
+  TOCA.TooltipDisplay(self, TOCA._L.UI.OPTIONS[4][1], TOCA._L.UI.OPTIONS[4][2])
+end)
+TOCA.Button.FrameAssignmentPersonalOptionsReset:SetScript("OnLeave", function(self)
+  self:SetBackdropBorderColor(1, 1, 1, 0.6)
+  TOCA.CloseAllMenus()
+end)
+TOCA.Button.FrameAssignmentPersonalOptionsReset:SetScript("OnClick", function()
+  TOCA.CloseAllMenus()
+  TOCA.FrameAssignmentPersonalOptions.Scale:SetValue(1.0)
+  TOCADB[TOCA.player.combine]["CONFIG"]["SCALEPERS"] = "1.0"
+end)
+TOCA.Button.FrameAssignmentPersonalOptionsReset.icon = TOCA.Button.FrameAssignmentPersonalOptionsReset:CreateTexture(nil, "ARTWORK")
+TOCA.Button.FrameAssignmentPersonalOptionsReset.icon:SetSize(16, 16)
+TOCA.Button.FrameAssignmentPersonalOptionsReset.icon:SetPoint("CENTER", 0, 0)
+TOCA.Button.FrameAssignmentPersonalOptionsReset.icon:SetTexture("Interface/Buttons/UI-RefreshButton")
+
+TOCA.Dropdown.FrameAssignmentPostTitle={}
+TOCA.Dropdown.FrameAssignmentPostTitle = TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]]:CreateFontString(nil, "ARTWORK")
+TOCA.Dropdown.FrameAssignmentPostTitle:SetFont(TOCA._G.font, 12)
+TOCA.Dropdown.FrameAssignmentPostTitle:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -200)
+TOCA.Dropdown.FrameAssignmentPostTitle:SetText(TOCA._L.UI.OPTIONS[3][1])
+--TOCA.FrameAssignmentPersonalOptions.Scale.Title:SetTextColor(1, 1, 0.5, 1)
+TOCA.Dropdown.FrameAssignmentPost={}
+TOCA.Dropdown.FrameAssignmentPostSel={"WHISPER", "RAID", "BOTH"}
+TOCA.Dropdown.FrameAssignmentPost = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]], "UIDropDownMenuTemplate")
+TOCA.Dropdown.FrameAssignmentPost:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -220)
+TOCA.Dropdown.FrameAssignmentPost.displayMode = "MENU"
+TOCA.Dropdown.FrameAssignmentPost:SetAlpha(1)
+TOCA.Dropdown.FrameAssignmentPost.text = TOCA.Dropdown.FrameAssignmentPost:CreateFontString(nil, "ARTWORK")
+TOCA.Dropdown.FrameAssignmentPost.text:SetFont(TOCA._G.font, 11)
+TOCA.Dropdown.FrameAssignmentPost.text:SetPoint("TOPLEFT", TOCA.Dropdown.FrameAssignmentPost, "TOPLEFT", 25, -8)
+TOCA.Dropdown.FrameAssignmentPost.text:SetText(TOCA.Dropdown.FrameAssignmentPostSel[1])
+TOCA.Dropdown.FrameAssignmentPost.onClick = function(self, checked)
+  TOCA.Dropdown.FrameAssignmentPost.text:SetText(self.value)
+  TOCADB[TOCA.player.combine]["CONFIG"]["ESASSIGNMSG"] = self.value
+  --if (self.value == "BOTH") then
+  --end
+end
+TOCA.Dropdown.FrameAssignmentPost.initialize = function(self, level)
+  local info = UIDropDownMenu_CreateInfo()
+  local i = 0
+  for k,v in pairs(TOCA.Dropdown.FrameAssignmentPostSel) do
+    info.notCheckable = 1
+    info.padding = 2
+    info.text = v
+    info.value= v
+    info.fontObject = GameFontWhite
+    info.justifyH = "LEFT"
+    info.disabled = false
+    info.func = self.onClick
+    UIDropDownMenu_AddButton(info, level)
+  end
+end
+UIDropDownMenu_SetWidth(TOCA.Dropdown.FrameAssignmentPost, 125)

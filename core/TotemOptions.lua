@@ -571,7 +571,7 @@ end)
 TOCA.Dropdown.FrameGryphons={}
 TOCA.Dropdown.FrameGryphonsSel={"Gryphons", "Lions"}
 TOCA.Dropdown.FrameGryphons = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]], "UIDropDownMenuTemplate")
-TOCA.Dropdown.FrameGryphons:SetPoint("TOPLEFT", 410, TOCA.OptionsPosition_y["FRAMEMENU"]-140)
+TOCA.Dropdown.FrameGryphons:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"]+12, TOCA.OptionsPosition_y["FRAMEMENU"]-140)
 TOCA.Dropdown.FrameGryphons.displayMode = "MENU"
 TOCA.Dropdown.FrameGryphons:SetAlpha(1)
 TOCA.Dropdown.FrameGryphons.text = TOCA.Dropdown.FrameGryphons:CreateFontString(nil, "ARTWORK")
@@ -864,6 +864,7 @@ TOCA.Button.OptionsClose:SetScript("OnClick", function()
   TOCA.CloseAllMenus()
   TOCA.FrameOptions:Hide()
 	TOCA.OptionMenuOpen = 0
+	TOCA.FrameAssignmentPersonal:Hide()
 end)
 TOCA.Button.OptionsCloseText = TOCA.Button.OptionsClose:CreateFontString(nil, "ARTWORK")
 TOCA.Button.OptionsCloseText:SetFont(TOCA._G.font, 11)
