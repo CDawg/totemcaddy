@@ -20,7 +20,7 @@ the copyright holders.
 
 TOCA.TotemRadiusAlpha = 0.8
 TOCA.TotemRadius={}
-TOCA.TotemRadiusSize = 32 --yards / default
+TOCA.TotemRadiusSize = 30 --yards / default
 
 for i=1, 4 do
 	--TOCA.TotemRadius[i] = CreateFrame("Frame", nil, UIParent)
@@ -257,10 +257,12 @@ TOCA.Button.Minimap:SetFrameLevel(499)
 TOCA.Button.Minimap:SetFrameStrata("TOOLTIP")
 TOCA.Button.Minimap:SetSize(26, 26)
 TOCA.Button.Minimap:SetMovable(true)
+--[==[
 local MMIcon = TOCA._G.dir .. "images/totem_icon_minimap.tga"
 TOCA.Button.Minimap:SetNormalTexture(MMIcon)
 TOCA.Button.Minimap:SetPushedTexture(MMIcon)
 TOCA.Button.Minimap:SetHighlightTexture(MMIcon)
+]==]--
 
 local thisIconPos = 0
 function TOCA.SaveMapButtonPos()
@@ -334,6 +336,7 @@ TOCA.Checkbox.MinimapButton:SetScript("OnClick", function(self)
   if (self:GetChecked()) then
     TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_ICON"] = "ON"
 		TOCA.Button.Minimap:Show()
+		TOCA.ModelDraw("m_minimap", TOCA.Button.Minimap, 30, 40, 0, 5, 510)
   else
     TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_ICON"] = "OFF"
 		TOCA.Button.Minimap:Hide()
