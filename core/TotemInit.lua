@@ -275,10 +275,10 @@ function TOCA.Init()
     TOCA.Button.TotemicCall:Hide()
     TOCA.Button.TotemicCall.ECL:Hide()
     TOCA.Button.TotemicCall.ECR:Hide()
-  end
-
-	TOCA.ModelDraw("m_totemiccall", TOCA.Button.TotemicCall, 40, 50, 0, 6, 0.5, 50)
-	TOCA.ModelDraw("m_minimap", TOCA.Button.Minimap, 34, 44, 0, 5, 1, 500)
+  else
+		--TOCA.ModelDraw("m_totemiccall", TOCA.Button.TotemicCall, 30, 40, 0, 6, 0.5, 50)
+	end
+	TOCA.ModelDraw("m_minimap", TOCA.Button.Minimap, 32, 42, 0, 5, 1, 500)
 
   TOCA.Notification("TOCA.Init()", true)
 end

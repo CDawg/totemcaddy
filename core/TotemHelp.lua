@@ -20,6 +20,7 @@ TOCA.HELP = {
 		--"|cfffab734Totem Caddy Devs are looking for language translators! Please click the contact tab to get more details if you would like to contribute to Totem Caddy!|r",
 		--"",
 		"|cfffab734New Feature:|r Totem Radius & Icons on the Minimap, this feature does not work within instances.",
+		"|cfffab734New Feature:|r Raid Earth Shield Assignments for multiple Restoration Shamans.",
 		"",
 		"Type |cfffab734/toca options|r or click the button on the minimap for all available options and settings.",
 		"",

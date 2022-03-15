@@ -36,7 +36,7 @@ function TOCA.ModelDraw(name, frame, w, h, x, y, alpha, FL)
 
 	TOCA.FrameModel[name]:SetModel("creature\\spells\\airelementaltotem.m2")
 	TOCA.FrameModel[name]:SetPosition(0, 0, 1.2)
-	if (TOCA.player.faction == "All3iance") then
+	if (TOCA.player.faction == "Alliance") then
 		TOCA.FrameModel[name]:SetModel("creature\\spells\\draeneitotem_air.m2")
 		TOCA.FrameModel[name]:SetPosition(0, 0, 0.40)
 		TOCA.FrameExp[name]:SetPoint("CENTER", x-1, y)

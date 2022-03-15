@@ -20,7 +20,7 @@ the copyright holders.
 
 TOCA.TotemRadiusAlpha = 0.8
 TOCA.TotemRadius={}
-TOCA.TotemRadiusSize = 30 --yards / default
+TOCA.TotemRadiusSize = 26
 
 for i=1, 4 do
 	--TOCA.TotemRadius[i] = CreateFrame("Frame", nil, UIParent)
@@ -293,9 +293,19 @@ end)
 
 TOCA.Button.Minimap:SetScript("OnEnter", function(self)
   TOCA.TooltipDisplay(self, TOCA._G.title, "v" .. TOCA._G.version .. "-" .. TOCA._G.suffix .. " ("..GetLocale()..")", "", true)
+	if (TOCA.player.faction == "Alliance") then
+		TOCA.FrameModel["m_minimap"]:SetModel("creature\\spells\\draeneitotem_fire.m2")
+	else
+		TOCA.FrameModel["m_minimap"]:SetModel("creature\\spells\\fireelementaltotem.m2")
+	end
 end)
 TOCA.Button.Minimap:SetScript("OnLeave", function(self)
 	TOCA.CloseAllMenus()
+	if (TOCA.player.faction == "Alliance") then
+		TOCA.FrameModel["m_minimap"]:SetModel("creature\\spells\\draeneitotem_air.m2")
+	else
+		TOCA.FrameModel["m_minimap"]:SetModel("creature\\spells\\airelementaltotem.m2")
+	end
 end)
 
 TOCA.Button.Minimap:SetScript("OnClick", function()
