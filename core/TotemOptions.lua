@@ -309,7 +309,7 @@ getglobal(TOCA.Slider.OpacityBG:GetName() .. 'High'):SetText('1')
 TOCA.Slider.OpacityBG:SetScript("OnValueChanged", function()
   TOCA.FrameMain.Background:SetAlpha(TOCA.Round(TOCA.Slider.OpacityBG:GetValue(), 2))
   --TOCA.Button.CloseMain:SetAlpha(TOCA.Round(TOCA.Slider.OpacityBG:GetValue(), 2))
-  --TOCA.Button.Options:SetAlpha(TOCA.Round(TOCA.Slider.OpacityBG:GetValue(), 2))
+  TOCA.Button.Options:SetAlpha(TOCA.Round(TOCA.Slider.OpacityBG:GetValue(), 2))
   TOCA.Button.TotemicCall.ECL:SetAlpha(TOCA.Round(TOCA.Slider.OpacityBG:GetValue(), 2))
   TOCA.Button.TotemicCall.ECR:SetAlpha(TOCA.Round(TOCA.Slider.OpacityBG:GetValue(), 2))
   TOCA.Slider.OpacityBG.Val:SetText(TOCA.Round(TOCA.Slider.OpacityBG:GetValue(), 2))
@@ -384,7 +384,7 @@ TOCA.Slider.OpacityFG:SetScript("OnValueChanged", function()
 		TOCA.FrameMain.AnkhFrame:SetAlpha(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))
   end
   TOCA.Button.CloseMain:SetAlpha(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))
-  --TOCA.Button.Options:SetAlpha(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))
+  TOCA.Button.Options:SetAlpha(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))
   TOCA.Button.TotemicCall:SetAlpha(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))
   TOCA.Slider.OpacityFG.Val:SetText(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))
 end)
@@ -459,13 +459,9 @@ TOCA.Checkbox.MainMenu:SetScript("OnClick", function(self)
   if (self:GetChecked()) then
     TOCADB[TOCA.player.combine]["CONFIG"]["MAINMENU"] = "ON"
     TOCA.Button.CloseMain:Show()
-    --TOCA.Button.Options:Show()
-    --TOCA.FrameMain.Background:SetPoint("CENTER", -1, 0)
   else
     TOCADB[TOCA.player.combine]["CONFIG"]["MAINMENU"] = "OFF"
     TOCA.Button.CloseMain:Hide()
-    --TOCA.Button.Options:Hide()
-    --TOCA.FrameMain.Background:SetPoint("CENTER", 0, 0)
     TOCA.Notification(TOCA._L.UI.FRAME[2][3])
   end
 end)
@@ -476,9 +472,35 @@ TOCA.Checkbox.MainMenu:SetScript("OnLeave", function(self)
   TOCA.CloseAllMenus()
 end)
 
+TOCA.Checkbox.MainMenuOpt={}
+TOCA.Checkbox.MainMenuOpt = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.MainMenuOpt:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["FRAMEMENU"]-80)
+TOCA.Checkbox.MainMenuOpt:SetChecked(nil)
+TOCA.Checkbox.MainMenuOpt.text = TOCA.Checkbox.MainMenuOpt:CreateFontString(nil, "ARTWORK")
+TOCA.Checkbox.MainMenuOpt.text:SetFont(TOCA._G.font, 12, "OUTLINE")
+TOCA.Checkbox.MainMenuOpt.text:SetPoint("TOPLEFT", 25, -6)
+TOCA.Checkbox.MainMenuOpt.text:SetText(TOCA._L.UI.FRAME[6][1])
+TOCA.Checkbox.MainMenuOpt:SetScript("OnClick", function(self)
+  if (self:GetChecked()) then
+    TOCADB[TOCA.player.combine]["CONFIG"]["MAINMENUOPT"] = "ON"
+    TOCA.Button.Options:Show()
+  else
+    TOCADB[TOCA.player.combine]["CONFIG"]["MAINMENUOPT"] = "OFF"
+    TOCA.Button.Options:Hide()
+    TOCA.Notification(TOCA._L.UI.FRAME[2][3])
+  end
+end)
+TOCA.Checkbox.MainMenuOpt:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA._L.UI.FRAME[6][2])
+end)
+TOCA.Checkbox.MainMenuOpt:SetScript("OnLeave", function(self)
+  TOCA.CloseAllMenus()
+end)
+
+
 TOCA.Checkbox.FrameBorder={}
 TOCA.Checkbox.FrameBorder = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.FrameBorder:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["FRAMEMENU"]-80)
+TOCA.Checkbox.FrameBorder:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["FRAMEMENU"]-100)
 TOCA.Checkbox.FrameBorder:SetChecked(1)
 TOCA.Checkbox.FrameBorder.text = TOCA.Checkbox.FrameBorder:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.FrameBorder.text:SetFont(TOCA._G.font, 12, "OUTLINE")
@@ -504,7 +526,7 @@ end)
 
 TOCA.Checkbox.Totemic={}
 TOCA.Checkbox.Totemic = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.Totemic:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["FRAMEMENU"]-100)
+TOCA.Checkbox.Totemic:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["FRAMEMENU"]-120)
 TOCA.Checkbox.Totemic:SetChecked(1)
 TOCA.Checkbox.Totemic.text = TOCA.Checkbox.Totemic:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.Totemic.text:SetFont(TOCA._G.font, 12, "OUTLINE")
@@ -542,7 +564,7 @@ end)
 
 TOCA.Checkbox.EndCaps={}
 TOCA.Checkbox.EndCaps = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.EndCaps:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"]+25, TOCA.OptionsPosition_y["FRAMEMENU"]-120)
+TOCA.Checkbox.EndCaps:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"]+25, TOCA.OptionsPosition_y["FRAMEMENU"]-140)
 TOCA.Checkbox.EndCaps:SetChecked(1)
 TOCA.Checkbox.EndCaps:SetAlpha(1)
 TOCA.Checkbox.EndCaps.text = TOCA.Checkbox.EndCaps:CreateFontString(nil, "ARTWORK")
@@ -574,7 +596,7 @@ end)
 TOCA.Dropdown.FrameGryphons={}
 TOCA.Dropdown.FrameGryphonsSel={"Gryphons", "Lions"}
 TOCA.Dropdown.FrameGryphons = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]], "UIDropDownMenuTemplate")
-TOCA.Dropdown.FrameGryphons:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"]+10, TOCA.OptionsPosition_y["FRAMEMENU"]-140)
+TOCA.Dropdown.FrameGryphons:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"]+10, TOCA.OptionsPosition_y["FRAMEMENU"]-160)
 TOCA.Dropdown.FrameGryphons.displayMode = "MENU"
 TOCA.Dropdown.FrameGryphons:SetAlpha(1)
 TOCA.Dropdown.FrameGryphons.text = TOCA.Dropdown.FrameGryphons:CreateFontString(nil, "ARTWORK")
@@ -616,7 +638,7 @@ TOCA.FrameOptions.Title.Timer:SetTextColor(1, 1, 0.5, 1)
 
 TOCA.Checkbox.Timers={}
 TOCA.Checkbox.Timers = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.Timers:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["TIMERS"]-20)
+TOCA.Checkbox.Timers:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["TIMERS"]-40)
 TOCA.Checkbox.Timers:SetChecked(1)
 TOCA.Checkbox.Timers.text = TOCA.Checkbox.Timers:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.Timers.text:SetFont(TOCA._G.font, 12, "OUTLINE")
@@ -647,7 +669,7 @@ end)
 
 TOCA.Checkbox.TimersInMinutes={}
 TOCA.Checkbox.TimersInMinutes = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.TimersInMinutes:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"]+25, TOCA.OptionsPosition_y["TIMERS"]-40)
+TOCA.Checkbox.TimersInMinutes:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"]+25, TOCA.OptionsPosition_y["TIMERS"]-60)
 TOCA.Checkbox.TimersInMinutes:SetChecked(1)
 TOCA.Checkbox.TimersInMinutes:SetAlpha(1)
 TOCA.Checkbox.TimersInMinutes.text = TOCA.Checkbox.TimersInMinutes:CreateFontString(nil, "ARTWORK")
@@ -672,7 +694,7 @@ end)
 
 TOCA.Checkbox.Reinc={}
 TOCA.Checkbox.Reinc = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.Reinc:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["TIMERS"]-60)
+TOCA.Checkbox.Reinc:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["TIMERS"]-80)
 TOCA.Checkbox.Reinc:SetChecked(1)
 TOCA.Checkbox.Reinc.text = TOCA.Checkbox.Reinc:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.Reinc.text:SetFont(TOCA._G.font, 12, "OUTLINE")
@@ -697,7 +719,7 @@ end)
 
 TOCA.Checkbox.AuraShield={}
 TOCA.Checkbox.AuraShield = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.AuraShield:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["TIMERS"]-80)
+TOCA.Checkbox.AuraShield:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["TIMERS"]-100)
 TOCA.Checkbox.AuraShield:SetChecked(1)
 TOCA.Checkbox.AuraShield.text = TOCA.Checkbox.AuraShield:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.AuraShield.text:SetFont(TOCA._G.font, 12, "OUTLINE")
@@ -721,7 +743,7 @@ end)
 
 TOCA.Checkbox.Ankh={}
 TOCA.Checkbox.Ankh = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.Ankh:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["TIMERS"]-100)
+TOCA.Checkbox.Ankh:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["TIMERS"]-120)
 TOCA.Checkbox.Ankh:SetChecked(1)
 TOCA.Checkbox.Ankh.text = TOCA.Checkbox.Ankh:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.Ankh.text:SetFont(TOCA._G.font, 12, "OUTLINE")
@@ -751,7 +773,7 @@ TOCA.FrameOptions.Title.Tooltip:SetTextColor(1, 1, 0.5, 1)
 
 TOCA.Checkbox.Tooltip={}
 TOCA.Checkbox.Tooltip = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.Tooltip:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["TOOLTIP"]-20)
+TOCA.Checkbox.Tooltip:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["TOOLTIP"]-40)
 TOCA.Checkbox.Tooltip:SetChecked(1)
 TOCA.Checkbox.Tooltip.text = TOCA.Checkbox.Tooltip:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.Tooltip.text:SetFont(TOCA._G.font, 12, "OUTLINE")
@@ -770,29 +792,6 @@ end)
 TOCA.Checkbox.Tooltip:SetScript("OnLeave", function()
   TOCA.CloseAllMenus()
 end)
---[==[
-TOCA.Checkbox.TooltipMouse={}
-TOCA.Checkbox.TooltipMouse = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.TooltipMouse:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["TOOLTIP"]-40)
-TOCA.Checkbox.TooltipMouse:SetChecked(1)
-TOCA.Checkbox.TooltipMouse.text = TOCA.Checkbox.TooltipMouse:CreateFontString(nil, "ARTWORK")
-TOCA.Checkbox.TooltipMouse.text:SetFont(TOCA._G.font, 12, "OUTLINE")
-TOCA.Checkbox.TooltipMouse.text:SetPoint("TOPLEFT", 25, -6)
-TOCA.Checkbox.TooltipMouse.text:SetText(TOCA._L.UI.TOOLTIP[2][1])
-TOCA.Checkbox.TooltipMouse:SetScript("OnClick", function(self)
-  if (self:GetChecked()) then
-    TOCADB[TOCA.player.combine]["CONFIG"]["TOOLMOUSE"] = "ON"
-  else
-    TOCADB[TOCA.player.combine]["CONFIG"]["TOOLMOUSE"] = "OFF"
-  end
-end)
-TOCA.Checkbox.TooltipMouse:SetScript("OnEnter", function(self)
-  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA._L.UI.TOOLTIP[2][2])
-end)
-TOCA.Checkbox.TooltipMouse:SetScript("OnLeave", function()
-  TOCA.CloseAllMenus()
-end)
-]==]--
 
 movingTotem= "nil"
 overTotem = "nil"

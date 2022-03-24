@@ -18,7 +18,7 @@ TOCA.DEBUG = false
 TOCA._G = {
   title  = TOCA.colors.class[7][4] .. TOCA._L.TITLE .."|r",
   author = "Porthias of Myzrael",
-  version= 2.56,
+  version= 2.58,
   CMD    = "/toca",
   width  = 150,
   height = 85,
@@ -28,7 +28,7 @@ TOCA._G = {
   prefix = "TotemCaddy",
   suffix = "BCC",
 	date   = date("%Y%m%d"),
-	update = 20220404,
+	update = 20220422,
 }
 --local _LName, _LTitle = GetAddOnInfo(TOCA._G.prefix)
 --TOCA._G.version = tonumber(string.sub(_LTitle, 26, 29))
@@ -696,8 +696,11 @@ function TOCA.GetOwnerSpell(bookSpell)
   return spellLatest --latest known spell in the owner's book
 end
 
+
+
 function TOCA.TooltipDisplay(owner, title, msg, anchor)
   local spellName, spellRank, spellID = GetSpellBookItemName(title)
+	GameTooltip:ClearLines()
   if (spellID) then --assure that there is a valid spell
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLON"] == "OFF") then
 			return
@@ -710,7 +713,6 @@ function TOCA.TooltipDisplay(owner, title, msg, anchor)
 				GameTooltip:SetPoint("BOTTOMRIGHT", WorldFrame, "BOTTOMRIGHT", -90, 90)
 			end
 			GameTooltip:SetOwner(owner, "ANCHOR_PRESERVE") --spells go to the right
-      GameTooltip:ClearLines()
       GameTooltip:SetSpellBookItem(knownSpell, BOOKTYPE_SPELL)
       GameTooltip:Show()
     end
@@ -720,7 +722,6 @@ function TOCA.TooltipDisplay(owner, title, msg, anchor)
     else
 			GameTooltip:SetOwner(owner, "ANCHOR_TOPLEFT")
     end
-    GameTooltip:ClearLines()
     if (title) then
       GameTooltip:AddLine(title, 1, 1, 1, 1)
       if (msg) then
@@ -1325,6 +1326,11 @@ function TOCA.Combat(event)
         TOCA.Button.CloseMain:Hide()
       else
         TOCA.Button.CloseMain:Show()
+      end
+			if (TOCADB[TOCA.player.combine]["CONFIG"]["MAINMENUOPT"] == "ON") then
+        TOCA.Button.Options:Show()
+      else
+        TOCA.Button.Options:Hide()
       end
       TOCA.Notification("Combat Ended", true)
     end

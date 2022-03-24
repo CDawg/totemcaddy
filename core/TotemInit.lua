@@ -73,6 +73,10 @@ function TOCA.Init()
       TOCA.Checkbox.MainMenu:SetChecked(nil)
       TOCA.FrameMain.Background:SetPoint("CENTER", 0, 0)
     end
+		if (TOCADB[TOCA.player.combine]["CONFIG"]["MAINMENUOPT"] == "ON") then
+			TOCA.Button.Options:Show()
+			TOCA.Checkbox.MainMenuOpt:SetChecked(1)
+		end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
       TOCA.Checkbox.FrameBorder:SetChecked(nil)
       TOCA.BorderFrame(false)
