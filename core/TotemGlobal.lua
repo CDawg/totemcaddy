@@ -1476,14 +1476,16 @@ function TOCA.FrameBorder(frame)
 end
 
 function TOCA.ReportFeedSend()
+	local source = "GUILD"
 	if (IsInGuild()) then
-	  TOCA.SendPacket(TOCA.Net.report_s .. TOCA.player.name .. ",GUILD", "GUILD")
+		source = "GUILD"
   end
 	if (IsInRaid()) then
-		TOCA.SendPacket(TOCA.Net.report_s .. TOCA.player.name .. ",RAID", "RAID")
+		source = "RAID"
 	elseif (IsInGroup()) then
-		TOCA.SendPacket(TOCA.Net.report_s .. TOCA.player.name .. ",PARTY", "PARTY")
+		source = "PARTY"
 	end
+	TOCA.SendPacket(TOCA.Net.report_s .. TOCA.player.name .. "," .. source, source)
 end
 function TOCA.ReportFeedGet(prefix, netpacket)
 	local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.report_s)
