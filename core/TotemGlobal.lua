@@ -696,8 +696,6 @@ function TOCA.GetOwnerSpell(bookSpell)
   return spellLatest --latest known spell in the owner's book
 end
 
-
-
 function TOCA.TooltipDisplay(owner, title, msg, anchor)
   local spellName, spellRank, spellID = GetSpellBookItemName(title)
 	GameTooltip:ClearLines()
@@ -918,9 +916,11 @@ function TOCA.TimerFrame(i)
       TOCA.SlotGrid.HorizontalTimer[i]:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
 			for totemCat,v in pairsByKeys(TOCA.totems) do
 			  for index,totemSpell in pairs(TOCA.totems[totemCat]) do
-					if (string.find(TOCA.TotemName[i], TOCA.FrameSeg.Button[totemCat][index].ID:GetText())) then
-						--print(TOCA.TotemName[i])
-						TOCA.FrameSeg.Button[totemCat][index].timer:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
+					if ((TOCA.TotemName[i]) and (TOCA.FrameSeg.Button[totemCat][index].ID:GetText())) then
+						if (string.find(TOCA.TotemName[i], TOCA.FrameSeg.Button[totemCat][index].ID:GetText())) then
+							--print(TOCA.TotemName[i])
+							TOCA.FrameSeg.Button[totemCat][index].timer:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
+						end
 					end
 				end
 		  end
@@ -930,9 +930,11 @@ function TOCA.TimerFrame(i)
       TOCA.SlotGrid.HorizontalTimer[i]:SetText(TOCA.TotemTimer[i])
 			for totemCat,v in pairsByKeys(TOCA.totems) do
 			  for index,totemSpell in pairs(TOCA.totems[totemCat]) do
-					if (string.find(TOCA.TotemName[i], TOCA.FrameSeg.Button[totemCat][index].ID:GetText())) then
-						--print(TOCA.TotemName[i])
-						TOCA.FrameSeg.Button[totemCat][index].timer:SetText(TOCA.TotemTimer[i])
+					if ((TOCA.TotemName[i]) and (TOCA.FrameSeg.Button[totemCat][index].ID:GetText())) then
+						if (string.find(TOCA.TotemName[i], TOCA.FrameSeg.Button[totemCat][index].ID:GetText())) then
+							--print(TOCA.TotemName[i])
+							TOCA.FrameSeg.Button[totemCat][index].timer:SetText(TOCA.TotemTimer[i])
+						end
 					end
 				end
 		  end
@@ -1474,11 +1476,14 @@ function TOCA.FrameBorder(frame)
 end
 
 function TOCA.ReportFeedSend()
-	local handshake = "GUILD"
+	if (IsInGuild()) then
+	  TOCA.SendPacket(TOCA.Net.report_s .. TOCA.player.name .. ",GUILD", "GUILD")
+  end
 	if (IsInRaid()) then
-		handshake = "RAID"
+		TOCA.SendPacket(TOCA.Net.report_s .. TOCA.player.name .. ",RAID", "RAID")
+	elseif (IsInGroup()) then
+		TOCA.SendPacket(TOCA.Net.report_s .. TOCA.player.name .. ",PARTY", "PARTY")
 	end
-	TOCA.SendPacket(TOCA.Net.report_s .. TOCA.player.name .. "," .. handshake, handshake)
 end
 function TOCA.ReportFeedGet(prefix, netpacket)
 	local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.report_s)
@@ -1486,7 +1491,7 @@ function TOCA.ReportFeedGet(prefix, netpacket)
 		--print("received signal... sending ...")
 		local packet = split(getPacket, ",")
 		if (packet[1] ~= TOCA.player.name) then
-			TOCA.SendPacket(TOCA.Net.report_g .. packet[1] .. "," .. TOCA.player.name .. "," .. TOCA._G.version, packet[2])
+			TOCA.SendPacket(TOCA.Net.report_g .. packet[1] .. "," .. TOCA.player.name .. "," .. TOCA._G.version .. "," .. packet[2], packet[2])
 		end
 	end
 end
@@ -1495,7 +1500,7 @@ function TOCA.ReportFeedResult(prefix, netpacket)
 	if (getPacket) then
 		local packet = split(getPacket, ",")
 		if (packet[1] == TOCA.player.name) then --give to requester only
-			TOCA.Notification(packet[2] .. " = " .. packet[3])
+			TOCA.Notification("[" .. packet[4] .. "] " .. packet[2] .. " = " .. packet[3])
 		end
 	end
 end
