@@ -15,10 +15,8 @@ the copyright holders.
 
 TOCA.HELP = {
 	UPDATES = {
-	  --"|cfffab734Please note:|r Totem Caddy is still evolving. Improvements will be made as time continues. There is an |cff7eabd5issue tracker|r now available on |cffff9f69Curseforge|r. Enjoy!",
-		--"",
-		--"|cfffab734Totem Caddy Devs are looking for language translators! Please click the contact tab to get more details if you would like to contribute to Totem Caddy!|r",
-		--"",
+		"|cfffa7634 Totem Caddy Devs are looking for language translators! Please click the contact tab to get more details if you would like to contribute to Totem Caddy!|r",
+		"",
 		"|cfffab734New Feature:|r Totem Radius & Icons on the Minimap, this feature does not work within instances.",
 		"|cfffab734New Feature:|r Raid Earth Shield Assignments for multiple Restoration Shamans.",
 		"",

@@ -1,5 +1,5 @@
 ## Interface: 20504
-## Title: |cff006aa6Totem Caddy|r v2.58
+## Title: |cff006aa6Totem Caddy|r v2.59
 ## Notes: Totem Caddy
 ## Version: 2.58
 ## Author: Porthias of Myzrael (aka Porthios)

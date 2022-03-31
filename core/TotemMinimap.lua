@@ -79,7 +79,7 @@ do
 		local totemRadius = TOCA.TotemRadiusSize
 		local TOTEMIC_MASTERY_TALENT = TOCA.GetOwnerSpell(TOCA.spell.TOTEMIC_MASTERY) --resto shamans with totemic mastery have an increase of ~11 yards
 		if (TOTEMIC_MASTERY_TALENT) then
-			totemRadius = totemRadius+10
+			totemRadius = totemRadius+6
 		end
 
 		if ((xOfs ~= 0) or (yOfs ~= 0)) then

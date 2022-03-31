@@ -1,3 +1,8 @@
+**2.59**
+- Few preparations for Sunwell launch
+- Bugfix: Positioning within instance not syncing with timerframe
+- Update: Report Net packet feed/sends no longer duplicating
+
 **2.58**
 - Reinstated the options button from the main menu
 - You can now enable/disable the options button independently from the options menu
