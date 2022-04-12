@@ -17,10 +17,7 @@ TOCA.HELP = {
 	UPDATES = {
 		"|cfffa7634 Totem Caddy Devs are looking for language translators! Please click the contact tab to get more details if you would like to contribute to Totem Caddy!|r",
 		"",
-		"|cfffab734New Feature:|r Totem Radius & Icons on the Minimap, this feature does not work within instances.",
-		"|cfffab734New Feature:|r Raid Earth Shield Assignments for multiple Restoration Shamans.",
-		"",
-		"Type |cfffab734/toca options|r or click the button on the minimap for all available options and settings.",
+		"|cfffab734New Feature:|r Totem Set Macros. Now you can add a macro with /toca set <name of set> (Case Sensitive)",
 		"",
 	  "|cfffab734First time using Totem Caddy?|r",
 	  "Let's get started by dragging the Totem Caddy anywhere on your screen saving the position.",

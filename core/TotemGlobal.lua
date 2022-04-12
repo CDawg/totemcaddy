@@ -18,7 +18,7 @@ TOCA.DEBUG = false
 TOCA._G = {
   title  = TOCA.colors.class[7][4] .. TOCA._L.TITLE .."|r",
   author = "Porthias of Myzrael",
-  version= 2.59,
+  version= 2.60,
   CMD    = "/toca",
   width  = 150,
   height = 85,
@@ -1515,6 +1515,7 @@ function SlashCmdList.TOCA(cmd)
 			print("|cffffff00".. list[1] .. "|r : " .. list[2] .. "|n")
 		end
 	end
+	local _, _, cmd, args = string.find(cmd, "%s?(%w+)%s?(.*)")
 	if (cmd == TOCA._L.COMMANDS[1][1]) then
 	  TOCA.FrameOptions:Show()
   elseif (cmd == TOCA._L.COMMANDS[2][1]) then
@@ -1543,5 +1544,25 @@ function SlashCmdList.TOCA(cmd)
 		print(string.format("version = %s, build = %s, date = '%s', tocversion = %s.", __Gversion, __Gbuild, __Gdate, __Gtoc))
 	elseif (cmd == "report") then
 		TOCA.ReportFeedSend()
+	elseif (cmd == "set") then
+		if (args ~= "") then
+			local existingSet = 0
+			for k,v in pairs(TOCADB[TOCA.player.combine]["PROFILES"]) do
+				if (k == args) then
+					TOCA.SetDDMenu(TOCA.Dropdown.Main, args)
+					TOCA.FrameSetsProfile:SetText(args)
+					existingSet = 1
+				end
+			end
+			if (existingSet == 1) then
+				TOCA.Notification("Set: [" .. args .. "] applied")
+			else
+				TOCA.Notification("|cfff55320Unknown Set:|r " .. args)
+			end
+		else
+			TOCA.Notification("set <name>")
+			TOCA.SetDDMenu(TOCA.Dropdown.Main, TOCA.Dropdown.Menu[1])
+			TOCA.FrameSetsProfile:SetText(TOCA.Dropdown.Menu[1])
+		end
 	end
 end

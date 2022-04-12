@@ -94,8 +94,8 @@ TOCA = {
 		  "spell_fireresistancetotem_01",
 		  "inv_spear_04",
 		  "spell_nature_manaregentotem",
-		  "spell_frost_summonwaterelemental",
 		  "spell_nature_poisoncleansingtotem",
+			"spell_frost_summonwaterelemental",
 		},
 		AIR = {
 		  "spell_nature_invisibilitytotem",
@@ -132,8 +132,8 @@ TOCA = {
 				8184, --fire resist
 				5394, --healing stream
 			  5675, --mana spring
-				16190, --mana tide
 				38306, --poison cleansing
+				16190, --mana tide
 			},
 			AIR = {
 				8835, --grace
