@@ -1,3 +1,6 @@
+# 2.60
+* New feature: Added Totem Set Macros
+
 # 2.59
 * Few preparations for Sunwell launch
 * Bugfix: Positioning within instance not syncing with timerframe
