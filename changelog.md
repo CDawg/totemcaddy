@@ -1,3 +1,6 @@
+# 2.61
+* Few bugfixes with localizations
+
 # 2.60
 * New feature: Added Totem Set Macros
 

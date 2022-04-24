@@ -18,7 +18,7 @@ TOCA.DEBUG = false
 TOCA._G = {
   title  = TOCA.colors.class[7][4] .. TOCA._L.TITLE .."|r",
   author = "Porthias of Myzrael",
-  version= 2.60,
+  version= 2.61,
   CMD    = "/toca",
   width  = 150,
   height = 85,
@@ -28,7 +28,7 @@ TOCA._G = {
   prefix = "TotemCaddy",
   suffix = "BCC",
 	date   = date("%Y%m%d"),
-	update = 20220422,
+	update = 20220523,
 }
 --local _LName, _LTitle = GetAddOnInfo(TOCA._G.prefix)
 --TOCA._G.version = tonumber(string.sub(_LTitle, 26, 29))
