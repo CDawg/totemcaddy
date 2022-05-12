@@ -1,3 +1,7 @@
+# 2.62
+* Updated library for TBC Sunwell P5
+* Minor version correction for Classic
+
 # 2.61
 * Few bugfixes with localizations
 
