@@ -236,7 +236,7 @@ TOCA.FrameAssignmentPersonal:SetScript("OnEnter", function(self)
     self:SetBackdropBorderColor(1, 1, 1, 1)
   end
 	if (TOCA.FrameAssignmentPersonal.tank:GetText()) then
-		TOCA.TooltipDisplay(self, "Earth Shield Assignments |cfff7cb45["..TOCA.FrameAssignmentPersonal.tank:GetText().."]", "|cffffffffDrag and drag anywhere to save position.|nRight Click - To open the Earth Shield Assignments", 1)
+		TOCA.TooltipDisplay(self, "Earth Shield Assignments |cfff7cb45["..TOCA.FrameAssignmentPersonal.tank:GetText().."]", "|cffffffffDrag and drop anywhere to save position.|nRight Click - To open the Earth Shield Assignments", 1)
 	end
 end)
 TOCA.FrameAssignmentPersonal:SetScript("OnLeave", function(self)

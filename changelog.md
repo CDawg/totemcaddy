@@ -1,3 +1,6 @@
+### 2.63
+* Font support for Russian (Cyrillic)
+
 ### 2.62
 * Updated library for TBC Sunwell P5
 * Minor version correction for Classic
