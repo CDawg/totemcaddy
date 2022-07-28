@@ -1,3 +1,10 @@
+### 2.65
+* Bugfix: Menu spacing on columns
+* Library preparations for Wrath pre-patch
+
+### 2.64
+* Tabbing support
+
 ### 2.63
 * Font support for Russian (Cyrillic)
 

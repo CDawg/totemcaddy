@@ -1,5 +1,5 @@
 Totem Caddy
-by Porthias@Myzrael
+by Porthias@Myzrael or Zistras of Atiesh
 
 WARNING!
   Do NOT use this github repo unless you are BETA testing features. Download the latest updates from https://www.curseforge.com/wow/addons/totem-caddy. You have been warned!
@@ -20,4 +20,4 @@ Enjoy!
 
 
 CONTACT:
-Porthias@Myzrael (west coast server)
+Porthias@Myzrael or Zistras@Atiesh (west coast servers)

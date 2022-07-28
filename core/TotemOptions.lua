@@ -632,7 +632,7 @@ UIDropDownMenu_SetWidth(TOCA.Dropdown.FrameGryphons, 125)
 
 TOCA.FrameOptions.Title.Timer = TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]]:CreateFontString(nil, "ARTWORK")
 TOCA.FrameOptions.Title.Timer:SetFont(TOCA._G.font, 12)
-TOCA.FrameOptions.Title.Timer:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["TIMERS"])
+TOCA.FrameOptions.Title.Timer:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["TIMERS"]-20)
 TOCA.FrameOptions.Title.Timer:SetText(TOCA._L.UI.TIMERS.TITLE)
 TOCA.FrameOptions.Title.Timer:SetTextColor(1, 1, 0.5, 1)
 
@@ -767,7 +767,7 @@ end)
 
 TOCA.FrameOptions.Title.Tooltip = TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]]:CreateFontString(nil, "ARTWORK")
 TOCA.FrameOptions.Title.Tooltip:SetFont(TOCA._G.font, 12)
-TOCA.FrameOptions.Title.Tooltip:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["TOOLTIP"])
+TOCA.FrameOptions.Title.Tooltip:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["RIGHT"], TOCA.OptionsPosition_y["TOOLTIP"]-20)
 TOCA.FrameOptions.Title.Tooltip:SetText(TOCA._L.UI.TOOLTIP.TITLE)
 TOCA.FrameOptions.Title.Tooltip:SetTextColor(1, 1, 0.5, 1)
 

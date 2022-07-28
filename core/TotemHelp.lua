@@ -17,6 +17,8 @@ TOCA.HELP = {
 	UPDATES = {
 		"|cfffa7634 Totem Caddy Devs are looking for language translators! Please click the contact tab to get more details if you would like to contribute to Totem Caddy!|r",
 		"",
+		"Note: Ready for Wrath? Segmented view of TotemCaddy will be the default view once pre-patch launches.",
+		"",
 		"|cfffab734New Feature:|r Totem Set Macros. Now you can add a macro with /toca set <name of set> (Case Sensitive)",
 		"|cfffab734Bug fix:|r Font support for Russian (Cyrillic).",
 		"",
@@ -42,7 +44,7 @@ TOCA.HELP = {
 	  "Special thanks to some beta testers from the Myzrael realm.",
 	  "Especially to my shaman buddy |cff006aa6Shockpopz|r of Myzrael For all the valuable feedback and laughs!",
 		"|n",
-	  "Written by |cff006aa6Porthias|r of Myzrael (a.k.a. Port)",
+	  "Written by |cff006aa6Porthias|r of Myzrael (a.k.a. Port) and |cff006aa6Zistras|r of Atiesh",
 	},
 	FOOTER = {
 	  "This message will not show again unless there is a new version.",
