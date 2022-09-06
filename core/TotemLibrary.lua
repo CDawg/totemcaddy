@@ -359,10 +359,24 @@ function matchString(source, target)
 	end
 end
 
+--[==[
 function TimeSecondsToMinutes(time)
   local minutes = floor(mod(time,3600)/60)
   local seconds = floor(mod(time,60))
-  return format("%2d:%02d",minutes,seconds)
+  return format("%2d:%02d", minutes, seconds)
+end
+]==]--
+
+function TimeSecondsToMinutes(time)
+  local minutes = floor(mod(time, 3600)/60)
+  local seconds = floor(mod(time, 60))
+	if (minutes <= -1) then
+		minutes = 0
+	end
+	if (seconds <= -1) then
+		seconds = 0
+	end
+  return format("%2d:%02d", minutes, seconds)
 end
 
 function round(number)

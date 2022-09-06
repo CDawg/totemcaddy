@@ -135,6 +135,7 @@ TOCA.Slot_h=35
 TOCA.Slot_x=-TOCA.Slot_w/2
 TOCA.TotemsEnabled = true
 
+-- may need to add this to it's own function
 if (TOCA.Game.version == 1) then --classic
   table.remove(TOCA.totems.FIRE, 6) --totem of wrath
   table.remove(TOCA.totems.AIR, 2) --grounding totem
@@ -144,6 +145,17 @@ elseif (TOCA.Game.version == 3) then --WRATH
 	table.remove(TOCA.totems.AIR, 1) --grace of air
 	table.remove(TOCA.totems.AIR, 5) --tranquil air
 	table.remove(TOCA.totems.AIR, 7) --windwall
+
+	table.remove(TOCA.TotemAuras.AIR, 3)
+	table.remove(TOCA.TotemAuras.AIR, 5)
+	table.remove(TOCA.TotemAuras.AIR, 7)
+
+  --[==[
+	table.remove(TOCA.TotemAuraExempt.FIRE, 1)
+	table.remove(TOCA.TotemAuraExempt.WATER, 1)
+	table.remove(TOCA.TotemAuraExempt.WATER, 2)
+	]==]--
+
 end
 
 --default totem slots
@@ -824,15 +836,6 @@ function TOCA.TotemAuraRadius(event)
 		TOCA.TotemInRange[i] = nil --clear the array
 	end
 
-	--[==[
-	--used for a debug aura check on the totem
-	while UnitAura("player", _Uindex) do
-		local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura("player", _Uindex)
-		print(spellId)
-		_Uindex = _Uindex + 1
-	end
-	]==]--
-
   while UnitAura("player", _Uindex) do
 	  local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura("player", _Uindex)
 		for auraCat,index in pairs(TOCA.TotemAuras) do
@@ -926,6 +929,9 @@ function TOCA.TimerFrame(i)
 					if ((TOCA.TotemName[i]) and (TOCA.FrameSeg.Button[totemCat][index].ID:GetText())) then
 						if (string.find(TOCA.TotemName[i], TOCA.FrameSeg.Button[totemCat][index].ID:GetText())) then
 							--print(TOCA.TotemName[i])
+							--print(i)
+							--print("time: ")
+							--print(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
 							TOCA.FrameSeg.Button[totemCat][index].timer:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
 						end
 					end
@@ -1220,6 +1226,7 @@ function TOCA.TotemTimerReset(i)
 				TOCA.FrameSeg.Button[totemCat][index].timer:SetText("")
 			end
 		end
+		print("Totem Timer reset!")
   else
     TOCA.TotemFunc[i]:Cancel()
     TOCA.TotemTimer[i] = 0
