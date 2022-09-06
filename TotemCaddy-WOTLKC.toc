@@ -1,4 +1,4 @@
-## Interface: 20504
+## Interface: 30400
 ## Title: |cff006aa6Totem Caddy|r v3.01
 ## Notes: Totem Caddy
 ## Version: 3.01

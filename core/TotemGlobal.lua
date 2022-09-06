@@ -18,17 +18,16 @@ TOCA.DEBUG = false
 TOCA._G = {
   title  = TOCA.colors.class[7][4] .. TOCA._L.TITLE .."|r",
   author = "Porthias of Myzrael",
-  version= 2.65,
+  version= 3.01,
   CMD    = "/toca",
   width  = 150,
   height = 85,
-  --font   = "Fonts/FRIZQT__.TTF",
-	font = "Interface/Addons/TotemCaddy/fonts/FRIZQT__.TTF",
+	font   = "Interface/Addons/TotemCaddy/fonts/FRIZQT__.TTF",
   dir    = "Interface/Addons/TotemCaddy/",
   prefix = "TotemCaddy",
-  suffix = "BCC",
+  suffix = "WOTLKC",
 	date   = date("%Y%m%d"),
-	update = 20221014,
+	update = 20221114,
 }
 --local _LName, _LTitle = GetAddOnInfo(TOCA._G.prefix)
 --TOCA._G.version = tonumber(string.sub(_LTitle, 26, 29))
@@ -37,10 +36,12 @@ TOCA.Game={}
 TOCA.Game.version = tonumber(string.sub(__Gversion, 1, 1))
 if (TOCA.Game.version == 1) then
   TOCA._G.suffix = "Classic"
+elseif (TOCA.Game.version == 2) then
+  TOCA._G.suffix = "BCC"
 end
 
 TOCA.Net = {
-	Success = C_ChatInfo.RegisterAddonMessagePrefix(TOCA._G.prefix),
+	register  = C_ChatInfo.RegisterAddonMessagePrefix(TOCA._G.prefix),
   version   = "0xEFVe", --version
 	assign_es = "0xEFES", --earthshield assign
 	assign_au = "0xEFAU", --earthshield author
@@ -137,6 +138,12 @@ TOCA.TotemsEnabled = true
 if (TOCA.Game.version == 1) then --classic
   table.remove(TOCA.totems.FIRE, 6) --totem of wrath
   table.remove(TOCA.totems.AIR, 2) --grounding totem
+elseif (TOCA.Game.version == 3) then --WRATH
+	table.remove(TOCA.totems.FIRE, 1) --fire nova
+  table.remove(TOCA.totems.WATER, 5) --poison cleansing
+	table.remove(TOCA.totems.AIR, 1) --grace of air
+	table.remove(TOCA.totems.AIR, 5) --tranquil air
+	table.remove(TOCA.totems.AIR, 7) --windwall
 end
 
 --default totem slots
@@ -562,7 +569,7 @@ function TOCA.BorderFrame(enable)
 end
 
 function TOCA.HideUnknownSpells(force)
-	if ((TOCA.Game.version == 1) or (force)) then
+	if ((TOCA.Game.version == 1) or (force)) then --classic
 		TOCA.Button.TotemicCall:Hide()
 		TOCA.Button.TotemicCall.ECL:Hide()
 		TOCA.Button.TotemicCall.ECR:Hide()
@@ -1147,7 +1154,7 @@ function TOCA.GetReincTimer() --always checking
     end
   end
 
-  if (TOCA.Game.version == 1) then
+  if (TOCA.Game.version == 1) then --classic
     TOCA.FrameMain.ReincFrame:Hide()
   end
 end
