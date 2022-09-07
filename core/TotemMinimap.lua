@@ -208,7 +208,7 @@ function TOCA.TotemStampPos(totemCat) --stamp the last pos for the specific tote
 		--WorldMapFrame:Hide() --testing. this is dangerous
 
 		TOCA.TotemPresent[totemCat], TOCA.TotemName[totemCat], TOCA.TotemStartTime[totemCat], TOCA.TotemDuration[totemCat], TOCA.TotemID[totemCat] = GetTotemInfo(totemCat)
-		if (TOCA.TotemPresent[totemCat]) then
+		if ((TOCA.TotemPresent[totemCat]) and (TOCA.TotemName[totemCat] ~= "")) then
 			if (TOCA.TotemName[totemCat]) then
 				TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]] = posX --math.floor(posX*10000)
 				--print(TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]])
@@ -219,9 +219,11 @@ function TOCA.TotemStampPos(totemCat) --stamp the last pos for the specific tote
 
 		TOCA.TotemRadius[totemCat]:Hide()
 		if ((TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]) and (TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]])) then
-			TOCA.TotemRadius[totemCat]:Show()
-			TOCA.TotemRadius[totemCat]:ClearAllPoints()
-		  TOCA.TotemRadius[totemCat]:SetPoint("CENTER", Minimap, "CENTER", TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]], TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]])
+			if (TOCA.TotemName[totemCat] ~= "") then
+				TOCA.TotemRadius[totemCat]:Show()
+				TOCA.TotemRadius[totemCat]:ClearAllPoints()
+			  TOCA.TotemRadius[totemCat]:SetPoint("CENTER", Minimap, "CENTER", TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]], TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]])
+			end
 		end
 
 		local getPlayerFC = 0
@@ -233,18 +235,20 @@ function TOCA.TotemStampPos(totemCat) --stamp the last pos for the specific tote
 			getPlayerFS = playerFS + playerFC
 		end
 
-		if ((TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]) and (TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]])) then
-			if (totemCat == 1) then
-				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]-0.002*getPlayerFS, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]-0.002*getPlayerFC, TOCA.TotemID[totemCat])
-			end
-			if (totemCat == 2) then
-			TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]+0.002*getPlayerFC, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]-0.002*getPlayerFS, TOCA.TotemID[totemCat])
-			end
-			if (totemCat == 3) then
-				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]+0.002*getPlayerFS, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]+0.002*getPlayerFC, TOCA.TotemID[totemCat])
-			end
-			if (totemCat == 4) then
-				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]-0.002*getPlayerFC, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]+0.002*getPlayerFS, TOCA.TotemID[totemCat])
+		if (TOCA.TotemName[totemCat] ~= "") then
+			if ((TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]) and (TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]])) then
+				if (totemCat == 1) then
+					TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]-0.002*getPlayerFS, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]-0.002*getPlayerFC, TOCA.TotemID[totemCat])
+				end
+				if (totemCat == 2) then
+				TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]+0.002*getPlayerFC, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]-0.002*getPlayerFS, TOCA.TotemID[totemCat])
+				end
+				if (totemCat == 3) then
+					TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]+0.002*getPlayerFS, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]+0.002*getPlayerFC, TOCA.TotemID[totemCat])
+				end
+				if (totemCat == 4) then
+					TOCA.UpdateTotemPosition(TOCA.TotemRadius[totemCat], totemCat, TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]]-0.002*getPlayerFC, TOCA.RadiusTotem.Y[TOCA.TotemName[totemCat]]+0.002*getPlayerFS, TOCA.TotemID[totemCat])
+				end
 			end
 		end
 

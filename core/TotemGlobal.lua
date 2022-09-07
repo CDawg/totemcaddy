@@ -766,6 +766,7 @@ for i=1, 4 do
 end
 
 function TOCA.ExpireNotificationsTotems(totemname, totemtimer)
+	print(totemtimer)
 	if (totemtimer == 10) then
 		if ((totemname ~= nil) or (totemname ~= "")) then
 			if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGE"] ~= "OFF") then
@@ -838,6 +839,8 @@ function TOCA.TotemAuraRadius(event)
 
   while UnitAura("player", _Uindex) do
 	  local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura("player", _Uindex)
+		--print(name)
+		--print(spellId)
 		for auraCat,index in pairs(TOCA.TotemAuras) do
 			for auraCatIndex,auraList in pairs(TOCA.TotemAuras[auraCat]) do
 				if (auraList) then
@@ -921,13 +924,6 @@ end
 function TOCA.TimerFrame(i)
 	TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
 
-	--[==[
-	for i=1, 4 do
-		TOCA.Slot.Timer[i]:SetText("")
-		TOCA.SlotGrid.VerticalTimer[i]:SetText("")
-		TOCA.SlotGrid.HorizontalTimer[i]:SetText("")
-	end
-	]==]--
   if ((TOCA.TotemPresent[i]) and (TOCA.TotemName[i] ~= "")) then
     TOCA.TotemTimer[i] = TOCA.TotemTimer[i] -1
     if (TOCA._GTimerInMinutes) then
@@ -941,7 +937,7 @@ function TOCA.TimerFrame(i)
 							--print(TOCA.TotemName[i])
 							--print(i)
 							--print("time: ")
-							print(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
+							--print(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
 							TOCA.FrameSeg.Button[totemCat][index].timer:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
 						end
 					end
