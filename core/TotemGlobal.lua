@@ -866,7 +866,7 @@ function TOCA.TotemAuraRadius(event)
 	--trap the totem second time around
 	for i=1, 4 do
 		TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i], TOCA.TotemID[i] = GetTotemInfo(i)
-		if (TOCA.TotemPresent[i]) then
+		if ((TOCA.TotemPresent[i]) and (TOCA.TotemName[i] ~= "")) then
 			--print(TOCA.TotemID[i])
 			if (TOCA.TotemInRange[i]) then
 				--print("In Range : " .. TOCA.TotemInRange[i])
@@ -881,11 +881,13 @@ function TOCA.TotemAuraRadius(event)
 					--print(TOCA.TotemName[i])
 				--end
 				if (TOCA.TotemName[i]) then
-					for totemCat,v in pairsByKeys(TOCA.totems) do
-						for index,totemSpell in pairs(TOCA.totems[totemCat]) do
-							if (string.find(TOCA.TotemName[i], TOCA.FrameSeg.Button[totemCat][index].ID:GetText())) then
-								--print(TOCA.TotemName[i])
-								TOCA.FrameSeg.Button[totemCat][index].radius:Show()
+					if (TOCA.TotemName[i] ~= "") then
+						for totemCat,v in pairsByKeys(TOCA.totems) do
+							for index,totemSpell in pairs(TOCA.totems[totemCat]) do
+								if (string.find(TOCA.TotemName[i], TOCA.FrameSeg.Button[totemCat][index].ID:GetText())) then
+									--print(TOCA.TotemName[i])
+									TOCA.FrameSeg.Button[totemCat][index].radius:Show()
+								end
 							end
 						end
 					end
@@ -917,8 +919,16 @@ function TOCA.TotemAuraRadius(event)
 end
 
 function TOCA.TimerFrame(i)
-  TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
-  if (TOCA.TotemPresent[i]) then
+	TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
+
+	--[==[
+	for i=1, 4 do
+		TOCA.Slot.Timer[i]:SetText("")
+		TOCA.SlotGrid.VerticalTimer[i]:SetText("")
+		TOCA.SlotGrid.HorizontalTimer[i]:SetText("")
+	end
+	]==]--
+  if ((TOCA.TotemPresent[i]) and (TOCA.TotemName[i] ~= "")) then
     TOCA.TotemTimer[i] = TOCA.TotemTimer[i] -1
     if (TOCA._GTimerInMinutes) then
       TOCA.Slot.Timer[i]:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
@@ -931,7 +941,7 @@ function TOCA.TimerFrame(i)
 							--print(TOCA.TotemName[i])
 							--print(i)
 							--print("time: ")
-							--print(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
+							print(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
 							TOCA.FrameSeg.Button[totemCat][index].timer:SetText(TimeSecondsToMinutes(TOCA.TotemTimer[i]))
 						end
 					end
@@ -1226,7 +1236,7 @@ function TOCA.TotemTimerReset(i)
 				TOCA.FrameSeg.Button[totemCat][index].timer:SetText("")
 			end
 		end
-		print("Totem Timer reset!")
+		--print("Totem Timer reset!")
   else
     TOCA.TotemFunc[i]:Cancel()
     TOCA.TotemTimer[i] = 0
@@ -1300,7 +1310,7 @@ function TOCA.OnUpdateEvent(event)
 
 	  for i=1, 4 do
 	    TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
-	    if (TOCA.TotemPresent[i]) then
+			if ((TOCA.TotemPresent[i]) and (TOCA.TotemName[i] ~= "")) then
 	      TOCA.Button.TotemicCall.flash:Show()
 			end
 	  end
