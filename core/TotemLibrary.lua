@@ -62,7 +62,7 @@ TOCA = {
 			{0.67, 0.83, 0.45, "|CFFAAD372", "Interface/ICONS/ClassIcon_Hunter"},
 			{1.00, 0.96, 0.41, "|CFFFFF468", "Interface/ICONS/ClassIcon_Rogue"},
 			{1.00, 1.00, 1.00, "|CFFFFFFFF", "Interface/ICONS/ClassIcon_Priest"},
-			{0.77, 0.12, 0.23, "|CFFC41E3A", "Interface/ICONS/ClassIcon_DeathKnight"},
+			{0.77, 0.12, 0.23, "|CFFC41E3A", "Interface/ICONS/spell_deathknight_classicon"},
 			{0.00, 0.44, 0.87, "|CFF0070DD", "Interface/ICONS/ClassIcon_Shaman"},
 			{0.25, 0.78, 0.92, "|CFF3FC7EB", "Interface/ICONS/ClassIcon_Mage"},
 			{0.53, 0.53, 0.93, "|CFF8788EE", "Interface/ICONS/ClassIcon_Warlock"},

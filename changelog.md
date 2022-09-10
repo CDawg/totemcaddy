@@ -1,3 +1,12 @@
+### 3.01
+* BCC to WOTLKC updates
+
+### 2.67
+* BETA: Release reverted
+
+### 2.66
+* BETA: Skipped Release
+
 ### 2.65
 * Bugfix: Menu spacing on columns
 * Library preparations for Wrath pre-patch
