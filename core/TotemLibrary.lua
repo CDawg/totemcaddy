@@ -201,7 +201,7 @@ TOCA = {
 			{8836, 10626, 25360}, --grace of air
 			{10596, 10598, 10599, 25573}, --nature resist
 			{15108, 15109, 15110, 25576}, --windwall
-			{2895}, -- Wrath of Air
+			{3738}, {2895}, -- Wrath of Air
 			{25909}, --tranquility
 		},
 		EARTH = {
