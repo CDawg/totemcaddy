@@ -766,7 +766,7 @@ for i=1, 4 do
 end
 
 function TOCA.ExpireNotificationsTotems(totemname, totemtimer)
-	print(totemtimer)
+	--print(totemtimer)
 	if (totemtimer == 10) then
 		if ((totemname ~= nil) or (totemname ~= "")) then
 			if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIREMESSAGE"] ~= "OFF") then

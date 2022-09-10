@@ -4,6 +4,7 @@
 ## Version: 3.01
 ## Author: Porthias of Myzrael (aka Port) or Zistras of Atiesh
 ## SavedVariables: TOCADB
+## SavedVariablesPerCharacter: TOCADB
 ## OptionalDeps: Blizzard_RaidUI, Blizzard_CompactRaidFrames, Blizzard_BindingUI
 
 core/TotemLibrary.lua
