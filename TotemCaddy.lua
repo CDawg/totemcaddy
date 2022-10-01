@@ -202,40 +202,6 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.Totem[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
   TOCA.Totem[totemCat]:SetPoint("CENTER", 0, 0)
   TOCA.Totem[totemCat]:SetAttribute("type", "spell")
-  --[==[
-  TOCA.Totem[totemCat]:SetScript("OnMouseWheel", function(self, delta)
-    --TOCA.CloseAllMenus()
-    if (totemCat == "AIR") then
-      tTotal = getn(TOCA.totems.AIR)
-      tCurrent = getKeyFromValue(TOCA.totems.AIR, TOCA.cache[1], 1)
-      if (sTotem == nil) then
-        sTotem = tCurrent
-      end
-      print("tTotal " .. tTotal)
-      print("delta " .. delta)
-      --print(sTotem)
-      if ((sTotem > tTotal) or (sTotem < 1)) then
-        return
-      end
-      if (delta == 1) then
-        sTotem = sTotem + 1
-      end
-      if (delta == -1) then
-        sTotem = sTotem - 1
-      end
-      print(sTotem)
-      --print(TOCA.cache[1])
-      --for totemCat,v in pairsByKeys(TOCA.totems.AIR) do
-        --print(v[1])
-      --end
-      TOCA.cache[1] = totemSpell[1]
-      TOCA.Totem[totemCat]:SetAttribute("spell", TOCA.cache[1])
-      TOCA.SetKeyBindReset("TOTEM_AIR", totemSpell[1])
-      --TOCA.Notification("Setting AIR " .. totemSpell[1], true)
-      TOCA.Notification("Setting AIR " .. totemSpell[1], false)
-    end
-  end)
-  ]==]--
 
   local thisTotemSpell = ""
   if (totemCat == "AIR") then
@@ -481,6 +447,12 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.SlotSelect[totemCat].icon:SetTexture("Interface/Buttons/Arrow-Up-Up")
 
   local totemCategoryCount = getn(TOCA.totems[totemCat])
+	if (TOCA.Game.version == 3) then --WRATH
+		--bugfix: air totems are not registering
+		if (totemCat == "AIR") then
+		  totemCategoryCount = 5
+	  end
+	end
   TOCA.SlotSelectMenu[totemCat]= CreateFrame("Frame", nil, TOCA.SlotSelect[totemCat], "BackdropTemplate")
   TOCA.SlotSelectMenu[totemCat]:SetSize(40, (totemCategoryCount*36.2))
 	TOCA.SlotSelectMenu[totemCat]:SetPoint("BOTTOMLEFT", -3, 15)

@@ -17,10 +17,6 @@ TOCA.HELP = {
 	UPDATES = {
 		"|cfffa7634 Totem Caddy Devs are looking for language translators! Please click the contact tab to get more details if you would like to contribute to Totem Caddy!|r",
 		"",
-		"Note: Ready for Wrath? Segmented view of TotemCaddy will be the default view once pre-patch launches.",
-		"",
-		"|cfffab734New Feature:|r Totem Set Macros. Now you can add a macro with /toca set <name of set> (Case Sensitive)",
-		"|cfffab734Bug fix:|r Font support for Russian (Cyrillic).",
 		"",
 	  "|cfffab734First time using Totem Caddy?|r",
 	  "Let's get started by dragging the Totem Caddy anywhere on your screen saving the position.",

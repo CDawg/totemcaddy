@@ -18,7 +18,7 @@ TOCA.DEBUG = false
 TOCA._G = {
   title  = TOCA.colors.class[7][4] .. TOCA._L.TITLE .."|r",
   author = "Porthias of Myzrael",
-  version= 3.01,
+  version= 3.02,
   CMD    = "/toca",
   width  = 150,
   height = 85,
@@ -146,16 +146,10 @@ elseif (TOCA.Game.version == 3) then --WRATH
 	table.remove(TOCA.totems.AIR, 5) --tranquil air
 	table.remove(TOCA.totems.AIR, 7) --windwall
 
+	--remove auras in this version
 	table.remove(TOCA.TotemAuras.AIR, 3)
 	table.remove(TOCA.TotemAuras.AIR, 5)
 	table.remove(TOCA.TotemAuras.AIR, 7)
-
-  --[==[
-	table.remove(TOCA.TotemAuraExempt.FIRE, 1)
-	table.remove(TOCA.TotemAuraExempt.WATER, 1)
-	table.remove(TOCA.TotemAuraExempt.WATER, 2)
-	]==]--
-
 end
 
 --default totem slots
