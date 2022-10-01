@@ -1,3 +1,6 @@
+### 3.02
+* WRATH - Bugfix: Totems are not registering correctly in the air category [sentry, grounding] causing the menu to clip due to the size of 3 and not 5
+
 ### 3.01
 * BCC to WOTLKC updates
 
