@@ -85,7 +85,8 @@ function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 		if (event == "UNIT_SPELLCAST_SUCCEEDED") then
 			if ((prefix == "player") and (_casted)) then --spell came from self
 				--print("debug spell: " .. _casted)
-				TOCA.TimerRechargeStart(_casted, true)
+				--TOCA.TimerRechargeStart(_casted, true)
+				TOCA.TimerRechargeStart(_casted, false)
 			end
 		end
 

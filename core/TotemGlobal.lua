@@ -18,7 +18,7 @@ TOCA.DEBUG = false
 TOCA._G = {
   title  = TOCA.colors.class[7][4] .. TOCA._L.TITLE .."|r",
   author = "Porthias of Myzrael",
-  version= 3.02,
+  version= 3.03,
   CMD    = "/toca",
   width  = 150,
   height = 85,
@@ -27,7 +27,7 @@ TOCA._G = {
   prefix = "TotemCaddy",
   suffix = "WOTLKC",
 	date   = date("%Y%m%d"),
-	update = 20221114,
+	update = 20230101,
 }
 --local _LName, _LTitle = GetAddOnInfo(TOCA._G.prefix)
 --TOCA._G.version = tonumber(string.sub(_LTitle, 26, 29))
@@ -1089,6 +1089,7 @@ function TOCA.TimerRechargeStart(spell, instant)
 	if (name) then
 		local skillType, contextualID = GetSpellBookItemInfo(name)
 		if (skillType == "SPELL") then
+			--if (skillType) then
 			if (instant) then --trigger only on totems
 				for totemCat,k in pairs(TOCA.totems) do
 					for totemSpell,v in pairs(TOCA.totems[totemCat]) do

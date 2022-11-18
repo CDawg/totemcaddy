@@ -1,3 +1,6 @@
+### 3.03
+* WRATH - Bugfix: Global cooldown visuals on instant spells.
+
 ### 3.02
 * WRATH - Bugfix: Totems are not registering correctly in the air category [sentry, grounding] causing the menu to clip due to the size of 3 and not 5
 
