@@ -16,7 +16,7 @@ the copyright holders.
 TOCA.HELP = {
 	UPDATES = {
 		"|cfffa7634 Totem Caddy Devs are looking for language translators! Please click the contact tab to get more details if you would like to contribute to Totem Caddy!|r",
-		"",
+		"Ankh reminder is current not working, due to Blizzard API changes.",
 		"",
 	  "|cfffab734First time using Totem Caddy?|r",
 	  "Let's get started by dragging the Totem Caddy anywhere on your screen saving the position.",

@@ -18,7 +18,7 @@ TOCA.DEBUG = false
 TOCA._G = {
   title  = TOCA.colors.class[7][4] .. TOCA._L.TITLE .."|r",
   author = "Porthias of Myzrael",
-  version= 3.04,
+  version= 3.06,
   CMD    = "/toca",
   width  = 150,
   height = 85,
@@ -1355,15 +1355,18 @@ function TOCA.Combat(event)
 end
 
 function TOCA.InventoryCountItem(itemID)
-  local i = 0
+  --[==[
+	local i = 0
   for bag = 0, NUM_BAG_SLOTS do
-    for slot=1,GetContainerNumSlots(bag) do
-      if (itemID == GetContainerItemID(bag,slot)) then
-        i=i+(select(2, GetContainerItemInfo(bag, slot)))
+    for slot=1,C_Container.GetContainerNumSlots(bag) do
+      if (itemID == C_Container.GetContainerItemID(bag,slot)) then
+        i=i+(select(2, C_Container.GetContainerItemInfo(bag, slot)))
       end
     end
   end
   return i
+	]==]--
+	return 10
 end
 
 function TOCA.SendPacket(packet, channel, compress)

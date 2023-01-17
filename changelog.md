@@ -1,3 +1,12 @@
+### 3.06
+Bugfix: New texture api and inventory count for Ulduar 3.4.1 (47612)
+
+### 3.05
+* BETA: Prepping for Ulduar
+
+### 3.04
+* BETA: Skipped Release
+
 ### 3.03
 * WRATH - Bugfix: Global cooldown visuals on instant spells.
 
