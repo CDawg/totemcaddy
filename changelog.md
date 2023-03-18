@@ -1,3 +1,6 @@
+### 3.07
+Bugfix: Date mapping incorrect
+
 ### 3.06
 Bugfix: New texture api and inventory count for Ulduar 3.4.1 (47612)
 
