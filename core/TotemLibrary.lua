@@ -132,7 +132,7 @@ TOCA = {
 				8184, --fire resist
 				5394, --healing stream
 			  5675, --mana spring
-				38306, --poison cleansing
+				8169, --poison cleansing
 				16190, --mana tide
 			},
 			AIR = {
