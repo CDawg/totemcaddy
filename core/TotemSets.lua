@@ -270,6 +270,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
       end
       TOCA.FrameSetsSlot[totemCat]:SetBackdrop(TOCA.SetIcon(totemSpell[2]))
       TOCA.CloseAllMenus()
+      TOCA.Notification("FrameSetsSlotSelectTotem " .. totemCat .. " | " .. totemSpell[1], true)
     end)
     TOCA.FrameSetsSlotDisabled[totemCat][i]= CreateFrame("Button", nil, TOCA.FrameSetsSlotSelectTotem[totemCat][i], "BackdropTemplate")
     TOCA.FrameSetsSlotDisabled[totemCat][i]:SetSize(TOCA.Slot_w, TOCA.Slot_h)

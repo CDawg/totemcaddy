@@ -85,10 +85,11 @@ TOCA.Button.TotemicCall.ECR:SetTexCoord(1, 0, 0, 1)
 TOCA.Button.TotemicCallAtt= CreateFrame("Button", nil, TOCA.Button.TotemicCall, "SecureActionButtonTemplate")
 TOCA.Button.TotemicCallAtt:SetSize(TOCA.Button.TotemicCall_w, TOCA.Button.TotemicCall_h)
 TOCA.Button.TotemicCallAtt:SetPoint("CENTER", 0, 0)
+TOCA.Button.TotemicCallAtt:RegisterForClicks("AnyDown", "AnyUp")
 TOCA.Button.TotemicCallAtt:SetAttribute("type", "spell")
 TOCA.Button.TotemicCallAtt:SetAttribute("spell", TOCA._L.SPELLS.TotemicCall)
 TOCA.Button.TotemicCallAtt:SetScript("OnEnter", function(self)
-  --TOCA.CloseAllMenus() --bug with the totemic call button overlapping
+  TOCA.CloseAllMenus() --bug with the totemic call button overlapping
   if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
     TOCA.Button.TotemicCall:SetBackdropBorderColor(1, 1, 1, 0)
   else
@@ -201,6 +202,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
   TOCA.Totem[totemCat] = CreateFrame("Button", nil, TOCA.Slot[totemCat], "SecureActionButtonTemplate")
   TOCA.Totem[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
   TOCA.Totem[totemCat]:SetPoint("CENTER", 0, 0)
+  TOCA.Totem[totemCat]:RegisterForClicks("AnyDown", "AnyUp")
   TOCA.Totem[totemCat]:SetAttribute("type", "spell")
 
   local thisTotemSpell = ""

@@ -271,7 +271,7 @@ function TOCA.Init()
   end
 
   TOCA.FrameOptionsMain.name = TOCA._G.title
-  InterfaceOptions_AddCategory(TOCA.FrameOptionsMain)
+  --InterfaceOptions_AddCategory(TOCA.FrameOptionsMain)
 
   TOCA.HideUnknownSpells(false) --check game version first
 
