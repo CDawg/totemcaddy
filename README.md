@@ -1,11 +1,14 @@
-Totem Caddy
-by Porthias (Dreamscythe)
+<h3>Totem Caddy</h3>
+<br/>
 
 **WARNING!**
+
   Do NOT use this github repo unless you are BETA testing features. Download the latest updates from https://www.curseforge.com/wow/addons/totem-caddy. You have been warned!
 
+<br/>
 
 **WHAT THE ADDON IS FOR:**
+
   Totem Caddy is a World of Warcraft [Classic/TBC] Totem Managing addon for raiding and questing, allowing you to manage your totem slots easier with a small UI toolbar.
   - Categorize by totem slots
   - Configure timer viewing
@@ -14,7 +17,7 @@ by Porthias (Dreamscythe)
   - View Reincarnation and * shield timers or icons
 
 
-</br>
+<br/>
 
 **INSTALLATION:**
   - git clone the "TotemCaddy" folder into your \<WoW Installation\>\Interface\AddOns\ folder
@@ -22,9 +25,7 @@ by Porthias (Dreamscythe)
   - type /toca in-game to view the available commands.
   - Playing a class other than a shaman will not show. To force Totem Caddy type /toca show
 
+<br/>
 
 Enjoy!
-
-
-CONTACT:
-Porthias
+BNET: Porthios#11569
