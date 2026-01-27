@@ -1,9 +1,11 @@
-## Interface: 11403
-## Title: |cff006aa6Totem Caddy|r v3.07
+## Interface: 20505
+## X-Min-Interface: 20504
+## Title: |cff006aa6Totem Caddy|r v3.08
 ## Notes: Totem Caddy
-## Version: 3.07
-## Author: Porthias of Myzrael (aka Port) or Zistras of Atiesh
+## Version: 3.08
+## Author: Porthias (aka Port)
 ## SavedVariables: TOCADB
+## SavedVariablesPerCharacter: TOCADB
 ## OptionalDeps: Blizzard_RaidUI, Blizzard_CompactRaidFrames, Blizzard_BindingUI
 
 core/TotemLibrary.lua

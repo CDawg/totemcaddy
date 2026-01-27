@@ -40,7 +40,8 @@ TOCA.HELP = {
 	  "Special thanks to some beta testers from the Myzrael realm.",
 	  "Especially to my shaman buddy |cff006aa6Shockpopz|r of Myzrael For all the valuable feedback and laughs!",
 		"|n",
-	  "Written by |cff006aa6Porthias|r of Myzrael (a.k.a. Port) and |cff006aa6Zistras|r of Atiesh",
+    "SteveBotella",
+	  "Written by |cff006aa6Porthias|r (a.k.a. Port)",
 	},
 	FOOTER = {
 	  "This message will not show again unless there is a new version.",

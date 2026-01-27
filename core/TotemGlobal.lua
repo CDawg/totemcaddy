@@ -13,21 +13,21 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
-TOCA.DEBUG = false
+TOCA.DEBUG = true
 
 TOCA._G = {
   title  = TOCA.colors.class[7][4] .. TOCA._L.TITLE .."|r",
   author = "Porthias of Myzrael",
-  version= 3.07,
+  version= 3.08,
   CMD    = "/toca",
   width  = 150,
   height = 85,
-	font   = "Interface/Addons/TotemCaddy/fonts/FRIZQT__.TTF",
+  font   = "Interface/Addons/TotemCaddy/fonts/FRIZQT__.TTF",
   dir    = "Interface/Addons/TotemCaddy/",
   prefix = "TotemCaddy",
   suffix = "WOTLKC",
-	date   = date("%Y%m%d"),
-	update = 20230601,
+  date   = date("%Y%m%d"),
+  update = 20260208,
 }
 --local _LName, _LTitle = GetAddOnInfo(TOCA._G.prefix)
 --TOCA._G.version = tonumber(string.sub(_LTitle, 26, 29))
@@ -41,12 +41,12 @@ elseif (TOCA.Game.version == 2) then
 end
 
 TOCA.Net = {
-	register  = C_ChatInfo.RegisterAddonMessagePrefix(TOCA._G.prefix),
+  register  = C_ChatInfo.RegisterAddonMessagePrefix(TOCA._G.prefix),
   version   = "0xEFVe", --version
-	assign_es = "0xEFES", --earthshield assign
-	assign_au = "0xEFAU", --earthshield author
-	report_s  = "0xEuRS",--report send signal
-	report_g  = "0xEuRG",--report get signal
+  assign_es = "0xEFES", --earthshield assign
+  assign_au = "0xEFAU", --earthshield author
+  report_s  = "0xEuRS",--report send signal
+  report_g  = "0xEuRG",--report get signal
 }
 
 TOCA.OptionMenuOpen = 0
