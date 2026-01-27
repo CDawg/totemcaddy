@@ -255,7 +255,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
       self:SetBackdropBorderColor(1, 1, 1, 0.6)
     end)
     TOCA.FrameSetsSlotSelectTotem[totemCat][i]:SetScript("OnClick", function()
-      --TOCA.Notification(totemCat .. " ".. i .. " " .. totemSpell[1], true)
+      TOCA.Notification(totemCat .. " ".. i .. " " .. totemSpell[1], true)
       if (totemCat == "AIR") then
         TOCA.cache[1] = totemSpell[1]
       end

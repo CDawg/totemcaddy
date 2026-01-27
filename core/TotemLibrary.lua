@@ -30,6 +30,9 @@ TOCA = {
 		  edgeFile= "Interface/ToolTips/UI-Tooltip-Border",
 		  edgeSize= 10,
 		  insets  = {left=2, right=2, top=2, bottom=2},
+		},
+		Slider = {
+			Template = "UISliderTemplateWithLabels",
 		}
 	},
 

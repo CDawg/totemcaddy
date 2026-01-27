@@ -579,7 +579,7 @@ end)
 
 TOCA.FrameAssignmentPersonalOptions={}
 TOCA.FrameAssignmentPersonalOptions.Scale={}
-TOCA.FrameAssignmentPersonalOptions.Scale = CreateFrame("Slider", "TOCA.FrameAssignmentPersonalOptions.Scale", TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]], "OptionsSliderTemplate")
+TOCA.FrameAssignmentPersonalOptions.Scale = CreateFrame("Slider", "TOCA.FrameAssignmentPersonalOptions.Scale", TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]], TOCA.Backdrop.Slider.Template)
 TOCA.FrameAssignmentPersonalOptions.Scale:SetWidth(140)
 TOCA.FrameAssignmentPersonalOptions.Scale:SetHeight(14)
 TOCA.FrameAssignmentPersonalOptions.Scale:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -150)

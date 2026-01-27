@@ -197,7 +197,7 @@ TOCA.FrameOptions.Title.Scale:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"]
 TOCA.FrameOptions.Title.Scale:SetText(TOCA._L.UI.OPTIONS[3][1])
 TOCA.FrameOptions.Title.Scale:SetTextColor(1, 1, 0.5, 1)
 TOCA.Slider.Scale={}
-TOCA.Slider.Scale = CreateFrame("Slider", "TOCA.Slider.Scale", TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]], "OptionsSliderTemplate")
+TOCA.Slider.Scale = CreateFrame("Slider", "TOCA.Slider.Scale", TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]], TOCA.Backdrop.Slider.Template)
 TOCA.Slider.Scale:SetWidth(140)
 TOCA.Slider.Scale:SetHeight(14)
 TOCA.Slider.Scale:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -170)
@@ -291,7 +291,7 @@ TOCA.FrameOptions.Title.OpacityBG:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LE
 TOCA.FrameOptions.Title.OpacityBG:SetText(TOCA._L.UI.OPTIONS[6][1])
 TOCA.FrameOptions.Title.OpacityBG:SetTextColor(1, 1, 0.5, 1)
 TOCA.Slider.OpacityBG={}
-TOCA.Slider.OpacityBG = CreateFrame("Slider", "TOCA.Slider.OpacityBG", TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]], "OptionsSliderTemplate")
+TOCA.Slider.OpacityBG = CreateFrame("Slider", "TOCA.Slider.OpacityBG", TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]], TOCA.Backdrop.Slider.Template)
 TOCA.Slider.OpacityBG:SetWidth(140)
 TOCA.Slider.OpacityBG:SetHeight(14)
 TOCA.Slider.OpacityBG:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -240)
@@ -354,7 +354,7 @@ TOCA.FrameOptions.Title.OpacityFG:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LE
 TOCA.FrameOptions.Title.OpacityFG:SetText(TOCA._L.UI.OPTIONS[8][1])
 TOCA.FrameOptions.Title.OpacityFG:SetTextColor(1, 1, 0.5, 1)
 TOCA.Slider.OpacityFG={}
-TOCA.Slider.OpacityFG = CreateFrame("Slider", "TOCA.Slider.OpacityFG", TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]], "OptionsSliderTemplate")
+TOCA.Slider.OpacityFG = CreateFrame("Slider", "TOCA.Slider.OpacityFG", TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[1]], TOCA.Backdrop.Slider.Template)
 TOCA.Slider.OpacityFG:SetWidth(140)
 TOCA.Slider.OpacityFG:SetHeight(14)
 TOCA.Slider.OpacityFG:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -320)

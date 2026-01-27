@@ -26,6 +26,10 @@
   - Playing a class other than a shaman will not show. To force Totem Caddy type /toca show
 
 <br/>
+<br/>
 
 Enjoy!
-BNET: Porthios#11569
+
+<br/>
+
+**BNET:** Porthios#11569

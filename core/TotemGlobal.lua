@@ -17,15 +17,15 @@ TOCA.DEBUG = true
 
 TOCA._G = {
   title  = TOCA.colors.class[7][4] .. TOCA._L.TITLE .."|r",
-  author = "Porthias of Myzrael",
-  version= 3.08,
+  author = "Porthias",
+  version= 3.07,
   CMD    = "/toca",
   width  = 150,
   height = 85,
   font   = "Interface/Addons/TotemCaddy/fonts/FRIZQT__.TTF",
   dir    = "Interface/Addons/TotemCaddy/",
   prefix = "TotemCaddy",
-  suffix = "WOTLKC",
+  suffix = "TBC",
   date   = date("%Y%m%d"),
   update = 20260208,
 }
