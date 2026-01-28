@@ -6,7 +6,7 @@
 ## Author: Porthias (aka Port)
 ## SavedVariables: TOCADB
 ## SavedVariablesPerCharacter: TOCADB
-## OptionalDeps: Blizzard_RaidUI, Blizzard_CompactRaidFrames, Blizzard_BindingUI
+## OptionalDeps: Blizzard_RaidUI, Blizzard_CompactRaidFrames
 
 core/TotemLibrary.lua
 core/locales/localization.en.lua
