@@ -1332,6 +1332,7 @@ function TOCA.Combat(event)
       TOCA.SlotSelect[totemCat]:Hide()
       TOCA.Button.DropdownMain:Hide()
       TOCA.Button.CloseMain:Hide()
+			TOCA.Button.Options:Hide()
       if (TOCADB[TOCA.player.combine]["CONFIG"]["COMBATLOCK"] == "OFF") then
         TOCA.FrameMain:SetMovable(true)
         TOCA.FrameMain:EnableMouse(true)
