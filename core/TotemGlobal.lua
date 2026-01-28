@@ -18,7 +18,7 @@ TOCA.DEBUG = true
 TOCA._G = {
   title  = TOCA.colors.class[7][4] .. TOCA._L.TITLE .."|r",
   author = "Porthias",
-  version= 3.07,
+  version= 3.08,
   CMD    = "/toca",
   width  = 150,
   height = 85,
@@ -36,8 +36,6 @@ TOCA.Game={}
 TOCA.Game.version = tonumber(string.sub(__Gversion, 1, 1))
 if (TOCA.Game.version == 1) then
   TOCA._G.suffix = "Classic"
-elseif (TOCA.Game.version == 2) then
-  TOCA._G.suffix = "BCC"
 end
 
 TOCA.Net = {
