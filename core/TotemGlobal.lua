@@ -503,10 +503,7 @@ function TOCA.DisplayAnkhFrame()
 		--TOCA.Notification("TOCA.AnkhCount " .. AnkhCount)
     TOCA.FrameMain.AnkhFrame.text:SetText(AnkhCount)
     if (AnkhCount <= TOCA.AnkhReminder) then
-			TOCA.FrameMain.AnkhFrame.text:SetTextColor(1, 1, 1, 1)
-			if (AnkhCount <= 1) then
-			  TOCA.FrameMain.AnkhFrame.text:SetTextColor(1, 0, 0, 1)
-		  end
+			TOCA.FrameMain.AnkhFrame.text:SetTextColor(1, 0, 0, 1)
       TOCA.FrameMain.AnkhFrame:Show()
     else
       TOCA.FrameMain.AnkhFrame:Hide()
