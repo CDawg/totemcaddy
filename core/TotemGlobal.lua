@@ -761,8 +761,9 @@ for i=1, 4 do
   TOCA.TotemDuration[i] = 0
 end
 
-function TOCA.GetTotemInfo(cat)
-  TOCA.TotemPresent[cat], TOCA.TotemName[cat], TOCA.TotemStartTime[cat], TOCA.TotemDuration[cat], TOCA.TotemIcon[cat], TOCA.TotemRate[cat], TOCA.TotemID[cat] = GetTotemInfo(cat)
+function TOCA.GetTotemInfo(t)
+  --TOCA.TotemPresent[t], TOCA.TotemName[t], TOCA.TotemStartTime[t], TOCA.TotemDuration[t], TOCA.TotemIcon[t], TOCA.TotemRate[t], TOCA.TotemID[t] = GetTotemInfo(t)
+	TOCA.TotemPresent[t], TOCA.TotemName[t], TOCA.TotemStartTime[t], TOCA.TotemDuration[t], TOCA.TotemID[t] = GetTotemInfo(t)
 end
 
 function TOCA.ExpireNotificationsTotems(totemname, totemtimer)
@@ -1146,7 +1147,7 @@ function TOCA.TotemBarTimerStart()
 			TOCA.TotemTimer[i] = TOCA.TotemDuration[i]
 		end
   end
-	TOCA.Notification("TOCA.TotemBarTimerStart()")
+	TOCA.Notification("TOCA.TotemBarTimerStart()", true)
 end
 
 function TOCA.GetReincTimer() --always checking
