@@ -19,15 +19,15 @@ TOCA.HELP = {
 		"",
 	  "|cfffab734First time using Totem Caddy?|r",
 	  "Let's get started by dragging the Totem Caddy anywhere on your screen saving the position.",
-	  "You can select totems in a category order (air, earth, fire, or water) by selecting the top arrows above the current totem icons.",
-	  "- The totem order can be changed under the Totem Sets in the options window.",
-	  "- You can also display all totems on screen in vertical/horizontal order based on totem category under the Frame Style options.",
-    "- Totems will be display on your minimap for proximity",
-    "- Totem/Shield timers and notifications can also be set within the options menu",
+	  "> You can select totems in a category order (air, earth, fire, or water) by selecting the top arrows above the current totem icons.",
+	  "> The totem order can be changed under the Totem Sets in the options window.",
+	  "> You can also display all totems on screen in vertical/horizontal order based on totem category under the Frame Style options.",
+    "> Totems will be display on your minimap for proximity",
+    "> Totem/Shield timers and notifications can also be set within the options menu",
 	  "For addition options or create totem sets:",
-	  "Select the cogwheel button or type /toca 'options', then select Totem Sets",
-	  "You can select which totem for each category, give it a name, then select the bottom arrow on the main frame dropdown to access it.",
-	  "Totem slot keybindings for your totem category slots: If you assign key bindings to to the totem slots for the very first time, you may have to do a '/reload'.",
+	  "> Select the cogwheel button or type /toca 'options', then select Totem Sets",
+	  "> You can select which totem for each category, give it a name, then select the bottom arrow on the main frame dropdown to access it.",
+	  "> Totem slot keybindings for your totem category slots: If you assign key bindings to to the totem slots for the very first time, you may have to do a '/reload'.",
 	  "|n",
 	},
 	CONTACT = {
@@ -68,7 +68,7 @@ TOCA.Button.Tab={}
 TOCA.Button.TabBack={}
 TOCA.FrameHelpPage={}
 
-local HelpIntro = TOCA._L.INIT[5].. " " .. TOCA._G.title .. " v" .. TOCA._G.version .. "-" .. TOCA._G.suffix .. " (" .. GetLocale() .. ")|n|n"
+local HelpIntro = TOCA._L.INIT[5].. " " .. TOCA._G.title .. " " .. TOCA.Addon .. "|n|n"
 
 for i=1, getn(TOCA._L.UI.TABS.HELP) do
   TOCA.FrameHelpPage[TOCA._L.UI.TABS.HELP[i]] = CreateFrame("Frame", "TOCA.FrameHelp", TOCA.FrameHelp, "BackdropTemplate")

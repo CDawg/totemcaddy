@@ -296,7 +296,7 @@ TOCA.Button.Minimap:SetScript("OnDragStop", function()
 end)
 
 TOCA.Button.Minimap:SetScript("OnEnter", function(self)
-  TOCA.TooltipDisplay(self, TOCA._G.title, "v" .. TOCA._G.version .. "-" .. TOCA._G.suffix .. " ("..GetLocale()..")", "", true)
+  TOCA.TooltipDisplay(self, TOCA._G.title, TOCA.Addon, "", true)
 	if (TOCA.player.faction == "Alliance") then
 		TOCA.FrameModel["m_minimap"]:SetModel("creature\\spells\\draeneitotem_fire.m2")
 	else

@@ -25,7 +25,7 @@ TOCA._G = {
   font   = "Interface/Addons/TotemCaddy/fonts/FRIZQT__.TTF",
   dir    = "Interface/Addons/TotemCaddy/",
   prefix = "TotemCaddy",
-  suffix = "TBC",
+  suffix = "TBC Anniversary",
   date   = date("%Y%m%d"),
   update = 20260208,
 }
@@ -37,6 +37,8 @@ TOCA.Game.version = tonumber(string.sub(__Gversion, 1, 1))
 if (TOCA.Game.version == 1) then
   TOCA._G.suffix = "Classic"
 end
+
+TOCA.Addon = "v" .. TOCA._G.version .. " " .. TOCA._G.suffix .. " ("..GetLocale()..")"
 
 TOCA.Net = {
   register  = C_ChatInfo.RegisterAddonMessagePrefix(TOCA._G.prefix),
@@ -1537,7 +1539,7 @@ end
 SLASH_TOCA1 = TOCA._G.CMD
 function SlashCmdList.TOCA(cmd)
   if ((cmd == nil) or (cmd == "")) then
-    TOCA.Notification("v" .. TOCA._G.version .. "-" .. TOCA._G.suffix .. " ("..GetLocale()..")")
+    TOCA.Notification(TOCA.Addon)
 		for int,list in pairs(TOCA._L.COMMANDS) do
 			print("|cffffff00".. list[1] .. "|r : " .. list[2] .. "|n")
 		end

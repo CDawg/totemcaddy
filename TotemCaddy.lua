@@ -562,7 +562,7 @@ TOCA.Button.Options:SetScript("OnEnter", function(self)
   else
     self:SetBackdropBorderColor(1, 1, 1, 0.6)
   end
-  TOCA.TooltipDisplay(self, TOCA._G.title, "v" .. TOCA._G.version .. "-" .. TOCA._G.suffix .. " ("..GetLocale()..")")
+  TOCA.TooltipDisplay(self, TOCA._G.title, TOCA.Addon)
 end)
 TOCA.Button.Options:SetScript("OnLeave", function(self)
   if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
