@@ -307,7 +307,6 @@ function TOCA.EnableTotems(enable)
 				TOCA.FrameSeg.Button[totemCat][i].disable:Hide()
       end
     end
-    TOCA.Notification("TOCA.EnableTotems()", true)
   else
     TOCA.TotemsEnabled = false
     for totemCat,v in pairsByKeys(TOCA.totems) do
@@ -319,6 +318,7 @@ function TOCA.EnableTotems(enable)
       end
     end
   end
+	--TOCA.Notification("TOCA.EnableTotems(" .. tostring(enable) .. ")", true)
 end
 
 local totemButtonPos_X={}
@@ -752,11 +752,17 @@ TOCA.TotemStartTime={}
 TOCA.TotemDuration={}
 TOCA.TotemID={}
 TOCA.TotemFunc={}
+TOCA.TotemIcon={}
+TOCA.TotemRate={}
 
 TOCA.TotemTimer={}
 for i=1, 4 do
   TOCA.TotemTimer[i] = 0
   TOCA.TotemDuration[i] = 0
+end
+
+function TOCA.GetTotemInfo(cat)
+  TOCA.TotemPresent[cat], TOCA.TotemName[cat], TOCA.TotemStartTime[cat], TOCA.TotemDuration[cat], TOCA.TotemIcon[cat], TOCA.TotemRate[cat], TOCA.TotemID[cat] = GetTotemInfo(cat)
 end
 
 function TOCA.ExpireNotificationsTotems(totemname, totemtimer)
@@ -862,7 +868,8 @@ function TOCA.TotemAuraRadius(event)
 
 	--trap the totem second time around
 	for i=1, 4 do
-		TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i], TOCA.TotemID[i] = GetTotemInfo(i)
+		TOCA.GetTotemInfo(i)
+
 		if ((TOCA.TotemPresent[i]) and (TOCA.TotemName[i] ~= "")) then
 			--print(TOCA.TotemID[i])
 			if (TOCA.TotemInRange[i]) then
@@ -916,7 +923,7 @@ function TOCA.TotemAuraRadius(event)
 end
 
 function TOCA.TimerFrame(i)
-	TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
+  TOCA.GetTotemInfo(i)
 
   if ((TOCA.TotemPresent[i]) and (TOCA.TotemName[i] ~= "")) then
     TOCA.TotemTimer[i] = TOCA.TotemTimer[i] -1
@@ -1131,12 +1138,15 @@ end
 
 function TOCA.TotemBarTimerStart()
   for i=1, 4 do
-    TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
-    if (TOCA.TotemTimer[i] <= 0) then
-      TOCA.TotemFunc[i] = C_Timer.NewTicker(1, function() TOCA.TimerFrame(i) end, TOCA.TotemDuration[i])
-      TOCA.TotemTimer[i] = TOCA.TotemDuration[i]
-    end
+		TOCA.GetTotemInfo(i)
+
+		if (TOCA.TotemTimer[i] <= 0) then
+			TOCA.TotemTimerReset(i)
+			TOCA.TotemFunc[i] = C_Timer.NewTicker(1, function() TOCA.TimerFrame(i) end, TOCA.TotemDuration[i])
+			TOCA.TotemTimer[i] = TOCA.TotemDuration[i]
+		end
   end
+	TOCA.Notification("TOCA.TotemBarTimerStart()")
 end
 
 function TOCA.GetReincTimer() --always checking
@@ -1213,7 +1223,6 @@ end
 TOCA.SlotGrid.VerticalTimer={}
 TOCA.SlotGrid.HorizontalTimer={}
 function TOCA.TotemTimerReset(i)
-	--print(i)
   if (i == "all") then
     for i=1, 4 do
       TOCA.TotemFunc[i]:Cancel()
@@ -1285,7 +1294,7 @@ function TOCA.OnUpdateEvent(event)
 	if (TOCA.player.classID == 7) then --shaman
 	  local percMana = (UnitPower("player")/UnitPowerMax("player"))*100
 	  local percMana = floor(percMana+0.5)
-	  local onTaxi = UnitOnTaxi("player")
+	  --local onTaxi = UnitOnTaxi("player")
 	  --TOCA.Notification("mana: " .. percMana, true)
 	  TOCA.Button.TotemicCall.flash:Hide()
     --TOCA.TotemInRange={} --clear the array
@@ -1300,7 +1309,7 @@ function TOCA.OnUpdateEvent(event)
 		end
 
 	  for i=1, 4 do
-	    TOCA.TotemPresent[i], TOCA.TotemName[i], TOCA.TotemStartTime[i], TOCA.TotemDuration[i] = GetTotemInfo(i)
+	    TOCA.GetTotemInfo(i)
 			if ((TOCA.TotemPresent[i]) and (TOCA.TotemName[i] ~= "")) then
 	      TOCA.Button.TotemicCall.flash:Show()
 			end

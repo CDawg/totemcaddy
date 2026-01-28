@@ -207,7 +207,7 @@ function TOCA.TotemStampPos(totemCat) --stamp the last pos for the specific tote
 
 		--WorldMapFrame:Hide() --testing. this is dangerous
 
-		TOCA.TotemPresent[totemCat], TOCA.TotemName[totemCat], TOCA.TotemStartTime[totemCat], TOCA.TotemDuration[totemCat], TOCA.TotemID[totemCat] = GetTotemInfo(totemCat)
+		TOCA.GetTotemInfo(totemCat)
 		if ((TOCA.TotemPresent[totemCat]) and (TOCA.TotemName[totemCat] ~= "")) then
 			if (TOCA.TotemName[totemCat]) then
 				TOCA.RadiusTotem.X[TOCA.TotemName[totemCat]] = posX --math.floor(posX*10000)
