@@ -13,7 +13,7 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
-TOCA.DEBUG = true
+TOCA.DEBUG = false
 
 TOCA._G = {
   title  = TOCA.colors.class[7][4] .. TOCA._L.TITLE .."|r",
@@ -491,17 +491,20 @@ function TOCA.FrameStyleSet(style)
   TOCA.Notification("Frame Style: " .. style, true)
 end
 
+TOCA.AnkhCount = C_Item.GetItemCount(TOCA.item.ANKH)
 function TOCA.DisplayAnkhFrame()
+	AnkhCount = C_Item.GetItemCount(TOCA.item.ANKH)
   TOCA.FrameMain.AnkhFrame:Hide()
   if (TOCADB[TOCA.player.combine]["CONFIG"]["ANKH"] == "OFF") then
     return
   end
-  local pL = UnitLevel("player")
-  if (pL >= 30) then
-    TOCA.FrameMain.AnkhFrame.text:SetText(TOCA.InventoryCountItem(TOCA.item.ANKH))
-    if (TOCA.InventoryCountItem(TOCA.item.ANKH) <= TOCA.AnkhReminder) then
+  local playerLevel = UnitLevel("player")
+  if (playerLevel >= 30) then
+		--TOCA.Notification("TOCA.AnkhCount " .. AnkhCount)
+    TOCA.FrameMain.AnkhFrame.text:SetText(AnkhCount)
+    if (AnkhCount <= TOCA.AnkhReminder) then
 			TOCA.FrameMain.AnkhFrame.text:SetTextColor(1, 1, 1, 1)
-			if (TOCA.InventoryCountItem(TOCA.item.ANKH) <= 1) then
+			if (AnkhCount <= 1) then
 			  TOCA.FrameMain.AnkhFrame.text:SetTextColor(1, 0, 0, 1)
 		  end
       TOCA.FrameMain.AnkhFrame:Show()

@@ -16,13 +16,14 @@ the copyright holders.
 TOCA.HELP = {
 	UPDATES = {
 		"|cfffa7634 Totem Caddy Devs are looking for language translators! Please click the contact tab to get more details if you would like to contribute to Totem Caddy!|r",
-		"Ankh reminder is current not working, due to Blizzard API changes.",
 		"",
 	  "|cfffab734First time using Totem Caddy?|r",
 	  "Let's get started by dragging the Totem Caddy anywhere on your screen saving the position.",
 	  "You can select totems in a category order (air, earth, fire, or water) by selecting the top arrows above the current totem icons.",
-	  "The set of totems are by default, and the order is currently alphabetical. The totem order can changed under the Totem Sets in the options window.",
-	  "You can also display all totems on screen in vertical/horizontal order based on totem category under the Frame Style options.",
+	  "- The totem order can be changed under the Totem Sets in the options window.",
+	  "- You can also display all totems on screen in vertical/horizontal order based on totem category under the Frame Style options.",
+    "- Totems will be display on your minimap for proximity",
+    "- Totem/Shield timers and notifications can also be set within the options menu",
 	  "For addition options or create totem sets:",
 	  "Select the cogwheel button or type /toca 'options', then select Totem Sets",
 	  "You can select which totem for each category, give it a name, then select the bottom arrow on the main frame dropdown to access it.",

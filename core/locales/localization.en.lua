@@ -126,5 +126,5 @@ TOCA._L = {
 }
 
 function TOCA._L.Ankh()
-	return "Ankhs: |cffffffff".. TOCA.InventoryCountItem(TOCA.item.ANKH) .."|r|n|nAnkh Inventory Count Reminder.|nThis will display when you have less than " .. TOCA.AnkhReminder .. " Ankhs"
+	return "Ankhs: |cffffffff".. TOCA.AnkhCount .."|r|n|nAnkh Inventory Count Reminder.|nThis will display when you have less than " .. TOCA.AnkhReminder .. " Ankhs"
 end
