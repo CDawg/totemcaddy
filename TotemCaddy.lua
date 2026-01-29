@@ -198,7 +198,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 	TOCA.Slot.Recharge[totemCat]:SetAllPoints()
 	TOCA.Slot.Recharge[totemCat]:SetCooldown(GetTime(), 2)
 	TOCA.Slot.Recharge[totemCat]:SetEdgeScale(0)
-
+  --action layer
   TOCA.Totem[totemCat] = CreateFrame("Button", nil, TOCA.Slot[totemCat], "SecureActionButtonTemplate")
   TOCA.Totem[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
   TOCA.Totem[totemCat]:SetPoint("CENTER", 0, 0)
@@ -476,6 +476,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
     TOCA.SlotSelectTotem[totemCat][i]:SetFrameLevel(TOCA.Framelevel.Buttons)
     TOCA.SlotSelectTotem[totemCat][i]:SetBackdrop(TOCA.SetIcon(totemSpell[2]))
     TOCA.SlotSelectTotem[totemCat][i]:SetBackdropBorderColor(1, 1, 1, 0.6)
+    TOCA.SlotSelectTotem[totemCat][i]:RegisterForClicks("AnyDown", "AnyUp")
     TOCA.SlotSelectTotem[totemCat][i]:SetScript("OnEnter", function(self)
       TOCA.TooltipDisplay(self, totemSpell[1])
       if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
