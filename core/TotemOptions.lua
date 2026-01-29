@@ -83,8 +83,8 @@ for i=1, getn(TOCA._L.UI.TABS.OPTIONS) do
 	    TOCA.Button.TabOptionsBack[1]:SetSize(TOCA.TabWidth.Options-20, 30)
 			TOCA.FrameOptions:Hide()
 			if (not GameMenuFrame:IsShown()) then
-        ShowUIPanel(SettingsPanel)
-        --SettingsPanelMixin:OpenToCategory(OpenToCategory(Settings.KEYBINDINGS_CATEGORY_ID))
+        --ShowUIPanel(SettingsPanel)
+        Settings.OpenToCategory(Settings.KEYBINDINGS_CATEGORY_ID, TOCA.Category) --bindings.xml
         TOCA.Notification("ShowUIPanel", true)
 	    end
 			return

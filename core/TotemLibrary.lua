@@ -18,6 +18,8 @@ __Gversion, __Gbuild, __Gdate, __Gtoc = GetBuildInfo()
 TOCA = {
 	_L={},
 
+	Category = "|cff0070DDTotem Caddy", --options/keybindings
+
 	Backdrop={
 		General = {
 		  bgFile  = "Interface/Tooltips/UI-Tooltip-Background",

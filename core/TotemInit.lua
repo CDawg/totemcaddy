@@ -284,5 +284,12 @@ function TOCA.Init()
 	end
 	TOCA.ModelDraw("m_minimap", TOCA.Button.Minimap, 32, 42, 0, 5, 1, 500)
 
+  --Settings.CreateCategory("Totem Caddy")
+  local TOCAOpt = Settings.RegisterVerticalLayoutCategory(TOCA.Category)
+
+  
+
+  Settings.RegisterAddOnCategory(TOCAOpt)
+
   TOCA.Notification("TOCA.Init()", true)
 end
