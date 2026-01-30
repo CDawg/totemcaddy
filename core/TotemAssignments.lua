@@ -153,7 +153,7 @@ for i=1, MAX_RAID_MEMBERS do
 			local shamanSelection = TOCA.Dropdown.FrameAssignments[i].text:GetText()
 			local tankSelection = TOCA.FrameAssignments.MTName[i]:GetText()
 			if ((shamanSelection) and (tankSelection)) then
-				TOCA.SendPacket(TOCA.Net.assign_es .. i .. ",".. tankSelection .. "," .. shamanSelection, "RAID") --send author
+				TOCA.SendPacket(TOCA.Net.assign_es .. i .. ",".. tankSelection .. "," .. shamanSelection, TOCA.AddonChannel) --send author
 			end
 		end
 	end
@@ -288,7 +288,7 @@ function TOCA.NoTanksAssigned()
 end
 
 function TOCA.SendAuthorAssignment()
-	TOCA.SendPacket(TOCA.Net.assign_au .. TOCA.player.name .. " [" .. date("%Y-%m-%d %H:%M:%S") .. "]", "RAID") --send author
+	TOCA.SendPacket(TOCA.Net.assign_au .. TOCA.player.name .. " [" .. date("%Y-%m-%d %H:%M:%S") .. "]", TOCA.AddonChannel) --send author
 end
 
 function TOCA.SendAllAssignments()
@@ -297,7 +297,7 @@ function TOCA.SendAllAssignments()
 			local shamanSelection = TOCA.Dropdown.FrameAssignments[i].text:GetText()
 			local tankSelection = TOCA.FrameAssignments.MTName[i]:GetText()
 			if ((shamanSelection) and (tankSelection)) then
-				TOCA.SendPacket(TOCA.Net.assign_es .. i .. ",".. tankSelection .. "," .. shamanSelection, "RAID") --send author
+				TOCA.SendPacket(TOCA.Net.assign_es .. i .. ",".. tankSelection .. "," .. shamanSelection, TOCA.AddonChannel) --send author
 				--if (shamanSelection ~= TOCA.player.name) then
 					if ((tankSelection) and (UnitInRaid(shamanSelection))) then
 						if (TOCADB[TOCA.player.combine]["CONFIG"]["ESASSIGNMSG"] == "Custom") then
@@ -305,17 +305,17 @@ function TOCA.SendAllAssignments()
 								local channelID = GetChannelName(TOCADB[TOCA.player.combine]["CONFIG"]["ESASSIGNCHANNEL"])
 								if (channelID) then
 									--print(channelID)
-							    SendChatMessage("<".. TOCA._L.TITLE .."> " .. TOCA.player.name .. " has assigned " .. shamanSelection .. " [" .. tankSelection .. "] for Earth Shield", "CHANNEL", nil, channelID)
+							    C_ChatInfo.SendChatMessage("<".. TOCA._L.TITLE .."> " .. TOCA.player.name .. " has assigned " .. shamanSelection .. " [" .. tankSelection .. "] for Earth Shield", "CHANNEL", nil, channelID)
 							  else
-									SendChatMessage("<".. TOCA._L.TITLE .."> " .. TOCA.player.name .. " has assigned " .. shamanSelection .. " [" .. tankSelection .. "] for Earth Shield", "RAID", nil, shamanSelection)
+									C_ChatInfo.SendChatMessage("<".. TOCA._L.TITLE .."> " .. TOCA.player.name .. " has assigned " .. shamanSelection .. " [" .. tankSelection .. "] for Earth Shield", "RAID", nil, shamanSelection)
 								end
 							else --if all else fails, go to the raid
-								SendChatMessage("<".. TOCA._L.TITLE .."> " .. TOCA.player.name .. " has assigned " .. shamanSelection .. " [" .. tankSelection .. "] for Earth Shield", "RAID", nil, shamanSelection)
+								C_ChatInfo.SendChatMessage("<".. TOCA._L.TITLE .."> " .. TOCA.player.name .. " has assigned " .. shamanSelection .. " [" .. tankSelection .. "] for Earth Shield", "RAID", nil, shamanSelection)
 							end
 						elseif (TOCADB[TOCA.player.combine]["CONFIG"]["ESASSIGNMSG"] == "Whisper") then
-							SendChatMessage("<".. TOCA._L.TITLE .."> " .. TOCA.player.name .. " has assigned you [" .. tankSelection .. "] for Earth Shield", "WHISPER", nil, shamanSelection)
+							C_ChatInfo.SendChatMessage("<".. TOCA._L.TITLE .."> " .. TOCA.player.name .. " has assigned you [" .. tankSelection .. "] for Earth Shield", "WHISPER", nil, shamanSelection)
 					  else
-							SendChatMessage("<".. TOCA._L.TITLE .."> " .. TOCA.player.name .. " has assigned " .. shamanSelection .. " [" .. tankSelection .. "] for Earth Shield", "RAID", nil, shamanSelection)
+							C_ChatInfo.SendChatMessage("<".. TOCA._L.TITLE .."> " .. TOCA.player.name .. " has assigned " .. shamanSelection .. " [" .. tankSelection .. "] for Earth Shield", "RAID", nil, shamanSelection)
 						end
 					end
 				--end

@@ -13,7 +13,7 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
-TOCA.DEBUG = false
+TOCA.DEBUG = true
 
 TOCA._G = {
   title  = TOCA.colors.class[7][4] .. TOCA._L.TITLE .."|r",
@@ -38,15 +38,16 @@ if (TOCA.Game.version == 1) then
   TOCA._G.suffix = "Classic"
 end
 
-TOCA.Addon = "v" .. TOCA._G.version .. " " .. TOCA._G.suffix .. " ("..GetLocale()..")"
+TOCA.AddonChannel = "RAID" --default
+TOCA.Addon = "v" .. TOCA._G.version .. " " .. TOCA._G.suffix .. " ["..GetLocale().."]"
 
 TOCA.Net = {
   register  = C_ChatInfo.RegisterAddonMessagePrefix(TOCA._G.prefix),
   version   = "0xEFVe", --version
   assign_es = "0xEFES", --earthshield assign
   assign_au = "0xEFAU", --earthshield author
-  report_s  = "0xEuRS",--report send signal
-  report_g  = "0xEuRG",--report get signal
+  report_s  = "0xEuRS", --report send signal
+  report_g  = "0xEuRG", --report get signal
 }
 
 TOCA.OptionMenuOpen = 0
@@ -1486,7 +1487,7 @@ function TOCA.BuildTotemOrder()
 end
 
 function TOCA.ReportFeedSend() --check version match with neighbors
-	local source = "INSTANCE_CHAT"
+	local source = TOCA.AddonChannel
 	if (IsInGuild()) then
 		source = "GUILD"
   end

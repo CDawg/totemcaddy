@@ -250,6 +250,8 @@ TOCA = {
 
 }
 
+--C_ChatInfo.SendChatMessage
+
 function arrayToString(array)
   formstring=""
   for k,v in pairs(array) do
