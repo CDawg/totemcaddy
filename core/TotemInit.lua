@@ -283,10 +283,5 @@ function TOCA.Init()
 		--TOCA.ModelDraw("m_totemiccall", TOCA.Button.TotemicCall, 30, 40, 0, 6, 0.5, 50)
 	end
 	TOCA.ModelDraw("m_minimap", TOCA.Button.Minimap, 32, 42, 0, 5, 1, 500)
-
-  --local TOCAOpt = Settings.RegisterVerticalLayoutCategory(TOCA.Category)
-  --Settings.RegisterAddOnCategory(TOCA.FrameOptions)
-  --Settings.RegisterAddOnCategory(TOCAOpt)
-
   TOCA.Notification("TOCA.Init()", true)
 end

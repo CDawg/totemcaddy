@@ -903,3 +903,49 @@ TOCA.FrameOptionsMain.text = TOCA.FrameOptionsMain.Options:CreateFontString(nil,
 TOCA.FrameOptionsMain.text:SetFont(TOCA._G.font, 12, "OUTLINE")
 TOCA.FrameOptionsMain.text:SetPoint("CENTER", 0, 0)
 TOCA.FrameOptionsMain.text:SetText(TOCA._L.UI.OPTIONS.TITLE)
+
+-- Options Frame --
+--[==[
+local TOCAOpt = Settings.RegisterVerticalLayoutCategory(TOCA.Category)
+--Settings.RegisterAddOnCategory(TOCAOpt)
+
+Settings.TOCA={}
+Settings.TOCA.Button={}
+--Settings.TOCA.Button.OptionsOpen={}
+Settings.RegisterCanvasLayoutCategory(Settings.TOCA, "TESTING")
+Settings.TOCA.Button.OptionsOpen=CreateFrame("Button", nil, UIParent, "BackdropTemplate")
+Settings.TOCA.Button.OptionsOpen:SetSize(110, 25)
+Settings.TOCA.Button.OptionsOpen:SetPoint("CENTER", 0, -100)
+Settings.TOCA.Button.OptionsOpen:SetBackdrop(TOCA.Backdrop.Button)
+Settings.TOCA.Button.OptionsOpen:SetBackdropColor(0.6, 0, 0, 1)
+Settings.TOCA.Button.OptionsOpen:SetBackdropBorderColor(1, 1, 1, 0.6)
+Settings.TOCA.Button.OptionsOpen:SetScript("OnEnter", function(self)
+  self:SetBackdropBorderColor(1, 1, 0.8, 1)
+end)
+Settings.TOCA.Button.OptionsOpen:SetScript("OnLeave", function(self)
+  self:SetBackdropBorderColor(1, 1, 1, 0.6)
+end)
+Settings.TOCA.Button.OptionsOpen:SetScript("OnClick", function()
+  TOCA.CloseAllMenus()
+  TOCA.FrameOptions:Show()
+	TOCA.OptionMenuOpen = 1
+	TOCA.FrameAssignmentPersonal:Show()
+end)
+Settings.TOCA.Button.OptionsOpenText = Settings.TOCA.Button.OptionsOpen:CreateFontString(nil, "ARTWORK")
+Settings.TOCA.Button.OptionsOpenText:SetFont(TOCA._G.font, 11)
+Settings.TOCA.Button.OptionsOpenText:SetPoint("CENTER", 0, 0)
+Settings.TOCA.Button.OptionsOpenText:SetText("Options")
+--TOCA.Button.OptionsOpen:SetFrameStrata("TOOLTIP")
+
+--Settings.CreateFrame("Button", nil, UIParent, "BackdropTemplate")
+Settings.RegisterAddOnCategory(TOCAOpt)
+]==]--
+
+--local TOCAOpt = Settings.RegisterVerticalLayoutCategory(TOCA.Category)
+--Settings.RegisterAddOnCategory(TOCA.FrameOptions)
+--Settings.RegisterAddOnCategory(TOCAOpt)
+--Settings.RegisterCanvasLayoutCategory(TOCA.FrameOptions, TOCA.Category)
+--Settings.RegisterCanvasLayoutCategory(Settings.TOCA.Button.OptionsOpen, TOCA.Category)
+--Settings.RegisterAddOnCategory(TOCAOpt)
+--Settings.RegisterCanvasLayoutCategory(Settings.TOCA.Button.OptionsOpen, TOCA.Category)
+--Settings.RegisterCanvasLayoutSubcategory(TOCA.Category, TOCA.FrameOptions, "NAME")

@@ -1,3 +1,6 @@
+### 3.12
+Bugfix for Vertical and Segmented frames Not registering clicks
+
 ### 3.11
 Updating for TBC Anni
 

@@ -18,7 +18,7 @@ TOCA.DEBUG = false
 TOCA._G = {
   title  = TOCA.colors.class[7][4] .. TOCA._L.TITLE .."|r",
   author = "Porthias",
-  version= 3.11,
+  version= 3.12,
   CMD    = "/toca",
   width  = 150,
   height = 85,
@@ -1365,21 +1365,6 @@ function TOCA.Combat(event)
   end
 end
 
-function TOCA.InventoryCountItem(itemID)
-  --[==[
-	local i = 0
-  for bag = 0, NUM_BAG_SLOTS do
-    for slot=1,C_Container.GetContainerNumSlots(bag) do
-      if (itemID == C_Container.GetContainerItemID(bag,slot)) then
-        i=i+(select(2, C_Container.GetContainerItemInfo(bag, slot)))
-      end
-    end
-  end
-  return i
-	]==]--
-	return 10
-end
-
 function TOCA.SendPacket(packet, channel, compress)
   compressPacket = packet
   if (compress) then
@@ -1500,12 +1485,8 @@ function TOCA.BuildTotemOrder()
   TOCA.SetTotemOrder()
 end
 
-function TOCA.FrameBorder(frame)
-
-end
-
-function TOCA.ReportFeedSend()
-	local source = "GUILD"
+function TOCA.ReportFeedSend() --check version match with neighbors
+	local source = "INSTANCE_CHAT"
 	if (IsInGuild()) then
 		source = "GUILD"
   end
