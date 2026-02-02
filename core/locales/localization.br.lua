@@ -33,7 +33,7 @@ TOCA._L = {
 		BUTTON = {"Fechar", "Salve", "Excluir", "sim", "Não"},
 
 		TABS = {
-		  OPTIONS= {"Quadro", "Conjuntos", "Notificações", "Minimapa", "Atribuições", "Teclado"},
+		  OPTIONS= {"Quadro", "Conjuntos", "Notificações", "Weapons", "Minimapa", "Atribuições", "Teclado"},
 		  HELP   = {"Atualizações", "Contato", "Crédito"}
 		},
 

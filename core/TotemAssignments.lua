@@ -524,14 +524,14 @@ function TOCA.GetShieldFromTanks()
 	end
 end
 
-TOCA.FrameAssignmentPersonalOptionsTitle = TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]]:CreateFontString(nil, "ARTWORK")
+TOCA.FrameAssignmentPersonalOptionsTitle = TOCA.FrameOptionsPage[TOCA.TABPage.RAID]:CreateFontString(nil, "ARTWORK")
 TOCA.FrameAssignmentPersonalOptionsTitle:SetFont(TOCA._G.font, 12)
 TOCA.FrameAssignmentPersonalOptionsTitle:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -20)
 TOCA.FrameAssignmentPersonalOptionsTitle:SetText(TOCA._L.UI.ASSIGNMENTS.TITLE)
 TOCA.FrameAssignmentPersonalOptionsTitle:SetTextColor(1, 1, 0.5, 1)
 
 TOCA.Button.FrameAssignmentPersonalTest={}
-TOCA.Button.FrameAssignmentPersonalTest= CreateFrame("Button", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]], "BackdropTemplate")
+TOCA.Button.FrameAssignmentPersonalTest= CreateFrame("Button", nil, TOCA.FrameOptionsPage[TOCA.TABPage.RAID], "BackdropTemplate")
 TOCA.Button.FrameAssignmentPersonalTest:SetSize(120, 25)
 TOCA.Button.FrameAssignmentPersonalTest:SetPoint("TOPLEFT", 20, -50)
 TOCA.Button.FrameAssignmentPersonalTest:SetBackdrop(TOCA.Backdrop.Button)
@@ -555,7 +555,7 @@ TOCA.Button.FrameAssignmentPersonalTest:SetScript("OnClick", function()
 	TOCA.FrameAssignmentPersonal:Show()
 end)
 TOCA.Checkbox.FrameAssignments={}
-TOCA.Checkbox.FrameAssignments = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.FrameAssignments = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.TABPage.RAID], "ChatConfigCheckButtonTemplate")
 TOCA.Checkbox.FrameAssignments:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -90)
 TOCA.Checkbox.FrameAssignments:SetChecked(1)
 TOCA.Checkbox.FrameAssignments.text = TOCA.Checkbox.FrameAssignments:CreateFontString(nil, "ARTWORK")
@@ -579,7 +579,7 @@ end)
 
 TOCA.FrameAssignmentPersonalOptions={}
 TOCA.FrameAssignmentPersonalOptions.Scale={}
-TOCA.FrameAssignmentPersonalOptions.Scale = CreateFrame("Slider", "TOCA.FrameAssignmentPersonalOptions.Scale", TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]], TOCA.Backdrop.Slider.Template)
+TOCA.FrameAssignmentPersonalOptions.Scale = CreateFrame("Slider", "TOCA.FrameAssignmentPersonalOptions.Scale", TOCA.FrameOptionsPage[TOCA.TABPage.RAID], TOCA.Backdrop.Slider.Template)
 TOCA.FrameAssignmentPersonalOptions.Scale:SetWidth(140)
 TOCA.FrameAssignmentPersonalOptions.Scale:SetHeight(14)
 TOCA.FrameAssignmentPersonalOptions.Scale:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -150)
@@ -592,7 +592,7 @@ TOCA.FrameAssignmentPersonalOptions.Scale.Val = TOCA.FrameAssignmentPersonalOpti
 TOCA.FrameAssignmentPersonalOptions.Scale.Val:SetFont(TOCA._G.font, 11, "OUTLINE")
 TOCA.FrameAssignmentPersonalOptions.Scale.Val:SetPoint("CENTER", 0, -14)
 TOCA.FrameAssignmentPersonalOptions.Scale.Val:SetText("")
-TOCA.FrameAssignmentPersonalOptions.Scale.Title = TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]]:CreateFontString(nil, "ARTWORK")
+TOCA.FrameAssignmentPersonalOptions.Scale.Title = TOCA.FrameOptionsPage[TOCA.TABPage.RAID]:CreateFontString(nil, "ARTWORK")
 TOCA.FrameAssignmentPersonalOptions.Scale.Title:SetFont(TOCA._G.font, 12)
 TOCA.FrameAssignmentPersonalOptions.Scale.Title:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -130)
 TOCA.FrameAssignmentPersonalOptions.Scale.Title:SetText(TOCA._L.UI.OPTIONS[3][1])
@@ -610,7 +610,7 @@ TOCA.FrameAssignmentPersonalOptions.Scale:SetScript("OnLeave", function()
   TOCADB[TOCA.player.combine]["CONFIG"]["SCALEPERS"] = TOCA.Round(TOCA.FrameAssignmentPersonalOptions.Scale:GetValue(), 2)
   TOCA.CloseAllMenus()
 end)
-TOCA.Button.FrameAssignmentPersonalOptionsReset= CreateFrame("Button", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]], "BackdropTemplate")
+TOCA.Button.FrameAssignmentPersonalOptionsReset= CreateFrame("Button", nil, TOCA.FrameOptionsPage[TOCA.TABPage.RAID], "BackdropTemplate")
 TOCA.Button.FrameAssignmentPersonalOptionsReset:SetSize(25, 25)
 TOCA.Button.FrameAssignmentPersonalOptionsReset:SetPoint("TOPLEFT", 180, -140)
 TOCA.Button.FrameAssignmentPersonalOptionsReset:SetBackdrop(TOCA.Backdrop.Button)
@@ -635,7 +635,7 @@ TOCA.Button.FrameAssignmentPersonalOptionsReset.icon:SetPoint("CENTER", 0, 0)
 TOCA.Button.FrameAssignmentPersonalOptionsReset.icon:SetTexture("Interface/Buttons/UI-RefreshButton")
 
 TOCA.Dropdown.FrameAssignmentPostTitle={}
-TOCA.Dropdown.FrameAssignmentPostTitle = TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]]:CreateFontString(nil, "ARTWORK")
+TOCA.Dropdown.FrameAssignmentPostTitle = TOCA.FrameOptionsPage[TOCA.TABPage.RAID]:CreateFontString(nil, "ARTWORK")
 TOCA.Dropdown.FrameAssignmentPostTitle:SetFont(TOCA._G.font, 12)
 TOCA.Dropdown.FrameAssignmentPostTitle:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -200)
 TOCA.Dropdown.FrameAssignmentPostTitle:SetText(TOCA._L.UI.ASSIGNMENTS[4][1])
@@ -644,7 +644,7 @@ TOCA.Dropdown.FrameAssignmentPostTitle:SetTextColor(1, 1, 0.5, 1)
 TOCA.Dropdown.FrameAssignmentPost={}
 
 TOCA.Channels={"Raid", "Whisper", "Custom"}
-TOCA.Dropdown.FrameAssignmentPost = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]], "UIDropDownMenuTemplate")
+TOCA.Dropdown.FrameAssignmentPost = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA.TABPage.RAID], "UIDropDownMenuTemplate")
 TOCA.Dropdown.FrameAssignmentPost:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"]-20, -220)
 TOCA.Dropdown.FrameAssignmentPost.displayMode = "MENU"
 TOCA.Dropdown.FrameAssignmentPost:SetAlpha(1)
@@ -682,14 +682,14 @@ end
 UIDropDownMenu_SetWidth(TOCA.Dropdown.FrameAssignmentPost, 125)
 
 --TOCA.FrameAssignmentPostChannelTitle={}
-TOCA.FrameAssignmentPostChannelTitle = TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]]:CreateFontString(nil, "ARTWORK")
+TOCA.FrameAssignmentPostChannelTitle = TOCA.FrameOptionsPage[TOCA.TABPage.RAID]:CreateFontString(nil, "ARTWORK")
 TOCA.FrameAssignmentPostChannelTitle:SetFont(TOCA._G.font, 12)
 TOCA.FrameAssignmentPostChannelTitle:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"]+4, -260)
 TOCA.FrameAssignmentPostChannelTitle:SetText(TOCA._L.UI.ASSIGNMENTS[5][1])
 TOCA.FrameAssignmentPostChannelTitle:SetTextColor(1, 1, 0.5, 1)
 TOCA.FrameAssignmentPostChannelTitle:Hide()
 
-TOCA.FrameAssignmentPostChannel = CreateFrame("EditBox", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]], "BackdropTemplate")
+TOCA.FrameAssignmentPostChannel = CreateFrame("EditBox", nil, TOCA.FrameOptionsPage[TOCA.TABPage.RAID], "BackdropTemplate")
 TOCA.FrameAssignmentPostChannel:SetWidth(150)
 TOCA.FrameAssignmentPostChannel:SetHeight(24)
 TOCA.FrameAssignmentPostChannel:SetFontObject(GameFontWhite)

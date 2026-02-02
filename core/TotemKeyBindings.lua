@@ -16,7 +16,7 @@ the copyright holders.
 --[==[
 TOCA.Button.KeyBind={}
 for i=1, 5 do
-	TOCA.Button.KeyBind[i] = CreateFrame("Button", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]], "BackdropTemplate")
+	TOCA.Button.KeyBind[i] = CreateFrame("Button", nil, TOCA.FrameOptionsPage[TOCA.TABPage.KEYBINDINGS], "BackdropTemplate")
 	TOCA.Button.KeyBind[i]:SetSize(140, 25)
 	TOCA.Button.KeyBind[i]:SetPoint("TOPLEFT", 160, -i*25-2)
 	TOCA.Button.KeyBind[i]:SetBackdrop(TOCA.Backdrop.Button)
@@ -38,7 +38,7 @@ for i=1, 5 do
 	TOCA.Button.KeyBind[i].Text:SetPoint("CENTER", 0, 0)
 	TOCA.Button.KeyBind[i].Text:SetText(i)
 
-	TOCA.Button.KeyBind[i].Title = TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[5]]:CreateFontString(nil, "ARTWORK")
+	TOCA.Button.KeyBind[i].Title = TOCA.FrameOptionsPage[TOCA.TABPage.KEYBINDINGS]:CreateFontString(nil, "ARTWORK")
 	TOCA.Button.KeyBind[i].Title:SetFont(TOCA._G.font, 12)
 	TOCA.Button.KeyBind[i].Title:SetPoint("TOPLEFT", 20, -i*25-10)
 	TOCA.Button.KeyBind[i].Title:SetText(i)

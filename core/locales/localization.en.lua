@@ -33,10 +33,10 @@ TOCA._L = {
 		BUTTON = {"Close", "Save", "Delete", "Yes", "No"},
 
 		TABS = {
-		  OPTIONS= {"Frame", "Totem Sets", "Notifications", "Minimap", "Assignments", "Key Bindings"},
+		  OPTIONS= {"Frame", "Totem Sets", "Notifications", "Weapons", "Minimap", "Raid|nAssignments", "Key Bindings"},
 		  HELP   = {"Updates", "Contact", "Credit"}
 		},
-		
+
 		SLIDER = {
 		  "Low",
 		  "High",

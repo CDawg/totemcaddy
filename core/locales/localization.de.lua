@@ -33,7 +33,7 @@ TOCA._L = {
 		BUTTON = {"Nah dran", "Speichern", "Löschen", "ja", "Nein"},
 
 		TABS = {
-		  OPTIONS= {"Rahmen", "Sets", "Warnungen", "Minikarte", "Zuordnungen", "Klaviatur"},
+		  OPTIONS= {"Rahmen", "Sets", "Warnungen", "Weapons", "Minikarte", "Zuordnungen", "Klaviatur"},
 		  HELP   = {"Aktualisierung", "Kontakt", "Kredit"}
 		},
 

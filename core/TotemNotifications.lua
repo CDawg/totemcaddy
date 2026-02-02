@@ -17,14 +17,14 @@ local NumTotemNotificationSounds = 20
 local NumShieldNotificationSounds = 20
 
 TOCA.FrameOptions.Title.Notifs={}
-TOCA.FrameOptions.Title.Notifs = TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[3]]:CreateFontString(nil, "ARTWORK")
+TOCA.FrameOptions.Title.Notifs = TOCA.FrameOptionsPage[TOCA.TABPage.NOTIFICATIONS]:CreateFontString(nil, "ARTWORK")
 TOCA.FrameOptions.Title.Notifs:SetFont(TOCA._G.font, 12)
 TOCA.FrameOptions.Title.Notifs:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -20)
 TOCA.FrameOptions.Title.Notifs:SetText(TOCA._L.UI.NOTIFICATIONS.TITLE)
 TOCA.FrameOptions.Title.Notifs:SetTextColor(1, 1, 0.5, 1)
 
 TOCA.Checkbox.NotifyCombat={}
-TOCA.Checkbox.NotifyCombat = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[3]], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.NotifyCombat = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.TABPage.NOTIFICATIONS], "ChatConfigCheckButtonTemplate")
 TOCA.Checkbox.NotifyCombat:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -40)
 TOCA.Checkbox.NotifyCombat:SetChecked(1)
 TOCA.Checkbox.NotifyCombat.text = TOCA.Checkbox.NotifyCombat:CreateFontString(nil, "ARTWORK")
@@ -46,7 +46,7 @@ TOCA.Checkbox.NotifyCombat:SetScript("OnLeave", function()
 end)
 
 TOCA.Checkbox.ExpireMessage={}
-TOCA.Checkbox.ExpireMessage = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[3]], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.ExpireMessage = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.TABPage.NOTIFICATIONS], "ChatConfigCheckButtonTemplate")
 TOCA.Checkbox.ExpireMessage:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -80)
 TOCA.Checkbox.ExpireMessage:SetChecked(1)
 TOCA.Checkbox.ExpireMessage.text = TOCA.Checkbox.ExpireMessage:CreateFontString(nil, "ARTWORK")
@@ -68,7 +68,7 @@ TOCA.Checkbox.ExpireMessage:SetScript("OnLeave", function()
 end)
 
 TOCA.Checkbox.ExpireSound={}
-TOCA.Checkbox.ExpireSound = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[3]], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.ExpireSound = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.TABPage.NOTIFICATIONS], "ChatConfigCheckButtonTemplate")
 TOCA.Checkbox.ExpireSound:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -100)
 TOCA.Checkbox.ExpireSound:SetChecked(1)
 TOCA.Checkbox.ExpireSound.text = TOCA.Checkbox.ExpireSound:CreateFontString(nil, "ARTWORK")
@@ -98,7 +98,7 @@ end
 
 TOCA.Dropdown.Sound={}
 TOCA.Dropdown.Sound.TotemExpire={}
-TOCA.Dropdown.Sound.TotemExpire = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[3]], "UIDropDownMenuTemplate")
+TOCA.Dropdown.Sound.TotemExpire = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA.TABPage.NOTIFICATIONS], "UIDropDownMenuTemplate")
 TOCA.Dropdown.Sound.TotemExpire:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"]+10, -120)
 TOCA.Dropdown.Sound.TotemExpire.displayMode = "MENU"
 TOCA.Dropdown.Sound.TotemExpire.text = TOCA.Dropdown.Sound.TotemExpire:CreateFontString(nil, "ARTWORK")
@@ -134,7 +134,7 @@ end
 UIDropDownMenu_SetWidth(TOCA.Dropdown.Sound.TotemExpire, 125)
 
 TOCA.Checkbox.ShieldMessage={}
-TOCA.Checkbox.ShieldMessage = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[3]], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.ShieldMessage = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.TABPage.NOTIFICATIONS], "ChatConfigCheckButtonTemplate")
 TOCA.Checkbox.ShieldMessage:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -160)
 TOCA.Checkbox.ShieldMessage:SetChecked(1)
 TOCA.Checkbox.ShieldMessage.text = TOCA.Checkbox.ShieldMessage:CreateFontString(nil, "ARTWORK")
@@ -156,7 +156,7 @@ TOCA.Checkbox.ShieldMessage:SetScript("OnLeave", function()
 end)
 
 TOCA.Checkbox.ShieldExpire={}
-TOCA.Checkbox.ShieldExpire = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[3]], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.ShieldExpire = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.TABPage.NOTIFICATIONS], "ChatConfigCheckButtonTemplate")
 TOCA.Checkbox.ShieldExpire:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -180)
 TOCA.Checkbox.ShieldExpire:SetChecked(1)
 TOCA.Checkbox.ShieldExpire.text = TOCA.Checkbox.ShieldExpire:CreateFontString(nil, "ARTWORK")
@@ -185,7 +185,7 @@ for i=1, NumShieldNotificationSounds do
 end
 
 TOCA.Dropdown.Sound.ShieldExpire={}
-TOCA.Dropdown.Sound.ShieldExpire = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[3]], "UIDropDownMenuTemplate")
+TOCA.Dropdown.Sound.ShieldExpire = CreateFrame("Frame", nil, TOCA.FrameOptionsPage[TOCA.TABPage.NOTIFICATIONS], "UIDropDownMenuTemplate")
 TOCA.Dropdown.Sound.ShieldExpire:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"]+10, -200)
 TOCA.Dropdown.Sound.ShieldExpire.displayMode = "MENU"
 TOCA.Dropdown.Sound.ShieldExpire.text = TOCA.Dropdown.Sound.ShieldExpire:CreateFontString(nil, "ARTWORK")
@@ -221,7 +221,7 @@ end
 UIDropDownMenu_SetWidth(TOCA.Dropdown.Sound.ShieldExpire, 125)
 
 TOCA.Checkbox.TotemRadiusVisual={}
-TOCA.Checkbox.TotemRadiusVisual = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA._L.UI.TABS.OPTIONS[3]], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.TotemRadiusVisual = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.TABPage.NOTIFICATIONS], "ChatConfigCheckButtonTemplate")
 TOCA.Checkbox.TotemRadiusVisual:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -240)
 TOCA.Checkbox.TotemRadiusVisual:SetChecked(1)
 TOCA.Checkbox.TotemRadiusVisual.text = TOCA.Checkbox.TotemRadiusVisual:CreateFontString(nil, "ARTWORK")
