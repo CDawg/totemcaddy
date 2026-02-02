@@ -1,3 +1,6 @@
+### 3.20
+Added the totem frame set name to the Classic frame drop down
+
 ### 3.12
 Bugfix for Vertical and Segmented frames Not registering clicks
 
