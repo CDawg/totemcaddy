@@ -37,6 +37,11 @@ TOCA._L = {
 		  HELP   = {"Actualizaciones", "Contactos", "Crédito"}
 		},
 
+		SLIDER = {
+		  "Low",
+		  "High",
+	  },
+
 		OPTIONS = {
 			TITLE = "Options Menu",
 		  {"Frame Totem Layout",       "|n|cffffffffClassic|r|nFour primary totems that are commonly used and selectable or profile built selection.|n|n|cffffffffGrid Vertical|r|nAll known Totems are displayed vertically organized by category row.|n|n|cffffffffGrid Horizontal|r|nAll known Totems are displayed horizontally organized by category row.|n|n|cffffffffThe totem category orders are configurable in the options menu."},

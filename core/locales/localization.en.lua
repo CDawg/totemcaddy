@@ -36,6 +36,11 @@ TOCA._L = {
 		  OPTIONS= {"Frame", "Totem Sets", "Notifications", "Minimap", "Assignments", "Key Bindings"},
 		  HELP   = {"Updates", "Contact", "Credit"}
 		},
+		
+		SLIDER = {
+		  "Low",
+		  "High",
+	  },
 
 		OPTIONS = {
 			TITLE = "Options Menu",

@@ -38,4 +38,4 @@ TOCA.FrameWeap.Background:SetBackdropColor(0, 0, 0, 1)
 TOCA.FrameWeap.Background:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.FrameWeap.Background:SetFrameLevel(TOCA.Framelevel.Background)
 
-TOCA.FrameWeap:Hide()
+--TOCA.FrameWeap:Hide()

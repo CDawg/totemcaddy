@@ -170,6 +170,7 @@ TOCA.Dropdown.FrameStrat.onClick = function(self, checked)
   TOCA.Notification(self.value, true)
   TOCADB[TOCA.player.combine]["CONFIG"]["FRAMELEVEL"] = self.value
   TOCA.FrameMain:SetFrameStrata(self.value)
+  TOCA.FrameWeap:SetFrameStrata(self.value)
 end
 TOCA.Dropdown.FrameStrat.initialize = function(self, level)
   local info = UIDropDownMenu_CreateInfo()
@@ -217,6 +218,7 @@ getglobal(TOCA.Slider.Scale:GetName() .. 'High'):SetText('2')
 --getglobal(TOCA.Slider.Scale:GetName() .. 'Text'):SetText("Scale")
 TOCA.Slider.Scale:SetScript("OnValueChanged", function()
   TOCA.FrameMain:SetScale(TOCA.Round(TOCA.Slider.Scale:GetValue(), 2))
+  TOCA.FrameWeap:SetScale(TOCA.Round(TOCA.Slider.Scale:GetValue(), 2))
 	for totemCat,v in pairsByKeys(TOCA.totems) do
 		TOCA.FrameSeg[totemCat]:SetScale(TOCA.Round(TOCA.Slider.Scale:GetValue(), 2))
 	end
@@ -271,6 +273,8 @@ TOCA.Button.ResetPosition:SetScript("OnClick", function()
   TOCA.CloseAllMenus()
   TOCA.FrameMain:ClearAllPoints()
   TOCA.FrameMain:SetPoint("CENTER", 0, -140)
+  TOCA.FrameWeap:ClearAllPoints()
+  TOCA.FrameWeap:SetPoint("CENTER", 0, -140)
 	local totemCount = 0
 	for totemCat,v in pairsByKeys(TOCA.totems) do
 		totemCount = totemCount+1
@@ -310,6 +314,7 @@ getglobal(TOCA.Slider.OpacityBG:GetName() .. 'Low'):SetText('0')
 getglobal(TOCA.Slider.OpacityBG:GetName() .. 'High'):SetText('1')
 TOCA.Slider.OpacityBG:SetScript("OnValueChanged", function()
   TOCA.FrameMain.Background:SetAlpha(TOCA.Round(TOCA.Slider.OpacityBG:GetValue(), 2))
+  TOCA.FrameWeap.Background:SetAlpha(TOCA.Round(TOCA.Slider.OpacityBG:GetValue(), 2))
   --TOCA.Button.CloseMain:SetAlpha(TOCA.Round(TOCA.Slider.OpacityBG:GetValue(), 2))
   TOCA.Button.Options:SetAlpha(TOCA.Round(TOCA.Slider.OpacityBG:GetValue(), 2))
   TOCA.Button.TotemicCall.ECL:SetAlpha(TOCA.Round(TOCA.Slider.OpacityBG:GetValue(), 2))

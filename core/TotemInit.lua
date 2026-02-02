@@ -15,8 +15,10 @@ the copyright holders.
 
 function TOCA.Init()
   TOCA.FrameMain:Hide()
+  TOCA.FrameWeap:Hide()
   if (TOCA.player.classID == 7) then --shaman
     TOCA.FrameMain:Show()
+    TOCA.FrameWeap:Show()
 		TOCA.Button.Minimap:Show()
   else
     TOCA.FrameHelp:Hide()
@@ -54,7 +56,7 @@ function TOCA.Init()
 		if (TOCADB[TOCA.player.combine]["RAID"] == nil) then
 			TOCADB[TOCA.player.combine]["RAID"] = {}
 		end
-
+    --loading profile
     TOCA.Notification(TOCA._L.INIT[2] .. ": " .. TOCA.player.combine)
     if (TOCADB[TOCA.player.combine]["DISABLED"] == "YES") then
       TOCA.FrameMain:Hide()
@@ -68,7 +70,6 @@ function TOCA.Init()
       TOCA.FrameAssignmentPersonalOptions.Scale.Val:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["SCALEPERS"])
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["MAINMENU"] == "OFF") then
-      --TOCA.FrameMain.Background:SetBackdrop(TOCA.Backdrop.General)
       TOCA.Button.CloseMain:Hide()
       TOCA.Checkbox.MainMenu:SetChecked(nil)
       TOCA.FrameMain.Background:SetPoint("CENTER", 0, 0)
@@ -170,6 +171,7 @@ function TOCA.Init()
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMELEVEL"]) then
       TOCA.FrameMain:SetFrameStrata(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMELEVEL"])
+      TOCA.FrameWeap:SetFrameStrata(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMELEVEL"])
       TOCA.Dropdown.FrameStrat.text:SetText(TOCADB[TOCA.player.combine]["CONFIG"]["FRAMELEVEL"])
     end
     if (TOCADB[TOCA.player.combine]["LASTSAVED"]) then
