@@ -679,7 +679,7 @@ TOCA.FrameMain.AnkhFrame.text:SetPoint("CENTER", TOCA.FrameMain.AnkhFrame, "CENT
 TOCA.FrameMain.AnkhFrame.text:SetText(TOCA.AnkhCount)
 --TOCA.FrameMain.AnkhFrame.text:SetShadowOffset(1, 1)
 TOCA.FrameMain.AnkhFrame:SetScript("OnEnter", function(self)
-	TOCA.TooltipDisplay(self, TOCA._L.INIT[3], TOCA._L.Ankh())
+	TOCA.TooltipDisplay(self, TOCA._L.INIT[3], TOCA._L.Ankh(TOCA.AnkhCount))
 end)
 TOCA.FrameMain.AnkhFrame:SetScript("OnLeave", function(self)
   TOCA.CloseAllMenus()
