@@ -348,7 +348,6 @@ TOCA.Dropdown.Sets.text:SetPoint("TOPLEFT", TOCA.Dropdown.Sets, "TOPLEFT", 25, -
 TOCA.Dropdown.Sets.text:SetText(TOCA.Dropdown.Menu[1])
 TOCA.FrameSetsProfile:SetText(TOCA.Dropdown.Menu[1])
 TOCA.Dropdown.Sets.onClick = function(self, checked)
-  --TOCA.Dropdown.Sets.text:SetText(self.value)
   TOCA.SetDDMenu(TOCA.Dropdown.Sets, self.value)
   TOCA.FrameSetsProfile:SetText(self.value)
 end

@@ -175,6 +175,7 @@ function TOCA.Init()
     if (TOCADB[TOCA.player.combine]["LASTSAVED"]) then
       TOCA.SetDDMenu(TOCA.Dropdown.Main, TOCADB[TOCA.player.combine]["LASTSAVED"])
       TOCA.FrameSetsProfile:SetText(TOCADB[TOCA.player.combine]["LASTSAVED"])
+      TOCA.Button.DropdownMain.text:SetText(string.sub(TOCADB[TOCA.player.combine]["LASTSAVED"], 0, 18))
     end
     if (TOCADB[TOCA.player.combine]["HELP"] == TOCA._G.version) then
       TOCA.FrameHelp:Hide()
@@ -184,6 +185,12 @@ function TOCA.Init()
       TOCAFrameMainPos = split(TOCADB[TOCA.player.combine]["CONFIG"]["MAINPOS"], ",")
       TOCA.FrameMain:ClearAllPoints()
       TOCA.FrameMain:SetPoint(TOCAFrameMainPos[1], tonumber(TOCAFrameMainPos[2]), tonumber(TOCAFrameMainPos[3]))
+    end
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["WEAPPOS"]) then
+      local TOCAFrameWeapPos = {}
+      TOCAFrameWeapPos = split(TOCADB[TOCA.player.combine]["CONFIG"]["WEAPPOS"], ",")
+      TOCA.FrameWeap:ClearAllPoints()
+      TOCA.FrameWeap:SetPoint(TOCAFrameWeapPos[1], tonumber(TOCAFrameWeapPos[2]), tonumber(TOCAFrameWeapPos[3]))
     end
 		for totemCat,v in pairsByKeys(TOCA.totems) do
 			if (TOCADB[TOCA.player.combine]["CONFIG"]["SEG_POS_" .. totemCat]) then
