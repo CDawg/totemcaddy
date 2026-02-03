@@ -13,7 +13,7 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
-TOCA.DEBUG = true
+TOCA.DEBUG = false
 
 TOCA._G = {
   title  = TOCA.colors.class[7][4] .. TOCA._L.TITLE .."|r",
@@ -78,6 +78,14 @@ TOCA._L.SPELLS.SHIELDS = {
 	TOCA.IdentifySpell(TOCA.spell.LIGHTNING_SHIELD),
 	TOCA.IdentifySpell(TOCA.spell.EARTH_SHIELD),
 }
+--[==[
+TOCA._L.SPELLS.WEAPONS = {
+	TOCA.IdentifySpell(TOCA.spell.WEAPON_WIND),
+	TOCA.IdentifySpell(TOCA.spell.WEAPON_ROCK),
+	TOCA.IdentifySpell(TOCA.spell.WEAPON_FIRE),
+	TOCA.IdentifySpell(TOCA.spell.WEAPON_FROST),
+}
+]==]--
 
 --match the totems spells to their respective icons
 TOCA.totems = {FIRE={}, EARTH={}, WATER={}, AIR={}} --cached order
@@ -240,6 +248,10 @@ function TOCA.SetKeyBindOnLoad()
 		TOCA.SetKeyBindReset("SHIELD_WATER",    TOCA.IdentifySpell(TOCA.spell.WATER_SHIELD))
 		TOCA.SetKeyBindReset("SHIELD_LIGHTNING",TOCA.IdentifySpell(TOCA.spell.LIGHTNING_SHIELD))
 		TOCA.SetKeyBindReset("SHIELD_EARTH",    TOCA.IdentifySpell(TOCA.spell.EARTH_SHIELD))
+		TOCA.SetKeyBindReset("WEAP_WIND",       TOCA.IdentifySpell(TOCA.spell.WEAPON_WIND))
+		TOCA.SetKeyBindReset("WEAP_ROCK",       TOCA.IdentifySpell(TOCA.spell.WEAPON_ROCK))
+		TOCA.SetKeyBindReset("WEAP_FIRE",       TOCA.IdentifySpell(TOCA.spell.WEAPON_FIRE))
+		TOCA.SetKeyBindReset("WEAP_FROST",      TOCA.IdentifySpell(TOCA.spell.WEAPON_FROST))
     TOCA.Notification("TOCA.SetKeyBindOnLoad()", true)
   end
 end
@@ -517,6 +529,7 @@ end
 function TOCA.BorderFrame(enable)
   if (enable) then
     TOCA.FrameMain.Background:SetBackdropBorderColor(1, 1, 1, 0.6)
+		TOCA.FrameWeap.Background:SetBackdropBorderColor(1, 1, 1, 0.6)
     TOCA.Button.TotemicCall:SetBackdropBorderColor(1, 1, 1, 0.6)
     TOCA.Button.CloseMain:SetBackdropBorderColor(1, 1, 1, 0.8)
     TOCA.Button.DropdownMain:SetBackdropBorderColor(1, 1, 1, 0.6)
@@ -547,6 +560,7 @@ function TOCA.BorderFrame(enable)
     end
   else
     TOCA.FrameMain.Background:SetBackdropBorderColor(1, 1, 1, 0)
+		TOCA.FrameWeap.Background:SetBackdropBorderColor(1, 1, 1, 0)
     TOCA.Button.TotemicCall:SetBackdropBorderColor(1, 1, 1, 0)
     TOCA.Button.CloseMain:SetBackdropBorderColor(1, 1, 1, 0)
     TOCA.Button.DropdownMain:SetBackdropBorderColor(1, 1, 1, 0)

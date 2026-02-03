@@ -161,6 +161,10 @@ TOCA = {
 		LIGHTNING_SHIELD= 23551,
 		EARTH_SHIELD    = 974,
 		TOTEMIC_MASTERY = 16189, --talent
+		WEAPON_WIND     = 8232, --go to highest rank
+		WEAPON_ROCK     = 8017, --go to highest rank
+		WEAPON_FIRE     = 8024, --go to highest rank
+		WEAPON_FROST    = 8033, --go to highest rank
 
 		SHIELD = {
 		  WATER_SHIELD = {
@@ -183,7 +187,7 @@ TOCA = {
 				32593, --rank 2
 				32594, --rank 3
 			}
-		}
+		},
 	},
 
 	item = {

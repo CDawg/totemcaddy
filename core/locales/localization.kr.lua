@@ -16,6 +16,10 @@ TOCA._L = {
 		SHIELD_WATER    = "방패: 물",
 		SHIELD_LIGHTNING= "방패: 번개",
 		SHIELD_EARTH    = "방패: 지구",
+		WEAP_WIND       = "Weapon: Windfury",
+		WEAP_ROCK       = "Weapon: Rockbiter",
+		WEAP_FIRE       = "Weapon: Flametongue",
+		WEAP_FROST      = "Weapon: Frostbrand",
 	},
 
 	INIT = {
@@ -37,10 +41,7 @@ TOCA._L = {
 		  HELP   = {"업데이트", "연락하다", "신용 거래"}
 		},
 
-		SLIDER = {
-		  "Low",
-		  "High",
-	  },
+		SLIDER = {"Low", "High"},
 
 		OPTIONS = {
 			TITLE = "Options Menu",

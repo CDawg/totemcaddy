@@ -1,18 +1,14 @@
 <Bindings>
-  <Binding name="TOTEM_RECALL" header="TOTEMCADDY" category="|cff0070DDTotem Caddy">
-  </Binding>
-  <Binding name="TOTEM_AIR" category="|cff0070DDTotem Caddy">
-  </Binding>
-  <Binding name="TOTEM_EARTH" category="|cff0070DDTotem Caddy">
-  </Binding>
-  <Binding name="TOTEM_FIRE" category="|cff0070DDTotem Caddy">
-  </Binding>
-  <Binding name="TOTEM_WATER" category="|cff0070DDTotem Caddy">
-  </Binding>
-	<Binding name="SHIELD_WATER" category="|cff0070DDTotem Caddy">
-	</Binding>
-	<Binding name="SHIELD_LIGHTNING" category="|cff0070DDTotem Caddy">
-	</Binding>
-	<Binding name="SHIELD_EARTH" category="|cff0070DDTotem Caddy">
-	</Binding>
+  <Binding name="TOTEM_RECALL" header="TOTEMCADDY" category="|cff0070DDTotem Caddy"></Binding>
+  <Binding name="TOTEM_AIR" category="|cff0070DDTotem Caddy"></Binding>
+  <Binding name="TOTEM_EARTH" category="|cff0070DDTotem Caddy"></Binding>
+  <Binding name="TOTEM_FIRE" category="|cff0070DDTotem Caddy"></Binding>
+  <Binding name="TOTEM_WATER" category="|cff0070DDTotem Caddy"></Binding>
+	<Binding name="SHIELD_WATER" category="|cff0070DDTotem Caddy"></Binding>
+	<Binding name="SHIELD_LIGHTNING" category="|cff0070DDTotem Caddy"></Binding>
+	<Binding name="SHIELD_EARTH" category="|cff0070DDTotem Caddy"></Binding>
+  <Binding name="WEAP_WIND" category="|cff0070DDTotem Caddy"></Binding>
+  <Binding name="WEAP_ROCK" category="|cff0070DDTotem Caddy"></Binding>
+  <Binding name="WEAP_FIRE" category="|cff0070DDTotem Caddy"></Binding>
+  <Binding name="WEAP_FROST" category="|cff0070DDTotem Caddy"></Binding>
 </Bindings>

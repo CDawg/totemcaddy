@@ -16,6 +16,10 @@ TOCA._L = {
 		SHIELD_WATER    = "Escudo: Água",
 		SHIELD_LIGHTNING= "Escudo: Relâmpago",
 		SHIELD_EARTH    = "Escudo: Terra",
+		WEAP_WIND       = "Weapon: Windfury",
+		WEAP_ROCK       = "Weapon: Rockbiter",
+		WEAP_FIRE       = "Weapon: Flametongue",
+		WEAP_FROST      = "Weapon: Frostbrand",
 	},
 
 	INIT = {
@@ -37,10 +41,7 @@ TOCA._L = {
 		  HELP   = {"Atualizações", "Contato", "Crédito"}
 		},
 
-		SLIDER = {
-		  "Low",
-		  "High",
-	  },
+		SLIDER = {"Low", "High"},
 
 		OPTIONS = {
 			TITLE = "Options Menu",

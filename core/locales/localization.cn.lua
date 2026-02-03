@@ -16,6 +16,10 @@ TOCA._L = {
 		SHIELD_WATER    = "盾牌：水",
 		SHIELD_LIGHTNING= "盾牌：闪电",
 		SHIELD_EARTH    = "盾牌：地球",
+		WEAP_WIND       = "Weapon: Windfury",
+		WEAP_ROCK       = "Weapon: Rockbiter",
+		WEAP_FIRE       = "Weapon: Flametongue",
+		WEAP_FROST      = "Weapon: Frostbrand",
 	},
 
 	INIT = {
@@ -37,10 +41,7 @@ TOCA._L = {
 		  HELP   = {"更新", "接触", "信用"}
 		},
 
-		SLIDER = {
-		  "Low",
-		  "High",
-	  },
+		SLIDER = {"Low", "High"},
 
 		OPTIONS = {
 			TITLE = "Options Menu",
