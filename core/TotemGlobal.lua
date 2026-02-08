@@ -18,7 +18,7 @@ TOCA.DEBUG = false
 TOCA._G = {
   title  = TOCA.colors.class[7][4] .. TOCA._L.TITLE .."|r",
   author = "Porthias",
-  version= 3.13,
+  version= 3.21,
   CMD    = "/toca",
   width  = 150,
   height = 85,
@@ -27,7 +27,7 @@ TOCA._G = {
   prefix = "TotemCaddy",
   suffix = "TBC Anniversary",
   date   = date("%Y%m%d"),
-  update = 20260208,
+  update = 20260308,
 }
 --local _LName, _LTitle = GetAddOnInfo(TOCA._G.prefix)
 --TOCA._G.version = tonumber(string.sub(_LTitle, 26, 29))
@@ -672,12 +672,14 @@ end
 
 function TOCA.UpdateDDMenu(DDFrame, value)
   local DDArray = {TOCA.Dropdown.Menu[1]}
+
   for k,v in pairs(TOCADB[TOCA.player.combine]["PROFILES"]) do
     if (k ~= TOCA.Dropdown.Menu[1]) then
       table.insert(DDArray, k)
     end
   end
-  DDFrame.initialize = function(self, level)
+
+	DDFrame.initialize = function(self, level)
     local info = UIDropDownMenu_CreateInfo()
     local i = 0
     for k,v in pairs(DDArray) do

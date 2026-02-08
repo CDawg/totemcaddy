@@ -63,3 +63,8 @@ TOCA.Checkbox.MainLock:SetScript("OnClick", function(self)
   end
 end)
 ]==]--
+TOCA.FrameWeapOptions = {}
+TOCA.FrameWeapOptions.text = TOCA.FrameOptionsPage[TOCA.TABPage.WEAPONS]:CreateFontString(nil, "ARTWORK")
+TOCA.FrameWeapOptions.text:SetFont(TOCA._G.font, 12, "OUTLINE")
+TOCA.FrameWeapOptions.text:SetPoint("TOPLEFT", 25, -12)
+TOCA.FrameWeapOptions.text:SetText("Coming soon")

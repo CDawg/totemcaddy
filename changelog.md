@@ -1,3 +1,8 @@
+### 3.21
+Bugfix: Notifications and alerts (in combat)
+Bugfix: Updated event management for key binding
+Beta: Weapons menu (currently disabled)
+
 ### 3.20
 Added the totem frame set name to the Classic frame drop down
 
