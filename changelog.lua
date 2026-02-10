@@ -1,4 +1,7 @@
 TOCA.CHANGELOG = [==[
+### 3.23
+* Updated: Help Menu language locales
+
 ### 3.22
 * Bugfix: Adjusted totem minimap radius for Outlands
 
@@ -155,4 +158,3 @@ TOCA.CHANGELOG = [==[
 ### 2.37
 * Bugfix: Library LUA error on array split
 ]==]
-
