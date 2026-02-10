@@ -32,10 +32,6 @@ TOCA._G = {
 --local _LName, _LTitle = GetAddOnInfo(TOCA._G.prefix)
 --TOCA._G.version = tonumber(string.sub(_LTitle, 26, 29))
 
-TOCA.CREDIT = {
-	"knarfde",
-}
-
 TOCA.Game={}
 TOCA.Game.version = tonumber(string.sub(__Gversion, 1, 1))
 if (TOCA.Game.version == 1) then
