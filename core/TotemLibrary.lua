@@ -257,7 +257,7 @@ TOCA = {
 function arrayToString(array)
   formstring=""
   for k,v in pairs(array) do
-    formstring = formstring .. v .. "\n"
+    formstring = formstring .. v .. "|n"
   end
   return formstring
 end
