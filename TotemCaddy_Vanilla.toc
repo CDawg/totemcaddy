@@ -33,3 +33,4 @@ core/TotemMinimap.lua
 core/TotemWeapons.lua
 core/TotemKeyBindings.lua
 core/TotemViewExp.lua
+changelog.lua

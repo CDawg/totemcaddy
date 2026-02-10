@@ -3,6 +3,44 @@
 TOCA._L = {
 	TITLE = "Totem Caddy",
 
+	INTRO = {
+		{
+			"|cfffa7634 Totem Caddy Devs are looking for language translators! Please click the contact tab to get more details if you would like to contribute to Totem Caddy!|r",
+			"",
+			"|cfffab734First time using Totem Caddy?|r",
+			"Select the Help tab for more info|n|n",
+			"UPDATES",
+		},
+		{
+			"|cfffab734First time using Totem Caddy?|r|n",
+			"Let's get started by dragging the Totem Caddy anywhere on your screen saving the position.",
+			"> You can select totems in a category order (air, earth, fire, or water) by selecting the top arrows above the current totem icons.",
+			"> The totem order can be changed under the Totem Sets in the options window.",
+			"> You can also display all totems on screen in vertical/horizontal order based on totem category under the Frame Style options.",
+			"> Totems will be display on your minimap for proximity",
+			"> Totem/Shield timers and notifications can also be set within the options menu",
+			"For addition options or create totem sets:",
+			"> Select the cogwheel button or type /toca 'options', then select Totem Sets",
+			"> You can select which totem for each category, give it a name, then select the bottom arrow on the main frame dropdown to access it.",
+			"> Totem slot keybindings for your totem category slots: If you assign key bindings to to the totem slots for the very first time, you may have to do a '/reload'.",
+			"|n",
+		},
+		{
+			"Please feel free to reach out and let me know what improvements can be made.",
+			"",
+			"|cffffdf96Curseforge:|r https://www.curseforge.com/wow/addons/totem-caddy/",
+			"",
+			"|cffffdf96Discord:|r https://discord.com/users/Porthios#8963",
+		},
+		{
+			"|cffffdf96Special thanks to:|cffffffff|n",
+		},
+		{
+			"This message will not show again unless there is a new version.",
+			'Type "/toca help" anytime to display this help message.'
+		}
+  },
+
 	SPELLS = {
 		Unknown = "Unknown",
 	},
@@ -38,7 +76,7 @@ TOCA._L = {
 
 		TABS = {
 		  OPTIONS= {"Frame", "Totem Sets", "Notifications", "Weapons", "Minimap", "Raid|nAssignments", "Key Bindings"},
-		  HELP   = {"Updates", "Contact", "Credit"}
+		  HELP   = {"Updates", "Help", "Contact", "Credit"}
 		},
 
 		SLIDER = {"Low", "High"},

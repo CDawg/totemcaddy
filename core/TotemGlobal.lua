@@ -32,6 +32,10 @@ TOCA._G = {
 --local _LName, _LTitle = GetAddOnInfo(TOCA._G.prefix)
 --TOCA._G.version = tonumber(string.sub(_LTitle, 26, 29))
 
+TOCA.CREDIT = {
+	"knarfde",
+}
+
 TOCA.Game={}
 TOCA.Game.version = tonumber(string.sub(__Gversion, 1, 1))
 if (TOCA.Game.version == 1) then
@@ -40,6 +44,7 @@ end
 
 TOCA.AddonChannel = "RAID" --default
 TOCA.Addon = "v" .. TOCA._G.version .. " " .. TOCA._G.suffix .. " ["..GetLocale().."]"
+TOCA.INTROLOG = ""
 
 TOCA.Net = {
   register  = C_ChatInfo.RegisterAddonMessagePrefix(TOCA._G.prefix),

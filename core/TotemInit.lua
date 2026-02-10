@@ -292,5 +292,9 @@ function TOCA.Init()
 		--TOCA.ModelDraw("m_totemiccall", TOCA.Button.TotemicCall, 30, 40, 0, 6, 0.5, 50)
 	end
 	TOCA.ModelDraw("m_minimap", TOCA.Button.Minimap, 32, 42, 0, 5, 1, 500)
+
+  TOCA.INTROLOG = arrayToString(TOCA._L.INTRO[1]) .. TOCA.CHANGELOG:gsub("###", "") --:gsub("* ", "|r|cfffab734")
+  TOCA.TextFrame.text:SetText(TOCA.INTROLOG)
+
   TOCA.Notification("TOCA.Init()", true)
 end

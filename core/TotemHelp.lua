@@ -13,43 +13,18 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
-TOCA.HELP = {
-	UPDATES = {
-		"|cfffa7634 Totem Caddy Devs are looking for language translators! Please click the contact tab to get more details if you would like to contribute to Totem Caddy!|r",
-		"",
-	  "|cfffab734First time using Totem Caddy?|r",
-	  "Let's get started by dragging the Totem Caddy anywhere on your screen saving the position.",
-	  "> You can select totems in a category order (air, earth, fire, or water) by selecting the top arrows above the current totem icons.",
-	  "> The totem order can be changed under the Totem Sets in the options window.",
-	  "> You can also display all totems on screen in vertical/horizontal order based on totem category under the Frame Style options.",
-    "> Totems will be display on your minimap for proximity",
-    "> Totem/Shield timers and notifications can also be set within the options menu",
-	  "For addition options or create totem sets:",
-	  "> Select the cogwheel button or type /toca 'options', then select Totem Sets",
-	  "> You can select which totem for each category, give it a name, then select the bottom arrow on the main frame dropdown to access it.",
-	  "> Totem slot keybindings for your totem category slots: If you assign key bindings to to the totem slots for the very first time, you may have to do a '/reload'.",
-	  "|n",
-	},
-	CONTACT = {
-	  "Please feel free to reach out and let me know what improvements can be made.",
-		"",
-	  "|cffffdf96Curseforge:|r https://www.curseforge.com/wow/addons/totem-caddy/",
-		"",
-	  "|cffffdf96Discord:|r https://discord.com/users/Porthios#8963",
-	},
-	CREDIT = {
-	  "|cffffdf96Special thanks to:|cffffffff|n",
-    "Shockpopz",
-    "SteveBotella",
-    "WolfLove",
-    "|nAnd a few nameless heroes on Classic Myzrael|n",
-    "|nWritten by |cff006aa6Porthias|r (a.k.a. Port)",
-	},
-	FOOTER = {
-	  "This message will not show again unless there is a new version.",
-		'Type "/toca help" anytime to display this help message.'
-	}
+TOCA.CREDIT = {
+  "Shockpopz",
+  "SteveBotella",
+  "WolfLove",
+  "Torfear",
+	"knarfde",
+  "|nAnd a few nameless heroes on Classic Myzrael|n",
+  "|nWritten by |cff006aa6Porthias|r (a.k.a. Port)",
 }
+for _,v in ipairs(TOCA.CREDIT) do
+  table.insert(TOCA._L.INTRO[4], v)
+end
 
 TOCA.FrameHelp_w = 500
 TOCA.FrameHelp_h = 350
@@ -67,8 +42,6 @@ TOCA.TabWidth.Help = 140
 TOCA.Button.Tab={}
 TOCA.Button.TabBack={}
 TOCA.FrameHelpPage={}
-
-local HelpIntro = TOCA._L.INIT[5].. " " .. TOCA._G.title .. " " .. TOCA.Addon .. "|n|n"
 
 for i=1, getn(TOCA._L.UI.TABS.HELP) do
   TOCA.FrameHelpPage[TOCA._L.UI.TABS.HELP[i]] = CreateFrame("Frame", "TOCA.FrameHelp", TOCA.FrameHelp, "BackdropTemplate")
@@ -106,24 +79,28 @@ for i=1, getn(TOCA._L.UI.TABS.HELP) do
       TOCA.Button.TabBack[i]:SetSize(TOCA.TabWidth.Help-20, 29)
     end
     TOCA.Button.TabBack[i]:SetSize(TOCA.TabWidth.Help-20, 31)
-    if (TOCA._L.UI.TABS.HELP[i] == TOCA._L.UI.TABS.HELP[3]) then
-      TOCA.TextFrame.text:SetText(arrayToString(TOCA.HELP.CREDIT))
-    elseif (TOCA._L.UI.TABS.HELP[i] == TOCA._L.UI.TABS.HELP[2]) then
-      TOCA.TextFrame.text:SetText(arrayToString(TOCA.HELP.CONTACT))
-    else
-      TOCA.TextFrame.text:SetText(HelpIntro .. arrayToString(TOCA.HELP.UPDATES))
+
+    if (TOCA._L.UI.TABS.HELP[i] == TOCA._L.UI.TABS.HELP[i]) then
+      TOCA.TextFrame.text:SetText(arrayToString(TOCA._L.INTRO[i]))
+      if (i == 1) then
+        TOCA.TextFrame.text:SetText(TOCA.INTROLOG)
+      end
     end
   end)
 end
 TOCA.Button.TabBack[1]:SetSize(TOCA.TabWidth.Help-20, 30) --first tab
 
+TOCA.FrameHelp.Header = TOCA.FrameHelp:CreateFontString(nil, "ARTWORK")
+TOCA.FrameHelp.Header:SetFont(TOCA._G.font, 12, "OUTLINE")
+TOCA.FrameHelp.Header:SetPoint("TOPLEFT", 10, -15)
+TOCA.FrameHelp.Header:SetText(TOCA._L.INIT[5].. " " .. TOCA._G.title .. " " .. TOCA.Addon)
+
 TOCA.TextFrame_w = TOCA.FrameHelp_w-20
 TOCA.TextFrame_h = TOCA.FrameHelp_h-50
---TOCA.TextFrame = CreateFrame("Frame", nil, TOCA.FrameHelpPage[TOCA._L.UI.TABS.HELP[1]])
 TOCA.TextFrame = CreateFrame("Frame", nil, TOCA.FrameHelp)
 TOCA.TextFrame:SetWidth(TOCA.TextFrame_w)
 TOCA.TextFrame:SetHeight(TOCA.TextFrame_h)
-TOCA.TextFrame:SetPoint("CENTER", 0, 40)
+TOCA.TextFrame:SetPoint("CENTER", 0, 20)
 TOCA.TextFrame:SetFrameStrata("DIALOG")
 TOCA.TextFrameScrollFrame={}
 --TOCA.TextFrameScrollFrame = CreateFrame("Frame", TOCA.TextFrameScrollFrame, TOCA.TextFrame, "InsetFrameTemplate")
@@ -151,7 +128,7 @@ TOCA.TextFrame.text:SetPoint("TOPLEFT", 4, -4)
 TOCA.TextFrame.text:SetMultiLine(true)
 TOCA.TextFrame.text:ClearFocus(self)
 TOCA.TextFrame.text:SetAutoFocus(false)
-TOCA.TextFrame.text:SetText(HelpIntro .. arrayToString(TOCA.HELP.UPDATES))
+TOCA.TextFrame.text:SetText(arrayToString(TOCA._L.INTRO[1]))
 
 TOCA.Button.CloseFrameHelp= CreateFrame("Button", nil, TOCA.FrameHelp, "BackdropTemplate")
 TOCA.Button.CloseFrameHelp:SetSize(100, 25)
@@ -174,14 +151,8 @@ TOCA.Button.CloseFrameHelp:SetScript("OnClick", function()
   TOCADB[TOCA.player.combine]["HELP"] = TOCA._G.version
 end)
 
-TOCA.ShowAgain={}
-TOCA.ShowAgain[1] = TOCA.FrameHelp:CreateFontString(nil, "ARTWORK")
-TOCA.ShowAgain[1]:SetFont(TOCA._G.font, 10, "OUTLINE")
-TOCA.ShowAgain[1]:SetPoint("CENTER", 0, -TOCA.FrameHelp_h/2+50)
-TOCA.ShowAgain[1]:SetText(TOCA.HELP.FOOTER[1])
-TOCA.ShowAgain[1]:SetTextColor(0.7, 0.7, 0.6, 1)
-TOCA.ShowAgain[2] = TOCA.FrameHelp:CreateFontString(nil, "ARTWORK")
-TOCA.ShowAgain[2]:SetFont(TOCA._G.font, 10, "OUTLINE")
-TOCA.ShowAgain[2]:SetPoint("CENTER", 0, -TOCA.FrameHelp_h/2+60)
-TOCA.ShowAgain[2]:SetText(TOCA.HELP.FOOTER[2])
-TOCA.ShowAgain[2]:SetTextColor(0.7, 0.7, 0.6, 1)
+TOCA.ShowAgain = TOCA.FrameHelp:CreateFontString(nil, "ARTWORK")
+TOCA.ShowAgain:SetFont(TOCA._G.font, 10, "OUTLINE")
+TOCA.ShowAgain:SetPoint("CENTER", 0, -TOCA.FrameHelp_h/2+60)
+TOCA.ShowAgain:SetText(arrayToString(TOCA._L.INTRO[5]))
+TOCA.ShowAgain:SetTextColor(0.7, 0.7, 0.6, 1)

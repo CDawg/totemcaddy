@@ -20,7 +20,7 @@ the copyright holders.
 
 TOCA.TotemRadiusAlpha = 0.8
 TOCA.TotemRadius={}
-TOCA.TotemRadiusSize = 26
+TOCA.TotemRadiusSize = 18.6
 
 for i=1, 4 do
 	--TOCA.TotemRadius[i] = CreateFrame("Frame", nil, UIParent)

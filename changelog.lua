@@ -1,22 +1,26 @@
+TOCA.CHANGELOG = [==[
+### 3.22
+* Bugfix: Adjusted totem minimap radius for Outlands
+
 ### 3.21
-Bugfix: Notifications and alerts (in combat)
-Bugfix: Updated event management for key binding
-Beta: Weapons menu (currently disabled)
+* Bugfix: Notifications and alerts (in combat)
+* Bugfix: Updated event management for key binding
+* Beta: Weapons menu (currently disabled)
 
 ### 3.20
-Added the totem frame set name to the Classic frame drop down
+* Added the totem frame set name to the Classic frame drop down
 
 ### 3.12
-Bugfix for Vertical and Segmented frames Not registering clicks
+* Bugfix for Vertical and Segmented frames Not registering clicks
 
 ### 3.11
-Updating for TBC Anni
+* Updating for TBC Anni
 
 ### 3.07
-Bugfix: Date mapping incorrect
+* Bugfix: Date mapping incorrect
 
 ### 3.06
-Bugfix: New texture api and inventory count for Ulduar 3.4.1 (47612)
+* Bugfix: New texture api and inventory count for Ulduar 3.4.1 (47612)
 
 ### 3.05
 * BETA: Prepping for Ulduar
@@ -150,3 +154,5 @@ Bugfix: New texture api and inventory count for Ulduar 3.4.1 (47612)
 
 ### 2.37
 * Bugfix: Library LUA error on array split
+]==]
+
