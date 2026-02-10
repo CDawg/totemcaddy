@@ -27,10 +27,6 @@ TOCA._L = {
 		},
 		{
 			"Please feel free to reach out and let me know what improvements can be made.",
-			"",
-			"|cffffdf96Curseforge:|r https://www.curseforge.com/wow/addons/totem-caddy/",
-			"",
-			"|cffffdf96Discord:|r https://discord.com/users/Porthios#8963",
 		},
 		{
 			"|cffffdf96Special thanks to:|cffffffff|n",

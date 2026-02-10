@@ -293,7 +293,7 @@ function TOCA.Init()
 	end
 	TOCA.ModelDraw("m_minimap", TOCA.Button.Minimap, 32, 42, 0, 5, 1, 500)
 
-  TOCA.INTROLOG = arrayToString(TOCA._L.INTRO[1]) .. TOCA.CHANGELOG:gsub("###", "") --:gsub("* ", "|r|cfffab734")
+  TOCA.INTROLOG = arrayToString(TOCA._L.INTRO[1]) .. TOCA.CHANGELOG:gsub("###", ""):gsub("*", "|cfffab734>|r") .. "|n|n|n"
   TOCA.TextFrame.text:SetText(TOCA.INTROLOG)
 
   TOCA.Notification("TOCA.Init()", true)

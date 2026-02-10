@@ -20,11 +20,14 @@ TOCA.CREDIT = {
   "Torfear",
 	"knarfde",
   "|nAnd a few nameless heroes on Classic Myzrael|n",
-  "|nWritten by |cff006aa6Porthias|r (a.k.a. Port)",
+  "Written by |cff006aa6Porthias|r (a.k.a. Port)",
 }
-for _,v in ipairs(TOCA.CREDIT) do
-  table.insert(TOCA._L.INTRO[4], v)
-end
+TOCA.CONTACT = {
+  "|n|cffffdf96Curseforge:|r https://www.curseforge.com/wow/addons/totem-caddy/",
+  "|n|cffffdf96Discord:|r https://discordapp.com/users/238146303324979200",
+}
+table.merge(TOCA._L.INTRO[3], TOCA.CONTACT)
+table.merge(TOCA._L.INTRO[4], TOCA.CREDIT)
 
 TOCA.FrameHelp_w = 500
 TOCA.FrameHelp_h = 350
@@ -81,7 +84,7 @@ for i=1, getn(TOCA._L.UI.TABS.HELP) do
     TOCA.Button.TabBack[i]:SetSize(TOCA.TabWidth.Help-20, 31)
 
     if (TOCA._L.UI.TABS.HELP[i] == TOCA._L.UI.TABS.HELP[i]) then
-      TOCA.TextFrame.text:SetText(arrayToString(TOCA._L.INTRO[i]))
+      TOCA.TextFrame.text:SetText(arrayToString(TOCA._L.INTRO[i]):gsub(">", "|cfffab734>|r"))
       if (i == 1) then
         TOCA.TextFrame.text:SetText(TOCA.INTROLOG)
       end
@@ -106,7 +109,7 @@ TOCA.TextFrameScrollFrame={}
 --TOCA.TextFrameScrollFrame = CreateFrame("Frame", TOCA.TextFrameScrollFrame, TOCA.TextFrame, "InsetFrameTemplate")
 TOCA.TextFrameScrollFrame = CreateFrame("Frame", TOCA.TextFrameScrollFrame, TOCA.TextFrame, "BackdropTemplate")
 TOCA.TextFrameScrollFrame:SetWidth(TOCA.TextFrame_w+10)
-TOCA.TextFrameScrollFrame:SetHeight(TOCA.TextFrame_h-65)
+TOCA.TextFrameScrollFrame:SetHeight(TOCA.TextFrame_h-60)
 TOCA.TextFrameScrollFrame:SetPoint("CENTER", 0, 0)
 TOCA.TextFrameScrollFrame:SetBackdrop(TOCA.Backdrop.General)
 TOCA.TextFrameScrollFrame:SetBackdropColor(0, 0, 0, 1)
