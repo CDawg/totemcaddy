@@ -18,7 +18,7 @@ function TOCA.Init()
   TOCA.FrameWeap:Hide()
   if (TOCA.player.classID == 7) then --shaman
     TOCA.FrameMain:Show()
-    TOCA.FrameWeap:Show()
+    --TOCA.FrameWeap:Show()
 		TOCA.Button.Minimap:Show()
   else
     TOCA.FrameHelp:Hide()
@@ -122,6 +122,10 @@ function TOCA.Init()
     if (TOCADB[TOCA.player.combine]["CONFIG"]["ANKH"] == "OFF") then
       TOCA.FrameMain.AnkhFrame:Hide()
       TOCA.Checkbox.Ankh:SetChecked(nil)
+    end
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["WEAPFRAME"] == "ON") then
+      TOCA.FrameWeap:Show()
+      TOCA.Checkbox.FrameWeap:SetChecked(1)
     end
 
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["NOTIFYCOMBAT"] == "OFF") then

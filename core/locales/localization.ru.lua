@@ -165,6 +165,7 @@ TOCA._L = {
 		{"debug on", "Enable Debug Mode (Very Spammy)"},
 		{"debug off","Disable Debug Mode (/reload)"},
 		{"build",    "View latest game version and build"},
+		{"weapons",  "View the weapons bar."},
 	}
 }
 

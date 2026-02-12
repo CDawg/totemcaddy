@@ -1152,6 +1152,9 @@ function TOCA.TimerRechargeStart(spell, instant)
 					end
 				end
 			else
+				for i=1, 4 do
+  			  TOCA.Button.Weap[i].recharge:SetCooldown(GetTime(), countDown)
+				end
 				TOCA.Button.TotemicCall.recharge:SetCooldown(GetTime(), countDown)
 				for totemCat,k in pairs(TOCA.totems) do
 					TOCA.ExtendedTotemCooldowns(totemCat, spell, countDown)
@@ -1607,5 +1610,7 @@ function SlashCmdList.TOCA(cmd)
 			TOCA.SetDDMenu(TOCA.Dropdown.Main, TOCA.Dropdown.Menu[1])
 			TOCA.FrameSetsProfile:SetText(TOCA.Dropdown.Menu[1])
 		end
+	elseif (cmd == TOCA._L.COMMANDS[10][1]) then
+		TOCA.FrameWeap:Show()
 	end
 end
