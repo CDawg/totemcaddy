@@ -201,7 +201,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 	    self:SetBackdropBorderColor(1, 1, 1, 1)
 	  end
 		--TOCA.SegmentedButtonMenu(totemCat, true)
-		TOCA.TooltipDisplay(self, "Hide", "Hide this bar")
+		TOCA.TooltipDisplay(self, TOCA._L.UI.TOOLTIP[3][1], TOCA._L.UI.TOOLTIP[3][2]) -- hide this bar
 	end)
 	TOCA.FrameSeg.Button[totemCat].close:SetScript("OnLeave", function(self)
 	  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
@@ -237,7 +237,7 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 	    self:SetBackdropBorderColor(1, 1, 1, 1)
 	  end
 		--TOCA.SegmentedButtonMenu(totemCat, true)
-		TOCA.TooltipDisplay(self, "Flip", "Flip the bar vertical or horizontal")
+		TOCA.TooltipDisplay(self, TOCA._L.UI.TOOLTIP[4][1], TOCA._L.UI.TOOLTIP[4][2]) -- flip the bar
 	end)
 	TOCA.FrameSeg.Button[totemCat].orientation:SetScript("OnLeave", function(self)
 	  if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then

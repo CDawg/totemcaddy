@@ -110,7 +110,10 @@ TOCA._L = {
 		TOOLTIP = {
 			TITLE = "Tooltip",
 			{"Display Totem Tooltip",   "Toggle the mouseover of totem/spell details."},
-			{"Anchor Tooltip to Cursor","Toggle this tooltip to follow over the mouse cursor."}
+			{"Anchor Tooltip to Cursor","Toggle this tooltip to follow over the mouse cursor."},
+			-- segmented
+			{"Hide",                    "Hide this bar."},
+			{"Flip",                    "Flip the bar vertical or horizontal"},
 		},
 
 		TOTEMSET = {
