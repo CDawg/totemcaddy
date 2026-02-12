@@ -1503,8 +1503,12 @@ function TOCA.BuildTotemOrder()
   TOCA.SetTotemOrder()
 end
 
-function TOCA.ReportFeedSend() --check version match with neighbors
+function TOCA.ReportFeedSend(channel) --check version match with neighbors
 	local source = TOCA.AddonChannel
+	if (channel ~= "") then
+		source = string.upper(channel)
+	end
+	--[==[
 	if (IsInGuild()) then
 		source = "GUILD"
   end
@@ -1513,6 +1517,7 @@ function TOCA.ReportFeedSend() --check version match with neighbors
 	elseif (IsInGroup()) then
 		source = "PARTY"
 	end
+	]==]--
 	TOCA.SendPacket(TOCA.Net.report_s .. TOCA.player.name .. "," .. source, source)
 end
 function TOCA.ReportFeedGet(prefix, netpacket)
@@ -1571,7 +1576,11 @@ function SlashCmdList.TOCA(cmd)
 	elseif (cmd == TOCA._L.COMMANDS[9][1]) then
 		print(string.format("version = %s, build = %s, date = '%s', tocversion = %s.", __Gversion, __Gbuild, __Gdate, __Gtoc))
 	elseif (cmd == "report") then
-		TOCA.ReportFeedSend()
+		if (args ~= "") then
+		  TOCA.ReportFeedSend(args)
+		else
+			TOCA.Notification("report <channel>")
+		end
 	elseif (cmd == "set") then
 		if (args ~= "") then
 			local existingSet = 0

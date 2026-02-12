@@ -154,6 +154,13 @@ TOCA = {
 		}
   },
 
+	weapons = {
+	  8232, --windfury
+		8017, --rockbiter
+		8024, --flametongue
+		8033, --frostbrand
+	},
+
 	spell = {
 		REINCARNATION   = 20608,
 	  TOTEMIC_CALL    = 36936,

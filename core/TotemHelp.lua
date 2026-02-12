@@ -23,8 +23,8 @@ TOCA.CREDIT = {
   "Written by |cff006aa6Porthias|r (a.k.a. Port)",
 }
 TOCA.CONTACT = {
-  "|n|cffffdf96Curseforge:|r https://www.curseforge.com/wow/addons/totem-caddy/",
-  "|n|cffffdf96Discord:|r https://discordapp.com/users/238146303324979200",
+  "|n|cffffdf96Curseforge|r|nhttps://www.curseforge.com/wow/addons/totem-caddy/",
+  "|n|cffffdf96Discord (.porthios)|r|nhttps://discordapp.com/users/238146303324979200",
 }
 table.merge(TOCA._L.INTRO[3], TOCA.CONTACT)
 table.merge(TOCA._L.INTRO[4], TOCA.CREDIT)

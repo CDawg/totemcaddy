@@ -38,7 +38,61 @@ TOCA.FrameWeap.Background:SetBackdropColor(0, 0, 0, 1)
 TOCA.FrameWeap.Background:SetBackdropBorderColor(1, 1, 1, 0.6)
 TOCA.FrameWeap.Background:SetFrameLevel(TOCA.Framelevel.Background)
 
-TOCA.FrameWeap:Hide()
+--TOCA.FrameWeap:Hide()
+
+TOCA.Button.WeapSize_w=32
+TOCA.Button.WeapSize_h=32
+TOCA.Button.WeapPos_x=0
+TOCA.Button.Weap = {}
+for i=1, 4 do
+  TOCA.Button.WeapPos_x = -20 + (i*TOCA.Button.WeapSize_w)
+  TOCA.Button.Weap[i]= CreateFrame("Button", nil, TOCA.FrameWeap, "BackdropTemplate")
+  TOCA.Button.Weap[i]:SetSize(TOCA.Button.WeapSize_w, TOCA.Button.WeapSize_h)
+  TOCA.Button.Weap[i]:SetPoint("LEFT", TOCA.Button.WeapPos_x, 0)
+  TOCA.Button.Weap[i]:SetBackdrop(TOCA.SetIcon("spell_unused"))
+  TOCA.Button.Weap[i]:SetBackdropBorderColor(1, 1, 1, 0.5)
+  TOCA.Button.Weap[i]:SetFrameLevel(TOCA.Framelevel.Foreground)
+  
+  TOCA.Button.Weap[i].flash = TOCA.Button.Weap[i]:CreateTexture(nil, "ARTWORK")
+  --TOCA.Button.Weap[i].flash:SetSize(TOCA.Button.WeapSize_w*2, TOCA.Button.WeapSize_h*2)
+  TOCA.Button.Weap[i].flash:SetSize(TOCA.Button.WeapSize_w, TOCA.Button.WeapSize_h)
+  TOCA.Button.Weap[i].flash:SetPoint("LEFT", 0, 0)
+  TOCA.Button.Weap[i].flash:SetTexture("Interface/Buttons/CheckButtonGlow")
+  TOCA.Button.Weap[i].flash:Hide()
+  TOCA.Button.Weap[i].highlight= TOCA.Button.Weap[i]:CreateTexture(nil, "ARTWORK")
+  TOCA.Button.Weap[i].highlight:SetSize(TOCA.Button.WeapSize_w, TOCA.Button.WeapSize_h)
+  TOCA.Button.Weap[i].highlight:SetPoint("LEFT", 0, 0)
+  TOCA.Button.Weap[i].highlight:SetTexture("Interface/Buttons/ButtonHilight-Square")
+  TOCA.Button.Weap[i].highlight:SetBlendMode("ADD")
+  TOCA.Button.Weap[i].highlight:Hide()
+  TOCA.Button.Weap[i].disable = CreateFrame("Frame", nil, TOCA.Button.Weap[i], "BackdropTemplate")
+  TOCA.Button.Weap[i].disable:SetSize(TOCA.Button.WeapSize_w, TOCA.Button.WeapSize_h)
+  TOCA.Button.Weap[i].disable:SetPoint("LEFT", 0, 0)
+  TOCA.Button.Weap[i].disable:SetBackdrop(TOCA.Backdrop.General)
+  TOCA.Button.Weap[i].disable:SetBackdropColor(0, 0, 0, 1)
+  TOCA.Button.Weap[i].disable:Hide()
+  TOCA.Button.Weap[i].recharge = CreateFrame("Cooldown", nil, TOCA.Button.Weap[i], "CooldownFrameTemplate")
+  TOCA.Button.Weap[i].recharge:SetSize(TOCA.Button.WeapSize_w, TOCA.Button.WeapSize_h)
+  TOCA.Button.Weap[i].recharge:SetPoint("LEFT", 0, 0)
+  TOCA.Button.Weap[i].recharge:SetAllPoints()
+  TOCA.Button.Weap[i].recharge:SetCooldown(GetTime(), 2)
+  TOCA.Button.Weap[i].recharge:SetEdgeScale(0)
+  TOCA.Button.Weap[i].Action = CreateFrame("Button", nil, TOCA.Button.Weap[i], "SecureActionButtonTemplate")
+  TOCA.Button.Weap[i].Action:SetSize(TOCA.Button.WeapSize_w, TOCA.Button.WeapSize_h)
+  TOCA.Button.Weap[i].Action:SetPoint("LEFT", 0, 0)
+  TOCA.Button.Weap[i].Action:RegisterForClicks("AnyDown", "AnyUp")
+  TOCA.Button.Weap[i].Action:SetAttribute("type", "spell")
+  TOCA.Button.Weap[i].Action:SetAttribute("spell", TOCA.IdentifySpell(TOCA.weapons[i]))
+  TOCA.Button.Weap[i].Action:SetScript("OnEnter", function(self)
+    TOCA.CloseAllMenus()
+    TOCA.Button.Weap[i].highlight:Show()
+    --TOCA.TooltipDisplay(self, TOCA._L.SPELLS.TotemicCall)
+  end)
+  TOCA.Button.Weap[i].Action:SetScript("OnLeave", function(self)
+    TOCA.CloseAllMenus()
+    TOCA.Button.Weap[i].highlight:Hide()
+  end)
+end
 
 --[==[
 TOCA.Checkbox.MainLock={}
