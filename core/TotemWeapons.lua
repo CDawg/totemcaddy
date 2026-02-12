@@ -49,13 +49,12 @@ for i=1, 4 do
   TOCA.Button.Weap[i]= CreateFrame("Button", nil, TOCA.FrameWeap, "BackdropTemplate")
   TOCA.Button.Weap[i]:SetSize(TOCA.Button.WeapSize_w, TOCA.Button.WeapSize_h)
   TOCA.Button.Weap[i]:SetPoint("LEFT", TOCA.Button.WeapPos_x, 0)
-  TOCA.Button.Weap[i]:SetBackdrop(TOCA.SetIcon("spell_unused"))
-  TOCA.Button.Weap[i]:SetBackdropBorderColor(1, 1, 1, 0.5)
+  TOCA.Button.Weap[i]:SetBackdrop(TOCA.SetIcon(TOCA.icons.WEAP[i]))
+  TOCA.Button.Weap[i]:SetBackdropBorderColor(1, 1, 1, 0)
   TOCA.Button.Weap[i]:SetFrameLevel(TOCA.Framelevel.Foreground)
   
   TOCA.Button.Weap[i].flash = TOCA.Button.Weap[i]:CreateTexture(nil, "ARTWORK")
-  --TOCA.Button.Weap[i].flash:SetSize(TOCA.Button.WeapSize_w*2, TOCA.Button.WeapSize_h*2)
-  TOCA.Button.Weap[i].flash:SetSize(TOCA.Button.WeapSize_w, TOCA.Button.WeapSize_h)
+  TOCA.Button.Weap[i].flash:SetSize(TOCA.Button.WeapSize_w*2, TOCA.Button.WeapSize_h*2)
   TOCA.Button.Weap[i].flash:SetPoint("LEFT", 0, 0)
   TOCA.Button.Weap[i].flash:SetTexture("Interface/Buttons/CheckButtonGlow")
   TOCA.Button.Weap[i].flash:Hide()
@@ -85,12 +84,24 @@ for i=1, 4 do
   TOCA.Button.Weap[i].Action:SetAttribute("spell", TOCA.IdentifySpell(TOCA.weapons[i]))
   TOCA.Button.Weap[i].Action:SetScript("OnEnter", function(self)
     TOCA.CloseAllMenus()
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
+        TOCA.Button.Weap[i]:SetBackdropBorderColor(1, 1, 1, 0)
+    else
+        TOCA.Button.Weap[i]:SetBackdropBorderColor(1, 1, 1, 1)
+    end
     TOCA.Button.Weap[i].highlight:Show()
-    --TOCA.TooltipDisplay(self, TOCA._L.SPELLS.TotemicCall)
+    TOCA.TooltipDisplay(self, TOCA.IdentifySpell(TOCA.weapons[i]))
   end)
   TOCA.Button.Weap[i].Action:SetScript("OnLeave", function(self)
-    TOCA.CloseAllMenus()
     TOCA.Button.Weap[i].highlight:Hide()
+    TOCA.CloseAllMenus()
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMEBORDER"] == "OFF") then
+        TOCA.Button.Weap[i]:SetBackdropBorderColor(1, 1, 1, 0)
+    else
+        TOCA.Button.Weap[i]:SetBackdropBorderColor(1, 1, 1, 0.6)
+    end
+    TOCA.Button.Weap[i].highlight:Hide()
+    TOCA.CloseAllMenus()
   end)
 end
 

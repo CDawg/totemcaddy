@@ -537,6 +537,9 @@ function TOCA.BorderFrame(enable)
 		TOCA.FrameMain.ShieldFrame:SetBackdropBorderColor(1, 1, 1, 0.6)
     TOCA.FrameMain.ReincFrame:SetBackdropBorderColor(1, 1, 1, 0.6)
     TOCA.FrameMain.AnkhFrame:SetBackdropBorderColor(1, 1, 1, 0.6)
+		for i=1, 4 do
+		  TOCA.Button.Weap[i]:SetBackdropBorderColor(1, 1, 1, 0.6)
+		end
     for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
       TOCA.SlotSelect[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
@@ -568,6 +571,9 @@ function TOCA.BorderFrame(enable)
 		TOCA.FrameMain.ShieldFrame:SetBackdropBorderColor(1, 1, 1, 0)
     TOCA.FrameMain.ReincFrame:SetBackdropBorderColor(1, 1, 1, 0)
     TOCA.FrameMain.AnkhFrame:SetBackdropBorderColor(1, 1, 1, 0)
+		for i=1, 4 do
+		  TOCA.Button.Weap[i]:SetBackdropBorderColor(1, 1, 1, 0)
+		end
     for totemCat,v in pairsByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)
       TOCA.SlotSelect[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)

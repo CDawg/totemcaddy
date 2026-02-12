@@ -18,7 +18,7 @@ function TOCA.Init()
   TOCA.FrameWeap:Hide()
   if (TOCA.player.classID == 7) then --shaman
     TOCA.FrameMain:Show()
-    --TOCA.FrameWeap:Show()
+    TOCA.FrameWeap:Show()
 		TOCA.Button.Minimap:Show()
   else
     TOCA.FrameHelp:Hide()

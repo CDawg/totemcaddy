@@ -111,6 +111,12 @@ TOCA = {
 		  "spell_nature_windfury",
 		  "spell_nature_earthbind",
 		  "spell_nature_slowingtotem",
+		},
+		WEAP = {
+			"spell_nature_cyclone",
+			"spell_nature_rockbiter",
+			"spell_fire_flametounge",
+			"spell_frost_frostbrand",
 		}
 	},
 
