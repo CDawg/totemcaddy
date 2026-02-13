@@ -1,6 +1,6 @@
 TOCA.CHANGELOG = [==[
 ### 3.24
-* Added Weapon frame with options
+* BETA: Added Weapon frame with options
 * TODO: Weapons aura reminder
 
 ### 3.23
