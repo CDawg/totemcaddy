@@ -98,6 +98,8 @@ TOCA._L = {
 			{"Display Totemic Call Button",      "Toggle the Totemic Call button to display.|n|nDisplaying the Totemic Call button is by default."},
 			{"Display End Caps",                 "Toggle the cosmetic end caps on the main frame.|n|nEnabled (Gryphons) by Default"},
 			{"Display Main Options Button",      "Toggle the Options button from the main frame."},
+			{"Enable The Weapons Frame",         "Enable the weapons frame."},
+			{"Flip Weapons Vertically",          "Flip the weapons frame vertically."},
 		},
 		TIMERS = {
 			TITLE = "Timers",

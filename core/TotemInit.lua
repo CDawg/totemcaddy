@@ -127,6 +127,10 @@ function TOCA.Init()
       TOCA.FrameWeap:Show()
       TOCA.Checkbox.FrameWeap:SetChecked(1)
     end
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["WEAPFLIP"] == "ON") then
+      --TOCA.FrameWeap:Show()
+      TOCA.Checkbox.FrameWeap.flip:SetChecked(1)
+    end
 
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["NOTIFYCOMBAT"] == "OFF") then
 			TOCA.Checkbox.NotifyCombat:SetChecked(nil)

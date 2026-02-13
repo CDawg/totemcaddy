@@ -150,15 +150,14 @@ TOCA.FrameWeap.close:Hide()
 --TOCA.FrameWeapOptions = {}
 TOCA.Checkbox.FrameWeap={}
 TOCA.Checkbox.FrameWeap = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.TABPage.WEAPONS], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.FrameWeap:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], TOCA.OptionsPosition_y["FRAMEMENU"]-40)
+TOCA.Checkbox.FrameWeap:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -40)
 TOCA.Checkbox.FrameWeap:SetChecked(nil)
 TOCA.Checkbox.FrameWeap.text = TOCA.Checkbox.FrameWeap:CreateFontString(nil, "ARTWORK")
 TOCA.Checkbox.FrameWeap.text:SetFont(TOCA._G.font, 12, "OUTLINE")
 TOCA.Checkbox.FrameWeap.text:SetPoint("TOPLEFT", 25, -6)
---TOCA.Checkbox.FrameWeap.text:SetText(TOCA._L.UI.FRAME[1][1])
-TOCA.Checkbox.FrameWeap.text:SetText("Enable Weapons Frame")
+TOCA.Checkbox.FrameWeap.text:SetText(TOCA._L.UI.FRAME[7][1])
 TOCA.Checkbox.FrameWeap:SetScript("OnEnter", function(self)
-  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA._L.UI.FRAME[1][2])
+  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA._L.UI.FRAME[7][2])
 end)
 TOCA.Checkbox.FrameWeap:SetScript("OnLeave", function(self)
   TOCA.CloseAllMenus()
@@ -172,9 +171,55 @@ TOCA.Checkbox.FrameWeap:SetScript("OnClick", function(self)
     TOCA.FrameWeap:Hide()
   end
 end)
-TOCA.FrameWeap:Hide()
 
---TOCA.FrameWeapOptions.text = TOCA.FrameOptionsPage[TOCA.TABPage.WEAPONS]:CreateFontString(nil, "ARTWORK")
---TOCA.FrameWeapOptions.text:SetFont(TOCA._G.font, 12, "OUTLINE")
---TOCA.FrameWeapOptions.text:SetPoint("TOPLEFT", 25, -12)
---TOCA.FrameWeapOptions.text:SetText("Coming soon")
+--TOCA.Checkbox.FrameWeap.flip={}
+TOCA.Checkbox.FrameWeap.flip = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.TABPage.WEAPONS], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.FrameWeap.flip:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -60)
+TOCA.Checkbox.FrameWeap.flip:SetChecked(nil)
+TOCA.Checkbox.FrameWeap.flip.text = TOCA.Checkbox.FrameWeap.flip:CreateFontString(nil, "ARTWORK")
+TOCA.Checkbox.FrameWeap.flip.text:SetFont(TOCA._G.font, 12, "OUTLINE")
+TOCA.Checkbox.FrameWeap.flip.text:SetPoint("TOPLEFT", 25, -6)
+TOCA.Checkbox.FrameWeap.flip.text:SetText(TOCA._L.UI.FRAME[8][1])
+TOCA.Checkbox.FrameWeap.flip:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA._L.UI.FRAME[8][2])
+end)
+TOCA.Checkbox.FrameWeap.flip:SetScript("OnLeave", function(self)
+  TOCA.CloseAllMenus()
+end)
+TOCA.Checkbox.FrameWeap.flip:SetScript("OnClick", function(self)
+  if (self:GetChecked()) then
+    TOCADB[TOCA.player.combine]["CONFIG"]["WEAPFLIP"] = "ON"
+    
+  else
+    TOCADB[TOCA.player.combine]["CONFIG"]["WEAPFLIP"] = "OFF"
+    
+  end
+end)
+
+--[==[
+TOCA.Checkbox.FrameWeap.flip={}
+TOCA.Checkbox.FrameWeap.flip = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.TABPage.WEAPONS], "ChatConfigCheckButtonTemplate")
+TOCA.Checkbox.FrameWeap.flip:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], TOCA.OptionsPosition_y["FRAMEMENU"]-40)
+TOCA.Checkbox.FrameWeap.flip:SetChecked(nil)
+TOCA.Checkbox.FrameWeap.flip.text = TOCA.Checkbox.FrameWeap:CreateFontString(nil, "ARTWORK")
+TOCA.Checkbox.FrameWeap.flip.text:SetFont(TOCA._G.font, 12, "OUTLINE")
+TOCA.Checkbox.FrameWeap.flip.text:SetPoint("TOPLEFT", 25, -6)
+TOCA.Checkbox.FrameWeap.flip.text:SetText(TOCA._L.UI.FRAME[8][1])
+TOCA.Checkbox.FrameWeap.flip:SetScript("OnEnter", function(self)
+  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA._L.UI.FRAME[8][2])
+end)
+TOCA.Checkbox.FrameWeap.flip:SetScript("OnLeave", function(self)
+  TOCA.CloseAllMenus()
+end)
+TOCA.Checkbox.FrameWeap.flip:SetScript("OnClick", function(self)
+  if (self:GetChecked()) then
+    TOCADB[TOCA.player.combine]["CONFIG"]["WEAPFRAME_CLOSE"] = "ON"
+    TOCA.FrameWeap:Show()
+  else
+    TOCADB[TOCA.player.combine]["CONFIG"]["WEAPFRAME_CLOSE"] = "OFF"
+    TOCA.FrameWeap:Hide()
+  end
+end)
+]==]--
+
+TOCA.FrameWeap:Hide()
