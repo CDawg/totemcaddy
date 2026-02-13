@@ -79,14 +79,6 @@ TOCA._L.SPELLS.SHIELDS = {
 	TOCA.IdentifySpell(TOCA.spell.LIGHTNING_SHIELD),
 	TOCA.IdentifySpell(TOCA.spell.EARTH_SHIELD),
 }
---[==[
-TOCA._L.SPELLS.WEAPONS = {
-	TOCA.IdentifySpell(TOCA.spell.WEAPON_WIND),
-	TOCA.IdentifySpell(TOCA.spell.WEAPON_ROCK),
-	TOCA.IdentifySpell(TOCA.spell.WEAPON_FIRE),
-	TOCA.IdentifySpell(TOCA.spell.WEAPON_FROST),
-}
-]==]--
 
 --match the totems spells to their respective icons
 TOCA.totems = {FIRE={}, EARTH={}, WATER={}, AIR={}} --cached order
@@ -1248,6 +1240,27 @@ function TOCA.GetShieldTimer()
   end
 end
 
+TOCA.WeaponAuras = { -- shamans auras are considered enchants
+	1669, --windfury
+	3044, --rockbiter
+	2634, --flametongue
+	2635, --frostbrand
+}
+
+function TOCA.GetWeaponAura()
+  --if (TOCADB[TOCA.player.combine]["CONFIG"]["WEAPREMINDER"] == "OFF") then
+		--return
+	--end
+	local hasMainHandEnchant, mainHandExpiration, mainHandCharges,
+	mainHandEnchantID, hasOffHandEnchant, offHandExpiration, offHandCharges, offHandEnchantID,
+	hasRangedEnchant, rangedExpiration, rangedCharges, rangedEnchantID = GetWeaponEnchantInfo()
+	for k,v in pairs(TOCA.WeaponAuras) do
+		if (mainHandEnchantID == v) then
+			print("has " .. v)
+		end
+	end
+end
+
 TOCA.SlotGrid.VerticalTimer={}
 TOCA.SlotGrid.HorizontalTimer={}
 function TOCA.TotemTimerReset(i)
@@ -1348,6 +1361,7 @@ function TOCA.OnUpdateEvent(event)
 	  TOCA.DisplayAnkhFrame()
 		TOCA.HandleShieldAlert()
 		TOCA.GetShieldFromTanks()
+		--TOCA.GetWeaponAura() --enchant
 	end
 end
 

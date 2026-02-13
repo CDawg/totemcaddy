@@ -13,10 +13,14 @@ All rights not explicitly addressed in this license are reserved by
 the copyright holders.
 ]==]--
 
+TOCA.FrameWeapSize = {}
+TOCA.FrameWeapSize[1] = 150 --w default
+TOCA.FrameWeapSize[2] = 42 -- h
+
 TOCA.FrameWeap={}
 TOCA.FrameWeap = CreateFrame("Frame", TOCA.FrameWeap, UIParent, "BackdropTemplate")
-TOCA.FrameWeap:SetWidth(TOCA._G.width)
-TOCA.FrameWeap:SetHeight(TOCA._G.height/2)
+TOCA.FrameWeap:SetWidth(TOCA.FrameWeapSize[1])
+TOCA.FrameWeap:SetHeight(TOCA.FrameWeapSize[2])
 TOCA.FrameWeap:SetPoint("CENTER", 0, -140)
 TOCA.FrameWeap:SetMovable(true)
 TOCA.FrameWeap:EnableMouse(true)
@@ -36,8 +40,8 @@ TOCA.FrameWeap:SetScript("OnLeave", function()
   TOCA.FrameWeap.close:Hide()
 end)
 TOCA.FrameWeap.Background = CreateFrame("Frame", TOCA.FrameWeap.Background, TOCA.FrameWeap, "BackdropTemplate", -6)
-TOCA.FrameWeap.Background:SetWidth(TOCA._G.width)
-TOCA.FrameWeap.Background:SetHeight(TOCA._G.height/2)
+TOCA.FrameWeap.Background:SetWidth(TOCA.FrameWeapSize[1])
+TOCA.FrameWeap.Background:SetHeight(TOCA.FrameWeapSize[2])
 TOCA.FrameWeap.Background:SetPoint("CENTER", 0, 0)
 TOCA.FrameWeap.Background:SetBackdrop(TOCA.Backdrop.General)
 TOCA.FrameWeap.Background:SetBackdropColor(0, 0, 0, 1)
@@ -107,6 +111,28 @@ for i=1, 4 do
     TOCA.Button.Weap[i].highlight:Hide()
     TOCA.CloseAllMenus()
   end)
+end
+
+function TOCA.WeapFrameFlip(vert)
+  if (vert == 1) then
+    TOCA.FrameWeap:SetWidth(TOCA.FrameWeapSize[2])
+    TOCA.FrameWeap:SetHeight(TOCA.FrameWeapSize[1])
+    TOCA.FrameWeap.Background:SetWidth(TOCA.FrameWeapSize[2])
+    TOCA.FrameWeap.Background:SetHeight(TOCA.FrameWeapSize[1])
+    for i=1, 4 do
+      TOCA.Button.WeapPos_x = -21 + (i*TOCA.Button.WeapSize_w)
+      TOCA.Button.Weap[i]:SetPoint("LEFT", 0, TOCA.Button.WeapPos_x)
+    end
+  else
+    TOCA.FrameWeap:SetWidth(TOCA.FrameWeapSize[1])
+    TOCA.FrameWeap:SetHeight(TOCA.FrameWeapSize[2])
+    TOCA.FrameWeap.Background:SetWidth(TOCA.FrameWeapSize[1])
+    TOCA.FrameWeap.Background:SetHeight(TOCA.FrameWeapSize[2])
+    for i=1, 4 do
+      TOCA.Button.WeapPos_x = -21 + (i*TOCA.Button.WeapSize_w)
+      TOCA.Button.Weap[i]:SetPoint("LEFT", TOCA.Button.WeapPos_x, 0)
+    end
+  end
 end
 
 TOCA.FrameWeap.close = CreateFrame("Button", nil, TOCA.FrameWeap, "BackdropTemplate")
@@ -189,37 +215,11 @@ end)
 TOCA.Checkbox.FrameWeap.flip:SetScript("OnClick", function(self)
   if (self:GetChecked()) then
     TOCADB[TOCA.player.combine]["CONFIG"]["WEAPFLIP"] = "ON"
-    
+    TOCA.WeapFrameFlip(1)
   else
     TOCADB[TOCA.player.combine]["CONFIG"]["WEAPFLIP"] = "OFF"
-    
+    TOCA.WeapFrameFlip(0)
   end
 end)
-
---[==[
-TOCA.Checkbox.FrameWeap.flip={}
-TOCA.Checkbox.FrameWeap.flip = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.TABPage.WEAPONS], "ChatConfigCheckButtonTemplate")
-TOCA.Checkbox.FrameWeap.flip:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], TOCA.OptionsPosition_y["FRAMEMENU"]-40)
-TOCA.Checkbox.FrameWeap.flip:SetChecked(nil)
-TOCA.Checkbox.FrameWeap.flip.text = TOCA.Checkbox.FrameWeap:CreateFontString(nil, "ARTWORK")
-TOCA.Checkbox.FrameWeap.flip.text:SetFont(TOCA._G.font, 12, "OUTLINE")
-TOCA.Checkbox.FrameWeap.flip.text:SetPoint("TOPLEFT", 25, -6)
-TOCA.Checkbox.FrameWeap.flip.text:SetText(TOCA._L.UI.FRAME[8][1])
-TOCA.Checkbox.FrameWeap.flip:SetScript("OnEnter", function(self)
-  TOCA.TooltipDisplay(self, self.text:GetText(), TOCA._L.UI.FRAME[8][2])
-end)
-TOCA.Checkbox.FrameWeap.flip:SetScript("OnLeave", function(self)
-  TOCA.CloseAllMenus()
-end)
-TOCA.Checkbox.FrameWeap.flip:SetScript("OnClick", function(self)
-  if (self:GetChecked()) then
-    TOCADB[TOCA.player.combine]["CONFIG"]["WEAPFRAME_CLOSE"] = "ON"
-    TOCA.FrameWeap:Show()
-  else
-    TOCADB[TOCA.player.combine]["CONFIG"]["WEAPFRAME_CLOSE"] = "OFF"
-    TOCA.FrameWeap:Hide()
-  end
-end)
-]==]--
 
 TOCA.FrameWeap:Hide()
