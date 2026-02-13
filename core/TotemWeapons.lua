@@ -114,14 +114,15 @@ for i=1, 4 do
 end
 
 function TOCA.WeapFrameFlip(vert)
+  local buttonpos = 0
   if (vert == 1) then
     TOCA.FrameWeap:SetWidth(TOCA.FrameWeapSize[2])
     TOCA.FrameWeap:SetHeight(TOCA.FrameWeapSize[1])
     TOCA.FrameWeap.Background:SetWidth(TOCA.FrameWeapSize[2])
     TOCA.FrameWeap.Background:SetHeight(TOCA.FrameWeapSize[1])
     for i=1, 4 do
-      TOCA.Button.WeapPos_x = -21 + (i*TOCA.Button.WeapSize_w)
-      TOCA.Button.Weap[i]:SetPoint("LEFT", 0, TOCA.Button.WeapPos_x)
+      buttonpos = -82 + (i*TOCA.Button.WeapSize_w)
+      TOCA.Button.Weap[i]:SetPoint("LEFT", 5, -buttonpos)
     end
   else
     TOCA.FrameWeap:SetWidth(TOCA.FrameWeapSize[1])
@@ -129,8 +130,8 @@ function TOCA.WeapFrameFlip(vert)
     TOCA.FrameWeap.Background:SetWidth(TOCA.FrameWeapSize[1])
     TOCA.FrameWeap.Background:SetHeight(TOCA.FrameWeapSize[2])
     for i=1, 4 do
-      TOCA.Button.WeapPos_x = -21 + (i*TOCA.Button.WeapSize_w)
-      TOCA.Button.Weap[i]:SetPoint("LEFT", TOCA.Button.WeapPos_x, 0)
+      buttonpos = -21 + (i*TOCA.Button.WeapSize_w)
+      TOCA.Button.Weap[i]:SetPoint("LEFT", buttonpos, 0)
     end
   end
 end

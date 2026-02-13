@@ -128,7 +128,7 @@ function TOCA.Init()
       TOCA.Checkbox.FrameWeap:SetChecked(1)
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["WEAPFLIP"] == "ON") then
-      --TOCA.FrameWeap:Show()
+      TOCA.WeapFrameFlip(1)
       TOCA.Checkbox.FrameWeap.flip:SetChecked(1)
     end
 

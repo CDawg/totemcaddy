@@ -1256,7 +1256,7 @@ function TOCA.GetWeaponAura()
 	hasRangedEnchant, rangedExpiration, rangedCharges, rangedEnchantID = GetWeaponEnchantInfo()
 	for k,v in pairs(TOCA.WeaponAuras) do
 		if (mainHandEnchantID == v) then
-			print("has " .. v)
+			print("TOCA.GetWeaponAura() has " .. v)
 		end
 	end
 end
