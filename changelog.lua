@@ -1,4 +1,8 @@
 TOCA.CHANGELOG = [==[
+### 3.24
+* Added Weapon frame with options
+* TODO: Weapons aura reminder
+
 ### 3.23
 * Updated: Help Menu language locales
 
@@ -8,7 +12,7 @@ TOCA.CHANGELOG = [==[
 ### 3.21
 * Bugfix: Notifications and alerts (in combat)
 * Bugfix: Updated event management for key binding
-* Beta: Weapons menu (currently disabled)
+* BETA: Weapons menu (currently disabled)
 
 ### 3.20
 * Added the totem frame set name to the Classic frame drop down

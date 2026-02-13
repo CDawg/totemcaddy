@@ -199,7 +199,6 @@ TOCA.Checkbox.FrameWeap:SetScript("OnClick", function(self)
   end
 end)
 
---TOCA.Checkbox.FrameWeap.flip={}
 TOCA.Checkbox.FrameWeap.flip = CreateFrame("CheckButton", nil, TOCA.FrameOptionsPage[TOCA.TABPage.WEAPONS], "ChatConfigCheckButtonTemplate")
 TOCA.Checkbox.FrameWeap.flip:SetPoint("TOPLEFT", TOCA.OptionsPosition_x["LEFT"], -60)
 TOCA.Checkbox.FrameWeap.flip:SetChecked(nil)

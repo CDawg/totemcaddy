@@ -18,7 +18,6 @@ TOCA.DEBUG = false
 TOCA._G = {
   title  = TOCA.colors.class[7][4] .. TOCA._L.TITLE .."|r",
   author = "Porthias",
-  version= 3.21,
   CMD    = "/toca",
   width  = 150,
   height = 85,
@@ -29,8 +28,7 @@ TOCA._G = {
   date   = date("%Y%m%d"),
   update = 20260308,
 }
---local _LName, _LTitle = GetAddOnInfo(TOCA._G.prefix)
---TOCA._G.version = tonumber(string.sub(_LTitle, 26, 29))
+TOCA._G.version = C_AddOns.GetAddOnMetadata(TOCA._G.prefix, "version")
 
 TOCA.Game={}
 TOCA.Game.version = tonumber(string.sub(__Gversion, 1, 1))
