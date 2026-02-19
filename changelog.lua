@@ -1,6 +1,6 @@
 TOCA.CHANGELOG = [==[
 ### 3.25
-* Added Earth and fire elementals override totems with live timer
+* Added Greater Earth and Greater Fire Elemental Totems to the classic frames
 
 ### 3.24
 * BETA: Added Weapon frame with options
