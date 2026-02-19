@@ -337,7 +337,7 @@ function TOCA.BuildRaidAssignments(loadSaved) --get saved variables
 		listSortNameShamans = {TOCA.ClearESQueue}
 		TOCA.NumTanks = 0
 
-		if (classIndex == 7) then --is a sham
+		if (classIndex == 7) then --is a shaman
 			local isKnown = IsSpellKnown(TOCA.spell.EARTH_SHIELD, false) --we know earth shield, show the assignments button
 			if (isKnown) then
 				TOCA.Button.Assignments:Show()
@@ -491,6 +491,7 @@ function TOCA.GetShieldFromTanks()
 				TOCA.FrameAssignmentPersonal:Show()
 				if (UnitIsConnected(tankToShaman)) then --is the tank in raid but not logged on
 					local _Uindex = 1
+					-- https://wowwiki-archive.fandom.com/wiki/API_UnitAura -- deprecated?
 					while UnitAura(tankToShaman, _Uindex) do
 						local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura(tankToShaman, _Uindex)
 						for k,v in pairs(TOCA._L.SPELLS.SHIELDS) do --just rank all shields regardless.

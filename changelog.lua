@@ -1,6 +1,6 @@
 TOCA.CHANGELOG = [==[
 ### 3.25
-* Added Greater Earth and Greater Fire Elemental Totems to the classic frames
+* Added Greater Earth and Greater Fire Elemental Totems to the classic frames when activated
 
 ### 3.24
 * BETA: Added Weapon frame with options
