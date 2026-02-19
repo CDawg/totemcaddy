@@ -1,14 +1,17 @@
 ## Interface: 20505
 ## X-Min-Interface: 20504
-## Title: |cff006aa6Totem Caddy|r v3.24
+## Title: |cff006aa6Totem Caddy|r v3.25
 ## Notes: Totem Caddy
-## Version: 3.24
+## Version: 3.25
 ## Author: Porthias (aka Port)
 ## SavedVariables: TOCADB
 ## SavedVariablesPerCharacter: TOCADB
 ## OptionalDeps: Blizzard_RaidFrame, Blizzard_RaidUI, Blizzard_CompactRaidFrames, Blizzard_Settings_Shared, Blizzard_HUDInventoryTemplates, Blizzard_Minimap
 
+# Library
 core/TotemLibrary.lua
+
+# Localization
 core/locales/localization.en.lua
 core/locales/localization.br.lua
 core/locales/localization.cn.lua
@@ -19,6 +22,7 @@ core/locales/localization.it.lua
 core/locales/localization.kr.lua
 core/locales/localization.ru.lua
 core/locales/localization.tw.lua
+
 core/TotemGlobal.lua
 core/TotemInit.lua
 core/TotemEventManager.lua
