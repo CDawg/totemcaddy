@@ -131,6 +131,7 @@ end
 TOCA.Slot={}
 TOCA.Slot.Disable={}
 TOCA.Slot.highlight={}
+TOCA.Slot.elemental={}
 TOCA.Slot.Radius={}
 TOCA.Slot.Radius.Border={}
 TOCA.Slot.Recharge={}
@@ -165,6 +166,21 @@ for totemCat,v in pairsByKeys(TOCA.totems) do
 	TOCA.colors.totems[totemCat][1],
 	TOCA.colors.totems[totemCat][2],
 	TOCA.colors.totems[totemCat][3], 0.6)
+  
+  TOCA.Slot.elemental[totemCat]= TOCA.Slot[totemCat]:CreateTexture(nil, "ARTWORK")
+  TOCA.Slot.elemental[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
+  TOCA.Slot.elemental[totemCat]:SetPoint("CENTER", 0, 0)
+  TOCA.Slot.elemental[totemCat]:SetTexture("Interface/Buttons/ButtonHilight-Square")
+  if (totemCat == "EARTH") then
+    TOCA.Slot.elemental[totemCat]:SetTexture("Interface/ICONS/spell_nature_earthelemental_totem")
+  end
+  if (totemCat == "FIRE") then
+    TOCA.Slot.elemental[totemCat]:SetTexture("Interface/ICONS/spell_fire_elemental_totem")
+  end
+  TOCA.Slot.elemental[totemCat]:Hide()
+
+  --TOCA.Notification("totemCat[176] " .. totemCat, true)
+
   TOCA.Slot.highlight[totemCat]= TOCA.Slot[totemCat]:CreateTexture(nil, "ARTWORK")
   TOCA.Slot.highlight[totemCat]:SetSize(TOCA.Slot_w, TOCA.Slot_h)
   TOCA.Slot.highlight[totemCat]:SetPoint("CENTER", 0, 0)

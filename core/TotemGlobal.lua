@@ -1336,6 +1336,8 @@ function TOCA.OnUpdateEvent(event)
 	  --local onTaxi = UnitOnTaxi("player")
 	  --TOCA.Notification("mana: " .. percMana, true)
 	  TOCA.Button.TotemicCall.flash:Hide()
+		TOCA.Slot.elemental["EARTH"]:Hide()
+		TOCA.Slot.elemental["FIRE"]:Hide()
     --TOCA.TotemInRange={} --clear the array
 	  if ((UnitOnTaxi("player")) or (percMana <= 1)) then
 	    TOCA.EnableTotems(false)
@@ -1349,8 +1351,17 @@ function TOCA.OnUpdateEvent(event)
 
 	  for i=1, 4 do
 	    TOCA.GetTotemInfo(i)
-			if ((TOCA.TotemPresent[i]) and (TOCA.TotemName[i] ~= "")) then
+			if ((TOCA.TotemPresent[i]) and (TOCA.TotemName[i] ~= "") and (TOCA.TotemName[i] ~= nil)) then
 	      TOCA.Button.TotemicCall.flash:Show()
+
+				TOCA.Notification("TOTEM ID" .. TOCA.TotemID[i], true)
+
+				if (TOCA.TotemID[i] == 136024) then --earth elemental totem
+					TOCA.Slot.elemental["EARTH"]:Show()
+				end
+				if (TOCA.TotemID[i] == 135790) then --fire elemental totem
+					TOCA.Slot.elemental["FIRE"]:Show()
+				end
 			end
 	  end
 
