@@ -1,4 +1,7 @@
 TOCA.CHANGELOG = [==[
+### 3.26
+* Bugfix: For WoW [Classic/SoD/Hard] Bad Key Bindings event called
+
 ### 3.25
 * Added Greater Earth and Greater Fire Elemental Totems to the classic frames when activated
 
