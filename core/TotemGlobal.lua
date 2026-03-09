@@ -26,7 +26,7 @@ TOCA._G = {
   prefix = "TotemCaddy",
   suffix = "TBC Anniversary",
   date   = date("%Y%m%d"),
-  update = 20260308,
+  update = 20260608,
 }
 TOCA._G.version = C_AddOns.GetAddOnMetadata(TOCA._G.prefix, "version")
 
