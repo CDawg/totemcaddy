@@ -2,7 +2,7 @@
 ## X-Min-Interface: 11503
 ## Title: |cff006aa6Totem Caddy|r v3.27
 ## Notes: Totem Caddy
-## Version: 3.27
+## Version: 3.28
 ## Author: Porthias (aka Port)
 ## SavedVariables: TOCADB
 ## SavedVariablesPerCharacter: TOCADB

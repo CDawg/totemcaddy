@@ -338,9 +338,14 @@ function TOCA.BuildRaidAssignments(loadSaved) --get saved variables
 		TOCA.NumTanks = 0
 
 		if (classIndex == 7) then --is a shaman
-			local isKnown = IsSpellKnown(TOCA.spell.EARTH_SHIELD, false) --we know earth shield, show the assignments button
+		 --we know earth shield, show the assignments button
+			--local isKnown = IsSpellKnown(TOCA.spell.EARTH_SHIELD, false) --old, do not use
+			local isKnown = false
+			isKnown = IsPlayerSpell(TOCA.spell.EARTH_SHIELD, false)
+			TOCA.Notification("TOCA.BuildRaidAssignments()->IsInRaid() is a shaman", true)
 			if (isKnown) then
 				TOCA.Button.Assignments:Show()
+				TOCA.Notification("Raid Assignments show button?", true)
 			end
 		end
 

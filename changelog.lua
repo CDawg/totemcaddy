@@ -1,4 +1,8 @@
 TOCA.CHANGELOG = [==[
+### 3.28
+* Bugfix for Earth Shield Raid Assignments for multiple resto shamans in raid
+* WoW API update IsSpellKnown -> IsPlayerSpell
+
 ### 3.27
 * Bugfix: For WoW [Classic/SoD/Hardmode] version update
 
