@@ -61,12 +61,6 @@ for i=1, 4 do
 	--TOCA.TotemRadius[i].radius:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 end
 
---[==[
-hooksecurefunc(WorldMapFrame, "OnMapChanged", function()
-  local mapID = WorldMapFrame.mapID
-end)
-]==]--
-
 do
 	function TOCA.UpdateTotemPosition(totem, totemCat, stampX, stampY, totemID)
 		local _GMMapW = Minimap:GetWidth()
