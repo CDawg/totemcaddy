@@ -26,8 +26,8 @@ TOCA.CONTACT = {
   "|n|cffffdf96Curseforge|r|nhttps://www.curseforge.com/wow/addons/totem-caddy/",
   "|n|cffffdf96Discord (.porthios)|r|nhttps://discordapp.com/users/238146303324979200",
 }
-table.merge(TOCA._L.INTRO[3], TOCA.CONTACT)
-table.merge(TOCA._L.INTRO[4], TOCA.CREDIT)
+TOCA.TableMerge(TOCA._L.INTRO[3], TOCA.CONTACT)
+TOCA.TableMerge(TOCA._L.INTRO[4], TOCA.CREDIT)
 
 TOCA.FrameHelp_w = 500
 TOCA.FrameHelp_h = 350
@@ -84,7 +84,7 @@ for i=1, getn(TOCA._L.UI.TABS.HELP) do
     TOCA.Button.TabBack[i]:SetSize(TOCA.TabWidth.Help-20, 31)
 
     if (TOCA._L.UI.TABS.HELP[i] == TOCA._L.UI.TABS.HELP[i]) then
-      TOCA.TextFrame.text:SetText(arrayToString(TOCA._L.INTRO[i]):gsub(">", "|cfffab734>|r"))
+      TOCA.TextFrame.text:SetText(TOCA.ArrayToString(TOCA._L.INTRO[i]):gsub(">", "|cfffab734>|r"))
       if (i == 1) then
         TOCA.TextFrame.text:SetText(TOCA.INTROLOG)
       end
@@ -131,7 +131,7 @@ TOCA.TextFrame.text:SetPoint("TOPLEFT", 4, -4)
 TOCA.TextFrame.text:SetMultiLine(true)
 TOCA.TextFrame.text:ClearFocus(self)
 TOCA.TextFrame.text:SetAutoFocus(false)
-TOCA.TextFrame.text:SetText(arrayToString(TOCA._L.INTRO[1]))
+TOCA.TextFrame.text:SetText(TOCA.ArrayToString(TOCA._L.INTRO[1]))
 
 TOCA.Button.CloseFrameHelp= CreateFrame("Button", nil, TOCA.FrameHelp, "BackdropTemplate")
 TOCA.Button.CloseFrameHelp:SetSize(100, 25)
@@ -157,5 +157,5 @@ end)
 TOCA.ShowAgain = TOCA.FrameHelp:CreateFontString(nil, "ARTWORK")
 TOCA.ShowAgain:SetFont(TOCA._G.font, 10, "OUTLINE")
 TOCA.ShowAgain:SetPoint("CENTER", 0, -TOCA.FrameHelp_h/2+60)
-TOCA.ShowAgain:SetText(arrayToString(TOCA._L.INTRO[5]))
+TOCA.ShowAgain:SetText(TOCA.ArrayToString(TOCA._L.INTRO[5]))
 TOCA.ShowAgain:SetTextColor(0.7, 0.7, 0.6, 1)

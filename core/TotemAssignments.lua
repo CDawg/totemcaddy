@@ -375,7 +375,7 @@ function TOCA.BuildRaidAssignments(loadSaved) --get saved variables
 		end
 
 		table.sort(listSortNameTanks) --alpha order tanks
-		for k,v in pairsByKeys(listSortNameTanks) do
+		for k,v in TOCA.PairByKeys(listSortNameTanks) do
 			TOCA.NumTanks = TOCA.NumTanks +1
 			TOCA.FrameAssignments.MTName[k]:Show()
 			TOCA.FrameAssignments.MTClass[k]:Show()
@@ -456,7 +456,7 @@ function TOCA.AssignmentESRaidGet(prefix, netpacket)
 	local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.assign_es)
 	if (getPacket) then
 		--print("getting " .. getPacket)
-		local assign = split(getPacket, ",")
+		local assign = TOCA.Split(getPacket, ",")
 		local ddID = tonumber(assign[1])
 		local tank = assign[2]
 		local shaman=assign[3]

@@ -187,7 +187,7 @@ TOCA.SlotSetsPosX = {
   156,
 }
 local totemNum = 0
-for totemCat,v in pairsByKeys(TOCA.totems) do
+for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
   totemNum = totemNum+1
   TOCA.FrameSetsSlot[totemCat]={}
   TOCA.FrameSetsSlot[totemCat]= CreateFrame("Button", nil, TOCA.FrameSets, "BackdropTemplate")

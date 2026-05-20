@@ -267,7 +267,7 @@ TOCA = {
 
 }
 
-function arrayToString(array)
+function TOCA.ArrayToString(array)
   formstring=""
   for k,v in pairs(array) do
     formstring = formstring .. v .. "|n"
@@ -275,7 +275,7 @@ function arrayToString(array)
   return formstring
 end
 
-function split(s, delimiter)
+function TOCA.Split(s, delimiter)
   result = {}
   if (s) then
     for match in (s..delimiter):gmatch("(.-)"..delimiter) do
@@ -285,18 +285,14 @@ function split(s, delimiter)
   return result
 end
 
-function isempty(s)
-  return s == nil or s == ''
-end
-
-function table.merge(t1, t2)
+function TOCA.TableMerge(t1, t2)
  for k,v in ipairs(t2) do
     table.insert(t1, v)
  end
   return t1
 end
 
-function pairsByKeys(t, f)
+function TOCA.PairByKeys(t, f)
   local a = {}
   for n in pairs(t) do table.insert(a, n) end
   table.sort(a, f)
@@ -310,11 +306,7 @@ function pairsByKeys(t, f)
   return iter
 end
 
-function firstToUpper(str)
-  return (str:gsub("^%l", string.upper))
-end
-
-function getKeyFromValue(_array, value, index)
+function TOCA.GetKeyFromValue(_array, value, index)
   if ((index == nil) or (index == 0)) then
 		for k,v in pairs(_array) do
 			if v==value then return k end
@@ -328,69 +320,7 @@ function getKeyFromValue(_array, value, index)
 	end
 end
 
-function reindexArray(input, reval)
-  local n=#input
-  for i=1,n do
-    if reval[input[i]] then
-      input[i]=nil
-    end
-  end
-  local j=0
-  for i=1,n do
-    if input[i]~=nil then
-      j=j+1
-      input[j]=input[i]
-    end
-  end
-  for i=j+1,n do
-    input[i]=nil
-  end
-end
-
-function reindexArraySafe(array)
-  local n=0
-  local newArray={}
-  for i,v in pairs(array) do
-    n=n+1
-    newArray[n] = v
-  end
-  return newArray
-end
-
-function matchString(source, target)
-	local _source_match = ""
-	local _target_match = ""
-	local _source_reiterate = 1
-	local _target_reiterate = 1
-	if ((source) and (target)) then
-		for _split in string.gmatch(source, "%a+") do
-			_source_reiterate = _source_reiterate -1
-			if (_source_reiterate >= 0) then
-				_source_match = _source_match .. string.lower(_split)
-		  end
-		end
-		for _split in string.gmatch(target, "%a+") do
-			_target_reiterate = _target_reiterate -1
-			if (_target_reiterate >= 0) then
-				_target_match = _target_match .. string.lower(_split)
-			end
-		end
-
-		if (_source_match == _target_match) then
-			return 1
-		end
-	end
-end
-
---[==[
-function TimeSecondsToMinutes(time)
-  local minutes = floor(mod(time,3600)/60)
-  local seconds = floor(mod(time,60))
-  return format("%2d:%02d", minutes, seconds)
-end
-]==]--
-
-function TimeSecondsToMinutes(time)
+function TOCA.TimeSecondsToMinutes(time)
   local minutes = floor(mod(time, 3600)/60)
   local seconds = floor(mod(time, 60))
 	if (minutes <= -1) then
@@ -402,7 +332,7 @@ function TimeSecondsToMinutes(time)
   return format("%2d:%02d", minutes, seconds)
 end
 
-function round(number)
+function TOCA.Round(number)
   if (number - (number % 0.1)) - (number - (number % 1)) < 0.5 then
     number = number - (number % 1)
   else

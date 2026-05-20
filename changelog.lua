@@ -1,4 +1,10 @@
 TOCA.CHANGELOG = [==[
+### 3.30
+* Renamed all globals in the library and created independent functions
+
+### 3.29
+* Bugfix: Updated frame registercallback
+
 ### 3.28
 * Bugfix for Earth Shield Raid Assignments for multiple resto shamans in raid
 * WoW API update IsSpellKnown -> IsPlayerSpell

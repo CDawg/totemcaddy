@@ -19,7 +19,7 @@ TOCA.SegBarSize={}
 TOCA.TotemNum["SEG"] = 0
 
 local totemPalette={}
-for totemCat,v in pairsByKeys(TOCA.totems) do
+for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
 	totemPalette[totemCat] = {TOCA.colors.totems[totemCat][1], TOCA.colors.totems[totemCat][2], TOCA.colors.totems[totemCat][3], TOCA.colors.totems[totemCat][4]}
 end
 
@@ -30,7 +30,7 @@ function TOCA.SegmentedButtonMenu(totemCat, show)
 	end
 end
 
-for totemCat,v in pairsByKeys(TOCA.totems) do
+for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
 	TOCA.TotemNum["SEG"] = TOCA.TotemNum["SEG"] +1
 	totemButtonPos_X[totemCat] = 0
 	totemButtonPos_Y[totemCat] = 0

@@ -231,7 +231,7 @@ getglobal(TOCA.Slider.Scale:GetName() .. 'High'):SetText('2')
 TOCA.Slider.Scale:SetScript("OnValueChanged", function()
   TOCA.FrameMain:SetScale(TOCA.Round(TOCA.Slider.Scale:GetValue(), 2))
   TOCA.FrameWeap:SetScale(TOCA.Round(TOCA.Slider.Scale:GetValue(), 2))
-	for totemCat,v in pairsByKeys(TOCA.totems) do
+	for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
 		TOCA.FrameSeg[totemCat]:SetScale(TOCA.Round(TOCA.Slider.Scale:GetValue(), 2))
 	end
   TOCA.Slider.Scale.Val:SetText(TOCA.Round(TOCA.Slider.Scale:GetValue(), 2))
@@ -288,7 +288,7 @@ TOCA.Button.ResetPosition:SetScript("OnClick", function()
   TOCA.FrameWeap:ClearAllPoints()
   TOCA.FrameWeap:SetPoint("CENTER", 0, -140)
 	local totemCount = 0
-	for totemCat,v in pairsByKeys(TOCA.totems) do
+	for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
 		totemCount = totemCount+1
 		local defaultPointSet = totemCount*50
 		TOCA.FrameSeg[totemCat]:ClearAllPoints()
@@ -332,7 +332,7 @@ TOCA.Slider.OpacityBG:SetScript("OnValueChanged", function()
   TOCA.Button.TotemicCall.ECL:SetAlpha(TOCA.Round(TOCA.Slider.OpacityBG:GetValue(), 2))
   TOCA.Button.TotemicCall.ECR:SetAlpha(TOCA.Round(TOCA.Slider.OpacityBG:GetValue(), 2))
   TOCA.Slider.OpacityBG.Val:SetText(TOCA.Round(TOCA.Slider.OpacityBG:GetValue(), 2))
-	for totemCat,v in pairsByKeys(TOCA.totems) do
+	for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
 		TOCA.FrameSeg[totemCat].Background:SetAlpha(TOCA.Round(TOCA.Slider.OpacityBG:GetValue(), 2))
 	end
 end)
@@ -389,7 +389,7 @@ TOCA.Slider.OpacityFG.Val:SetText("")
 getglobal(TOCA.Slider.OpacityFG:GetName() .. 'Low'):SetText('0')
 getglobal(TOCA.Slider.OpacityFG:GetName() .. 'High'):SetText('1')
 TOCA.Slider.OpacityFG:SetScript("OnValueChanged", function()
-  for totemCat,v in pairsByKeys(TOCA.totems) do
+  for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
     TOCA.SlotSelect[totemCat]:SetAlpha(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))
     TOCA.Slot[totemCat]:SetAlpha(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))
     TOCA.Button.DropdownMain:SetAlpha(TOCA.Round(TOCA.Slider.OpacityFG:GetValue(), 2))

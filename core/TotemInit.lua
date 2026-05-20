@@ -192,39 +192,39 @@ function TOCA.Init()
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["MAINPOS"]) then
       local TOCAFrameMainPos = {}
-      TOCAFrameMainPos = split(TOCADB[TOCA.player.combine]["CONFIG"]["MAINPOS"], ",")
+      TOCAFrameMainPos = TOCA.Split(TOCADB[TOCA.player.combine]["CONFIG"]["MAINPOS"], ",")
       TOCA.FrameMain:ClearAllPoints()
       TOCA.FrameMain:SetPoint(TOCAFrameMainPos[1], tonumber(TOCAFrameMainPos[2]), tonumber(TOCAFrameMainPos[3]))
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["WEAPPOS"]) then
       local TOCAFrameWeapPos = {}
-      TOCAFrameWeapPos = split(TOCADB[TOCA.player.combine]["CONFIG"]["WEAPPOS"], ",")
+      TOCAFrameWeapPos = TOCA.Split(TOCADB[TOCA.player.combine]["CONFIG"]["WEAPPOS"], ",")
       TOCA.FrameWeap:ClearAllPoints()
       TOCA.FrameWeap:SetPoint(TOCAFrameWeapPos[1], tonumber(TOCAFrameWeapPos[2]), tonumber(TOCAFrameWeapPos[3]))
     end
-		for totemCat,v in pairsByKeys(TOCA.totems) do
+		for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
 			if (TOCADB[TOCA.player.combine]["CONFIG"]["SEG_POS_" .. totemCat]) then
 				local TOCAFrameMainPos = {}
-				TOCAFrameMainPos = split(TOCADB[TOCA.player.combine]["CONFIG"]["SEG_POS_" .. totemCat], ",")
+				TOCAFrameMainPos = TOCA.Split(TOCADB[TOCA.player.combine]["CONFIG"]["SEG_POS_" .. totemCat], ",")
 				TOCA.FrameSeg[totemCat]:ClearAllPoints()
 				TOCA.FrameSeg[totemCat]:SetPoint(TOCAFrameMainPos[1], tonumber(TOCAFrameMainPos[2]), tonumber(TOCAFrameMainPos[3]))
 			end
 		end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPLODEPOS"]) then
       local TOCAFrameExplodePos = {}
-      TOCAFrameExplodePos = split(TOCADB[TOCA.player.combine]["CONFIG"]["EXPLODEPOS"], ",")
+      TOCAFrameExplodePos = TOCA.Split(TOCADB[TOCA.player.combine]["CONFIG"]["EXPLODEPOS"], ",")
       TOCA.FrameExplode:ClearAllPoints()
       TOCA.FrameExplode:SetPoint(TOCAFrameExplodePos[1], tonumber(TOCAFrameExplodePos[2]), tonumber(TOCAFrameExplodePos[3]))
     end
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["ESPOS"]) then
 			local TOCAFrameESPos = {}
-			TOCAFrameESPos = split(TOCADB[TOCA.player.combine]["CONFIG"]["ESPOS"], ",")
+			TOCAFrameESPos = TOCA.Split(TOCADB[TOCA.player.combine]["CONFIG"]["ESPOS"], ",")
 			TOCA.FrameAssignments:ClearAllPoints()
 			TOCA.FrameAssignments:SetPoint(TOCAFrameESPos[1], tonumber(TOCAFrameESPos[2]), tonumber(TOCAFrameESPos[3]))
 		end
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["ESPERSPOS"]) then
 			local TOCAFrameESPos = {}
-			TOCAFrameESPos = split(TOCADB[TOCA.player.combine]["CONFIG"]["ESPERSPOS"], ",")
+			TOCAFrameESPos = TOCA.Split(TOCADB[TOCA.player.combine]["CONFIG"]["ESPERSPOS"], ",")
 			TOCA.FrameAssignmentPersonal:ClearAllPoints()
 			TOCA.FrameAssignmentPersonal:SetPoint(TOCAFrameESPos[1], tonumber(TOCAFrameESPos[2]), tonumber(TOCAFrameESPos[3]))
 		end
@@ -241,7 +241,7 @@ function TOCA.Init()
     end
     if (TOCADB[TOCA.player.combine]["CONFIG"]["TOOLPOS"]) then
       local TOCAFrameToolPos = {}
-      TOCAFrameToolPos = split(TOCADB[TOCA.player.combine]["CONFIG"]["TOOLPOS"], ",")
+      TOCAFrameToolPos = TOCA.Split(TOCADB[TOCA.player.combine]["CONFIG"]["TOOLPOS"], ",")
       TOCA.Tooltip:ClearAllPoints()
       TOCA.Tooltip:SetPoint(TOCAFrameToolPos[1], tonumber(TOCAFrameToolPos[2]), tonumber(TOCAFrameToolPos[3]))
     end
@@ -251,7 +251,7 @@ function TOCA.Init()
 		end
 		TOCA.UpdateMapButton()
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_ICON_POS"]) then
-	    local minimapIconPos = split(TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_ICON_POS"], ",")
+	    local minimapIconPos = TOCA.Split(TOCADB[TOCA.player.combine]["CONFIG"]["MINIMAP_ICON_POS"], ",")
 	    if ((minimapIconPos[1]) and (minimapIconPos[2])) then
 	      TOCA.Button.Minimap:SetPoint("TOPLEFT", Minimap, "TOPLEFT", minimapIconPos[1]+130, minimapIconPos[2]+22)
 	    end
@@ -301,7 +301,7 @@ function TOCA.Init()
 	end
 	TOCA.ModelDraw("m_minimap", TOCA.Button.Minimap, 32, 42, 0, 5, 1, 500)
 
-  TOCA.INTROLOG = arrayToString(TOCA._L.INTRO[1]) .. "|n" .. TOCA.CHANGELOG:gsub("###", ""):gsub("*", "|cfffab734>|r") .. "|n|n|n"
+  TOCA.INTROLOG = TOCA.ArrayToString(TOCA._L.INTRO[1]) .. "|n" .. TOCA.CHANGELOG:gsub("###", ""):gsub("*", "|cfffab734>|r") .. "|n|n|n"
   TOCA.TextFrame.text:SetText(TOCA.INTROLOG)
 
   TOCA.Notification("TOCA.Init()", true)
