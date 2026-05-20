@@ -592,6 +592,7 @@ TOCA.FrameAssignmentPersonalOptions.Scale:SetPoint("TOPLEFT", TOCA.OptionsPositi
 TOCA.FrameAssignmentPersonalOptions.Scale:SetOrientation('HORIZONTAL')
 TOCA.FrameAssignmentPersonalOptions.Scale:EnableMouse(true)
 TOCA.FrameAssignmentPersonalOptions.Scale:SetMinMaxValues(0.50, 2.00)
+TOCA.SliderBackdrop(TOCA.FrameAssignmentPersonalOptions.Scale)
 TOCA.FrameAssignmentPersonalOptions.ScaleMin, TOCA.FrameAssignmentPersonalOptions.ScaleMax = TOCA.FrameAssignmentPersonalOptions.Scale:GetMinMaxValues()
 TOCA.FrameAssignmentPersonalOptions.Scale:SetValue(1.0)
 TOCA.FrameAssignmentPersonalOptions.Scale.Val = TOCA.FrameAssignmentPersonalOptions.Scale:CreateFontString(nil, "ARTWORK")

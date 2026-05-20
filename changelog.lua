@@ -5,6 +5,7 @@ TOCA.CHANGELOG = [==[
 
 ### 3.29
 * Bugfix: Updated frame registercallback
+* Bugfix: Fix for Blizzard's slider UI backdrop
 
 ### 3.28
 * Bugfix for Earth Shield Raid Assignments for multiple resto shamans in raid

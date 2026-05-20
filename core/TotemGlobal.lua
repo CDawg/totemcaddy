@@ -424,6 +424,13 @@ for k,v in pairs(TOCA._L.UI.FRAMESTYLES) do
   TOCA.FrameStyleIndex[v]=k
 end
 
+function TOCA.SliderBackdrop(frame)
+	frame.Back = frame:CreateTexture(nil, "BACKGROUND")
+  frame.Back:SetSize(frame:GetWidth()-4, 14)
+  frame.Back:SetPoint("CENTER", 0, 0)
+  frame.Back:SetTexture("Interface/GLUES/LoadingBar/Loading-BarBorder")
+end
+
 function TOCA.FrameStyleDefault() --used for emergency recovery
   TOCA.FrameMain:SetHeight(TOCA._G.height)
   TOCA.FrameMain:SetWidth(TOCA._G.width)
