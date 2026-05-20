@@ -1329,30 +1329,42 @@ function TOCA.HandleShieldAlert()
 	end
 end
 
+TOCA.Event = {}
+TOCA.EventCounter = 0
+function TOCA.EventThrottle(event)
+	if (TOCA.Event[event]) then
+	  TOCA.Event[event] = false
+	else
+		TOCA.Event[event] = true --catch the initial event
+	end
+	return TOCA.Event[event]
+end
+
 function TOCA.OnUpdateEvent(event)
 	if (TOCA.player.classID == 7) then --shaman
-	  local percMana = (UnitPower("player")/UnitPowerMax("player"))*100
-	  local percMana = floor(percMana+0.5)
-	  --local onTaxi = UnitOnTaxi("player")
-	  --TOCA.Notification("mana: " .. percMana, true)
-	  TOCA.Button.TotemicCall.flash:Hide()
+		TOCA.EventCounter = TOCA.EventCounter +1
+		local percMana = (UnitPower("player")/UnitPowerMax("player"))*100
+		local percMana = floor(percMana+0.5)
+		--local onTaxi = UnitOnTaxi("player")
+		--TOCA.Notification("mana: " .. percMana, true)
+		TOCA.Button.TotemicCall.flash:Hide()
 		TOCA.Slot.elemental["EARTH"]:Hide()
 		TOCA.Slot.elemental["FIRE"]:Hide()
-    --TOCA.TotemInRange={} --clear the array
-	  if ((UnitOnTaxi("player")) or (percMana <= 1)) then
-	    TOCA.EnableTotems(false)
-	  else
-	    TOCA.EnableTotems(true)
-	  end
+		--TOCA.TotemInRange={} --clear the array
+		if ((UnitOnTaxi("player")) or (percMana <= 1)) then
+			TOCA.EnableTotems(false)
+		else
+			TOCA.EnableTotems(true)
+		end
 
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["TOTEMRADIUSVISUAL"] ~= "OFF") then
 			TOCA.TotemAuraRadius(event)
 		end
 
-	  for i=1, 4 do
-	    TOCA.GetTotemInfo(i)
+		for i=1, 4 do
+			TOCA.GetTotemInfo(i)
 			if ((TOCA.TotemPresent[i]) and (TOCA.TotemName[i] ~= "") and (TOCA.TotemName[i] ~= nil)) then
-	      TOCA.Button.TotemicCall.flash:Show()
+				TOCA.Button.TotemicCall.flash:Show()
 
 				TOCA.Notification("TOTEM ID" .. TOCA.TotemID[i], true)
 
@@ -1363,19 +1375,21 @@ function TOCA.OnUpdateEvent(event)
 					TOCA.Slot.elemental["FIRE"]:Show()
 				end
 			end
-	  end
+		end
 
 		TOCA.GetReincTimer()
 		TOCA.GetShieldTimer()
-	  TOCA.DisplayAnkhFrame()
+		TOCA.DisplayAnkhFrame()
 		TOCA.HandleShieldAlert()
 		TOCA.GetShieldFromTanks()
 		--TOCA.GetWeaponAura() --enchant
+
+		TOCA.Notification("TOCA.OnUpdateEvent(" .. event .. ")", true)
+		TOCA.Notification("TOCA.EventCounter = " .. TOCA.EventCounter, true)
 	end
 end
 
 function TOCA.Combat(event)
-
 	--player has entered combat
 	if (event == "PLAYER_REGEN_DISABLED") then
 		TOCA.isInCombat = true

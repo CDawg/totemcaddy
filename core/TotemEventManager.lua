@@ -32,7 +32,8 @@ TOCA.Main:RegisterEvent("UNIT_SPELLCAST_SENT")
 TOCA.Main:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 TOCA.Main:RegisterEvent("UNIT_AURA")
 TOCA.Main:RegisterEvent("UNIT_MAXPOWER")
-TOCA.Main:RegisterEvent("UNIT_POWER_FREQUENT")
+--TOCA.Main:RegisterEvent("UNIT_POWER_FREQUENT")
+TOCA.Main:RegisterEvent("UNIT_POWER_UPDATE")
 TOCA.Main:RegisterEvent("UNIT_INVENTORY_CHANGED")
 TOCA.Main:RegisterEvent("UNIT_ENTERED_VEHICLE")
 TOCA.Main:RegisterEvent("UNIT_EXITED_VEHICLE")
@@ -60,17 +61,17 @@ function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 	    TOCA.Init()
 	  end
 
-		if ((event == "UNIT_SPELLCAST_START") or
-		(event == "UNIT_SPELLCAST_STOP") or
-	  (event == "UNIT_POWER_FREQUENT")) then
-	    TOCA.OnUpdateEvent(event)
-	  end
-
 		if (event == "UNIT_SPELLCAST_START") then
 			if ((prefix == "player") and (_casted)) then
 				TOCA.TimerRechargeStart(_casted, false)
 			end
 		end
+
+		if (event == "UNIT_POWER_UPDATE") then
+			if (TOCA.EventThrottle(event)) then
+		    TOCA.OnUpdateEvent(event)
+		  end
+	  end
 
 	  --technically, this needs to be handled on a different event
 	  if (event == "UNIT_SPELLCAST_SENT") then
@@ -93,12 +94,13 @@ function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 			end
 		end
 
-	  if (event == "UNIT_MAXPOWER") then
+		if (event == "UNIT_MAXPOWER") then
 	    TOCA.OnUpdateEvent(event)
 	  end
 	  if (event == "UNIT_AURA") then --more accurate on usable spells
 	    TOCA.OnUpdateEvent(event)
 	  end
+
 	  if (event == "PLAYER_TOTEM_UPDATE") then
 	    TOCA.OnUpdateEvent(event)
 	    TOCA.TotemBarTimerStart()
@@ -109,12 +111,6 @@ function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 				end
 		  end
 	  end
-
-		if ((event == "PLAYER_TOTEM_UPDATE") or
-		(event == "PLAYER_STARTED_MOVING") or
-		(event == "PLAYER_STOPPED_MOVING")) then
-		  TOCA.OnUpdateEvent(event)
-		end
 
 	  if (event == "PLAYER_DEAD") then
 	    TOCA.TotemTimerReset("all")
@@ -137,7 +133,9 @@ function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 	  end
 
 	  if (event == "BAG_UPDATE") then
-	    TOCA.OnUpdateEvent(event) --fire off when enable/disable
+			if (TOCA.EventThrottle(event)) then
+	      TOCA.OnUpdateEvent(event)
+			end
 	  end
 
 	  if (event == "PLAYER_CONTROL_GAINED") then

@@ -1,6 +1,7 @@
 TOCA.CHANGELOG = [==[
 ### 3.30
-* Renamed all globals in the library and created independent functions
+* Bugfix: Moved all library globals and created independent functions, this was causing conflicts with ElvUI addon
+* Added an event throttle for spellcasting and totem updates
 
 ### 3.29
 * Bugfix: Updated frame registercallback
