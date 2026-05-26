@@ -117,9 +117,9 @@ function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 	  end
 
 	  if (event == "PLAYER_LOGIN") then
-			--if (IsInGuild()) then
+			if (IsInGuild()) then
 			  TOCA.SendPacket(TOCA.Net.version .. TOCA._G.version, "GUILD")
-		  --end
+		  end
 			if (IsInRaid()) then
 				TOCA.SendPacket(TOCA.Net.version .. TOCA._G.version, "RAID")
 			end
