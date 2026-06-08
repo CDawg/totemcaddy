@@ -1,4 +1,8 @@
 TOCA.CHANGELOG = [==[
+### 3.31
+* Added additional event throttling for better performance
+* Removed event moving
+
 ### 3.30
 * Bugfix: Moved all library globals and created independent functions, this was causing conflicts with ElvUI addon
 * Added an event throttle for spellcasting and totem updates
