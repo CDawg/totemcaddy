@@ -164,7 +164,6 @@ function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 				TOCA.ReportFeedGet(prefix, netpacket)
 				TOCA.ReportFeedResult(prefix, netpacket)
 			end
-			--if (prefix) then print(prefix) end
 	  end
 
 	end
