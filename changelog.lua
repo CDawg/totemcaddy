@@ -1,6 +1,6 @@
 TOCA.CHANGELOG = [==[
 ### 3.32
-* Updated API for TBC SPell: Poison Cleansing Totem
+* Updated API for TBC Spell: Poison Cleansing Totem (8166)
 * Bugfix: Raid Assignment Options Re-enabled
 
 ### 3.31
