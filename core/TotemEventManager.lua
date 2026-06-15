@@ -159,7 +159,7 @@ function TOCA.EventManager(self, event, prefix, netpacket, _casted, _spellID)
 		--Load event last
 	  if (event == "CHAT_MSG_ADDON") then
 			if (prefix == TOCA._G.prefix) then
-				TOCA.VersionControl(prefix, netpacket) --get version from guild/raid
+				TOCA:VersionControl(prefix, netpacket) --get version from guild/raid
 				TOCA.AssignmentESRaidGet(prefix, netpacket)
 				TOCA.ReportFeedGet(prefix, netpacket)
 				TOCA.ReportFeedResult(prefix, netpacket)

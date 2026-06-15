@@ -89,7 +89,7 @@ for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
 end
 
 TOCA.version_alerted = 0
-function TOCA.VersionControl(netprefix, netpacket)
+function TOCA:VersionControl(netprefix, netpacket)
 	if (TOCA.version_alerted == 0) then
 		local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.version)
 		if (getPacket) then
