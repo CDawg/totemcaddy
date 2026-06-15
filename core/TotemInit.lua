@@ -282,6 +282,13 @@ function TOCA.Init()
 				end
 		  end
 		end
+
+    if (TOCADB[TOCA.player.combine]["CONFIG"]["ESASSIGNMENTS"] == "OFF") then
+		  TOCA.FrameAssignmentPersonal:Hide()
+      TOCA.Button.Assignments:Hide()
+      TOCA.Checkbox.FrameAssignments:SetChecked(nil)
+    end
+
     TOCA.UpdateTotemSet()
     TOCA.UpdateDDMenu(TOCA.Dropdown.Main)
     TOCA.UpdateDDMenu(TOCA.Dropdown.Sets)

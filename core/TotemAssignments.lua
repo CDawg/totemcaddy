@@ -327,6 +327,7 @@ function TOCA.SendAllAssignments()
 end
 
 function TOCA.BuildRaidAssignments(loadSaved) --get saved variables
+  TOCA.Button.Assignments:Hide()
 	local classIndex = select(3, UnitClass("player")) --users that use TC and not a shaman
 	--if (classIndex ~= 7) then --is a sham
 		--return
@@ -344,8 +345,9 @@ function TOCA.BuildRaidAssignments(loadSaved) --get saved variables
 			isKnown = IsPlayerSpell(TOCA.spell.EARTH_SHIELD, false)
 			TOCA.Notification("TOCA.BuildRaidAssignments()->IsInRaid() is a shaman", true)
 			if (isKnown) then
-				TOCA.Button.Assignments:Show()
-				TOCA.Notification("Raid Assignments show button?", true)
+				if (TOCADB[TOCA.player.combine]["CONFIG"]["ESASSIGNMENTS"] ~= "OFF") then
+				  TOCA.Button.Assignments:Show()
+				end
 			end
 		end
 
@@ -479,11 +481,10 @@ function TOCA.GetShieldFromTanks()
 	TOCA.FrameAssignmentPersonal:SetBackdropColor(1, 0, 0, 0.6)
 	TOCA.FrameAssignmentPersonal.ESIcon:Hide()
 	TOCA.FrameAssignmentPersonal.ESCount:SetText("")
-	if (TOCADB[TOCA.player.combine]["CONFIG"]["ESASSIGNMENTS"] == "OFF") then
-	  TOCA.FrameAssignmentPersonal:Hide()
-		return
-	end
-	if (classIndex == 7) then --dont even bother if it's not a shaman
+  TOCA.FrameAssignmentPersonal:Hide()
+	TOCA.Button.Assignments:Hide()
+
+	if ((classIndex == 7) and (TOCADB[TOCA.player.combine]["CONFIG"]["ESASSIGNMENTS"] ~= "OFF")) then
 		if (IsInRaid()) then
 			for i=1, MAX_RAID_MEMBERS do
 				if (TOCA.Dropdown.FrameAssignments[i].text:GetText() == TOCA.player.name) then
@@ -491,6 +492,7 @@ function TOCA.GetShieldFromTanks()
 				end
 			end
 			--print(tankToShaman) --debug
+			TOCA.Button.Assignments:Show()
 
 			if (tankToShaman) then --shaman specific tank
 				TOCA.FrameAssignmentPersonal:Show()
@@ -521,7 +523,7 @@ function TOCA.GetShieldFromTanks()
 							end
 						end
 						_Uindex = _Uindex + 1
-					end
+				  end
 				else
 					TOCA.FrameAssignmentPersonal:Hide()
 			  end --tank connected
@@ -577,9 +579,14 @@ end)
 TOCA.Checkbox.FrameAssignments:SetScript("OnClick", function(self)
   if (self:GetChecked()) then
     TOCADB[TOCA.player.combine]["CONFIG"]["ESASSIGNMENTS"] = "ON"
+		if (IsInRaid()) then
+		  TOCA.Button.Assignments:Show()
+		end
   else
     TOCADB[TOCA.player.combine]["CONFIG"]["ESASSIGNMENTS"] = "OFF"
 		TOCA.FrameAssignmentPersonal:Hide()
+		TOCA.FrameAssignmentPersonal.ESIcon:Hide()
+		TOCA.Button.Assignments:Hide()
   end
 end)
 
