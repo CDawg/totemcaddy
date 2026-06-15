@@ -1,4 +1,8 @@
 TOCA.CHANGELOG = [==[
+### 3.32
+* Updated API for TBC SPell: Poison Cleansing Totem
+* Bugfix: Raid Assignment Options Re-enabled
+
 ### 3.31
 * Added additional event throttling for better performance
 * Removed event moving
