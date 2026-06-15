@@ -91,22 +91,20 @@ end
 TOCA.version_alerted = 0
 function TOCA.VersionControl(netprefix, netpacket)
 	if (TOCA.version_alerted == 0) then
-	  --if (netprefix == TOCA._G.prefix) then
-	    local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.version)
-	    if (getPacket) then
-	      local latest_version = tonumber(getPacket)
-	      local my_version = tonumber(TOCA._G.version)
-	      if (latest_version > my_version) then --2 minor
-	        TOCA.Notification("|cfffc2121" .. TOCA._L.INIT[7] .. " Latest version:|cffffedad " .. latest_version)
-	        TOCA.version_alerted = tonumber(latest_version)
-	      end
-	    end
-	  end
-		if (tonumber(TOCA._G.date) >= tonumber(TOCA._G.update)) then
-	    TOCA.Notification("|cfffc2121" .. TOCA._L.INIT[7])
-			TOCA.version_alerted = 1
+		local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.version)
+		if (getPacket) then
+			local latest_version = tonumber(getPacket)
+			local my_version = tonumber(TOCA._G.version)
+			if (latest_version > my_version) then --2 minor
+				TOCA.Notification("|cfffc2121" .. TOCA._L.INIT[7] .. " Latest version:|cffffedad " .. latest_version)
+				TOCA.version_alerted = tonumber(latest_version)
+			end
 		end
-	--end
+	end
+	if (tonumber(TOCA._G.date) >= tonumber(TOCA._G.update)) then
+		TOCA.Notification("|cfffc2121" .. TOCA._L.INIT[7])
+		TOCA.version_alerted = 1
+	end
 end
 
 --menu & frame system default structures
