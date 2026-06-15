@@ -124,11 +124,11 @@ TOCA = {
 	totems = {
 		ID = {
 			FIRE = {
-				1535, --fire nova
-				8227, --flametongue
-				8181, --frost resist
-				8190, --magma
-				3599, --searing
+				1535,  --fire nova
+				8227,  --flametongue
+				8181,  --frost resist
+				8190,  --magma
+				3599,  --searing
 				30706, --totem of wrath
 			},
 			EARTH = {
@@ -139,23 +139,22 @@ TOCA = {
 				8143, --tremor
 			},
 			WATER = {
-				8170, --disease cleanse
-				8184, --fire resist
-				5394, --healing stream
-			  5675, --mana spring
-				--8169, --poison cleansing --wrath
-				38306, --poison cleansing
+				8170,  --disease cleanse
+				8184,  --fire resist
+				5394,  --healing stream
+			  5675,  --mana spring
+				8166,  --poison cleansing -- tbc update
 				16190, --mana tide
 			},
 			AIR = {
-				8835, --grace
-				8177, --grounding
+				8835,  --grace
+				8177,  --grounding
 				10595, --nature resist
-				6495, --sentry
+				6495,  --sentry
 				25908, --tranquil air
-				8512, --windfury
+				8512,  --windfury
 				15107, --windwall
-				3738, --wrath of air
+				3738,  --wrath of air
 			}
 		}
   },
