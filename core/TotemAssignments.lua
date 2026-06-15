@@ -377,7 +377,7 @@ function TOCA.BuildRaidAssignments(loadSaved) --get saved variables
 		end
 
 		table.sort(listSortNameTanks) --alpha order tanks
-		for k,v in TOCA.PairByKeys(listSortNameTanks) do
+		for k,v in TOCA:PairByKeys(listSortNameTanks) do
 			TOCA.NumTanks = TOCA.NumTanks +1
 			TOCA.FrameAssignments.MTName[k]:Show()
 			TOCA.FrameAssignments.MTClass[k]:Show()
@@ -458,7 +458,7 @@ function TOCA.AssignmentESRaidGet(prefix, netpacket)
 	local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.assign_es)
 	if (getPacket) then
 		--print("getting " .. getPacket)
-		local assign = TOCA.Split(getPacket, ",")
+		local assign = TOCA:Split(getPacket, ",")
 		local ddID = tonumber(assign[1])
 		local tank = assign[2]
 		local shaman=assign[3]
@@ -614,14 +614,14 @@ TOCA.FrameAssignmentPersonalOptions.Scale.Title:SetTextColor(1, 1, 0.5, 1)
 getglobal(TOCA.FrameAssignmentPersonalOptions.Scale:GetName() .. 'Low'):SetText('0.50')
 getglobal(TOCA.FrameAssignmentPersonalOptions.Scale:GetName() .. 'High'):SetText('2')
 TOCA.FrameAssignmentPersonalOptions.Scale:SetScript("OnValueChanged", function()
-  TOCA.FrameAssignmentPersonal:SetScale(TOCA.Round(TOCA.FrameAssignmentPersonalOptions.Scale:GetValue(), 2))
-  TOCA.FrameAssignmentPersonalOptions.Scale.Val:SetText(TOCA.Round(TOCA.FrameAssignmentPersonalOptions.Scale:GetValue(), 2))
+  TOCA.FrameAssignmentPersonal:SetScale(TOCA:MathRound(TOCA.FrameAssignmentPersonalOptions.Scale:GetValue(), 2))
+  TOCA.FrameAssignmentPersonalOptions.Scale.Val:SetText(TOCA:MathRound(TOCA.FrameAssignmentPersonalOptions.Scale:GetValue(), 2))
 end)
 TOCA.FrameAssignmentPersonalOptions.Scale:SetScript("OnEnter", function(self)
   TOCA.TooltipDisplay(self, TOCA.FrameAssignmentPersonalOptions.Scale.Title:GetText(), TOCA._L.UI.ASSIGNMENTS[3][2])
 end)
 TOCA.FrameAssignmentPersonalOptions.Scale:SetScript("OnLeave", function()
-  TOCADB[TOCA.player.combine]["CONFIG"]["SCALEPERS"] = TOCA.Round(TOCA.FrameAssignmentPersonalOptions.Scale:GetValue(), 2)
+  TOCADB[TOCA.player.combine]["CONFIG"]["SCALEPERS"] = TOCA:MathRound(TOCA.FrameAssignmentPersonalOptions.Scale:GetValue(), 2)
   TOCA.CloseAllMenus()
 end)
 TOCA.Button.FrameAssignmentPersonalOptionsReset= CreateFrame("Button", nil, TOCA.FrameOptionsPage[TOCA.TABPage.RAID], "BackdropTemplate")

@@ -266,7 +266,7 @@ TOCA = {
 
 }
 
-function TOCA.ArrayToString(array)
+function TOCA:ArrayToString(array)
   formstring=""
   for k,v in pairs(array) do
     formstring = formstring .. v .. "|n"
@@ -274,7 +274,7 @@ function TOCA.ArrayToString(array)
   return formstring
 end
 
-function TOCA.Split(s, delimiter)
+function TOCA:Split(s, delimiter)
   result = {}
   if (s) then
     for match in (s..delimiter):gmatch("(.-)"..delimiter) do
@@ -284,14 +284,14 @@ function TOCA.Split(s, delimiter)
   return result
 end
 
-function TOCA.TableMerge(t1, t2)
+function TOCA:TableMerge(t1, t2)
  for k,v in ipairs(t2) do
     table.insert(t1, v)
  end
   return t1
 end
 
-function TOCA.PairByKeys(t, f)
+function TOCA:PairByKeys(t, f)
   local a = {}
   for n in pairs(t) do table.insert(a, n) end
   table.sort(a, f)
@@ -305,7 +305,7 @@ function TOCA.PairByKeys(t, f)
   return iter
 end
 
-function TOCA.GetKeyFromValue(_array, value, index)
+function TOCA:GetKeyFromValue(_array, value, index)
   if ((index == nil) or (index == 0)) then
 		for k,v in pairs(_array) do
 			if v==value then return k end
@@ -319,7 +319,7 @@ function TOCA.GetKeyFromValue(_array, value, index)
 	end
 end
 
-function TOCA.TimeSecondsToMinutes(time)
+function TOCA:TimeSecondsToMinutes(time)
   local minutes = floor(mod(time, 3600)/60)
   local seconds = floor(mod(time, 60))
 	if (minutes <= -1) then
@@ -331,7 +331,7 @@ function TOCA.TimeSecondsToMinutes(time)
   return format("%2d:%02d", minutes, seconds)
 end
 
-function TOCA.Round(number)
+function TOCA:MathRound(number)
   if (number - (number % 0.1)) - (number - (number % 1)) < 0.5 then
     number = number - (number % 1)
   else

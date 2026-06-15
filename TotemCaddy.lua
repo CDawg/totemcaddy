@@ -153,7 +153,7 @@ scrollE = 1
 scrollF = 1
 scrollW = 1
 TOCA.TotemNum["MAIN"] = 0
-for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
   TOCA.TotemNum["MAIN"] = TOCA.TotemNum["MAIN"] +1
   TOCA.Slot_x = TOCA.Slot_x +36
   TOCA.Slot[totemCat]={}
@@ -331,7 +331,7 @@ TOCA.FrameMainGridHorizontal:Hide()
 local totemButtonPos_X={}
 local totemButtonPos_Y={}
 TOCA.TotemNum["ROW"] = 0
-for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
   TOCA.TotemNum["ROW"] = TOCA.TotemNum["ROW"] +1
   totemButtonPos_X[totemCat] = 0
   totemButtonPos_Y[totemCat] = 0
@@ -428,7 +428,7 @@ TOCA.SlotSelectTotemAction={}
 TOCA.SlotSelectMenu={}
 --TOCA.TotemSlotAction={}
 TOCA.SlotSelect_x = 0
-for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
   TOCA.SlotSelect[totemCat]= CreateFrame("Button", nil, TOCA.Slot[totemCat], "BackdropTemplate")
   TOCA.SlotSelect[totemCat]:SetSize(TOCA.Slot_w, 15)
   TOCA.SlotSelect[totemCat]:SetPoint("CENTER", 0, 21)

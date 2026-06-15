@@ -64,8 +64,8 @@ end
 
 --build all totems for the respective language (rank 1)
 TOCA._L.TOTEMS = {FIRE={}, EARTH={}, WATER={}, AIR={}}
-for totemCat,v in TOCA.PairByKeys(TOCA.totems.ID) do
-	for k,v in TOCA.PairByKeys(TOCA.totems.ID[totemCat]) do
+for totemCat,v in TOCA:PairByKeys(TOCA.totems.ID) do
+	for k,v in TOCA:PairByKeys(TOCA.totems.ID[totemCat]) do
 		TOCA._L.TOTEMS[totemCat][k] = TOCA.IdentifySpell(TOCA.totems.ID[totemCat][k])
 	end
 end
@@ -80,8 +80,8 @@ TOCA._L.SPELLS.SHIELDS = {
 
 --match the totems spells to their respective icons
 TOCA.totems = {FIRE={}, EARTH={}, WATER={}, AIR={}} --cached order
-for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
-	for k,v in TOCA.PairByKeys(TOCA._L.TOTEMS[totemCat]) do
+for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
+	for k,v in TOCA:PairByKeys(TOCA._L.TOTEMS[totemCat]) do
 		TOCA.totems[totemCat][k] = {}
 		TOCA.totems[totemCat][k][1] = TOCA._L.TOTEMS[totemCat][k]
 		TOCA.totems[totemCat][k][2] = TOCA.icons[totemCat][k]
@@ -152,7 +152,7 @@ end
 
 --default totem slots
 TOCA.cache={}
-for totemInt,totemCat in TOCA.PairByKeys(TOCA.AlphaOrder) do
+for totemInt,totemCat in TOCA:PairByKeys(TOCA.AlphaOrder) do
 	TOCA.cache[totemInt] = TOCA.totems[totemCat][1][1]
 end
 
@@ -167,7 +167,7 @@ end
 
 function TOCA.BuildKeyBindsInit()
   BINDING_HEADER_TOTEMCADDY = TOCA._G.title
-  for KeyBK,KeyBV in TOCA.PairByKeys(TOCA._L.KEYBINDS) do
+  for KeyBK,KeyBV in TOCA:PairByKeys(TOCA._L.KEYBINDS) do
     _G["BINDING_NAME_"..KeyBK] = KeyBV
   end
   TOCA.Notification("TOCA.BuildKeyBindsInit()", true)
@@ -245,34 +245,34 @@ function TOCA.SetKeyBindOnLoad()
   end
 end
 
-function TOCA.Round(num, numDecimalPlaces)
+function TOCA:MathRound(num, numDecimalPlaces)
   local mult = 10^(numDecimalPlaces or 0)
   return math.floor(num * mult + 0.5) / mult
 end
 
 function TOCA.UpdateTotemSet()
-  local totemIconKey = TOCA.GetKeyFromValue(TOCA.totems.AIR, TOCA.cache[1], 1)
+  local totemIconKey = TOCA:GetKeyFromValue(TOCA.totems.AIR, TOCA.cache[1], 1)
 	if (totemIconKey) then
 	  local totemIcon = TOCA.SetIcon(TOCA.totems.AIR[totemIconKey][2])
 	  TOCA.Slot["AIR"]:SetBackdrop(totemIcon)
 	  TOCA.FrameSetsSlot["AIR"]:SetBackdrop(totemIcon)
 	end
 
-  local totemIconKey = TOCA.GetKeyFromValue(TOCA.totems.EARTH, TOCA.cache[2], 1)
+  local totemIconKey = TOCA:GetKeyFromValue(TOCA.totems.EARTH, TOCA.cache[2], 1)
 	if (totemIconKey) then
 	  local totemIcon = TOCA.SetIcon(TOCA.totems.EARTH[totemIconKey][2])
 	  TOCA.Slot["EARTH"]:SetBackdrop(totemIcon)
 	  TOCA.FrameSetsSlot["EARTH"]:SetBackdrop(totemIcon)
 	end
 
-  local totemIconKey = TOCA.GetKeyFromValue(TOCA.totems.FIRE, TOCA.cache[3], 1)
+  local totemIconKey = TOCA:GetKeyFromValue(TOCA.totems.FIRE, TOCA.cache[3], 1)
 	if (totemIconKey) then
 	  local totemIcon = TOCA.SetIcon(TOCA.totems.FIRE[totemIconKey][2])
 	  TOCA.Slot["FIRE"]:SetBackdrop(totemIcon)
 	  TOCA.FrameSetsSlot["FIRE"]:SetBackdrop(totemIcon)
 	end
 
-  local totemIconKey = TOCA.GetKeyFromValue(TOCA.totems.WATER, TOCA.cache[4], 1)
+  local totemIconKey = TOCA:GetKeyFromValue(TOCA.totems.WATER, TOCA.cache[4], 1)
 	if (totemIconKey) then
 	  local totemIcon = TOCA.SetIcon(TOCA.totems.WATER[totemIconKey][2])
 	  TOCA.Slot["WATER"]:SetBackdrop(totemIcon)
@@ -289,7 +289,7 @@ TOCA.SlotGrid.HorizontalTotemButton={}
 TOCA.FrameSeg={}
 TOCA.FrameSeg.Button={}
 
-for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
   TOCA.SlotSelectTotemDisabled[totemCat]={}
   TOCA.FrameSetsSlotDisabled[totemCat]={}
   TOCA.SlotGrid.VerticalTotemButton[totemCat]={}
@@ -301,7 +301,7 @@ end
 function TOCA.EnableTotems(enable)
   if (enable) then
     TOCA.TotemsEnabled = true
-    for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+    for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
       TOCA.Slot.Disable[totemCat]:Hide()
       for i,totemSpell in pairs(TOCA.totems[totemCat]) do
         TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:Hide()
@@ -311,7 +311,7 @@ function TOCA.EnableTotems(enable)
     end
   else
     TOCA.TotemsEnabled = false
-    for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+    for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
       TOCA.Slot.Disable[totemCat]:Show()
       for i,totemSpell in pairs(TOCA.totems[totemCat]) do
         TOCA.SlotGrid.VerticalTotemButton[totemCat][i].disable:Show()
@@ -379,12 +379,12 @@ function TOCA.EnableKnownTotems()
 
     if (TOCA.isInCombat) then
       TOCA.Notification("In Combat, do nothing! TOCA.EnableKnownTotems()", true)
-			for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+			for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
 				TOCA.FrameSeg[totemCat].Menu:Hide()
 			end
 			return
     else
-      for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+      for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
         for i,totemSpell in pairs(TOCA.totems[totemCat]) do
           TOCA.SlotSelectTotemDisabled[totemCat][i]:Show()
           TOCA.FrameSetsSlotDisabled[totemCat][i]:Show()
@@ -404,7 +404,7 @@ function TOCA.EnableKnownTotems()
       end
     end
   end
-	for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+	for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
 		TOCA.SizeSegmentedBars(totemCat)
 	end
 	TOCA.Notification("TOCA.EnableKnownTotems()", true)
@@ -439,7 +439,7 @@ function TOCA.FrameStyleDefault() --used for emergency recovery
 	TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", -28, -14)
 	TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 61)
 	TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 61)
-	for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+	for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
 		TOCA.Slot[totemCat]:Show()
 		TOCA.FrameSeg[totemCat]:Hide()
 	end
@@ -455,7 +455,7 @@ function TOCA.FrameStyleSet(style)
 			TOCA.FrameMain.ShieldFrame:SetPoint("TOPLEFT", 10, -30)
 	    TOCA.FrameMain.ReincFrame:SetPoint("TOPLEFT", 40, -30)
 	    TOCA.FrameMain.AnkhFrame:SetPoint("TOPLEFT", 70, -30)
-			for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+			for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
 				TOCA.Slot[totemCat]:Hide()
 	      TOCA.FrameSeg[totemCat]:Show()
 			end
@@ -473,7 +473,7 @@ function TOCA.FrameStyleSet(style)
     TOCA.Button.TotemicCall:SetPoint("CENTER", 0, 160)
     TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 181)
     TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 181)
-    for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+    for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:Hide()
 			TOCA.FrameSeg[totemCat]:Hide()
     end
@@ -490,7 +490,7 @@ function TOCA.FrameStyleSet(style)
     TOCA.Button.TotemicCall.ECL:SetPoint("CENTER", -30, 103)
     TOCA.Button.TotemicCall.ECR:SetPoint("CENTER", 30, 103)
 		TOCA.Button.DropdownMain:Hide()
-    for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+    for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:Hide()
 			TOCA.FrameSeg[totemCat]:Hide()
     end
@@ -535,7 +535,7 @@ function TOCA.BorderFrame(enable)
 		for i=1, 4 do
 		  TOCA.Button.Weap[i]:SetBackdropBorderColor(1, 1, 1, 0.6)
 		end
-    for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+    for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
       TOCA.SlotSelect[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
       TOCA.SlotSelectMenu[totemCat]:SetBackdropBorderColor(1, 1, 1, 0.6)
@@ -569,7 +569,7 @@ function TOCA.BorderFrame(enable)
 		for i=1, 4 do
 		  TOCA.Button.Weap[i]:SetBackdropBorderColor(1, 1, 1, 0)
 		end
-    for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+    for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
       TOCA.Slot[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)
       TOCA.SlotSelect[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)
       TOCA.SlotSelectMenu[totemCat]:SetBackdropBorderColor(1, 1, 1, 0)
@@ -906,7 +906,7 @@ function TOCA.TotemAuraRadius(event)
 				--end
 				if (TOCA.TotemName[i]) then
 					if (TOCA.TotemName[i] ~= "") then
-						for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+						for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
 							for index,totemSpell in pairs(TOCA.totems[totemCat]) do
 								if (string.find(TOCA.TotemName[i], TOCA.FrameSeg.Button[totemCat][index].ID:GetText())) then
 									--print(TOCA.TotemName[i])
@@ -948,18 +948,18 @@ function TOCA.TimerFrame(i)
   if ((TOCA.TotemPresent[i]) and (TOCA.TotemName[i] ~= "")) then
     TOCA.TotemTimer[i] = TOCA.TotemTimer[i] -1
     if (TOCA._GTimerInMinutes) then
-      TOCA.Slot.Timer[i]:SetText(TOCA.TimeSecondsToMinutes(TOCA.TotemTimer[i]))
-      TOCA.SlotGrid.VerticalTimer[i]:SetText(TOCA.TimeSecondsToMinutes(TOCA.TotemTimer[i]))
-      TOCA.SlotGrid.HorizontalTimer[i]:SetText(TOCA.TimeSecondsToMinutes(TOCA.TotemTimer[i]))
-			for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+      TOCA.Slot.Timer[i]:SetText(TOCA:TimeSecondsToMinutes(TOCA.TotemTimer[i]))
+      TOCA.SlotGrid.VerticalTimer[i]:SetText(TOCA:TimeSecondsToMinutes(TOCA.TotemTimer[i]))
+      TOCA.SlotGrid.HorizontalTimer[i]:SetText(TOCA:TimeSecondsToMinutes(TOCA.TotemTimer[i]))
+			for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
 			  for index,totemSpell in pairs(TOCA.totems[totemCat]) do
 					if ((TOCA.TotemName[i]) and (TOCA.FrameSeg.Button[totemCat][index].ID:GetText())) then
 						if (string.find(TOCA.TotemName[i], TOCA.FrameSeg.Button[totemCat][index].ID:GetText())) then
 							--print(TOCA.TotemName[i])
 							--print(i)
 							--print("time: ")
-							--print(TOCA.TimeSecondsToMinutes(TOCA.TotemTimer[i]))
-							TOCA.FrameSeg.Button[totemCat][index].timer:SetText(TOCA.TimeSecondsToMinutes(TOCA.TotemTimer[i]))
+							--print(TOCA:TimeSecondsToMinutes(TOCA.TotemTimer[i]))
+							TOCA.FrameSeg.Button[totemCat][index].timer:SetText(TOCA:TimeSecondsToMinutes(TOCA.TotemTimer[i]))
 						end
 					end
 				end
@@ -968,7 +968,7 @@ function TOCA.TimerFrame(i)
       TOCA.Slot.Timer[i]:SetText(TOCA.TotemTimer[i])
       TOCA.SlotGrid.VerticalTimer[i]:SetText(TOCA.TotemTimer[i])
       TOCA.SlotGrid.HorizontalTimer[i]:SetText(TOCA.TotemTimer[i])
-			for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+			for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
 			  for index,totemSpell in pairs(TOCA.totems[totemCat]) do
 					if ((TOCA.TotemName[i]) and (TOCA.FrameSeg.Button[totemCat][index].ID:GetText())) then
 						if (string.find(TOCA.TotemName[i], TOCA.FrameSeg.Button[totemCat][index].ID:GetText())) then
@@ -1009,7 +1009,7 @@ function TOCA.TimerFrame(i)
       TOCA.SlotGrid.VerticalTimer[i]:Hide()
       TOCA.SlotGrid.HorizontalTimer[i]:Hide()
     end
-		for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+		for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
 			for index,totemSpell in pairs(TOCA.totems[totemCat]) do
 				TOCA.FrameSeg.Button[totemCat][index].timer:Hide()
 			end
@@ -1275,7 +1275,7 @@ function TOCA.TotemTimerReset(i)
       TOCA.SlotGrid.VerticalTimer[i]:SetText("")
       TOCA.SlotGrid.HorizontalTimer[i]:SetText("")
     end
-		for totemCat,v in TOCA.PairByKeys(TOCA.totems) do --place vert and horz here?
+		for totemCat,v in TOCA:PairByKeys(TOCA.totems) do --place vert and horz here?
 			for index,totemSpell in pairs(TOCA.totems[totemCat]) do
 				TOCA.FrameSeg.Button[totemCat][index].timer:SetText("")
 			end
@@ -1305,19 +1305,19 @@ function TOCA.TotemTimerResetBySpell(spellID)
   local spell = GetSpellInfo(spellID)
   local totemCatSpell={}
   if (spell) then
-    totemCatSpell.fire = TOCA.GetKeyFromValue(TOCA.totems.FIRE, spell, 1)
+    totemCatSpell.fire = TOCA:GetKeyFromValue(TOCA.totems.FIRE, spell, 1)
     if (totemCatSpell.fire) then
       TOCA.TotemTimerReset(1)
     end
-    totemCatSpell.earth = TOCA.GetKeyFromValue(TOCA.totems.EARTH, spell, 1)
+    totemCatSpell.earth = TOCA:GetKeyFromValue(TOCA.totems.EARTH, spell, 1)
     if (totemCatSpell.earth) then
       TOCA.TotemTimerReset(2)
     end
-    totemCatSpell.water = TOCA.GetKeyFromValue(TOCA.totems.WATER, spell, 1)
+    totemCatSpell.water = TOCA:GetKeyFromValue(TOCA.totems.WATER, spell, 1)
     if (totemCatSpell.water) then
       TOCA.TotemTimerReset(3)
     end
-    totemCatSpell.air = TOCA.GetKeyFromValue(TOCA.totems.AIR, spell, 1)
+    totemCatSpell.air = TOCA:GetKeyFromValue(TOCA.totems.AIR, spell, 1)
     if (totemCatSpell.air) then
       TOCA.TotemTimerReset(4)
     end
@@ -1398,7 +1398,7 @@ function TOCA.Combat(event)
 	--player has entered combat
 	if (event == "PLAYER_REGEN_DISABLED") then
 		TOCA.isInCombat = true
-		for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+		for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
 			TOCA.SlotSelect[totemCat]:Hide()
 		end
 		TOCA.Button.DropdownMain:Hide()
@@ -1417,7 +1417,7 @@ function TOCA.Combat(event)
 	--player has finished combat
 	if (event == "PLAYER_REGEN_ENABLED") then
 		TOCA.isInCombat = false
-		for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+		for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
 			TOCA.SlotSelect[totemCat]:Show()
 		end
 		TOCA.Button.DropdownMain:Show()
@@ -1475,12 +1475,12 @@ local totemButtonPos_X={}
 local totemButtonPos_Y={}
 function TOCA.SetTotemOrder()
   local buildOrder = TOCA.GetTotemOrder()
-  local totemOrder = TOCA.Split(buildOrder, ",")
+  local totemOrder = TOCA:Split(buildOrder, ",")
   for k,v in ipairs(totemOrder) do
     TOCA.Slot[v]:SetPoint("TOPLEFT", -15+TOCA.SlotPosX[k], -35) --main frame
     TOCA.FrameSetsSlot[v]:SetPoint("TOPLEFT", -60+TOCA.SlotSetsPosX[k], -70) --options frame
 
-    for totemCat,notUsed in TOCA.PairByKeys(TOCA.totems) do
+    for totemCat,notUsed in TOCA:PairByKeys(TOCA.totems) do
       --totemNum = totemNum +1
       totemButtonPos_Y[totemCat] = 0
       totemButtonPos_X[totemCat] = 0
@@ -1541,7 +1541,7 @@ end
 
 function TOCA.SetTotemOrderDropdown() --handled on Init() ONLY
   local buildOrder = TOCA.GetTotemOrder()
-  local totemOrder = TOCA.Split(buildOrder, ",")
+  local totemOrder = TOCA:Split(buildOrder, ",")
   for k,v in ipairs(totemOrder) do
     TOCA.Dropdown.OrderSet[k].text:SetText(v)
   end
@@ -1581,7 +1581,7 @@ function TOCA.ReportFeedGet(prefix, netpacket)
 	local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.report_s)
 	if (getPacket) then
 		--print("received signal... sending ...")
-		local packet = TOCA.Split(getPacket, ",")
+		local packet = TOCA:Split(getPacket, ",")
 		if (packet[1] ~= TOCA.player.name) then
 			TOCA.SendPacket(TOCA.Net.report_g .. packet[1] .. "," .. TOCA.player.name .. "," .. TOCA._G.version .. "," .. packet[2], packet[2])
 		end
@@ -1590,7 +1590,7 @@ end
 function TOCA.ReportFeedResult(prefix, netpacket)
 	local getPacket = TOCA.ParsePacket(netpacket, TOCA.Net.report_g)
 	if (getPacket) then
-		local packet = TOCA.Split(getPacket, ",")
+		local packet = TOCA:Split(getPacket, ",")
 		if (packet[1] == TOCA.player.name) then --give to requester only
 			TOCA.Notification("[" .. packet[4] .. "] " .. packet[2] .. " = " .. packet[3])
 		end
@@ -1611,7 +1611,7 @@ function SlashCmdList.TOCA(cmd)
   elseif (cmd == TOCA._L.COMMANDS[2][1]) then
 		TOCA.FrameMain:Show()
 		if (TOCADB[TOCA.player.combine]["CONFIG"]["FRAMESTYLE"] == TOCA._L.UI.FRAMESTYLES[2]) then --segmented
-			for totemCat,v in TOCA.PairByKeys(TOCA.totems) do
+			for totemCat,v in TOCA:PairByKeys(TOCA.totems) do
 				TOCA.FrameSeg[totemCat]:Show()
 			end
 		end
