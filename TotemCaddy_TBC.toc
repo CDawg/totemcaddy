@@ -1,5 +1,5 @@
-## Interface: 20505
-## X-Min-Interface: 20504
+## Interface: 20506
+## X-Min-Interface: 20506
 ## Title: |cff006aa6Totem Caddy|r v3.32
 ## Notes: Totem Caddy
 ## Version: 3.32
