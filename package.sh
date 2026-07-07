@@ -10,5 +10,6 @@ echo "Cleaning up .git .vscode"
 rm /e/TotemCaddy/.gitignore
 rm /e/TotemCaddy/package.sh
 rm -rf /e/TotemCaddy/.vscode/
+rm -rf /e/TotemCaddy/.vs/
 rm -rf /e/TotemCaddy/.git/
 echo "Done!"
