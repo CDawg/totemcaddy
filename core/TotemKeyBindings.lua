@@ -34,12 +34,12 @@ for i=1, 5 do
 		--KeyBindingFrame:Show()
 	end)
 	TOCA.Button.KeyBind[i].Text = TOCA.Button.KeyBind[i]:CreateFontString(nil, "ARTWORK")
-	TOCA.Button.KeyBind[i].Text:SetFont(TOCA._G.font, 11)
+	TOCA.Button.KeyBind[i].Text:SetFont(TOCA._G.font.style, TOCA._G.font.size-1)
 	TOCA.Button.KeyBind[i].Text:SetPoint("CENTER", 0, 0)
 	TOCA.Button.KeyBind[i].Text:SetText(i)
 
 	TOCA.Button.KeyBind[i].Title = TOCA.FrameOptionsPage[TOCA.TABPage.KEYBINDINGS]:CreateFontString(nil, "ARTWORK")
-	TOCA.Button.KeyBind[i].Title:SetFont(TOCA._G.font, 12)
+	TOCA.Button.KeyBind[i].Title:SetFont(TOCA._G.font.style, TOCA._G.font.size, TOCA._G.font.flag)
 	TOCA.Button.KeyBind[i].Title:SetPoint("TOPLEFT", 20, -i*25-10)
 	TOCA.Button.KeyBind[i].Title:SetText(i)
 end

@@ -1,4 +1,10 @@
 TOCA.CHANGELOG = [==[
+### 3.34
+* Preperation for Black Temple and Mount Hyjal (Game Build 2.5.6)
+* Removed Blizzard's placement fix for UI Sliders
+* Added updated font and flags for new UI
+* Bugfix: Blizzard's Retail UI scrollbar placement
+
 ### 3.33
 * Updated API new release build for TBC
 

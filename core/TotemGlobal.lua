@@ -17,12 +17,15 @@ TOCA.DEBUG = false
 
 TOCA._G = {
   title  = TOCA.colors.class[7][4] .. TOCA._L.TITLE .."|r",
-  author = "Porthias",
   CMD    = "/toca",
   width  = 150,
   height = 85,
-  font   = "Interface/Addons/TotemCaddy/fonts/FRIZQT__.TTF",
-  dir    = "Interface/Addons/TotemCaddy/",
+	font   = {
+		style = "Fonts/ARIALN.ttf",
+		size  = 13,
+		flag  = "SLUG",
+	},
+  path   = "Interface/Addons/TotemCaddy/",
   prefix = "TotemCaddy",
   suffix = "TBC Anniversary",
   date   = date("%Y%m%d"),
@@ -422,13 +425,6 @@ for k,v in pairs(TOCA._L.UI.FRAMESTYLES) do
   TOCA.FrameStyleIndex[v]=k
 end
 
-function TOCA.SliderBackdrop(frame)
-	frame.Back = frame:CreateTexture(nil, "BACKGROUND")
-  frame.Back:SetSize(frame:GetWidth()-4, 14)
-  frame.Back:SetPoint("CENTER", 0, 0)
-  frame.Back:SetTexture("Interface/GLUES/LoadingBar/Loading-BarBorder")
-end
-
 function TOCA.FrameStyleDefault() --used for emergency recovery
   TOCA.FrameMain:SetHeight(TOCA._G.height)
   TOCA.FrameMain:SetWidth(TOCA._G.width)
@@ -794,9 +790,9 @@ function TOCA.ExpireNotificationsTotems(totemname, totemtimer)
 			end
 			if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESOUND"] ~= "OFF") then
 				if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"]) then
-					PlaySoundFile(TOCA._G.dir .. "sounds/" .. TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"] .. ".ogg")
+					PlaySoundFile(TOCA._G.path .. "sounds/" .. TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDFILE"] .. ".ogg")
 				else
-					PlaySoundFile(TOCA._G.dir .. "sounds/totemexpire_1.ogg")
+					PlaySoundFile(TOCA._G.path .. "sounds/totemexpire_1.ogg")
 				end
 			end
 		end
@@ -824,9 +820,9 @@ function TOCA.ExpireNotificationsShield()
 							end
 							if (TOCADB[TOCA.player.combine]["CONFIG"]["EXPIRESHIELD"] ~= "OFF") then
 								if (TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"]) then
-									PlaySoundFile(TOCA._G.dir .. "sounds/" .. TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"] .. ".ogg")
+									PlaySoundFile(TOCA._G.path .. "sounds/" .. TOCADB[TOCA.player.combine]["CONFIG"]["SOUNDSHIELDFILE"] .. ".ogg")
 								else
-									PlaySoundFile(TOCA._G.dir .. "sounds/shieldexpire_1.ogg")
+									PlaySoundFile(TOCA._G.path .. "sounds/shieldexpire_1.ogg")
 								end
 							end
 						end
@@ -1565,16 +1561,6 @@ function TOCA.ReportFeedSend(channel) --check version match with neighbors
 	if (channel ~= "") then
 		source = string.upper(channel)
 	end
-	--[==[
-	if (IsInGuild()) then
-		source = "GUILD"
-  end
-	if (IsInRaid()) then
-		source = "RAID"
-	elseif (IsInGroup()) then
-		source = "PARTY"
-	end
-	]==]--
 	TOCA.SendPacket(TOCA.Net.report_s .. TOCA.player.name .. "," .. source, source)
 end
 function TOCA.ReportFeedGet(prefix, netpacket)
@@ -1582,9 +1568,7 @@ function TOCA.ReportFeedGet(prefix, netpacket)
 	if (getPacket) then
 		--print("received signal... sending ...")
 		local packet = TOCA:Split(getPacket, ",")
-		if (packet[1] ~= TOCA.player.name) then
-			TOCA.SendPacket(TOCA.Net.report_g .. packet[1] .. "," .. TOCA.player.name .. "," .. TOCA._G.version .. "," .. packet[2], packet[2])
-		end
+	  TOCA.SendPacket(TOCA.Net.report_g .. packet[1] .. "," .. TOCA.player.name .. "," .. TOCA._G.version .. "," .. packet[2], packet[2])
 	end
 end
 function TOCA.ReportFeedResult(prefix, netpacket)
@@ -1592,7 +1576,11 @@ function TOCA.ReportFeedResult(prefix, netpacket)
 	if (getPacket) then
 		local packet = TOCA:Split(getPacket, ",")
 		if (packet[1] == TOCA.player.name) then --give to requester only
-			TOCA.Notification("[" .. packet[4] .. "] " .. packet[2] .. " = " .. packet[3])
+		local player = packet[2]
+		if (player == TOCA.player.name) then
+			player = "|CFF4FE060" .. player .. "|r"
+		end
+			TOCA.Notification("[" .. packet[4] .. "] " .. player .. " = " .. packet[3])
 		end
 	end
 end

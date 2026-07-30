@@ -9,6 +9,7 @@ cp -r "/c/Program Files (x86)/World of Warcraft/_anniversary_/Interface/AddOns/T
 echo "Cleaning up .git .vscode"
 rm /e/TotemCaddy/.gitignore
 rm /e/TotemCaddy/package.sh
+rm /e/TotemCaddy/*code-workspace
 rm -rf /e/TotemCaddy/.vscode/
 rm -rf /e/TotemCaddy/.vs/
 rm -rf /e/TotemCaddy/.git/
